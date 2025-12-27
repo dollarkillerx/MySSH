@@ -10,6 +10,10 @@ const emit = defineEmits(["select", "edit", "add", "settings"]);
 const servers = ref([]);
 const loading = ref(false);
 
+// Delete confirmation state
+const showDeleteConfirm = ref(false);
+const deleteTarget = ref(null);
+
 async function loadServers() {
   loading.value = true;
   try {
@@ -21,16 +25,31 @@ async function loadServers() {
   }
 }
 
-async function handleDelete(server, event) {
+function confirmDelete(server, event) {
   event.stopPropagation();
-  if (confirm(t("servers.deleteConfirm", { name: server.name }))) {
-    try {
-      await deleteServer(server.id);
-      await loadServers();
-    } catch (error) {
-      alert(t("serverForm.deleteFailed", { error }));
-    }
+  deleteTarget.value = server;
+  showDeleteConfirm.value = true;
+}
+
+async function doDelete() {
+  if (!deleteTarget.value) return;
+
+  const server = deleteTarget.value;
+  showDeleteConfirm.value = false;
+
+  try {
+    await deleteServer(server.id);
+    await loadServers();
+  } catch (error) {
+    alert(t("serverForm.deleteFailed", { error }));
+  } finally {
+    deleteTarget.value = null;
   }
+}
+
+function cancelDelete() {
+  showDeleteConfirm.value = false;
+  deleteTarget.value = null;
 }
 
 function handleEdit(server, event) {
@@ -87,12 +106,30 @@ defineExpose({ loadServers });
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
           </button>
-          <button class="action-btn delete" @click="handleDelete(server, $event)" :title="t('common.delete')">
+          <button class="action-btn delete" @click="confirmDelete(server, $event)" :title="t('common.delete')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="3 6 5 6 21 6"></polyline>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
             </svg>
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div v-if="showDeleteConfirm" class="confirm-overlay" @click.self="cancelDelete">
+      <div class="confirm-modal">
+        <div class="confirm-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="confirm-message">{{ t("servers.deleteConfirm", { name: deleteTarget?.name }) }}</div>
+        <div class="confirm-actions">
+          <button class="btn" @click="cancelDelete">{{ t("common.cancel") }}</button>
+          <button class="btn danger" @click="doDelete">{{ t("common.delete") }}</button>
         </div>
       </div>
     </div>
@@ -276,5 +313,68 @@ defineExpose({ loadServers });
 .action-btn.delete:hover {
   background: #f38ba8;
   color: #1e1e2e;
+}
+
+/* Delete Confirmation Modal */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm-modal {
+  background: #1e1e2e;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  min-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.confirm-icon {
+  color: #f38ba8;
+  margin-bottom: 16px;
+}
+
+.confirm-message {
+  color: #cdd6f4;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  background: #45475a;
+  color: #cdd6f4;
+}
+
+.btn:hover {
+  background: #585b70;
+}
+
+.btn.danger {
+  background: #f38ba8;
+  color: #1e1e2e;
+}
+
+.btn.danger:hover {
+  background: #eba0ac;
 }
 </style>

@@ -36,16 +36,10 @@ function handleSelectServer(server) {
 }
 
 function openTerminal(server) {
-  const existingTab = tabs.value.find(
-    (t) => t.type === "terminal" && t.server.id === server.id
-  );
-  if (existingTab) {
-    activeTab.value = existingTab;
-  } else {
-    const newTab = { type: "terminal", server, id: `terminal-${server.id}-${Date.now()}` };
-    tabs.value.push(newTab);
-    activeTab.value = newTab;
-  }
+  // Always create a new terminal connection
+  const newTab = { type: "terminal", server, id: `terminal-${server.id}-${Date.now()}` };
+  tabs.value.push(newTab);
+  activeTab.value = newTab;
 }
 
 function openSftp(server) {
@@ -155,6 +149,7 @@ function getTabTitle(tab) {
               <Terminal
                 v-if="tab.type === 'terminal'"
                 :server="tab.server"
+                :active="activeTab === tab"
                 @close="closeTab(tab)"
               />
               <FileBrowser

@@ -10,6 +10,7 @@ const { t } = useI18n();
 
 const props = defineProps({
   server: Object,
+  active: Boolean,
 });
 
 const emit = defineEmits(["close"]);
@@ -23,6 +24,8 @@ let fitAddon = null;
 let sessionId = null;
 let unlistenData = null;
 let resizeObserver = null;
+let lastCols = 0;
+let lastRows = 0;
 
 async function connect() {
   if (!props.server) return;
@@ -84,12 +87,25 @@ async function connect() {
     });
 
     resizeObserver = new ResizeObserver(() => {
-      if (fitAddon && terminal && sessionId) {
-        fitAddon.fit();
-        sshResize(sessionId, terminal.cols, terminal.rows);
+      if (fitAddon && terminal && sessionId && terminalRef.value) {
+        // Only resize if the terminal is visible (has non-zero dimensions)
+        const rect = terminalRef.value.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          fitAddon.fit();
+          // Only send resize if dimensions actually changed
+          if (terminal.cols !== lastCols || terminal.rows !== lastRows) {
+            lastCols = terminal.cols;
+            lastRows = terminal.rows;
+            sshResize(sessionId, terminal.cols, terminal.rows);
+          }
+        }
       }
     });
     resizeObserver.observe(terminalRef.value);
+
+    // Store initial dimensions
+    lastCols = terminal.cols;
+    lastRows = terminal.rows;
 
     status.value = "connected";
     terminal.focus();
@@ -131,6 +147,19 @@ watch(
       if (newId) {
         await connect();
       }
+    }
+  }
+);
+
+// Handle tab becoming active
+watch(
+  () => props.active,
+  (isActive) => {
+    if (isActive && terminal && fitAddon && status.value === "connected") {
+      nextTick(() => {
+        fitAddon.fit();
+        terminal.focus();
+      });
     }
   }
 );
