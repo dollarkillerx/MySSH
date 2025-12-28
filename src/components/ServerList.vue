@@ -89,7 +89,7 @@ defineExpose({ loadServers });
         v-for="server in servers"
         :key="server.id"
         class="server-item"
-        @click="$emit('select', server)"
+        @dblclick="$emit('select', server)"
       >
         <div class="server-info">
           <div class="server-name">{{ server.name }}</div>

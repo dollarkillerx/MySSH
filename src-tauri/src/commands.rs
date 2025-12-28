@@ -77,7 +77,7 @@ pub fn save_server(request: SaveServerRequest) -> Result<ServerInfo, String> {
     let auth = if request.auth_type == "key" {
         AuthMethod::PrivateKey {
             key: request.private_key.ok_or("Private key is required")?,
-            passphrase: request.passphrase,
+            passphrase: request.passphrase.filter(|p| !p.is_empty()),
         }
     } else {
         AuthMethod::Password(request.password.ok_or("Password is required")?)

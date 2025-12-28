@@ -143,7 +143,9 @@ impl SshSession {
                 }
             }
             AuthMethod::PrivateKey { key, passphrase } => {
-                let key_pair = if let Some(passphrase) = passphrase {
+                // Treat empty passphrase as None
+                let passphrase_opt = passphrase.as_ref().filter(|p| !p.is_empty());
+                let key_pair = if let Some(passphrase) = passphrase_opt {
                     decode_secret_key(key, Some(passphrase))
                         .context("Failed to decode private key with passphrase")?
                 } else {
