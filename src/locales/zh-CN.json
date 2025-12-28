@@ -13,7 +13,9 @@
     "deleteConfirm": "确定删除「{name}」？",
     "empty": "暂无服务器配置",
     "emptyHint": "点击 + 添加服务器",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "search": "搜索服务器...",
+    "noResults": "未找到匹配的服务器"
   },
   "serverForm": {
     "basicInfo": "基本信息",

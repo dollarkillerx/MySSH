@@ -15,6 +15,11 @@ const emit = defineEmits(["close", "saved"]);
 const loading = ref(false);
 const form = ref(getDefaultForm());
 
+// Password visibility toggles
+const showPassword = ref(false);
+const showPassphrase = ref(false);
+const showProxyPassword = ref(false);
+
 function getDefaultForm() {
   return {
     id: null,
@@ -79,6 +84,12 @@ watch(
   (visible) => {
     if (visible && !props.serverId) {
       form.value = getDefaultForm();
+    }
+    if (!visible) {
+      // Reset password visibility when modal closes
+      showPassword.value = false;
+      showPassphrase.value = false;
+      showProxyPassword.value = false;
     }
   }
 );
@@ -176,7 +187,23 @@ function handleFileSelect(event) {
 
           <div v-if="form.auth_type === 'password'" class="form-group">
             <label>{{ t("serverForm.password") }} *</label>
-            <input v-model="form.password" type="password" :placeholder="t('serverForm.passwordPlaceholder')" />
+            <div class="password-input">
+              <input
+                v-model="form.password"
+                :type="showPassword ? 'text' : 'password'"
+                :placeholder="t('serverForm.passwordPlaceholder')"
+              />
+              <button type="button" class="toggle-password" @click="showPassword = !showPassword">
+                <svg v-if="showPassword" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <template v-else>
@@ -195,7 +222,23 @@ function handleFileSelect(event) {
 
             <div class="form-group">
               <label>{{ t("serverForm.passphrase") }}</label>
-              <input v-model="form.passphrase" type="password" :placeholder="t('serverForm.passphrasePlaceholder')" />
+              <div class="password-input">
+                <input
+                  v-model="form.passphrase"
+                  :type="showPassphrase ? 'text' : 'password'"
+                  :placeholder="t('serverForm.passphrasePlaceholder')"
+                />
+                <button type="button" class="toggle-password" @click="showPassphrase = !showPassphrase">
+                  <svg v-if="showPassphrase" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                  <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
             </div>
           </template>
         </div>
@@ -241,7 +284,22 @@ function handleFileSelect(event) {
               </div>
               <div class="form-group flex-1">
                 <label>{{ t("serverForm.proxyPassword") }}</label>
-                <input v-model="form.proxy_password" type="password" />
+                <div class="password-input">
+                  <input
+                    v-model="form.proxy_password"
+                    :type="showProxyPassword ? 'text' : 'password'"
+                  />
+                  <button type="button" class="toggle-password" @click="showProxyPassword = !showProxyPassword">
+                    <svg v-if="showProxyPassword" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                    <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </template>
@@ -373,6 +431,36 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: #89b4fa;
+}
+
+.password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input input {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #6c7086;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.toggle-password:hover {
+  background: #45475a;
+  color: #cdd6f4;
 }
 
 textarea {

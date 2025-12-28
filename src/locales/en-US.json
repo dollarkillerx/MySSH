@@ -13,7 +13,9 @@
     "deleteConfirm": "Delete \"{name}\"?",
     "empty": "No servers configured.",
     "emptyHint": "Click + to add one.",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "search": "Search servers...",
+    "noResults": "No matching servers found"
   },
   "serverForm": {
     "basicInfo": "Basic Info",

@@ -13,7 +13,9 @@
     "deleteConfirm": "「{name}」を削除しますか？",
     "empty": "サーバーが設定されていません",
     "emptyHint": "+ をクリックして追加",
-    "loading": "読み込み中..."
+    "loading": "読み込み中...",
+    "search": "サーバーを検索...",
+    "noResults": "一致するサーバーが見つかりません"
   },
   "serverForm": {
     "basicInfo": "基本情報",

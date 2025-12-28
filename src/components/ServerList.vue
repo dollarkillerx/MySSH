@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { getServers, deleteServer } from "../composables/useApi";
 
@@ -9,6 +9,17 @@ const emit = defineEmits(["select", "edit", "add", "settings"]);
 
 const servers = ref([]);
 const loading = ref(false);
+const searchQuery = ref("");
+
+const filteredServers = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+  if (!query) return servers.value;
+  return servers.value.filter(server =>
+    server.name.toLowerCase().includes(query) ||
+    server.host.toLowerCase().includes(query) ||
+    server.username.toLowerCase().includes(query)
+  );
+});
 
 // Delete confirmation state
 const showDeleteConfirm = ref(false);
@@ -77,6 +88,25 @@ defineExpose({ loadServers });
       </div>
     </div>
 
+    <div class="search-box">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="M21 21l-4.35-4.35"></path>
+      </svg>
+      <input
+        v-model="searchQuery"
+        type="text"
+        :placeholder="t('servers.search')"
+        class="search-input"
+      />
+      <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
     <div v-if="loading" class="loading">{{ t("servers.loading") }}</div>
 
     <div v-else-if="servers.length === 0" class="empty">
@@ -84,9 +114,13 @@ defineExpose({ loadServers });
       {{ t("servers.emptyHint") }}
     </div>
 
+    <div v-else-if="filteredServers.length === 0" class="empty">
+      {{ t("servers.noResults") }}
+    </div>
+
     <div v-else class="list">
       <div
-        v-for="server in servers"
+        v-for="server in filteredServers"
         :key="server.id"
         class="server-item"
         @dblclick="$emit('select', server)"
@@ -198,6 +232,53 @@ defineExpose({ loadServers });
 
 .add-btn:hover {
   background: #b4befe;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 8px;
+  background: #313244;
+  border-radius: 6px;
+  gap: 8px;
+}
+
+.search-icon {
+  color: #6c7086;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #cdd6f4;
+  font-size: 13px;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #6c7086;
+}
+
+.search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: #45475a;
+  color: #a6adc8;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.search-clear:hover {
+  background: #585b70;
+  color: #cdd6f4;
 }
 
 .loading,
