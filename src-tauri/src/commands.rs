@@ -18,6 +18,8 @@ pub struct ServerInfo {
     pub username: String,
     pub auth_type: String,
     pub has_proxy: bool,
+    pub has_jump_host: bool,
+    pub jump_host: Option<String>,
     pub notes: Option<String>,
 }
 
@@ -34,6 +36,8 @@ impl From<&ServerConfig> for ServerInfo {
                 AuthMethod::PrivateKey { .. } => "key".to_string(),
             },
             has_proxy: config.proxy.is_some(),
+            has_jump_host: config.jump_host.is_some(),
+            jump_host: config.jump_host.clone(),
             notes: config.notes.clone(),
         }
     }
@@ -69,6 +73,7 @@ pub struct SaveServerRequest {
     pub proxy_port: Option<u16>,
     pub proxy_username: Option<String>,
     pub proxy_password: Option<String>,
+    pub jump_host: Option<String>,
     pub notes: Option<String>,
 }
 
@@ -98,6 +103,9 @@ pub fn save_server(request: SaveServerRequest) -> Result<ServerInfo, String> {
         None
     };
 
+    // Filter empty jump_host
+    let jump_host = request.jump_host.filter(|h| !h.is_empty());
+
     let server = if let Some(id) = request.id {
         let mut existing = storage::get_server(&id).ok_or("Server not found")?;
         existing.name = request.name;
@@ -106,11 +114,13 @@ pub fn save_server(request: SaveServerRequest) -> Result<ServerInfo, String> {
         existing.username = request.username;
         existing.auth = auth;
         existing.proxy = proxy;
+        existing.jump_host = jump_host;
         existing.notes = request.notes;
         existing
     } else {
         let mut server = ServerConfig::new(request.name, request.host, request.port, request.username, auth);
         server.proxy = proxy;
+        server.jump_host = jump_host;
         server.notes = request.notes;
         server
     };

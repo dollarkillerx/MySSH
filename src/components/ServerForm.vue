@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { saveServer, getServer } from "../composables/useApi";
+import { saveServer, getServer, getServers } from "../composables/useApi";
 
 const { t } = useI18n();
 
@@ -14,6 +14,7 @@ const emit = defineEmits(["close", "saved"]);
 
 const loading = ref(false);
 const form = ref(getDefaultForm());
+const allServers = ref([]);
 
 // Password visibility toggles
 const showPassword = ref(false);
@@ -37,8 +38,23 @@ function getDefaultForm() {
     proxy_port: 1080,
     proxy_username: "",
     proxy_password: "",
+    jump_host: "",
     notes: "",
   };
+}
+
+// Get available servers for jump host selection (exclude current server)
+const availableJumpHosts = computed(() => {
+  return allServers.value.filter(s => s.id !== form.value.id);
+});
+
+// Load all servers for jump host dropdown
+async function loadServers() {
+  try {
+    allServers.value = await getServers();
+  } catch (error) {
+    console.error("Failed to load servers:", error);
+  }
 }
 
 const isEdit = computed(() => !!form.value.id);
@@ -46,6 +62,9 @@ const isEdit = computed(() => !!form.value.id);
 watch(
   () => props.serverId,
   async (id) => {
+    // Load servers list for jump host selection
+    await loadServers();
+
     if (id) {
       try {
         const server = await getServer(id);
@@ -66,6 +85,7 @@ watch(
             proxy_port: server.proxy?.port || 1080,
             proxy_username: server.proxy?.username || "",
             proxy_password: server.proxy?.password || "",
+            jump_host: server.jump_host || "",
             notes: server.notes || "",
           };
         }
@@ -306,6 +326,20 @@ function handleFileSelect(event) {
         </div>
 
         <div class="form-section">
+          <h4>{{ t("serverForm.jumpHost") }}</h4>
+          <div class="form-group">
+            <label>{{ t("serverForm.jumpHostSelect") }}</label>
+            <select v-model="form.jump_host" class="select-input">
+              <option value="">{{ t("serverForm.jumpHostNone") }}</option>
+              <option v-for="server in availableJumpHosts" :key="server.id" :value="server.id">
+                {{ server.name }} ({{ server.host }})
+              </option>
+            </select>
+            <span class="help-text">{{ t("serverForm.jumpHostHint") }}</span>
+          </div>
+        </div>
+
+        <div class="form-section">
           <h4>{{ t("serverForm.notes") }}</h4>
           <div class="form-group">
             <textarea v-model="form.notes" :placeholder="t('serverForm.notesPlaceholder')" rows="3"></textarea>
@@ -416,7 +450,8 @@ function handleFileSelect(event) {
 input[type="text"],
 input[type="password"],
 input[type="number"],
-textarea {
+textarea,
+select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 6px;
@@ -425,6 +460,27 @@ textarea {
   color: #cdd6f4;
   font-size: 14px;
   box-sizing: border-box;
+}
+
+.select-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c7086' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: #89b4fa;
+}
+
+.help-text {
+  display: block;
+  margin-top: 4px;
+  color: #6c7086;
+  font-size: 12px;
 }
 
 input:focus,

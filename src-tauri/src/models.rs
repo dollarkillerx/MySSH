@@ -10,6 +10,9 @@ pub struct ServerConfig {
     pub username: String,
     pub auth: AuthMethod,
     pub proxy: Option<ProxyConfig>,
+    /// Jump host server ID - use another saved server as SSH jump host
+    #[serde(default)]
+    pub jump_host: Option<String>,
     pub notes: Option<String>,
     #[serde(default)]
     pub created_at: i64,
@@ -34,6 +37,7 @@ impl ServerConfig {
             username,
             auth,
             proxy: None,
+            jump_host: None,
             notes: None,
             created_at: now,
             updated_at: now,

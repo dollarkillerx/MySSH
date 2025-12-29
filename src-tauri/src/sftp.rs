@@ -1,4 +1,5 @@
 use crate::models::{AuthMethod, FileEntry, ProxyConfig, ProxyType, ServerConfig};
+use crate::storage;
 use anyhow::{Context, Result};
 use async_trait::async_trait;
 use once_cell::sync::Lazy;
@@ -7,7 +8,7 @@ use russh::*;
 use russh_sftp::client::SftpSession;
 use std::collections::HashMap;
 use std::sync::Arc;
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
 use tokio::net::TcpStream;
 use tokio::sync::RwLock;
 use tokio_socks::tcp::Socks5Stream;
@@ -15,18 +16,40 @@ use tokio_socks::tcp::Socks5Stream;
 static SFTP_SESSIONS: Lazy<RwLock<HashMap<String, Arc<SftpConnection>>>> =
     Lazy::new(|| RwLock::new(HashMap::new()));
 
+// Store jump host connections to keep them alive
+static SFTP_JUMP_CONNECTIONS: Lazy<RwLock<HashMap<String, Arc<SftpJumpHostConnection>>>> =
+    Lazy::new(|| RwLock::new(HashMap::new()));
+
+struct SftpJumpHostConnection {
+    #[allow(dead_code)]
+    handle: client::Handle<JumpHostHandler>,
+}
+
 pub struct SftpConnection {
     session_id: String,
     sftp: SftpSession,
     _handle: client::Handle<SftpHandler>,
+    #[allow(dead_code)]
+    jump_connection_id: Option<String>,
 }
+
+// Trait for async read/write streams
+trait AsyncReadWrite: AsyncRead + AsyncWrite + Unpin + Send {}
+impl<T: AsyncRead + AsyncWrite + Unpin + Send> AsyncReadWrite for T {}
 
 impl SftpConnection {
     pub async fn connect(server: &ServerConfig) -> Result<Arc<Self>> {
         let session_id = uuid::Uuid::new_v4().to_string();
 
-        // Create TCP connection
-        let stream = Self::create_connection(server).await?;
+        // Check if we need to use a jump host
+        let (stream, jump_connection_id): (Box<dyn AsyncReadWrite>, Option<String>) =
+            if let Some(jump_host_id) = &server.jump_host {
+                let (stream, conn_id) = Self::connect_via_jump_host(jump_host_id, server).await?;
+                (Box::new(stream), Some(conn_id))
+            } else {
+                let stream = Self::create_connection(server).await?;
+                (Box::new(stream), None)
+            };
 
         // SSH config
         let config = client::Config::default();
@@ -59,11 +82,101 @@ impl SftpConnection {
             session_id: session_id.clone(),
             sftp,
             _handle: handle,
+            jump_connection_id,
         });
 
-        SFTP_SESSIONS.write().await.insert(session_id, connection.clone());
+        SFTP_SESSIONS
+            .write()
+            .await
+            .insert(session_id, connection.clone());
 
         Ok(connection)
+    }
+
+    async fn connect_via_jump_host(
+        jump_host_id: &str,
+        target_server: &ServerConfig,
+    ) -> Result<(ChannelStream<client::Msg>, String)> {
+        // Get jump host server config
+        let jump_server =
+            storage::get_server(jump_host_id).context("Jump host server not found")?;
+
+        // Connect to jump host
+        let jump_stream = Self::create_connection(&jump_server).await?;
+
+        let config = client::Config {
+            inactivity_timeout: Some(std::time::Duration::from_secs(3600)),
+            ..Default::default()
+        };
+        let config = Arc::new(config);
+
+        let handler = JumpHostHandler;
+        let mut jump_handle = client::connect_stream(config, jump_stream, handler)
+            .await
+            .context("Failed to connect to jump host")?;
+
+        // Authenticate to jump host
+        Self::authenticate_jump_host(&mut jump_handle, &jump_server).await?;
+
+        // Open direct-tcpip channel to target server
+        let channel = jump_handle
+            .channel_open_direct_tcpip(
+                &target_server.host,
+                target_server.port as u32,
+                "127.0.0.1",
+                0,
+            )
+            .await
+            .context("Failed to open tunnel through jump host")?;
+
+        // Store jump connection to keep it alive
+        let conn_id = uuid::Uuid::new_v4().to_string();
+        let jump_conn = Arc::new(SftpJumpHostConnection {
+            handle: jump_handle,
+        });
+        SFTP_JUMP_CONNECTIONS
+            .write()
+            .await
+            .insert(conn_id.clone(), jump_conn);
+
+        Ok((channel.into_stream(), conn_id))
+    }
+
+    async fn authenticate_jump_host(
+        handle: &mut client::Handle<JumpHostHandler>,
+        server: &ServerConfig,
+    ) -> Result<()> {
+        match &server.auth {
+            AuthMethod::Password(password) => {
+                let auth_result = handle
+                    .authenticate_password(&server.username, password)
+                    .await
+                    .context("Jump host password authentication failed")?;
+
+                if !auth_result {
+                    anyhow::bail!("Jump host: Invalid username or password");
+                }
+            }
+            AuthMethod::PrivateKey { key, passphrase } => {
+                let passphrase_opt = passphrase.as_ref().filter(|p| !p.is_empty());
+                let key_pair = if let Some(passphrase) = passphrase_opt {
+                    decode_secret_key(key, Some(passphrase))
+                        .context("Failed to decode jump host private key with passphrase")?
+                } else {
+                    decode_secret_key(key, None).context("Failed to decode jump host private key")?
+                };
+
+                let auth_result = handle
+                    .authenticate_publickey(&server.username, Arc::new(key_pair))
+                    .await
+                    .context("Jump host public key authentication failed")?;
+
+                if !auth_result {
+                    anyhow::bail!("Jump host: Public key authentication rejected");
+                }
+            }
+        }
+        Ok(())
     }
 
     async fn create_connection(server: &ServerConfig) -> Result<TcpStream> {
@@ -179,14 +292,46 @@ impl SftpConnection {
             let permissions = format!(
                 "{}{}{}{}{}{}{}{}{}",
                 if is_dir { 'd' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o400 != 0) { 'r' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o200 != 0) { 'w' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o100 != 0) { 'x' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o040 != 0) { 'r' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o020 != 0) { 'w' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o010 != 0) { 'x' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o004 != 0) { 'r' } else { '-' },
-                if metadata.permissions.map_or(false, |p| p & 0o002 != 0) { 'w' } else { '-' },
+                if metadata.permissions.map_or(false, |p| p & 0o400 != 0) {
+                    'r'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o200 != 0) {
+                    'w'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o100 != 0) {
+                    'x'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o040 != 0) {
+                    'r'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o020 != 0) {
+                    'w'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o010 != 0) {
+                    'x'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o004 != 0) {
+                    'r'
+                } else {
+                    '-'
+                },
+                if metadata.permissions.map_or(false, |p| p & 0o002 != 0) {
+                    'w'
+                } else {
+                    '-'
+                },
             );
 
             entries.push(FileEntry {
@@ -200,12 +345,10 @@ impl SftpConnection {
         }
 
         // Sort: directories first, then by name
-        entries.sort_by(|a, b| {
-            match (a.is_dir, b.is_dir) {
-                (true, false) => std::cmp::Ordering::Less,
-                (false, true) => std::cmp::Ordering::Greater,
-                _ => a.name.to_lowercase().cmp(&b.name.to_lowercase()),
-            }
+        entries.sort_by(|a, b| match (a.is_dir, b.is_dir) {
+            (true, false) => std::cmp::Ordering::Less,
+            (false, true) => std::cmp::Ordering::Greater,
+            _ => a.name.to_lowercase().cmp(&b.name.to_lowercase()),
         });
 
         Ok(entries)
@@ -250,6 +393,12 @@ impl SftpConnection {
     pub async fn close(&self) -> Result<()> {
         self.sftp.close().await?;
         SFTP_SESSIONS.write().await.remove(&self.session_id);
+
+        // Clean up jump connection if exists
+        if let Some(conn_id) = &self.jump_connection_id {
+            SFTP_JUMP_CONNECTIONS.write().await.remove(conn_id);
+        }
+
         Ok(())
     }
 }
@@ -259,13 +408,32 @@ pub async fn get_sftp_session(session_id: &str) -> Option<Arc<SftpConnection>> {
 }
 
 pub async fn remove_sftp_session(session_id: &str) {
-    SFTP_SESSIONS.write().await.remove(session_id);
+    if let Some(session) = SFTP_SESSIONS.write().await.remove(session_id) {
+        // Clean up jump connection if exists
+        if let Some(conn_id) = &session.jump_connection_id {
+            SFTP_JUMP_CONNECTIONS.write().await.remove(conn_id);
+        }
+    }
 }
 
 struct SftpHandler;
 
 #[async_trait]
 impl client::Handler for SftpHandler {
+    type Error = anyhow::Error;
+
+    async fn check_server_key(
+        &mut self,
+        _server_public_key: &key::PublicKey,
+    ) -> Result<bool, Self::Error> {
+        Ok(true)
+    }
+}
+
+struct JumpHostHandler;
+
+#[async_trait]
+impl client::Handler for JumpHostHandler {
     type Error = anyhow::Error;
 
     async fn check_server_key(
