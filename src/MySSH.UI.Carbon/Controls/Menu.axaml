@@ -1,0 +1,261 @@
+<!--
+  Carbon Overflow menu / Menu: ContextMenu, MenuFlyout (MenuFlyoutPresenter), MenuItem, Menu bar, Separator.
+  Items 40px, layer-01 surface with shadow, hover layer-hover; MenuItem Classes="danger" = destructive item.
+  MenuItem.Icon accepts any control, e.g. <carbon:CarbonIcon Kind="edit" />.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:conv="using:Avalonia.Controls.Converters"
+                    xmlns:sys="using:System"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+  <conv:PlatformKeyGestureConverter x:Key="CarbonKeyGestureConverter" />
+
+  <ControlTheme x:Key="CarbonMenuScrollViewer" TargetType="ScrollViewer">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="IsScrollChainingEnabled" Value="False" />
+    <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ScrollContentPresenter Name="PART_ContentPresenter" Margin="{TemplateBinding Padding}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type ContextMenu}" TargetType="ContextMenu">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinWidth" Value="160" />
+    <Setter Property="MaxWidth" Value="320" />
+    <Setter Property="Focusable" Value="True" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Margin="0,0,0,6"
+                Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BoxShadow="0 2 6 0 #4D000000">
+          <ScrollViewer Theme="{StaticResource CarbonMenuScrollViewer}">
+            <ItemsPresenter Name="PART_ItemsPresenter"
+                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                            Grid.IsSharedSizeScope="True"
+                            KeyboardNavigation.TabNavigation="Continue" />
+          </ScrollViewer>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type MenuFlyoutPresenter}" TargetType="MenuFlyoutPresenter">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinWidth" Value="160" />
+    <Setter Property="MaxWidth" Value="320" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Margin="0,0,0,6"
+                Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BoxShadow="0 2 6 0 #4D000000">
+          <ScrollViewer Theme="{StaticResource CarbonMenuScrollViewer}">
+            <ItemsPresenter Name="PART_ItemsPresenter"
+                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                            Grid.IsSharedSizeScope="True"
+                            KeyboardNavigation.TabNavigation="Continue" />
+          </ScrollViewer>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Name="root" Background="{TemplateBinding Background}" MinHeight="{TemplateBinding MinHeight}">
+          <Grid Margin="{TemplateBinding Padding}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" SharedSizeGroup="CarbonMenuItemIcon" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" SharedSizeGroup="CarbonMenuItemIGT" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ContentControl Name="PART_ToggleIconPresenter"
+                            Grid.Column="0"
+                            Width="16"
+                            Height="16"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            IsVisible="False" />
+            <ContentControl Name="PART_IconPresenter"
+                            Grid.Column="0"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Icon}"
+                            Foreground="{TemplateBinding Foreground}"
+                            IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <ContentPresenter Name="PART_HeaderPresenter"
+                              Grid.Column="1"
+                              VerticalAlignment="Center"
+                              Content="{TemplateBinding Header}"
+                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                              Foreground="{TemplateBinding Foreground}">
+              <ContentPresenter.DataTemplates>
+                <DataTemplate DataType="sys:String">
+                  <AccessText Text="{Binding}" TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+              </ContentPresenter.DataTemplates>
+            </ContentPresenter>
+            <TextBlock Name="PART_InputGestureText"
+                       Grid.Column="2"
+                       Margin="24,0,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource CarbonTextSecondary}"
+                       Text="{TemplateBinding InputGesture, Converter={StaticResource CarbonKeyGestureConverter}}" />
+            <carbon:CarbonIcon Name="PART_SubmenuChevron"
+                               Grid.Column="3"
+                               Margin="8,0,0,0"
+                               VerticalAlignment="Center"
+                               Kind="chevron-right"
+                               Size="16"
+                               Foreground="{TemplateBinding Foreground}" />
+          </Grid>
+          <Rectangle Name="PART_Divider" Height="1" VerticalAlignment="Top" IsVisible="False"
+                     Fill="{DynamicResource CarbonBorderSubtle01}" />
+          <Border Name="PART_FocusRing" BorderBrush="{DynamicResource CarbonFocus}" BorderThickness="2"
+                  IsHitTestVisible="False" IsVisible="False" />
+          <Popup Name="PART_Popup"
+                 IsLightDismissEnabled="False"
+                 IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}">
+            <Border Margin="0,0,0,6"
+                    MinWidth="160"
+                    Background="{DynamicResource CarbonLayer01}"
+                    BoxShadow="0 2 6 0 #4D000000">
+              <ScrollViewer Theme="{StaticResource CarbonMenuScrollViewer}">
+                <ItemsPresenter Name="PART_ItemsPresenter"
+                                Grid.IsSharedSizeScope="True"
+                                ItemsPanel="{TemplateBinding ItemsPanel}" />
+              </ScrollViewer>
+            </Border>
+          </Popup>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^ /template/ Popup#PART_Popup">
+      <Setter Property="Placement" Value="RightEdgeAlignedTop" />
+    </Style>
+    <Style Selector="^:separator">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Separator />
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="^:selected, ^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerHover01}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerActive01}" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:empty /template/ carbon|CarbonIcon#PART_SubmenuChevron">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^.danger:selected, ^.danger:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerPrimary}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    </Style>
+    <Style Selector="^.danger:selected /template/ TextBlock#PART_InputGestureText, ^.danger:pointerover /template/ TextBlock#PART_InputGestureText">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    </Style>
+    <Style Selector="^.divider-top /template/ Rectangle#PART_Divider">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="^:toggle /template/ ContentControl#PART_ToggleIconPresenter, ^:radio /template/ ContentControl#PART_ToggleIconPresenter">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:toggle /template/ ContentControl#PART_IconPresenter, ^:radio /template/ ContentControl#PART_IconPresenter">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:checked:toggle /template/ ContentControl#PART_ToggleIconPresenter">
+      <Setter Property="Content">
+        <Template>
+          <carbon:CarbonIcon Kind="checkmark" Size="16" />
+        </Template>
+      </Setter>
+    </Style>
+    <Style Selector="^:checked:radio /template/ ContentControl#PART_ToggleIconPresenter">
+      <Setter Property="Content">
+        <Template>
+          <Ellipse Fill="{Binding $parent[MenuItem].Foreground}" Width="6" Height="6" />
+        </Template>
+      </Setter>
+    </Style>
+  </ControlTheme>
+
+  <!-- Top-level items of a Menu bar -->
+  <ControlTheme x:Key="CarbonTopLevelMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="Padding" Value="12,0" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Style Selector="^ /template/ carbon|CarbonIcon#PART_SubmenuChevron">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^ /template/ Popup#PART_Popup">
+      <Setter Property="Placement" Value="BottomEdgeAlignedLeft" />
+      <Setter Property="IsLightDismissEnabled" Value="True" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type Menu}" TargetType="Menu">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="ItemContainerTheme" Value="{StaticResource CarbonTopLevelMenuItem}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <ItemsPresenter Name="PART_ItemsPresenter"
+                          ItemsPanel="{TemplateBinding ItemsPanel}"
+                          KeyboardNavigation.TabNavigation="Continue" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type Separator}" TargetType="Separator">
+    <Setter Property="Background" Value="{DynamicResource CarbonBorderSubtle01}" />
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

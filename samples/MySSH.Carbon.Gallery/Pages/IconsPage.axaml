@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MySSH.Carbon.Gallery.Pages.IconsPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Icons" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="@carbon/icons as StreamGeometry resources: &lt;carbon:CarbonIcon Kind=&quot;add&quot; Size=&quot;16|20|24|32&quot; /&gt;. 16 / 20 use pixel-tuned artwork when available." />
+    <WrapPanel Name="Icons" Margin="0,24,0,0" />
+    <TextBlock Classes="heading-02" Margin="0,24,0,8" Text="Sizes" />
+    <WrapPanel Name="Sizes" />
+  </StackPanel>
+</UserControl>

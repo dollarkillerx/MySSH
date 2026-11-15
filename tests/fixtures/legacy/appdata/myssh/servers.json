@@ -1,0 +1,160 @@
+{
+  "11111111-1111-4111-8111-111111111111": {
+    "id": "11111111-1111-4111-8111-111111111111",
+    "name": "Bastion",
+    "host": "bastion.example.com",
+    "port": 22,
+    "username": "root",
+    "auth": {
+      "type": "Password",
+      "value": "9CXjU0+LObcNYRuLqnDd8VEgVSXtsV0mkY4xecxH1fV1hVI="
+    },
+    "proxy": null,
+    "jump_host": null,
+    "notes": null,
+    "created_at": 1700000001,
+    "updated_at": 1700000101
+  },
+  "22222222-2222-4222-8222-222222222222": {
+    "id": "22222222-2222-4222-8222-222222222222",
+    "name": "生产服务器 🚀 本番",
+    "host": "10.0.0.2",
+    "port": 2222,
+    "username": "root",
+    "auth": {
+      "type": "Password",
+      "value": "GawFyOzjsjYqlHA5zBgKYl/kOHxXkFerO5c8hY/GbbmhnTY="
+    },
+    "proxy": null,
+    "jump_host": null,
+    "notes": "Ünïcødé notes · 日本語 · 中文",
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  },
+  "33333333-3333-4333-8333-333333333333": {
+    "id": "33333333-3333-4333-8333-333333333333",
+    "name": "Key with passphrase",
+    "host": "kp.example.com",
+    "port": 22,
+    "username": "alice",
+    "auth": {
+      "type": "PrivateKey",
+      "value": {
+        "key": "wbMwwUz8EkJcGnCQZwvJp+WZup2K0TrnvUVSzqM0J5Oqovse1+nGtF6oRuxk/q+Y96h+tc5b0o2LCes2Bgp5k3evLU3Jt3QqlYemO4L8G0UQKlXSSXODaMOcs9OLF+avrQ==",
+        "passphrase": "qhy0qnDLOBBL1wIg8nWWstWVduXDKMXM5u8hTFJCAkr+1QZ0f2WxN7c="
+      }
+    },
+    "proxy": {
+      "proxy_type": "socks5",
+      "host": "proxy.example.com",
+      "port": 1080,
+      "username": "puser",
+      "password": "8nWUL2ihKemnZNCL/v0PRyTvoP8UrZXlVOpJrMZDgxLO"
+    },
+    "jump_host": null,
+    "notes": null,
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  },
+  "44444444-4444-4444-8444-444444444444": {
+    "id": "44444444-4444-4444-8444-444444444444",
+    "name": "Key without passphrase",
+    "host": "knp.example.com",
+    "port": 22,
+    "username": "bob",
+    "auth": {
+      "type": "PrivateKey",
+      "value": {
+        "key": "V0FG/I0BkWAuzyhucB1bPgzzhGnH77JANADjRCxytuIM2vS3dshL+T9vXgHsxQnBoFLCJ1LFkFmIT3YckYTGu/sbTeue8oOJKfYMbwAnfuKiL1ib9bEYqcxd2kTRzN81+w==",
+        "passphrase": null
+      }
+    },
+    "proxy": {
+      "proxy_type": "http",
+      "host": "http-proxy.example.com",
+      "port": 3128,
+      "username": null,
+      "password": null
+    },
+    "jump_host": null,
+    "notes": null,
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  },
+  "55555555-5555-4555-8555-555555555555": {
+    "id": "55555555-5555-4555-8555-555555555555",
+    "name": "Shared key A",
+    "host": "a.example.com",
+    "port": 22,
+    "username": "deploy",
+    "auth": {
+      "type": "PrivateKey",
+      "value": {
+        "key": "h5z8HL3/hYrDiJrJSAdLFGetYKtSrwd75R60INBlS6bgIDEybiw/mOHMxD/zLbO6g0mdeVT4BACQv84rqv65a2PBKI8+ZLYGdZnD92lp4d9h+mpbp9GK8ktQXg80dYTlVA==",
+        "passphrase": null
+      }
+    },
+    "proxy": null,
+    "jump_host": null,
+    "notes": null,
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  },
+  "66666666-6666-4666-8666-666666666666": {
+    "id": "66666666-6666-4666-8666-666666666666",
+    "name": "Shared key B",
+    "host": "b.example.com",
+    "port": 22,
+    "username": "deploy",
+    "auth": {
+      "type": "PrivateKey",
+      "value": {
+        "key": "jLxhwW+9Ht6XeO0SHK/E2/HkZPkBqD6etmUnVGbcw/wUeA9xZCB1NfC1/bzYoQiqlyEtRTL4oowJfVV2/6PHaO+FWE/EXKaL3XrZAy5MCM9dAitTBzX+zxMJDWBwrVlL2g==",
+        "passphrase": null
+      }
+    },
+    "proxy": {
+      "proxy_type": "socks5",
+      "host": "proxy.example.com",
+      "port": 1080,
+      "username": "puser",
+      "password": "sq/dbBxHo+JJmhpM9hbYoAmYJwZOsKjLxhiI9Ii1bQfz"
+    },
+    "jump_host": null,
+    "notes": null,
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  },
+  "77777777-7777-4777-8777-777777777777": {
+    "id": "77777777-7777-4777-8777-777777777777",
+    "name": "Internal DB (via bastion)",
+    "host": "10.0.1.5",
+    "port": 5432,
+    "username": "postgres",
+    "auth": {
+      "type": "Password",
+      "value": "Z5v4Lz0TPrW6Tf0BLPWd/L+YxG5gclKvSvhlMuj3ygUD57DiwA=="
+    },
+    "proxy": null,
+    "jump_host": "11111111-1111-4111-8111-111111111111",
+    "notes": null,
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  },
+  "88888888-8888-4888-8888-888888888888": {
+    "id": "88888888-8888-4888-8888-888888888888",
+    "name": "Corrupted record",
+    "host": "broken.example.com",
+    "port": 22,
+    "username": "x",
+    "auth": {
+      "type": "Password",
+      "value": "kOmqiLnKq4TEt3cX/LdKRpk9iBfMF3ozOuEanWcSCRYq4E7Ze3pBe2GTKDE="
+    },
+    "proxy": null,
+    "jump_host": null,
+    "notes": null,
+    "created_at": 1700000000,
+    "updated_at": 1700000000
+  }
+}

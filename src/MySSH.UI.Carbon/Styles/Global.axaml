@@ -1,0 +1,51 @@
+<!-- Global Carbon defaults that are not control themes. -->
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:carbon="using:MySSH.UI.Carbon">
+  <!-- Carbon body-compact-01 defaults for window content -->
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{DynamicResource CarbonBackground}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="FontFamily" Value="{DynamicResource CarbonFontSans}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector="TextBlock.secondary, SelectableTextBlock.secondary">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+  </Style>
+  <Style Selector="TextBlock.helper">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextHelper}" />
+  </Style>
+  <Style Selector="TextBlock.error">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextError}" />
+  </Style>
+  <Style Selector="TextBlock.mono, SelectableTextBlock.mono">
+    <Setter Property="FontFamily" Value="{DynamicResource CarbonFontMono}" />
+  </Style>
+  <!-- ListBox density / dividers (descendant selectors cannot live in a ControlTheme) -->
+  <Style Selector="ListBox.sm ListBoxItem">
+    <Setter Property="MinHeight" Value="32" />
+  </Style>
+  <Style Selector="ListBox.lg ListBoxItem">
+    <Setter Property="MinHeight" Value="48" />
+  </Style>
+  <Style Selector="ListBox.divided ListBoxItem /template/ Rectangle#PART_Divider">
+    <Setter Property="IsVisible" Value="True" />
+  </Style>
+  <!-- Modal body: plain text content wraps (Carbon body-01) -->
+  <Style Selector="carbon|Modal > TextBlock">
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="LineHeight" Value="20" />
+  </Style>
+  <Style Selector="carbon|InlineNotification > TextBlock">
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
+  <!-- UI shell -->
+  <Style Selector="Button.header-action">
+    <Setter Property="Theme" Value="{DynamicResource CarbonHeaderActionButton}" />
+  </Style>
+  <Style Selector="carbon|SideNavRail:expanded carbon|SideNavItem">
+    <Setter Property="ToolTip.Tip" Value="{x:Null}" />
+  </Style>
+</Styles>

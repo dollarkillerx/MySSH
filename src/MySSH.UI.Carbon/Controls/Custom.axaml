@@ -1,0 +1,580 @@
+<!-- Themes of the custom Carbon controls: Tag, InlineNotification, Modal, ShellHeader, SideNavRail / SideNavItem. -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:chrome="using:Avalonia.Controls.Chrome"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <!-- ============================================================ Tag -->
+  <ControlTheme x:Key="CarbonTagDismissButton" TargetType="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Width" Value="16" />
+    <Setter Property="Height" Value="16" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+          <carbon:CarbonIcon Kind="close" Size="16" Foreground="{TemplateBinding Foreground}"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type carbon:Tag}" TargetType="carbon:Tag">
+    <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundGray}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorGray}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="Padding" Value="8,0" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LetterSpacing" Value="0.32" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}">
+          <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+            <carbon:CarbonIcon Name="PART_Icon" Kind="{TemplateBinding Icon}" Size="16" VerticalAlignment="Center"
+                               Foreground="{TemplateBinding Foreground}"
+                               IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <ContentPresenter Name="PART_ContentPresenter"
+                              VerticalAlignment="Center"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Foreground="{TemplateBinding Foreground}">
+              <ContentPresenter.Styles>
+                <Style Selector="TextBlock">
+                  <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                </Style>
+              </ContentPresenter.Styles>
+            </ContentPresenter>
+            <Button Name="PART_DismissButton"
+                    Theme="{StaticResource CarbonTagDismissButton}"
+                    ToolTip.Tip="{DynamicResource CarbonStringDismiss}"
+                    Foreground="{TemplateBinding Foreground}"
+                    VerticalAlignment="Center"
+                    IsVisible="{TemplateBinding IsDismissible}" />
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^[IsDismissible=True]">
+      <Setter Property="Padding" Value="8,0,4,0" />
+    </Style>
+    <Style Selector="^[Size=Small]">
+      <Setter Property="Height" Value="18" />
+      <Setter Property="CornerRadius" Value="9" />
+    </Style>
+    <Style Selector="^[Size=Large]">
+      <Setter Property="Height" Value="32" />
+      <Setter Property="CornerRadius" Value="16" />
+      <Setter Property="Padding" Value="12,0" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="LetterSpacing" Value="0.16" />
+    </Style>
+    <Style Selector="^[Type=Gray]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundGray}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorGray}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderGray}" />
+    </Style>
+    <Style Selector="^[Type=Gray] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverGray}" />
+    </Style>
+    <Style Selector="^[Type=CoolGray]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundCoolGray}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorCoolGray}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderCoolGray}" />
+    </Style>
+    <Style Selector="^[Type=CoolGray] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverCoolGray}" />
+    </Style>
+    <Style Selector="^[Type=WarmGray]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundWarmGray}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorWarmGray}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderWarmGray}" />
+    </Style>
+    <Style Selector="^[Type=WarmGray] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverWarmGray}" />
+    </Style>
+    <Style Selector="^[Type=Red]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundRed}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorRed}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderRed}" />
+    </Style>
+    <Style Selector="^[Type=Red] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverRed}" />
+    </Style>
+    <Style Selector="^[Type=Magenta]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundMagenta}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorMagenta}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderMagenta}" />
+    </Style>
+    <Style Selector="^[Type=Magenta] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverMagenta}" />
+    </Style>
+    <Style Selector="^[Type=Purple]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundPurple}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorPurple}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderPurple}" />
+    </Style>
+    <Style Selector="^[Type=Purple] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverPurple}" />
+    </Style>
+    <Style Selector="^[Type=Blue]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundBlue}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorBlue}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderBlue}" />
+    </Style>
+    <Style Selector="^[Type=Blue] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverBlue}" />
+    </Style>
+    <Style Selector="^[Type=Cyan]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundCyan}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorCyan}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderCyan}" />
+    </Style>
+    <Style Selector="^[Type=Cyan] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverCyan}" />
+    </Style>
+    <Style Selector="^[Type=Teal]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundTeal}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorTeal}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderTeal}" />
+    </Style>
+    <Style Selector="^[Type=Teal] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverTeal}" />
+    </Style>
+    <Style Selector="^[Type=Green]">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagBackgroundGreen}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTagColorGreen}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonTagBorderGreen}" />
+    </Style>
+    <Style Selector="^[Type=Green] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonTagHoverGreen}" />
+    </Style>
+    <Style Selector="^[Type=HighContrast]">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundInverse}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextInverse}" />
+    </Style>
+    <Style Selector="^[Type=HighContrast] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundInverseHover}" />
+    </Style>
+    <Style Selector="^[Type=Outline]">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackground}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderInverse}" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="^[Type=Outline] /template/ Button#PART_DismissButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ InlineNotification -->
+  <ControlTheme x:Key="CarbonNotificationCloseButton" TargetType="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Width" Value="48" />
+    <Setter Property="Height" Value="48" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="{TemplateBinding Background}">
+          <carbon:CarbonIcon Kind="close" Size="20" Foreground="{TemplateBinding Foreground}"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+          <Border Name="PART_FocusRing" BorderBrush="{DynamicResource CarbonFocus}" BorderThickness="2"
+                  IsHitTestVisible="False" IsVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type carbon:InlineNotification}" TargetType="carbon:InlineNotification">
+    <Setter Property="Background" Value="{DynamicResource CarbonBackgroundInverse}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextInverse}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportInfoInverse}" />
+    <Setter Property="MinHeight" Value="48" />
+    <Setter Property="MinWidth" Value="288" />
+    <Setter Property="MaxWidth" Value="800" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="{TemplateBinding Background}">
+          <Border Name="PART_Outline" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Opacity="0.4" />
+          <Rectangle Name="PART_Accent" Width="3" HorizontalAlignment="Left" Fill="{TemplateBinding BorderBrush}" />
+          <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+            <carbon:CarbonIcon Name="PART_Icon"
+                               Margin="13,14,0,0"
+                               VerticalAlignment="Top"
+                               Size="20"
+                               Kind="information-filled"
+                               Foreground="{TemplateBinding BorderBrush}" />
+            <StackPanel Grid.Column="1" Margin="16,15,16,15" VerticalAlignment="Top" Spacing="0">
+              <TextBlock TextWrapping="Wrap" LineHeight="18">
+                <Run Name="PART_Title" FontWeight="SemiBold" Text="{TemplateBinding Title}" />
+                <Run Text=" " />
+                <Run Name="PART_Subtitle" Text="{TemplateBinding Subtitle}" />
+              </TextBlock>
+              <ContentPresenter Name="PART_ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                Margin="0,4,0,0" />
+            </StackPanel>
+            <ContentPresenter Grid.Column="2"
+                              Margin="0,8,0,8"
+                              VerticalAlignment="Top"
+                              Content="{TemplateBinding Action}"
+                              IsVisible="{TemplateBinding Action, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <Button Name="PART_CloseButton"
+                    Grid.Column="3"
+                    ToolTip.Tip="{DynamicResource CarbonStringClose}"
+                    VerticalAlignment="Top"
+                    Theme="{StaticResource CarbonNotificationCloseButton}"
+                    Foreground="{DynamicResource CarbonIconInverse}"
+                    IsVisible="{TemplateBinding IsCloseButtonVisible}" />
+          </Grid>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <!-- high contrast (default): inverse support colors -->
+    <Style Selector="^[Kind=Error]">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportErrorInverse}" />
+    </Style>
+    <Style Selector="^[Kind=Success]">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportSuccessInverse}" />
+    </Style>
+    <Style Selector="^[Kind=Warning]">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportWarningInverse}" />
+    </Style>
+    <Style Selector="^[Kind=Error] /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Kind" Value="error-filled" />
+    </Style>
+    <Style Selector="^[Kind=Success] /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Kind" Value="checkmark-filled" />
+    </Style>
+    <Style Selector="^[Kind=Warning] /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Kind" Value="warning-filled" />
+      <Setter Property="InnerForeground" Value="#FF000000" />
+    </Style>
+    <!-- low contrast -->
+    <Style Selector="^[IsLowContrast=True]">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportInfo}" />
+      <Setter Property="Background" Value="{DynamicResource CarbonNotificationBackgroundInfo}" />
+      <Style Selector="^ /template/ Border#PART_Outline">
+        <Setter Property="BorderThickness" Value="0,1,1,1" />
+      </Style>
+      <Style Selector="^ /template/ Button#PART_CloseButton">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+      </Style>
+    </Style>
+    <Style Selector="^[IsLowContrast=True][Kind=Error]">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportError}" />
+      <Setter Property="Background" Value="{DynamicResource CarbonNotificationBackgroundError}" />
+    </Style>
+    <Style Selector="^[IsLowContrast=True][Kind=Success]">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportSuccess}" />
+      <Setter Property="Background" Value="{DynamicResource CarbonNotificationBackgroundSuccess}" />
+    </Style>
+    <Style Selector="^[IsLowContrast=True][Kind=Warning]">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportWarning}" />
+      <Setter Property="Background" Value="{DynamicResource CarbonNotificationBackgroundWarning}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ Modal -->
+  <ControlTheme x:Key="CarbonModalFooterButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Height" Value="64" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="Padding" Value="16,14,64,0" />
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type carbon:Modal}" TargetType="carbon:Modal">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Focusable" Value="True" />
+    <Setter Property="IsVisible" Value="False" />
+    <Setter Property="ZIndex" Value="1000" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Name="PART_Root">
+          <Border Name="PART_Overlay" Background="{DynamicResource CarbonOverlay}" />
+          <Border Name="PART_Container"
+                  Width="640"
+                  MaxHeight="{Binding #PART_Root.Bounds.Height, Converter={x:Static carbon:CarbonConverters.Fraction}, ConverterParameter=0.9}"
+                  MaxWidth="{Binding #PART_Root.Bounds.Width, Converter={x:Static carbon:CarbonConverters.Fraction}, ConverterParameter=0.9}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Background="{TemplateBinding Background}">
+            <DockPanel>
+              <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
+                <StackPanel Margin="16,16,0,8" Spacing="4">
+                  <TextBlock Classes="label-01" Foreground="{DynamicResource CarbonTextSecondary}"
+                             Text="{TemplateBinding Label}"
+                             IsVisible="{TemplateBinding Label, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                  <TextBlock Classes="heading-03" Foreground="{DynamicResource CarbonTextPrimary}" TextWrapping="Wrap"
+                             Text="{TemplateBinding Heading}" />
+                </StackPanel>
+                <Button Name="PART_CloseButton" Grid.Column="1" VerticalAlignment="Top" ToolTip.Tip="{DynamicResource CarbonStringClose}"
+                        IsVisible="{TemplateBinding IsDismissible}"
+                        Theme="{StaticResource CarbonNotificationCloseButton}"
+                        Foreground="{DynamicResource CarbonIconPrimary}" />
+              </Grid>
+              <UniformGrid Name="PART_Footer" DockPanel.Dock="Bottom" Rows="1" Margin="0,8,0,0">
+                <Button Name="PART_SecondaryButton" Classes="secondary" Theme="{StaticResource CarbonModalFooterButton}"
+                        Content="{TemplateBinding SecondaryButtonText}"
+                        IsVisible="{TemplateBinding SecondaryButtonText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                <Button Name="PART_PrimaryButton" Theme="{StaticResource CarbonModalFooterButton}"
+                        Content="{TemplateBinding PrimaryButtonText}"
+                        IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
+                        IsVisible="{TemplateBinding PrimaryButtonText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+              </UniformGrid>
+              <ScrollViewer Name="PART_Body" Margin="16,0,16,24" HorizontalScrollBarVisibility="Disabled">
+                <ContentPresenter Name="PART_ContentPresenter"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  Margin="0,0,0,8" />
+              </ScrollViewer>
+            </DockPanel>
+          </Border>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^[IsOpen=True]">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^[IsDanger=True] /template/ Button#PART_PrimaryButton">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerPrimary}" />
+    </Style>
+    <Style Selector="^[IsDanger=True] /template/ Button#PART_PrimaryButton:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerHover}" />
+    </Style>
+    <Style Selector="^[IsDanger=True] /template/ Button#PART_PrimaryButton:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerActive}" />
+    </Style>
+    <Style Selector="^[IsDanger=True] /template/ Button#PART_PrimaryButton:disabled">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDisabled}" />
+    </Style>
+    <Style Selector="^[Size=ExtraSmall] /template/ Border#PART_Container">
+      <Setter Property="Width" Value="368" />
+    </Style>
+    <Style Selector="^[Size=Small] /template/ Border#PART_Container">
+      <Setter Property="Width" Value="448" />
+    </Style>
+    <Style Selector="^[Size=Large] /template/ Border#PART_Container">
+      <Setter Property="Width" Value="960" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ ShellHeader -->
+  <ControlTheme x:Key="CarbonHeaderMenuButton" TargetType="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    <Setter Property="Width" Value="48" />
+    <Setter Property="Height" Value="48" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="{TemplateBinding Background}">
+          <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Foreground="{TemplateBinding Foreground}" />
+          <Border Name="PART_FocusRing" BorderBrush="{DynamicResource CarbonFocus}" BorderThickness="2"
+                  IsHitTestVisible="False" IsVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundActive}" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type carbon:ShellHeader}" TargetType="carbon:ShellHeader">
+    <Setter Property="Background" Value="{DynamicResource CarbonBackground}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderSubtle01}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="Height" Value="48" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.1" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Background"
+                chrome:WindowDecorationProperties.ElementRole="TitleBar"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <Grid Margin="{TemplateBinding ChromePadding}" ColumnDefinitions="Auto,Auto,*,Auto">
+            <Button Name="PART_MenuButton"
+                    chrome:WindowDecorationProperties.ElementRole="User"
+                    Theme="{StaticResource CarbonHeaderMenuButton}"
+                    IsVisible="{TemplateBinding IsMenuButtonVisible}"
+                    ToolTip.Tip="{DynamicResource CarbonStringMenu}">
+              <Panel>
+                <carbon:CarbonIcon Name="PART_MenuIcon" Kind="menu" Size="20" />
+                <carbon:CarbonIcon Name="PART_CloseIcon" Kind="close" Size="20" IsVisible="False" />
+              </Panel>
+            </Button>
+            <StackPanel Name="PART_Name" Grid.Column="1" Orientation="Horizontal" Spacing="4" Margin="16,0,32,0"
+                        VerticalAlignment="Center">
+              <TextBlock FontWeight="SemiBold" Text="{TemplateBinding ProductPrefix}"
+                         IsVisible="{TemplateBinding ProductPrefix, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+              <TextBlock Text="{TemplateBinding ProductName}" />
+            </StackPanel>
+            <ContentPresenter Name="PART_ContentPresenter"
+                              Grid.Column="2"
+                              HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+            <ContentPresenter Name="PART_GlobalActions"
+                              Grid.Column="3"
+                              chrome:WindowDecorationProperties.ElementRole="User"
+                              VerticalAlignment="Stretch"
+                              Content="{TemplateBinding GlobalActions}" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:menu-open /template/ carbon|CarbonIcon#PART_MenuIcon">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:menu-open /template/ carbon|CarbonIcon#PART_CloseIcon">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:menu-open /template/ Button#PART_MenuButton">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ SideNavRail -->
+  <ControlTheme x:Key="{x:Type carbon:SideNavItem}" TargetType="carbon:SideNavItem">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="ToolTip.Placement" Value="Right" />
+    <Setter Property="ToolTip.Tip" Value="{Binding $self.Content}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="{TemplateBinding Background}">
+          <Grid ColumnDefinitions="48,*">
+            <carbon:CarbonIcon Kind="{TemplateBinding Icon}" Size="16" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" Foreground="{DynamicResource CarbonIconSecondary}" Name="PART_Icon" />
+            <ContentPresenter Name="PART_ContentPresenter"
+                              Grid.Column="1"
+                              Margin="0,0,16,0"
+                              VerticalAlignment="Center"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Foreground="{TemplateBinding Foreground}">
+              <ContentPresenter.Styles>
+                <Style Selector="TextBlock">
+                  <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                </Style>
+              </ContentPresenter.Styles>
+            </ContentPresenter>
+          </Grid>
+          <Rectangle Name="PART_Indicator" Width="3" HorizontalAlignment="Left" IsVisible="False"
+                     Fill="{DynamicResource CarbonBorderInteractive}" />
+          <Border Name="PART_FocusRing" BorderBrush="{DynamicResource CarbonFocus}" BorderThickness="2"
+                  IsHitTestVisible="False" IsVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    </Style>
+    <Style Selector="^:pointerover /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundActive}" />
+    </Style>
+    <Style Selector="^:selected">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundSelected}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    </Style>
+    <Style Selector="^:selected /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+    <Style Selector="^:selected /template/ Rectangle#PART_Indicator">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type carbon:SideNavRail}" TargetType="carbon:SideNavRail">
+    <Setter Property="Background" Value="{DynamicResource CarbonBackground}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderSubtle01}" />
+    <Setter Property="BorderThickness" Value="0,0,1,0" />
+    <Setter Property="Padding" Value="0,16,0,0" />
+    <Setter Property="ClipToBounds" Value="True" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Width" Duration="0:0:0.11" Easing="0.2,0,0.38,0.9" />
+      </Transitions>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <DockPanel>
+            <ContentPresenter DockPanel.Dock="Bottom" Margin="0,0,0,16" Content="{TemplateBinding FooterContent}" />
+            <ScrollViewer Name="PART_ScrollViewer"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+              <ItemsPresenter Name="PART_ItemsPresenter" Margin="{TemplateBinding Padding}"
+                              ItemsPanel="{TemplateBinding ItemsPanel}" />
+            </ScrollViewer>
+          </DockPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

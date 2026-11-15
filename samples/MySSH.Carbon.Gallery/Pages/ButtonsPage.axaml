@@ -1,0 +1,109 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.ButtonsPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Button" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="Kinds via Classes (primary is the default), sizes sm / md / lg, icon slot via carbon:ButtonAssist.Icon." />
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Kinds and states" />
+      <Grid ColumnDefinitions="120,Auto,Auto,Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Classes="matrix">
+          <TextBlock Grid.Row="0" Grid.Column="1" Classes="label-01 secondary" Text="Default" />
+          <TextBlock Grid.Row="0" Grid.Column="2" Classes="label-01 secondary" Text="Hover" />
+          <TextBlock Grid.Row="0" Grid.Column="3" Classes="label-01 secondary" Text="Active" />
+          <TextBlock Grid.Row="0" Grid.Column="4" Classes="label-01 secondary" Text="Focus" />
+          <TextBlock Grid.Row="0" Grid.Column="5" Classes="label-01 secondary" Text="Disabled" />
+          <TextBlock Grid.Row="1" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Primary" />
+          <Button Grid.Row="1" Grid.Column="1" Classes="primary" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="1" Grid.Column="2" Classes="primary demo-hover" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="1" Grid.Column="3" Classes="primary demo-pressed" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="1" Grid.Column="4" Classes="primary demo-focus" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="1" Grid.Column="5" Classes="primary" carbon:ButtonAssist.Icon="add" IsEnabled="False" Content="Button" />
+          <TextBlock Grid.Row="2" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Secondary" />
+          <Button Grid.Row="2" Grid.Column="1" Classes="secondary" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="2" Grid.Column="2" Classes="secondary demo-hover" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="2" Grid.Column="3" Classes="secondary demo-pressed" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="2" Grid.Column="4" Classes="secondary demo-focus" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="2" Grid.Column="5" Classes="secondary" carbon:ButtonAssist.Icon="add" IsEnabled="False" Content="Button" />
+          <TextBlock Grid.Row="3" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Tertiary" />
+          <Button Grid.Row="3" Grid.Column="1" Classes="tertiary" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="3" Grid.Column="2" Classes="tertiary demo-hover" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="3" Grid.Column="3" Classes="tertiary demo-pressed" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="3" Grid.Column="4" Classes="tertiary demo-focus" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="3" Grid.Column="5" Classes="tertiary" carbon:ButtonAssist.Icon="add" IsEnabled="False" Content="Button" />
+          <TextBlock Grid.Row="4" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Ghost" />
+          <Button Grid.Row="4" Grid.Column="1" Classes="ghost" Content="Button" />
+          <Button Grid.Row="4" Grid.Column="2" Classes="ghost demo-hover" Content="Button" />
+          <Button Grid.Row="4" Grid.Column="3" Classes="ghost demo-pressed" Content="Button" />
+          <Button Grid.Row="4" Grid.Column="4" Classes="ghost demo-focus" Content="Button" />
+          <Button Grid.Row="4" Grid.Column="5" Classes="ghost" IsEnabled="False" Content="Button" />
+          <TextBlock Grid.Row="5" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Danger" />
+          <Button Grid.Row="5" Grid.Column="1" Classes="danger" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="5" Grid.Column="2" Classes="danger demo-hover" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="5" Grid.Column="3" Classes="danger demo-pressed" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="5" Grid.Column="4" Classes="danger demo-focus" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="5" Grid.Column="5" Classes="danger" carbon:ButtonAssist.Icon="add" IsEnabled="False" Content="Button" />
+          <TextBlock Grid.Row="6" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Danger tertiary" />
+          <Button Grid.Row="6" Grid.Column="1" Classes="danger-tertiary" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="6" Grid.Column="2" Classes="danger-tertiary demo-hover" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="6" Grid.Column="3" Classes="danger-tertiary demo-pressed" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="6" Grid.Column="4" Classes="danger-tertiary demo-focus" carbon:ButtonAssist.Icon="add" Content="Button" />
+          <Button Grid.Row="6" Grid.Column="5" Classes="danger-tertiary" carbon:ButtonAssist.Icon="add" IsEnabled="False" Content="Button" />
+          <TextBlock Grid.Row="7" Grid.Column="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="Danger ghost" />
+          <Button Grid.Row="7" Grid.Column="1" Classes="danger-ghost" Content="Button" />
+          <Button Grid.Row="7" Grid.Column="2" Classes="danger-ghost demo-hover" Content="Button" />
+          <Button Grid.Row="7" Grid.Column="3" Classes="danger-ghost demo-pressed" Content="Button" />
+          <Button Grid.Row="7" Grid.Column="4" Classes="danger-ghost demo-focus" Content="Button" />
+          <Button Grid.Row="7" Grid.Column="5" Classes="danger-ghost" IsEnabled="False" Content="Button" />
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Sizes" />
+      <WrapPanel Classes="row">
+        <Button Classes="sm" carbon:ButtonAssist.Icon="add" Content="Small (32)" />
+        <Button carbon:ButtonAssist.Icon="add" Content="Medium (40)" />
+        <Button Classes="lg" carbon:ButtonAssist.Icon="add" Content="Large (48)" />
+        <Button Classes="secondary sm" Content="Small" />
+        <Button Classes="tertiary lg" carbon:ButtonAssist.Icon="launch" Content="Large tertiary" />
+      </WrapPanel>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Icon only" />
+      <WrapPanel Classes="row">
+        <Button Classes="ghost icon-only" carbon:ButtonAssist.Icon="settings" ToolTip.Tip="Settings" />
+        <Button Classes="ghost icon-only demo-hover" carbon:ButtonAssist.Icon="edit" ToolTip.Tip="Edit" />
+        <Button Classes="ghost icon-only" carbon:ButtonAssist.Icon="trash-can" ToolTip.Tip="Delete" />
+        <Button Classes="ghost icon-only" carbon:ButtonAssist.Icon="overflow-menu-vertical" ToolTip.Tip="More" />
+        <Button Classes="icon-only" carbon:ButtonAssist.Icon="add" ToolTip.Tip="Add" />
+        <Button Classes="secondary icon-only" carbon:ButtonAssist.Icon="copy" ToolTip.Tip="Copy" />
+        <Button Classes="tertiary icon-only" carbon:ButtonAssist.Icon="download" ToolTip.Tip="Download" />
+        <Button Classes="danger icon-only" carbon:ButtonAssist.Icon="trash-can" ToolTip.Tip="Delete" />
+        <Button Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="close" ToolTip.Tip="Close" />
+        <Button Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="search" ToolTip.Tip="Search" />
+        <Button Classes="ghost icon-only" carbon:ButtonAssist.Icon="settings" IsEnabled="False" />
+      </WrapPanel>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Button set (modal footer style)" />
+      <StackPanel Orientation="Horizontal" Spacing="1">
+        <Button Classes="secondary" Width="200" Content="Cancel" />
+        <Button Width="200" carbon:ButtonAssist.Icon="connect" Content="Connect" />
+      </StackPanel>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Toggle button" />
+      <WrapPanel Classes="row">
+        <ToggleButton Content="Off" />
+        <ToggleButton Content="On" IsChecked="True" />
+        <ToggleButton Classes="icon-only" carbon:ButtonAssist.Icon="pin" IsChecked="True" />
+        <ToggleButton Content="Disabled" IsEnabled="False" />
+      </WrapPanel>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

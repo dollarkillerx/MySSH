@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.TabsPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Tabs" />
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Line (default)" />
+      <TabControl>
+        <TabItem Header="General">
+          <TextBlock Classes="body-01" Text="Host name, address, port and group." />
+        </TabItem>
+        <TabItem Header="Authentication" Classes="demo-hover">
+          <TextBlock Text="Authentication" />
+        </TabItem>
+        <TabItem Header="Proxy &amp; jump hosts">
+          <TextBlock Text="Proxy" />
+        </TabItem>
+        <TabItem Header="AI / MCP" Classes="demo-focus" />
+        <TabItem Header="Disabled" IsEnabled="False" />
+      </TabControl>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Contained (sessions)" />
+      <TabControl Classes="contained" Height="200">
+        <carbon:TabAssist.TrailingContent>
+          <Button Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="add" ToolTip.Tip="New session" />
+        </carbon:TabAssist.TrailingContent>
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <carbon:CarbonIcon Kind="terminal" VerticalAlignment="Center" />
+              <TextBlock Text="prod-web-01" VerticalAlignment="Center" />
+              <Button Theme="{StaticResource CarbonCloseButton}" Margin="8,0,-8,0" ToolTip.Tip="Close" />
+            </StackPanel>
+          </TabItem.Header>
+          <Border Background="{DynamicResource CarbonLayer01}" Padding="16">
+            <TextBlock Classes="code-02" Text="deploy@prod-web-01:~$ systemctl status nginx" />
+          </Border>
+        </TabItem>
+        <TabItem Classes="demo-hover">
+          <TabItem.Header>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <carbon:CarbonIcon Kind="terminal" VerticalAlignment="Center" />
+              <TextBlock Text="db-master" VerticalAlignment="Center" />
+              <Button Theme="{StaticResource CarbonCloseButton}" Margin="8,0,-8,0" ToolTip.Tip="Close" />
+            </StackPanel>
+          </TabItem.Header>
+        </TabItem>
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <carbon:CarbonIcon Kind="folder" VerticalAlignment="Center" />
+              <TextBlock Text="prod-web-01 · SFTP" VerticalAlignment="Center" />
+              <Button Theme="{StaticResource CarbonCloseButton}" Margin="8,0,-8,0" ToolTip.Tip="Close" />
+            </StackPanel>
+          </TabItem.Header>
+        </TabItem>
+        <TabItem Header="Disabled" IsEnabled="False" />
+      </TabControl>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

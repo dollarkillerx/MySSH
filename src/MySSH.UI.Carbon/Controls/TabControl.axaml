@@ -1,0 +1,148 @@
+<!--
+  Carbon Tabs.  <TabControl>                        line tabs (default)
+                <TabControl Classes="contained">     contained tabs (sessions); the panel below uses layer-01
+  carbon:TabAssist.TrailingContent puts e.g. a "+" button after the tab strip.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <!-- ============================================================ line tab -->
+  <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderSubtle01}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="{TemplateBinding Background}">
+          <Rectangle Name="PART_Divider" Width="1" HorizontalAlignment="Left"
+                     Fill="{DynamicResource CarbonBorderStrong01}" />
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Foreground="{TemplateBinding Foreground}"
+                            RecognizesAccessKey="True" />
+          <Rectangle Name="PART_Indicator" Height="2" Fill="{TemplateBinding BorderBrush}" />
+          <Border Name="PART_FocusRing" BorderBrush="{DynamicResource CarbonFocus}" BorderThickness="2"
+                  IsHitTestVisible="False" IsVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^ /template/ Rectangle#PART_Indicator">
+      <Setter Property="VerticalAlignment" Value="Bottom" />
+    </Style>
+    <Style Selector="^ /template/ Rectangle#PART_Divider">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderStrong01}" />
+    </Style>
+    <Style Selector="^:selected">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderInteractive}" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ contained tab -->
+  <ControlTheme x:Key="CarbonTabItemContained" TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayerAccent01}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="MinHeight" Value="48" />
+    <Setter Property="MinWidth" Value="160" />
+    <Style Selector="^ /template/ Rectangle#PART_Indicator">
+      <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+    <Style Selector="^ /template/ Rectangle#PART_Divider">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:nth-child(1) /template/ Rectangle#PART_Divider">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerAccentHover01}" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="^:selected">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderInteractive}" />
+    </Style>
+    <Style Selector="^:selected /template/ Rectangle#PART_Divider">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDisabled}" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColorDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ TabControl -->
+  <ControlTheme x:Key="{x:Type TabControl}" TargetType="TabControl">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="0,16,0,0" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Horizontal" />
+      </ItemsPanelTemplate>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}">
+          <DockPanel>
+            <Grid Name="PART_Strip" DockPanel.Dock="Top" ColumnDefinitions="Auto,Auto,*">
+              <ScrollViewer Name="PART_StripScroller"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Disabled">
+                <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+              </ScrollViewer>
+              <ContentPresenter Grid.Column="1"
+                                VerticalAlignment="Stretch"
+                                Content="{TemplateBinding (carbon:TabAssist.TrailingContent)}" />
+            </Grid>
+            <Panel Name="PART_ContentHost" Background="Transparent">
+              <ContentPresenter Name="PART_SelectedContentHost2"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                IsVisible="False" />
+              <ContentPresenter Name="PART_SelectedContentHost"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Panel>
+          </DockPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^.contained">
+      <Setter Property="ItemContainerTheme" Value="{StaticResource CarbonTabItemContained}" />
+      <Setter Property="Padding" Value="0" />
+      <Style Selector="^ /template/ Panel#PART_ContentHost">
+        <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+      </Style>
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

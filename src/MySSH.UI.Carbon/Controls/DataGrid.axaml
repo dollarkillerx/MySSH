@@ -1,0 +1,301 @@
+<!--
+  Carbon Data table for Avalonia.Controls.DataGrid.
+  Header layer-accent-01 / heading-compact-01, rows layer-01 / body-compact-01 text-secondary, 1px border-subtle
+  separators, no zebra, hover layer-hover, selected layer-selected, Carbon sort arrows.
+  Row sizes (Classes on the DataGrid): xs 24 | sm 32 | md 40 | lg 48 (default) | xl 64.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:collections="using:Avalonia.Collections"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <Thickness x:Key="DataGridTextColumnCellTextBlockMargin">0</Thickness>
+  <x:Double x:Key="DataGridSortIconMinWidth">16</x:Double>
+
+  <ControlTheme x:Key="DataGridCellTextBlockTheme" TargetType="TextBlock">
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+  </ControlTheme>
+
+  <ControlTheme x:Key="DataGridCellTextBoxTheme" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Margin" Value="-16,0" />
+    <Setter Property="MinHeight" Value="0" />
+  </ControlTheme>
+
+  <!-- ============================================================ cell -->
+  <ControlTheme x:Key="{x:Type DataGridCell}" TargetType="DataGridCell">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Border Name="CellBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid ColumnDefinitions="*,Auto">
+              <ContentPresenter Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Foreground="{TemplateBinding Foreground}" />
+              <Rectangle Name="PART_RightGridLine" Grid.Column="1" Width="1" VerticalAlignment="Stretch" />
+            </Grid>
+          </Border>
+          <Border Name="PART_FocusRing" BorderBrush="{DynamicResource CarbonFocus}" BorderThickness="2"
+                  IsHitTestVisible="False" IsVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:current:focus-within /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:invalid /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportError}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ column header -->
+  <ControlTheme x:Key="{x:Type DataGridColumnHeader}" TargetType="DataGridColumnHeader">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="Background" Value="{DynamicResource CarbonLayerAccent01}" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="SeparatorBrush" Value="Transparent" />
+    <Setter Property="AreSeparatorsVisible" Value="False" />
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="48" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="HeaderBorder"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <Grid Name="PART_ColumnHeaderRoot" ColumnDefinitions="*,Auto">
+            <Grid Margin="{TemplateBinding Padding}"
+                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                  ColumnDefinitions="*,Auto">
+              <ContentPresenter Name="PART_ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" />
+              <carbon:CarbonIcon Name="SortIcon"
+                                 Grid.Column="1"
+                                 Margin="8,0,0,0"
+                                 Size="16"
+                                 VerticalAlignment="Center"
+                                 Kind="arrows-vertical"
+                                 Foreground="{DynamicResource CarbonIconPrimary}"
+                                 Opacity="0" />
+            </Grid>
+            <Rectangle Name="VerticalSeparator"
+                       Grid.Column="1"
+                       Width="1"
+                       VerticalAlignment="Stretch"
+                       Fill="{TemplateBinding SeparatorBrush}"
+                       IsVisible="{TemplateBinding AreSeparatorsVisible}" />
+            <Border Name="FocusVisual" Grid.ColumnSpan="2" BorderBrush="{DynamicResource CarbonFocus}"
+                    BorderThickness="2" IsHitTestVisible="False" IsVisible="False" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:focus-visible /template/ Border#FocusVisual">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerAccentHover01}" />
+    </Style>
+    <Style Selector="^:pointerover /template/ carbon|CarbonIcon#SortIcon">
+      <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerAccentActive01}" />
+    </Style>
+    <Style Selector="^:dragIndicator">
+      <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style Selector="^:sortascending /template/ carbon|CarbonIcon#SortIcon">
+      <Setter Property="Opacity" Value="1" />
+      <Setter Property="Kind" Value="arrow-up" />
+    </Style>
+    <Style Selector="^:sortdescending /template/ carbon|CarbonIcon#SortIcon">
+      <Setter Property="Opacity" Value="1" />
+      <Setter Property="Kind" Value="arrow-down" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ row header (unused by default) -->
+  <ControlTheme x:Key="{x:Type DataGridRowHeader}" TargetType="DataGridRowHeader">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid Name="PART_Root" ColumnDefinitions="Auto,*" RowDefinitions="*,*,Auto">
+          <Border Grid.RowSpan="3" Grid.ColumnSpan="2" Background="{TemplateBinding Background}" />
+          <Rectangle Name="HorizontalSeparator" Grid.Row="2" Grid.ColumnSpan="2" Height="1"
+                     HorizontalAlignment="Stretch" Fill="{TemplateBinding SeparatorBrush}"
+                     IsVisible="{TemplateBinding AreSeparatorsVisible}" />
+          <ContentPresenter Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <!-- ============================================================ row -->
+  <ControlTheme x:Key="{x:Type DataGridRow}" TargetType="DataGridRow">
+    <Setter Property="Background" Value="{Binding $parent[DataGrid].RowBackground}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="RowBorder"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <DataGridFrozenGrid Name="PART_Root" ColumnDefinitions="Auto,*" RowDefinitions="*,Auto,Auto">
+            <Rectangle Name="BackgroundRectangle" Grid.RowSpan="2" Grid.ColumnSpan="2" IsVisible="False" />
+            <DataGridRowHeader Name="PART_RowHeader" Grid.RowSpan="3" DataGridFrozenGrid.IsFrozen="True" />
+            <DataGridCellsPresenter Name="PART_CellsPresenter" Grid.Column="1" DataGridFrozenGrid.IsFrozen="True" />
+            <DataGridDetailsPresenter Name="PART_DetailsPresenter" Grid.Row="1" Grid.Column="1" />
+            <Rectangle Name="PART_BottomGridLine" Grid.Row="2" Grid.Column="1" Height="1" HorizontalAlignment="Stretch" />
+          </DataGridFrozenGrid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+      <Style Selector="^ /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="Fill" Value="{DynamicResource CarbonLayerHover01}" />
+      </Style>
+    </Style>
+    <Style Selector="^:selected">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+      <Style Selector="^ /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="Fill" Value="{DynamicResource CarbonLayerSelected01}" />
+      </Style>
+    </Style>
+    <Style Selector="^:selected:pointerover /template/ Rectangle#BackgroundRectangle">
+      <Setter Property="Fill" Value="{DynamicResource CarbonLayerSelectedHover01}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ row group header -->
+  <ControlTheme x:Key="CarbonDataGridRowGroupExpanderButton" TargetType="ToggleButton">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Width="32" Height="32" Background="Transparent">
+          <carbon:CarbonIcon Name="PART_Chevron" Kind="chevron-right" Size="16" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" Foreground="{DynamicResource CarbonIconPrimary}"
+                             RenderTransformOrigin="50%,50%" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:checked /template/ carbon|CarbonIcon#PART_Chevron">
+      <Setter Property="RenderTransform" Value="rotate(90deg)" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type DataGridRowGroupHeader}" TargetType="DataGridRowGroupHeader">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayerAccent01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="Template">
+      <ControlTemplate x:DataType="collections:DataGridCollectionViewGroup">
+        <DataGridFrozenGrid Name="Root" Background="{TemplateBinding Background}"
+                            ColumnDefinitions="Auto,Auto,Auto,Auto" RowDefinitions="Auto,*,Auto">
+          <Rectangle Name="PART_IndentSpacer" Grid.Row="1" Grid.Column="1" />
+          <ToggleButton Name="PART_ExpanderButton" Grid.Row="1" Grid.Column="2" Margin="8,0,0,0"
+                        Theme="{StaticResource CarbonDataGridRowGroupExpanderButton}" />
+          <StackPanel Grid.Row="1" Grid.Column="3" Margin="0,1" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Name="PART_PropertyNameElement" Margin="4,0,0,0" IsVisible="{TemplateBinding IsPropertyNameVisible}" />
+            <TextBlock Margin="4,0,0,0" FontWeight="SemiBold" Text="{Binding Key}" />
+            <TextBlock Name="PART_ItemCountElement" Margin="8,0,0,0" Foreground="{DynamicResource CarbonTextSecondary}"
+                       IsVisible="{TemplateBinding IsItemCountVisible}" />
+          </StackPanel>
+          <DataGridRowHeader Name="RowHeader" Grid.RowSpan="3" DataGridFrozenGrid.IsFrozen="True" />
+        </DataGridFrozenGrid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <!-- ============================================================ grid -->
+  <ControlTheme x:Key="{x:Type DataGrid}" TargetType="DataGrid">
+    <Setter Property="RowBackground" Value="{DynamicResource CarbonLayer01}" />
+    <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="HeadersVisibility" Value="Column" />
+    <Setter Property="GridLinesVisibility" Value="Horizontal" />
+    <Setter Property="RowHeight" Value="48" />
+    <Setter Property="ColumnHeaderHeight" Value="48" />
+    <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+    <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    <Setter Property="SelectionMode" Value="Extended" />
+    <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource CarbonBorderSubtle01}" />
+    <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource CarbonBorderSubtle01}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="DropLocationIndicatorTemplate">
+      <Template>
+        <Rectangle Width="2" Fill="{DynamicResource CarbonBorderInteractive}" />
+      </Template>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="DataGridBorder"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*,Auto,Auto" ClipToBounds="True">
+            <DataGridColumnHeader Name="PART_TopLeftCornerHeader" Width="0" />
+            <DataGridColumnHeadersPresenter Name="PART_ColumnHeadersPresenter" Grid.Column="1" Grid.ColumnSpan="2"
+                                            Background="{DynamicResource CarbonLayerAccent01}" />
+            <Rectangle Name="PART_ColumnHeadersAndRowsSeparator" Grid.ColumnSpan="3" Height="0"
+                       VerticalAlignment="Bottom" />
+            <DataGridRowsPresenter Name="PART_RowsPresenter" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                                   ScrollViewer.IsScrollInertiaEnabled="{TemplateBinding IsScrollInertiaEnabled}">
+              <DataGridRowsPresenter.GestureRecognizers>
+                <ScrollGestureRecognizer CanHorizontallyScroll="True" CanVerticallyScroll="True"
+                                         IsScrollInertiaEnabled="{Binding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_RowsPresenter}" />
+              </DataGridRowsPresenter.GestureRecognizers>
+            </DataGridRowsPresenter>
+            <Rectangle Name="PART_BottomRightCorner" Grid.Row="2" Grid.Column="2" Fill="Transparent" />
+            <ScrollBar Name="PART_VerticalScrollbar" Grid.Row="1" Grid.Column="2" Orientation="Vertical"
+                       AllowAutoHide="{Binding Path=(ScrollViewer.AllowAutoHide), RelativeSource={RelativeSource TemplatedParent}}" />
+            <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="Auto,*">
+              <Rectangle Name="PART_FrozenColumnScrollBarSpacer" />
+              <ScrollBar Name="PART_HorizontalScrollbar" Grid.Column="1" Orientation="Horizontal"
+                         AllowAutoHide="{Binding Path=(ScrollViewer.AllowAutoHide), RelativeSource={RelativeSource TemplatedParent}}" />
+            </Grid>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^.xs">
+      <Setter Property="RowHeight" Value="24" />
+    </Style>
+    <Style Selector="^.sm">
+      <Setter Property="RowHeight" Value="32" />
+    </Style>
+    <Style Selector="^.md">
+      <Setter Property="RowHeight" Value="40" />
+    </Style>
+    <Style Selector="^.xl">
+      <Setter Property="RowHeight" Value="64" />
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

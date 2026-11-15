@@ -1,0 +1,274 @@
+<!--
+  Carbon Dropdown (ComboBox). carbon:Field.Label / HelperText / IsInvalid / InvalidText, sizes sm / md / lg.
+  Menu: layer background, 40px items, selected item = layer-selected + checkmark, shadow.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <ControlTheme x:Key="{x:Type ComboBox}" TargetType="ComboBox">
+    <Setter Property="Background" Value="{DynamicResource CarbonField01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderStrong01}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="PlaceholderForeground" Value="{DynamicResource CarbonTextPlaceholder}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0,0,0" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="MaxDropDownHeight" Value="264" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <DockPanel>
+          <TextBlock Name="PART_Label"
+                     DockPanel.Dock="Top"
+                     Margin="0,0,0,8"
+                     Classes="label-01"
+                     Foreground="{DynamicResource CarbonTextSecondary}"
+                     Text="{TemplateBinding (carbon:Field.Label)}"
+                     IsVisible="{TemplateBinding (carbon:Field.Label), Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <Panel DockPanel.Dock="Bottom">
+            <TextBlock Name="PART_Helper"
+                       Margin="0,4,0,0"
+                       Classes="helper-text-01"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource CarbonTextHelper}"
+                       Text="{TemplateBinding (carbon:Field.HelperText)}"
+                       IsVisible="{TemplateBinding (carbon:Field.HelperText), Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <TextBlock Name="PART_InvalidText"
+                       Margin="0,4,0,0"
+                       Classes="helper-text-01"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource CarbonTextError}"
+                       Text="{TemplateBinding (carbon:Field.InvalidText)}"
+                       IsVisible="False" />
+          </Panel>
+          <Panel Name="PART_Field" MinHeight="{TemplateBinding MinHeight}">
+            <Border Name="PART_Border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}" />
+            <Grid ColumnDefinitions="*,Auto,Auto">
+              <TextBlock Name="PlaceholderTextBlock"
+                         Grid.Column="0"
+                         Margin="{TemplateBinding Padding}"
+                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                         Foreground="{TemplateBinding PlaceholderForeground}"
+                         Text="{TemplateBinding PlaceholderText}"
+                         TextTrimming="CharacterEllipsis">
+                <TextBlock.IsVisible>
+                  <MultiBinding Converter="{x:Static BoolConverters.And}">
+                    <Binding Path="SelectionBoxItem" RelativeSource="{RelativeSource TemplatedParent}" Converter="{x:Static ObjectConverters.IsNull}" />
+                    <Binding Path="!IsEditable" RelativeSource="{RelativeSource TemplatedParent}" />
+                  </MultiBinding>
+                </TextBlock.IsVisible>
+              </TextBlock>
+              <ContentControl Name="PART_SelectionBox"
+                              Grid.Column="0"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding SelectionBoxItem}"
+                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                              Foreground="{TemplateBinding Foreground}"
+                              IsVisible="{TemplateBinding IsEditable, Converter={x:Static BoolConverters.Not}}" />
+              <TextBox Name="PART_EditableTextBox"
+                       Grid.Column="0"
+                       Padding="{TemplateBinding Padding}"
+                       MinHeight="0"
+                       Background="Transparent"
+                       BorderThickness="0"
+                       VerticalAlignment="Stretch"
+                       Foreground="{TemplateBinding Foreground}"
+                       Text="{TemplateBinding Text, Mode=TwoWay}"
+                       PlaceholderText="{TemplateBinding PlaceholderText}"
+                       IsVisible="{TemplateBinding IsEditable}" />
+              <carbon:CarbonIcon Name="PART_InvalidIcon"
+                                 Grid.Column="1"
+                                 Margin="8,0,0,0"
+                                 VerticalAlignment="Center"
+                                 Kind="warning-filled"
+                                 Size="16"
+                                 Foreground="{DynamicResource CarbonSupportError}"
+                                 IsVisible="False" />
+              <carbon:CarbonIcon Name="PART_Chevron"
+                                 Grid.Column="2"
+                                 Margin="16,0"
+                                 VerticalAlignment="Center"
+                                 Kind="chevron-down"
+                                 Size="16"
+                                 Foreground="{DynamicResource CarbonIconPrimary}"
+                                 RenderTransformOrigin="50%,50%">
+                <carbon:CarbonIcon.Transitions>
+                  <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.11" Easing="0.2,0,0.38,0.9" />
+                  </Transitions>
+                </carbon:CarbonIcon.Transitions>
+              </carbon:CarbonIcon>
+            </Grid>
+            <Border Name="PART_FocusRing"
+                    BorderBrush="{DynamicResource CarbonFocus}"
+                    BorderThickness="2"
+                    IsHitTestVisible="False"
+                    IsVisible="False" />
+            <Popup Name="PART_Popup"
+                   MinWidth="{Binding #PART_Field.Bounds.Width}"
+                   MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                   IsLightDismissEnabled="True"
+                   IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                   PlacementTarget="{Binding #PART_Field}"
+                   Placement="BottomEdgeAlignedLeft"
+                   InheritsTransform="True">
+              <Border Name="PART_PopupBorder"
+                      Background="{DynamicResource CarbonLayer01}"
+                      BoxShadow="0 2 6 0 #4D000000"
+                      Margin="0,0,0,8">
+                <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                              IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
+                              IsScrollChainingEnabled="False">
+                  <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </ScrollViewer>
+              </Border>
+            </Popup>
+          </Panel>
+        </DockPanel>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonFieldHover01}" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing, ^:dropdownopen /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:dropdownopen /template/ carbon|CarbonIcon#PART_Chevron">
+      <Setter Property="RenderTransform" Value="rotate(180deg)" />
+    </Style>
+    <Style Selector="^.sm">
+      <Setter Property="MinHeight" Value="32" />
+    </Style>
+    <Style Selector="^.lg">
+      <Setter Property="MinHeight" Value="48" />
+    </Style>
+    <Style Selector="^.on-layer">
+      <Setter Property="Background" Value="{DynamicResource CarbonField02}" />
+    </Style>
+    <Style Selector="^:invalid">
+      <Style Selector="^ /template/ Border#PART_FocusRing">
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportError}" />
+      </Style>
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_InvalidIcon">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Helper">
+        <Setter Property="IsVisible" Value="False" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_InvalidText">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="Background" Value="{DynamicResource CarbonField01}" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Setter Property="PlaceholderForeground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_Chevron">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonIconDisabled}" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Label">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Helper">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      </Style>
+    </Style>
+    <Style Selector="^[IsEditable=true]">
+      <Setter Property="IsTabStop" Value="False" />
+      <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0,16,0" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Background="{TemplateBinding Background}">
+          <Grid Margin="16,0" ColumnDefinitions="*,Auto">
+            <ContentPresenter Name="PART_ContentPresenter"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Foreground="{TemplateBinding Foreground}" />
+            <carbon:CarbonIcon Name="PART_Check"
+                               Grid.Column="1"
+                               Margin="8,0,0,0"
+                               VerticalAlignment="Center"
+                               Kind="checkmark"
+                               Size="16"
+                               Foreground="{DynamicResource CarbonIconPrimary}"
+                               IsVisible="False" />
+            <Rectangle Name="PART_Divider"
+                       Grid.ColumnSpan="2"
+                       Height="1"
+                       VerticalAlignment="Top"
+                       Fill="{DynamicResource CarbonBorderSubtle01}" />
+          </Grid>
+          <Border Name="PART_FocusRing"
+                  BorderBrush="{DynamicResource CarbonFocus}"
+                  BorderThickness="2"
+                  IsHitTestVisible="False"
+                  IsVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerHover01}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    </Style>
+    <Style Selector="^:pointerover /template/ Rectangle#PART_Divider">
+      <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="^:nth-child(1) /template/ Rectangle#PART_Divider">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:selected">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerSelected01}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    </Style>
+    <Style Selector="^:selected:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerSelectedHover01}" />
+    </Style>
+    <Style Selector="^:selected /template/ carbon|CarbonIcon#PART_Check">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:selected /template/ Rectangle#PART_Divider">
+      <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

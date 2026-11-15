@@ -1,0 +1,13 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:t="clr-namespace:TermControl;assembly=TermControl"
+        x:Class="TermProto.MainWindow"
+        Width="1000" Height="640" Background="#161616"
+        Title="MySSH terminal spike">
+    <DockPanel>
+        <Border DockPanel.Dock="Bottom" Height="24" Background="#262626" Padding="12,0">
+            <TextBlock x:Name="Status" VerticalAlignment="Center" FontSize="12" Foreground="#c6c6c6" />
+        </Border>
+        <t:TerminalControl x:Name="Term" Margin="8,8,0,0" />
+    </DockPanel>
+</Window>

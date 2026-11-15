@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:carbon="https://myssh.app/carbon"
+        x:Class="MySSH.Carbon.Gallery.MainWindow"
+        Title="Carbon Gallery"
+        Width="1360" Height="900" MinWidth="800" MinHeight="500"
+        ExtendClientAreaToDecorationsHint="True">
+  <DockPanel>
+    <carbon:ShellHeader DockPanel.Dock="Top" ProductPrefix="MySSH" ProductName="Carbon Gallery" IsMenuButtonVisible="True"
+                        IsMenuOpen="{Binding #Nav.IsExpanded, Mode=TwoWay}">
+      <carbon:ShellHeader.GlobalActions>
+        <StackPanel Orientation="Horizontal">
+          <Button Name="ThemeToggle" Classes="header-action" carbon:ButtonAssist.Icon="asleep" ToolTip.Tip="Toggle light / dark" />
+          <Button Classes="header-action" carbon:ButtonAssist.Icon="user" ToolTip.Tip="Profile" />
+        </StackPanel>
+      </carbon:ShellHeader.GlobalActions>
+    </carbon:ShellHeader>
+    <carbon:SideNavRail Name="Nav" DockPanel.Dock="Left" />
+    <ScrollViewer Name="Scroller" Background="{DynamicResource CarbonBackground}">
+      <ContentControl Name="Host" />
+    </ScrollViewer>
+  </DockPanel>
+</Window>

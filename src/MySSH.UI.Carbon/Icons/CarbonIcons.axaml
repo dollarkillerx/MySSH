@@ -1,0 +1,226 @@
+<!--
+  GENERATED FILE - DO NOT EDIT.
+  Carbon icons as StreamGeometry resources. Source: @carbon/icons 11.91.0 (Apache-2.0, see Icons/LICENSE-carbon-icons.txt).
+  Regenerate: cd tools/gen-carbon-icons && npm ci && npm run gen   (edit the ICONS list in gen.mjs)
+  Keys: CarbonIcon.{kind} (32px artwork), CarbonIcon.{kind}.16 / .20 (pixel-tuned, when available), *.inner (inner path of filled icons).
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- add -->
+  <StreamGeometry x:Key="CarbonIcon.add">F1 M 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15 z</StreamGeometry>
+  <!-- close -->
+  <StreamGeometry x:Key="CarbonIcon.close">F1 M 17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16 z</StreamGeometry>
+  <!-- search -->
+  <StreamGeometry x:Key="CarbonIcon.search">F1 M 29 27.5859 l -7.5521 -7.5521 a 11.0177 11.0177 0 1 0 -1.4141 1.4141 L 27.5859 29 Z M 4 13 a 9 9 0 1 1 9 9 A 9.01 9.01 0 0 1 4 13 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.search.16">F1 M 15 14.3 L 10.7 10 c 1.9 -2.3 1.6 -5.8 -0.7 -7.7 S 4.2 0.7 2.3 3 S 0.7 8.8 3 10.7 c 2 1.7 5 1.7 7 0 l 4.3 4.3 L 15 14.3 z M 2 6.5 C 2 4 4 2 6.5 2 S 11 4 11 6.5 S 9 11 6.5 11 S 2 9 2 6.5 z</StreamGeometry>
+  <!-- settings -->
+  <StreamGeometry x:Key="CarbonIcon.settings">F1 M 27 16.76 c 0 -0.25 0 -0.5 0 -0.76 s 0 -0.51 0 -0.77 l 1.92 -1.68 A 2 2 0 0 0 29.3 11 L 26.94 7 a 2 2 0 0 0 -1.73 -1 2 2 0 0 0 -0.64 0.1 l -2.43 0.82 a 11.35 11.35 0 0 0 -1.31 -0.75 l -0.51 -2.52 a 2 2 0 0 0 -2 -1.61 H 13.64 a 2 2 0 0 0 -2 1.61 l -0.51 2.52 a 11.48 11.48 0 0 0 -1.32 0.75 L 7.43 6.06 A 2 2 0 0 0 6.79 6 2 2 0 0 0 5.06 7 L 2.7 11 a 2 2 0 0 0 0.41 2.51 L 5 15.24 c 0 0.25 0 0.5 0 0.76 s 0 0.51 0 0.77 L 3.11 18.45 A 2 2 0 0 0 2.7 21 L 5.06 25 a 2 2 0 0 0 1.73 1 2 2 0 0 0 0.64 -0.1 l 2.43 -0.82 a 11.35 11.35 0 0 0 1.31 0.75 l 0.51 2.52 a 2 2 0 0 0 2 1.61 h 4.72 a 2 2 0 0 0 2 -1.61 l 0.51 -2.52 a 11.48 11.48 0 0 0 1.32 -0.75 l 2.42 0.82 a 2 2 0 0 0 0.64 0.1 2 2 0 0 0 1.73 -1 L 29.3 21 a 2 2 0 0 0 -0.41 -2.51 Z M 25.21 24 l -3.43 -1.16 a 8.86 8.86 0 0 1 -2.71 1.57 L 18.36 28 H 13.64 l -0.71 -3.55 a 9.36 9.36 0 0 1 -2.7 -1.57 L 6.79 24 4.43 20 l 2.72 -2.4 a 8.9 8.9 0 0 1 0 -3.13 L 4.43 12 6.79 8 l 3.43 1.16 a 8.86 8.86 0 0 1 2.71 -1.57 L 13.64 4 h 4.72 l 0.71 3.55 a 9.36 9.36 0 0 1 2.7 1.57 L 25.21 8 27.57 12 l -2.72 2.4 a 8.9 8.9 0 0 1 0 3.13 L 27.57 20 Z M 16 22 a 6 6 0 1 1 6 -6 A 5.94 5.94 0 0 1 16 22 Z m 0 -10 a 3.91 3.91 0 0 0 -4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4 -4 A 3.91 3.91 0 0 0 16 12 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.settings.16">F1 M 13.5 8.4 c 0 -0.1 0 -0.3 0 -0.4 c 0 -0.1 0 -0.3 0 -0.4 l 1 -0.8 c 0.4 -0.3 0.4 -0.9 0.2 -1.3 l -1.2 -2 C 13.3 3.2 13 3 12.6 3 c -0.1 0 -0.2 0 -0.3 0.1 l -1.2 0.4 c -0.2 -0.1 -0.4 -0.3 -0.7 -0.4 l -0.3 -1.3 C 10.1 1.3 9.7 1 9.2 1 H 6.8 c -0.5 0 -0.9 0.3 -1 0.8 L 5.6 3.1 C 5.3 3.2 5.1 3.3 4.9 3.4 L 3.7 3 C 3.6 3 3.5 3 3.4 3 C 3 3 2.7 3.2 2.5 3.5 l -1.2 2 C 1.1 5.9 1.2 6.4 1.6 6.8 l 0.9 0.9 c 0 0.1 0 0.3 0 0.4 c 0 0.1 0 0.3 0 0.4 L 1.6 9.2 c -0.4 0.3 -0.5 0.9 -0.2 1.3 l 1.2 2 C 2.7 12.8 3 13 3.4 13 c 0.1 0 0.2 0 0.3 -0.1 l 1.2 -0.4 c 0.2 0.1 0.4 0.3 0.7 0.4 l 0.3 1.3 c 0.1 0.5 0.5 0.8 1 0.8 h 2.4 c 0.5 0 0.9 -0.3 1 -0.8 l 0.3 -1.3 c 0.2 -0.1 0.4 -0.2 0.7 -0.4 l 1.2 0.4 c 0.1 0 0.2 0.1 0.3 0.1 c 0.4 0 0.7 -0.2 0.9 -0.5 l 1.1 -2 c 0.2 -0.4 0.2 -0.9 -0.2 -1.3 L 13.5 8.4 z M 12.6 12 l -1.7 -0.6 c -0.4 0.3 -0.9 0.6 -1.4 0.8 L 9.2 14 H 6.8 l -0.4 -1.8 c -0.5 -0.2 -0.9 -0.5 -1.4 -0.8 L 3.4 12 l -1.2 -2 l 1.4 -1.2 c -0.1 -0.5 -0.1 -1.1 0 -1.6 L 2.2 6 l 1.2 -2 l 1.7 0.6 C 5.5 4.2 6 4 6.5 3.8 L 6.8 2 h 2.4 l 0.4 1.8 c 0.5 0.2 0.9 0.5 1.4 0.8 L 12.6 4 l 1.2 2 l -1.4 1.2 c 0.1 0.5 0.1 1.1 0 1.6 l 1.4 1.2 L 12.6 12 z M 8 11 c -1.7 0 -3 -1.3 -3 -3 s 1.3 -3 3 -3 s 3 1.3 3 3 C 11 9.6 9.7 11 8 11 C 8 11 8 11 8 11 z M 8 6 C 6.9 6 6 6.8 6 7.9 C 6 7.9 6 8 6 8 c 0 1.1 0.8 2 1.9 2 c 0 0 0.1 0 0.1 0 c 1.1 0 2 -0.8 2 -1.9 c 0 0 0 -0.1 0 -0.1 C 10 6.9 9.2 6 8 6 C 8.1 6 8 6 8 6 z</StreamGeometry>
+  <!-- terminal -->
+  <StreamGeometry x:Key="CarbonIcon.terminal">F1 M 26 4.01 L 6 4.01 A 2 2 0 0 0 4 6.01 L 4 26.01 A 2 2 0 0 0 6 28.01 L 26 28.01 A 2 2 0 0 0 28 26.01 L 28 6.01 A 2 2 0 0 0 26 4.01 Z M 26 6.01 L 26 10.01 L 6 10.01 L 6 6.01 Z M 6 26.01 L 6 12.01 L 26 12.01 L 26 26.01 Z M 10.76 16.18 13.58 19.01 10.76 21.84 12.17 23.25 16.41 19.01 12.17 14.77 10.76 16.18 z</StreamGeometry>
+  <!-- folder -->
+  <StreamGeometry x:Key="CarbonIcon.folder">F1 M 11.17 6 l 3.42 3.41 0.58 0.59 H 28 V 26 H 4 V 6 h 7.17 m 0 -2 H 4 A 2 2 0 0 0 2 6 V 26 a 2 2 0 0 0 2 2 H 28 a 2 2 0 0 0 2 -2 V 10 a 2 2 0 0 0 -2 -2 H 16 L 12.59 4.59 A 2 2 0 0 0 11.17 4 Z</StreamGeometry>
+  <!-- folder-open -->
+  <StreamGeometry x:Key="CarbonIcon.folder-open">F1 M 28 8 H 20.8284 L 17.4143 4.5859 A 2 2 0 0 0 16 4 H 4 A 2 2 0 0 0 2 6 V 26 a 2 2 0 0 0 2 2 H 28 a 2 2 0 0 0 2 -2 V 10 A 2 2 0 0 0 28 8 Z M 8 26 V 14 h 8 v 6.17 l -2.59 -2.58 L 12 19 l 5 5 5 -5 -1.41 -1.41 L 18 20.17 V 14 a 2.0025 2.0025 0 0 0 -2 -2 H 8 a 2.0025 2.0025 0 0 0 -2 2 V 26 H 4 V 6 H 16 l 4 4 h 8 v 2 H 22 v 2 h 6 V 26 Z</StreamGeometry>
+  <!-- document -->
+  <StreamGeometry x:Key="CarbonIcon.document">F1 M 25.7 9.3 l -7 -7 C 18.5 2.1 18.3 2 18 2 H 8 C 6.9 2 6 2.9 6 4 v 24 c 0 1.1 0.9 2 2 2 h 16 c 1.1 0 2 -0.9 2 -2 V 10 C 26 9.7 25.9 9.5 25.7 9.3 z M 18 4.4 l 5.6 5.6 H 18 V 4.4 z M 24 28 H 8 V 4 h 8 v 6 c 0 1.1 0.9 2 2 2 h 6 V 28 z M 10 22 H 22 V 24 H 10 z M 10 16 H 22 V 18 H 10 z</StreamGeometry>
+  <!-- chevron-down -->
+  <StreamGeometry x:Key="CarbonIcon.chevron-down">F1 M 16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.chevron-down.16">F1 M 8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6 z</StreamGeometry>
+  <!-- chevron-up -->
+  <StreamGeometry x:Key="CarbonIcon.chevron-up">F1 M 16 10 26 20 24.6 21.4 16 12.8 7.4 21.4 6 20 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.chevron-up.16">F1 M 8 5 13 10 12.3 10.7 8 6.4 3.7 10.7 3 10 z</StreamGeometry>
+  <!-- chevron-left -->
+  <StreamGeometry x:Key="CarbonIcon.chevron-left">F1 M 10 16 20 6 21.4 7.4 12.8 16 21.4 24.6 20 26 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.chevron-left.16">F1 M 5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13 z</StreamGeometry>
+  <!-- chevron-right -->
+  <StreamGeometry x:Key="CarbonIcon.chevron-right">F1 M 22 16 12 26 10.6 24.6 19.2 16 10.6 7.4 12 6 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.chevron-right.16">F1 M 11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3 z</StreamGeometry>
+  <!-- caret-down -->
+  <StreamGeometry x:Key="CarbonIcon.caret-down">F1 M 24 12 16 22 8 12 z</StreamGeometry>
+  <!-- caret-up -->
+  <StreamGeometry x:Key="CarbonIcon.caret-up">F1 M 8 20 16 10 24 20 z</StreamGeometry>
+  <!-- overflow-menu-vertical -->
+  <StreamGeometry x:Key="CarbonIcon.overflow-menu-vertical">F1 M 14 8 A 2 2 0 1 0 18 8 A 2 2 0 1 0 14 8 Z M 14 16 A 2 2 0 1 0 18 16 A 2 2 0 1 0 14 16 Z M 14 24 A 2 2 0 1 0 18 24 A 2 2 0 1 0 14 24 Z</StreamGeometry>
+  <!-- overflow-menu-horizontal -->
+  <StreamGeometry x:Key="CarbonIcon.overflow-menu-horizontal">F1 M 6 16 A 2 2 0 1 0 10 16 A 2 2 0 1 0 6 16 Z M 14 16 A 2 2 0 1 0 18 16 A 2 2 0 1 0 14 16 Z M 22 16 A 2 2 0 1 0 26 16 A 2 2 0 1 0 22 16 Z</StreamGeometry>
+  <!-- edit -->
+  <StreamGeometry x:Key="CarbonIcon.edit">F1 M 2 26 H 30 V 28 H 2 z M 25.4 9 c 0.8 -0.8 0.8 -2 0 -2.8 c 0 0 0 0 0 0 l -3.6 -3.6 c -0.8 -0.8 -2 -0.8 -2.8 0 c 0 0 0 0 0 0 l -15 15 V 24 h 6.4 L 25.4 9 z M 20.4 4 L 24 7.6 l -3 3 L 17.4 7 L 20.4 4 z M 6 22 v -3.6 l 10 -10 l 3.6 3.6 l -10 10 H 6 z</StreamGeometry>
+  <!-- trash-can -->
+  <StreamGeometry x:Key="CarbonIcon.trash-can">F1 M 12 12 H 14 V 24 H 12 z M 18 12 H 20 V 24 H 18 z M 4 6 V 8 H 6 V 28 a 2 2 0 0 0 2 2 H 24 a 2 2 0 0 0 2 -2 V 8 h 2 V 6 Z M 8 28 V 8 H 24 V 28 Z M 12 2 H 20 V 4 H 12 z</StreamGeometry>
+  <!-- copy -->
+  <StreamGeometry x:Key="CarbonIcon.copy">F1 M 28 10 V 28 H 10 V 10 H 28 m 0 -2 H 10 a 2 2 0 0 0 -2 2 V 28 a 2 2 0 0 0 2 2 H 28 a 2 2 0 0 0 2 -2 V 10 a 2 2 0 0 0 -2 -2 Z M 4 18 H 2 V 4 A 2 2 0 0 1 4 2 H 18 V 4 H 4 Z</StreamGeometry>
+  <!-- password -->
+  <StreamGeometry x:Key="CarbonIcon.password">F1 M 21 2 a 8.9977 8.9977 0 0 0 -8.6119 11.6118 L 2 24 v 6 H 8 L 18.3881 19.6118 A 9 9 0 1 0 21 2 Z m 0 16 a 7.0125 7.0125 0 0 1 -2.0322 -0.3022 L 17.821 17.35 l -0.8472 0.8472 -3.1811 3.1812 L 12.4141 20 11 21.4141 l 1.3787 1.3786 -1.5859 1.586 L 9.4141 23 8 24.4141 l 1.3787 1.3786 L 7.1716 28 H 4 V 24.8284 l 9.8023 -9.8023 0.8472 -0.8474 -0.3473 -1.1467 A 7 7 0 1 1 21 18 Z M 20 10 A 2 2 0 1 0 24 10 A 2 2 0 1 0 20 10 Z</StreamGeometry>
+  <!-- user -->
+  <StreamGeometry x:Key="CarbonIcon.user">F1 M 16 4 a 5 5 0 1 1 -5 5 5 5 0 0 1 5 -5 m 0 -2 a 7 7 0 1 0 7 7 A 7 7 0 0 0 16 2 Z M 26 30 H 24 V 25 a 5 5 0 0 0 -5 -5 H 13 a 5 5 0 0 0 -5 5 v 5 H 6 V 25 a 7 7 0 0 1 7 -7 h 6 a 7 7 0 0 1 7 7 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.user.16">F1 M 8 2 c 1.4 0 2.5 1.1 2.5 2.5 S 9.4 7 8 7 S 5.5 5.9 5.5 4.5 S 6.6 2 8 2 M 8 1 C 6.1 1 4.5 2.6 4.5 4.5 S 6.1 8 8 8 s 3.5 -1.6 3.5 -3.5 S 9.9 1 8 1 z M 13 15 h -1 v -2.5 c 0 -1.4 -1.1 -2.5 -2.5 -2.5 h -3 C 5.1 10 4 11.1 4 12.5 V 15 H 3 v -2.5 C 3 10.6 4.6 9 6.5 9 h 3 c 1.9 0 3.5 1.6 3.5 3.5 V 15 z</StreamGeometry>
+  <!-- server -->
+  <StreamGeometry x:Key="CarbonIcon.server">F1 M 8 6 A 1 1 0 1 0 10 6 A 1 1 0 1 0 8 6 Z M 26 10 H 6 A 2.0021 2.0021 0 0 1 4 8 V 4 A 2.0021 2.0021 0 0 1 6 2 H 26 a 2.0021 2.0021 0 0 1 2 2 V 8 A 2.0021 2.0021 0 0 1 26 10 Z M 6 4 V 8 H 26 V 4 Z M 8 16 A 1 1 0 1 0 10 16 A 1 1 0 1 0 8 16 Z M 26 20 H 6 a 2.0021 2.0021 0 0 1 -2 -2 V 14 a 2.0021 2.0021 0 0 1 2 -2 H 26 a 2.0021 2.0021 0 0 1 2 2 v 4 A 2.0021 2.0021 0 0 1 26 20 Z M 6 14 v 4 H 26 V 14 Z M 8 26 A 1 1 0 1 0 10 26 A 1 1 0 1 0 8 26 Z M 26 30 H 6 a 2.0021 2.0021 0 0 1 -2 -2 V 24 a 2.0021 2.0021 0 0 1 2 -2 H 26 a 2.0021 2.0021 0 0 1 2 2 v 4 A 2.0021 2.0021 0 0 1 26 30 Z M 6 24 v 4 H 26 V 24 Z</StreamGeometry>
+  <!-- virtual-machine -->
+  <StreamGeometry x:Key="CarbonIcon.virtual-machine">F1 M 20 13 H 12 a 2.0025 2.0025 0 0 0 -2 2 V 28 a 2.0025 2.0025 0 0 0 2 2 h 8 a 2.0025 2.0025 0 0 0 2 -2 V 15 A 2.0025 2.0025 0 0 0 20 13 Z m 0 2 0 3 H 12 V 15 Z m 0 5 0 3 H 12 V 20 Z m -8 8 V 25 h 8 v 3 Z M 25.91 10.13 a 0.121 0.121 0 0 1 -0.0967 -0.0952 A 10.0061 10.0061 0 0 0 17.89 2.1816 10.0025 10.0025 0 0 0 6.1858 10.0347 a 0.1212 0.1212 0 0 1 -0.0964 0.0957 A 7.5019 7.5019 0 0 0 7.4912 25 H 8 V 23 H 7.4954 a 5.5108 5.5108 0 0 1 -5.4387 -6.3 5.6992 5.6992 0 0 1 4.7138 -4.6606 l 1.0166 -0.1836 a 0.1306 0.1306 0 0 0 0.1045 -0.1035 l 0.18 -0.9351 a 8.28 8.28 0 0 1 6.8469 -6.7427 7.957 7.957 0 0 1 2.8471 0.1245 8.22 8.22 0 0 1 6.1475 6.545 l 0.1941 1.0083 a 0.13 0.13 0 0 0 0.1045 0.1035 l 1.0576 0.1914 a 5.7819 5.7819 0 0 1 3.1011 1.539 A 5.5052 5.5052 0 0 1 24.5076 23 H 24 v 2 h 0.5076 A 7.5019 7.5019 0 0 0 25.91 10.13 Z</StreamGeometry>
+  <!-- database -->
+  <StreamGeometry x:Key="CarbonIcon.database">F1 M 24 3 H 8 A 2 2 0 0 0 6 5 V 27 a 2 2 0 0 0 2 2 H 24 a 2 2 0 0 0 2 -2 V 5 A 2 2 0 0 0 24 3 Z m 0 2 v 6 H 8 V 5 Z M 8 19 V 13 H 24 v 6 Z m 0 8 V 21 H 24 v 6 Z M 10 8 A 1 1 0 1 0 12 8 A 1 1 0 1 0 10 8 Z M 10 16 A 1 1 0 1 0 12 16 A 1 1 0 1 0 10 16 Z M 10 24 A 1 1 0 1 0 12 24 A 1 1 0 1 0 10 24 Z</StreamGeometry>
+  <!-- server-proxy -->
+  <StreamGeometry x:Key="CarbonIcon.server-proxy">F1 M 6 30 H 26 a 2 2 0 0 0 2 -2 V 22 a 2 2 0 0 0 -2 -2 H 6 a 2 2 0 0 0 -2 2 v 6 A 2 2 0 0 0 6 30 Z m 0 -8 H 26 v 6 H 6 Z M 8 25 A 1 1 0 1 0 10 25 A 1 1 0 1 0 8 25 Z M 26 2 24.59 3.41 27.17 6 H 22.315 A 6.9835 6.9835 0 0 0 9.08 10 H 4.83 L 7.41 7.41 6 6 1 11 l 5 5 1.41 -1.41 L 4.83 12 H 9.685 A 6.9835 6.9835 0 0 0 22.92 8 h 4.25 l -2.58 2.59 L 26 12 l 5 -5 Z M 21 9 a 4.983 4.983 0 0 1 -8.9745 3 H 16 V 10 H 11.1011 a 4.9852 4.9852 0 0 1 8.8734 -4 H 16 V 8 h 4.8989 A 5.0019 5.0019 0 0 1 21 9 Z</StreamGeometry>
+  <!-- connect -->
+  <StreamGeometry x:Key="CarbonIcon.connect">F1 M 23 16.01 A 7 7 0 0 0 18.82 17.4 L 14.6 13.18 A 6.86 6.86 0 0 0 16 9.01 A 7 7 0 1 0 13.19 14.6 L 17.4 18.82 A 7 7 0 1 0 23 16.01 Z M 4 9.01 A 5 5 0 1 1 9 14.01 A 5 5 0 0 1 4 9.01 Z</StreamGeometry>
+  <!-- plug -->
+  <StreamGeometry x:Key="CarbonIcon.plug">F1 M 22 8 H 21 V 2 H 19 V 8 H 13 V 2 H 11 V 8 H 10 a 2 2 0 0 0 -2 2 v 6 a 8.0073 8.0073 0 0 0 7 7.9307 V 30 h 2 V 23.9307 A 8.0073 8.0073 0 0 0 24 16 V 10 A 2 2 0 0 0 22 8 Z m 0 8 a 6 6 0 0 1 -12 0 V 10 H 22 Z</StreamGeometry>
+  <!-- network -->
+  <StreamGeometry x:Key="CarbonIcon.network">F1 M 30 30 H 22 V 22 h 8 Z m -6 -2 h 4 V 24 H 24 Z M 20 27 H 8 A 6 6 0 0 1 8 15 h 2 v 2 H 8 a 4 4 0 0 0 0 8 H 20 Z M 20 20 H 12 V 12 h 8 Z m -6 -2 h 4 V 14 H 14 Z M 24 17 H 22 V 15 h 2 a 4 4 0 0 0 0 -8 H 12 V 5 H 24 a 6 6 0 0 1 0 12 Z M 10 10 H 2 V 2 h 8 Z M 4 8 H 8 V 4 H 4 Z</StreamGeometry>
+  <!-- view -->
+  <StreamGeometry x:Key="CarbonIcon.view">F1 M 30.94 15.66 A 16.69 16.69 0 0 0 16 5 16.69 16.69 0 0 0 1.06 15.66 a 1 1 0 0 0 0 0.68 A 16.69 16.69 0 0 0 16 27 16.69 16.69 0 0 0 30.94 16.34 1 1 0 0 0 30.94 15.66 Z M 16 25 c -5.3 0 -10.9 -3.93 -12.93 -9 C 5.1 10.93 10.7 7 16 7 s 10.9 3.93 12.93 9 C 26.9 21.07 21.3 25 16 25 Z M 16 10 a 6 6 0 1 0 6 6 A 6 6 0 0 0 16 10 Z m 0 10 a 4 4 0 1 1 4 -4 A 4 4 0 0 1 16 20 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.view.16">F1 M 15.5 7.8 C 14.3 4.7 11.3 2.6 8 2.5 C 4.7 2.6 1.7 4.7 0.5 7.8 c 0 0.1 0 0.2 0 0.3 c 1.2 3.1 4.1 5.2 7.5 5.3 c 3.3 -0.1 6.3 -2.2 7.5 -5.3 C 15.5 8.1 15.5 7.9 15.5 7.8 z M 8 12.5 c -2.7 0 -5.4 -2 -6.5 -4.5 c 1 -2.5 3.8 -4.5 6.5 -4.5 s 5.4 2 6.5 4.5 C 13.4 10.5 10.6 12.5 8 12.5 z M 8 5 C 6.3 5 5 6.3 5 8 s 1.3 3 3 3 s 3 -1.3 3 -3 S 9.7 5 8 5 z M 8 10 c -1.1 0 -2 -0.9 -2 -2 s 0.9 -2 2 -2 s 2 0.9 2 2 S 9.1 10 8 10 z</StreamGeometry>
+  <!-- view-off -->
+  <StreamGeometry x:Key="CarbonIcon.view-off">F1 M 5.24 22.51 l 1.43 -1.42 A 14.06 14.06 0 0 1 3.07 16 C 5.1 10.93 10.7 7 16 7 a 12.38 12.38 0 0 1 4 0.72 l 1.55 -1.56 A 14.72 14.72 0 0 0 16 5 16.69 16.69 0 0 0 1.06 15.66 a 1 1 0 0 0 0 0.68 A 16 16 0 0 0 5.24 22.51 Z M 12 15.73 a 4 4 0 0 1 3.7 -3.7 l 1.81 -1.82 a 6 6 0 0 0 -7.33 7.33 Z M 30.94 15.66 A 16.4 16.4 0 0 0 25.2 8.22 L 30 3.41 28.59 2 2 28.59 3.41 30 l 5.1 -5.1 A 15.29 15.29 0 0 0 16 27 16.69 16.69 0 0 0 30.94 16.34 1 1 0 0 0 30.94 15.66 Z M 20 16 a 4 4 0 0 1 -6 3.44 L 19.44 14 A 4 4 0 0 1 20 16 Z m -4 9 a 13.05 13.05 0 0 1 -6 -1.58 l 2.54 -2.54 a 6 6 0 0 0 8.35 -8.35 l 2.87 -2.87 A 14.54 14.54 0 0 1 28.93 16 C 26.9 21.07 21.3 25 16 25 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.view-off.16">F1 M 2.6 11.3 l 0.7 -0.7 C 2.6 9.8 1.9 9 1.5 8 c 1 -2.5 3.8 -4.5 6.5 -4.5 c 0.7 0 1.4 0.1 2 0.4 l 0.8 -0.8 C 9.9 2.7 9 2.5 8 2.5 C 4.7 2.6 1.7 4.7 0.5 7.8 c 0 0.1 0 0.2 0 0.3 C 1 9.3 1.7 10.4 2.6 11.3 z M 6 7.9 c 0.1 -1 0.9 -1.8 1.8 -1.8 l 0.9 -0.9 C 7.2 4.7 5.5 5.6 5.1 7.2 C 5 7.7 5 8.3 5.1 8.8 L 6 7.9 z M 15.5 7.8 c -0.6 -1.5 -1.6 -2.8 -2.9 -3.7 L 15 1.7 L 14.3 1 L 1 14.3 L 1.7 15 l 2.6 -2.6 c 1.1 0.7 2.4 1 3.7 1.1 c 3.3 -0.1 6.3 -2.2 7.5 -5.3 C 15.5 8.1 15.5 7.9 15.5 7.8 z M 10 8 c 0 1.1 -0.9 2 -2 2 c -0.3 0 -0.7 -0.1 -1 -0.3 L 9.7 7 C 9.9 7.3 10 7.6 10 8 z M 8 12.5 c -1 0 -2.1 -0.3 -3 -0.8 l 1.3 -1.3 c 1.4 0.9 3.2 0.6 4.2 -0.8 c 0.7 -1 0.7 -2.4 0 -3.4 l 1.4 -1.4 c 1.1 0.8 2 1.9 2.6 3.2 C 13.4 10.5 10.6 12.5 8 12.5 z</StreamGeometry>
+  <!-- warning -->
+  <StreamGeometry x:Key="CarbonIcon.warning">F1 M 16 2 A 14 14 0 1 0 30 16 14 14 0 0 0 16 2 Z m 0 26 A 12 12 0 1 1 28 16 12 12 0 0 1 16 28 Z M 15 8 H 17 V 19 H 15 z M 16 22 a 1.5 1.5 0 1 0 1.5 1.5 A 1.5 1.5 0 0 0 16 22 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning.16">F1 M 8 1 C 4.1 1 1 4.1 1 8 s 3.1 7 7 7 s 7 -3.1 7 -7 S 11.9 1 8 1 z M 8 14 c -3.3 0 -6 -2.7 -6 -6 s 2.7 -6 6 -6 s 6 2.7 6 6 S 11.3 14 8 14 z M 7.5 4 H 8.5 V 9 H 7.5 z M 8 10.2 c -0.4 0 -0.8 0.3 -0.8 0.8 s 0.3 0.8 0.8 0.8 c 0.4 0 0.8 -0.3 0.8 -0.8 S 8.4 10.2 8 10.2 z</StreamGeometry>
+  <!-- warning-filled -->
+  <StreamGeometry x:Key="CarbonIcon.warning-filled">F1 M 16 2 C 8.3 2 2 8.3 2 16 s 6.3 14 14 14 s 14 -6.3 14 -14 C 30 8.3 23.7 2 16 2 z M 14.9 8 h 2.2 v 11 h -2.2 V 8 z M 16 25 c -0.8 0 -1.5 -0.7 -1.5 -1.5 S 15.2 22 16 22 c 0.8 0 1.5 0.7 1.5 1.5 S 16.8 25 16 25 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning-filled.inner">F1 M 17.5 23.5 c 0 0.8 -0.7 1.5 -1.5 1.5 c -0.8 0 -1.5 -0.7 -1.5 -1.5 S 15.2 22 16 22 C 16.8 22 17.5 22.7 17.5 23.5 z M 17.1 8 h -2.2 v 11 h 2.2 V 8 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning-filled.16">F1 M 8 1 C 4.2 1 1 4.2 1 8 s 3.2 7 7 7 s 7 -3.1 7 -7 S 11.9 1 8 1 z M 7.5 4 h 1 v 5 h -1 C 7.5 9 7.5 4 7.5 4 z M 8 12.2 c -0.4 0 -0.8 -0.4 -0.8 -0.8 s 0.3 -0.8 0.8 -0.8 c 0.4 0 0.8 0.4 0.8 0.8 S 8.4 12.2 8 12.2 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning-filled.16.inner">F1 M 7.5 4 h 1 v 5 h -1 C 7.5 9 7.5 4 7.5 4 z M 8 12.2 c -0.4 0 -0.8 -0.4 -0.8 -0.8 s 0.3 -0.8 0.8 -0.8 c 0.4 0 0.8 0.4 0.8 0.8 S 8.4 12.2 8 12.2 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning-filled.20">F1 M 10 1 c -5 0 -9 4 -9 9 s 4 9 9 9 s 9 -4 9 -9 S 15 1 10 1 z M 9.2 5 h 1.5 v 7 H 9.2 V 5 z M 10 16 c -0.6 0 -1 -0.4 -1 -1 s 0.4 -1 1 -1 s 1 0.4 1 1 S 10.6 16 10 16 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning-filled.20.inner">F1 M 9.2 5 h 1.5 v 7 H 9.2 V 5 z M 10 16 c -0.6 0 -1 -0.4 -1 -1 s 0.4 -1 1 -1 s 1 0.4 1 1 S 10.6 16 10 16 z</StreamGeometry>
+  <!-- warning-alt-filled -->
+  <StreamGeometry x:Key="CarbonIcon.warning-alt-filled">F1 M 16.002 6.1714 h -0.004 L 4.6487 27.9966 4.6506 28 H 27.3494 l 0.0019 -0.0034 Z M 14.875 12 h 2.25 v 9 h -2.25 Z M 16 26 a 1.5 1.5 0 1 1 1.5 -1.5 A 1.5 1.5 0 0 1 16 26 Z M 29 30 H 3 a 1 1 0 0 1 -0.8872 -1.4614 l 13 -25 a 1 1 0 0 1 1.7744 0 l 13 25 A 1 1 0 0 1 29 30 Z M 4.6507 28 H 27.3493 l 0.002 -0.0033 L 16.002 6.1714 h -0.004 L 4.6487 27.9967 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.warning-alt-filled.inner">F1 M 16 26 a 1.5 1.5 0 1 1 1.5 -1.5 A 1.5 1.5 0 0 1 16 26 Z m -1.125 -5 h 2.25 V 12 h -2.25 Z</StreamGeometry>
+  <!-- error -->
+  <StreamGeometry x:Key="CarbonIcon.error">F1 M 2 16 H 2 A 14 14 0 1 0 16 2 14 14 0 0 0 2 16 Z m 23.15 7.75 L 8.25 6.85 a 12 12 0 0 1 16.9 16.9 Z M 8.24 25.16 A 12 12 0 0 1 6.84 8.27 L 23.73 25.16 a 12 12 0 0 1 -15.49 0 Z</StreamGeometry>
+  <!-- error-filled -->
+  <StreamGeometry x:Key="CarbonIcon.error-filled">F1 M 16 2 A 13.914 13.914 0 0 0 2 16 13.914 13.914 0 0 0 16 30 13.914 13.914 0 0 0 30 16 13.914 13.914 0 0 0 16 2 Z m 5.4449 21 L 9 10.5557 10.5557 9 23 21.4448 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.error-filled.inner">F1 M 8.9996 10.5553 L 10.5553 8.9996 L 22.9997 21.444 L 21.444 22.9997 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.error-filled.16">F1 M 8 1 C 4.1 1 1 4.1 1 8 s 3.1 7 7 7 s 7 -3.1 7 -7 S 11.9 1 8 1 z M 10.7 11.5 L 4.5 5.3 l 0.8 -0.8 l 6.2 6.2 L 10.7 11.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.error-filled.16.inner">F1 M 10.7 11.5 L 4.5 5.3 l 0.8 -0.8 l 6.2 6.2 L 10.7 11.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.error-filled.20">F1 M 10 1 c -5 0 -9 4 -9 9 s 4 9 9 9 s 9 -4 9 -9 S 15 1 10 1 z M 13.5 14.5 l -8 -8 l 1 -1 l 8 8 L 13.5 14.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.error-filled.20.inner">F1 M 13.5 14.5 l -8 -8 l 1 -1 l 8 8 L 13.5 14.5 z</StreamGeometry>
+  <!-- misuse -->
+  <StreamGeometry x:Key="CarbonIcon.misuse">F1 M 16 2 C 8.3 2 2 8.3 2 16 s 6.3 14 14 14 s 14 -6.3 14 -14 S 23.7 2 16 2 z M 21.4 23 L 16 17.6 L 10.6 23 L 9 21.4 l 5.4 -5.4 L 9 10.6 L 10.6 9 l 5.4 5.4 L 21.4 9 l 1.6 1.6 L 17.6 16 l 5.4 5.4 L 21.4 23 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.misuse.inner">F1 M 21.4 23 L 16 17.6 L 10.6 23 L 9 21.4 l 5.4 -5.4 L 9 10.6 L 10.6 9 l 5.4 5.4 L 21.4 9 l 1.6 1.6 L 17.6 16 l 5.4 5.4 L 21.4 23 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.misuse.16">F1 M 8 1 C 4.1 1 1 4.1 1 8 s 3.1 7 7 7 s 7 -3.1 7 -7 S 11.9 1 8 1 z M 10.7 11.5 L 8 8.8 l -2.7 2.7 l -0.8 -0.8 L 7.2 8 L 4.5 5.3 l 0.8 -0.8 L 8 7.2 l 2.7 -2.7 l 0.8 0.8 L 8.8 8 l 2.7 2.7 L 10.7 11.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.misuse.16.inner">F1 M 10.7 11.5 L 8 8.8 l -2.7 2.7 l -0.8 -0.8 L 7.2 8 L 4.5 5.3 l 0.8 -0.8 L 8 7.2 l 2.7 -2.7 l 0.8 0.8 L 8.8 8 l 2.7 2.7 L 10.7 11.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.misuse.20">F1 M 10 1 c -4.9 0 -9 4.1 -9 9 s 4.1 9 9 9 s 9 -4 9 -9 S 15 1 10 1 z M 13.5 14.5 L 10 11 l -3.5 3.5 l -1 -1 L 9 10 L 5.5 6.5 l 1 -1 L 10 9 l 3.5 -3.5 l 1 1 L 11 10 l 3.5 3.5 L 13.5 14.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.misuse.20.inner">F1 M 13.5 14.5 L 10 11 l -3.5 3.5 l -1 -1 L 9 10 L 5.5 6.5 l 1 -1 L 10 9 l 3.5 -3.5 l 1 1 L 11 10 l 3.5 3.5 L 13.5 14.5 z</StreamGeometry>
+  <!-- checkmark -->
+  <StreamGeometry x:Key="CarbonIcon.checkmark">F1 M 13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.checkmark.20">F1 M 8 13.2 3.6 8.8 2.7 9.7 7.1 14.1 8 15 16.5 6.5 15.6 5.6 z M 15.6 5.6 8 13.2 3.6 8.8 2.7 9.7 7.1 14.1 8 15 16.5 6.5 15.6 5.6 z</StreamGeometry>
+  <!-- checkmark-filled -->
+  <StreamGeometry x:Key="CarbonIcon.checkmark-filled">F1 M 16 2 A 14 14 0 1 0 30 16 14 14 0 0 0 16 2 Z M 14 21.5908 l -5 -5 L 10.5906 15 14 18.4092 21.41 11 l 1.5957 1.5859 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.checkmark-filled.inner">F1 M 14 21.591 9 16.591 10.591 15 14 18.409 21.41 11 23.005 12.585 14 21.591 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.checkmark-filled.16">F1 M 8 1 C 4.1 1 1 4.1 1 8 c 0 3.9 3.1 7 7 7 s 7 -3.1 7 -7 C 15 4.1 11.9 1 8 1 z M 7 11 L 4.3 8.3 l 0.9 -0.8 L 7 9.3 l 4 -3.9 l 0.9 0.8 L 7 11 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.checkmark-filled.16.inner">F1 M 7 11 L 4.3 8.3 l 0.9 -0.8 L 7 9.3 l 4 -3.9 l 0.9 0.8 L 7 11 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.checkmark-filled.20">F1 M 10 1 c -4.9 0 -9 4.1 -9 9 s 4.1 9 9 9 s 9 -4 9 -9 S 15 1 10 1 z M 8.7 13.5 l -3.2 -3.2 l 1 -1 l 2.2 2.2 l 4.8 -4.8 l 1 1 L 8.7 13.5 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.checkmark-filled.20.inner">F1 M 8.7 13.5 l -3.2 -3.2 l 1 -1 l 2.2 2.2 l 4.8 -4.8 l 1 1 L 8.7 13.5 z</StreamGeometry>
+  <!-- checkmark-outline -->
+  <StreamGeometry x:Key="CarbonIcon.checkmark-outline">F1 M 14 21.414 9 16.413 10.413 15 14 18.586 21.585 11 23 12.415 14 21.414 z M 16 2 A 14 14 0 1 0 30 16 14 14 0 0 0 16 2 Z m 0 26 A 12 12 0 1 1 28 16 12 12 0 0 1 16 28 Z</StreamGeometry>
+  <!-- information -->
+  <StreamGeometry x:Key="CarbonIcon.information">F1 M 17 22 17 14 13 14 13 16 15 16 15 22 12 22 12 24 20 24 20 22 17 22 z M 16 8 a 1.5 1.5 0 1 0 1.5 1.5 A 1.5 1.5 0 0 0 16 8 Z M 16 30 A 14 14 0 1 1 30 16 14 14 0 0 1 16 30 Z M 16 4 A 12 12 0 1 0 28 16 12 12 0 0 0 16 4 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.information.16">F1 M 8.5 11 8.5 6.5 6.5 6.5 6.5 7.5 7.5 7.5 7.5 11 6 11 6 12 10 12 10 11 z M 8 3.5 c -0.4 0 -0.8 0.3 -0.8 0.8 S 7.6 5 8 5 c 0.4 0 0.8 -0.3 0.8 -0.8 S 8.4 3.5 8 3.5 z M 8 15 c -3.9 0 -7 -3.1 -7 -7 s 3.1 -7 7 -7 s 7 3.1 7 7 S 11.9 15 8 15 z M 8 2 C 4.7 2 2 4.7 2 8 s 2.7 6 6 6 s 6 -2.7 6 -6 S 11.3 2 8 2 z</StreamGeometry>
+  <!-- information-filled -->
+  <StreamGeometry x:Key="CarbonIcon.information-filled">F1 M 16 2 A 14 14 0 1 0 30 16 14 14 0 0 0 16 2 Z m 0 6 a 1.5 1.5 0 1 1 -1.5 1.5 A 1.5 1.5 0 0 1 16 8 Z m 4 16.125 H 12 v -2.25 h 2.875 v -5.75 H 13 v -2.25 h 4.125 v 8 H 20 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.information-filled.inner">F1 M 16 8 a 1.5 1.5 0 1 1 -1.5 1.5 A 1.5 1.5 0 0 1 16 8 Z m 4 13.875 H 17.125 v -8 H 13 v 2.25 h 1.875 v 5.75 H 12 v 2.25 h 8 Z</StreamGeometry>
+  <!-- help -->
+  <StreamGeometry x:Key="CarbonIcon.help">F1 M 16 2 A 14 14 0 1 0 30 16 14 14 0 0 0 16 2 Z m 0 26 A 12 12 0 1 1 28 16 12 12 0 0 1 16 28 Z M 14.5 23.5 A 1.5 1.5 0 1 0 17.5 23.5 A 1.5 1.5 0 1 0 14.5 23.5 Z M 17 8 H 15.5 A 4.49 4.49 0 0 0 11 12.5 V 13 h 2 v -0.5 A 2.5 2.5 0 0 1 15.5 10 H 17 a 2.5 2.5 0 0 1 0 5 H 15 v 4.5 h 2 V 17 a 4.5 4.5 0 0 0 0 -9 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.help.16">F1 M 8 1 C 4.1 1 1 4.1 1 8 s 3.1 7 7 7 s 7 -3.1 7 -7 S 11.9 1 8 1 z M 8 14 c -3.3 0 -6 -2.7 -6 -6 s 2.7 -6 6 -6 s 6 2.7 6 6 S 11.3 14 8 14 z M 7.2 11.8 A 0.8 0.8 0 1 0 8.8 11.8 A 0.8 0.8 0 1 0 7.2 11.8 Z M 8.5 4 H 7.8 C 6.5 4 5.5 5 5.5 6.2 c 0 0 0 0 0 0 v 0.2 h 1 V 6.2 C 6.5 5.6 7.1 5 7.8 5 h 0.8 c 0.7 0 1.2 0.6 1.2 1.2 S 9.2 7.5 8.5 7.5 h -1 v 2.2 h 1 V 8.5 c 1.2 0 2.2 -1 2.2 -2.2 S 9.7 4 8.5 4 z</StreamGeometry>
+  <!-- upload -->
+  <StreamGeometry x:Key="CarbonIcon.upload">F1 M 6 18 7.41 19.41 15 11.83 15 30 17 30 17 11.83 24.59 19.41 26 18 16 8 6 18 z M 6 8 V 4 H 26 V 8 h 2 V 4 a 2 2 0 0 0 -2 -2 H 6 A 2 2 0 0 0 4 4 V 8 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.upload.16">F1 M 3 9 3.7 9.7 7.5 5.9 7.5 15 8.5 15 8.5 5.9 12.3 9.7 13 9 8 4 z M 3 4 V 2 h 10 v 2 h 1 V 2 c 0 -0.6 -0.4 -1 -1 -1 H 3 C 2.4 1 2 1.4 2 2 v 2 H 3 z</StreamGeometry>
+  <!-- download -->
+  <StreamGeometry x:Key="CarbonIcon.download">F1 M 26 24 v 4 H 6 V 24 H 4 v 4 H 4 a 2 2 0 0 0 2 2 H 26 a 2 2 0 0 0 2 -2 h 0 V 24 Z M 26 14 24.59 12.59 17 20.17 17 2 15 2 15 20.17 7.41 12.59 6 14 16 24 26 14 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.download.16">F1 M 13 7 12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12 z M 13 12 v 2 H 3 v -2 H 2 v 2 l 0 0 c 0 0.6 0.4 1 1 1 h 10 c 0.6 0 1 -0.4 1 -1 l 0 0 v -2 H 13 z</StreamGeometry>
+  <!-- renew -->
+  <StreamGeometry x:Key="CarbonIcon.renew">F1 M 12 10 H 6.78 A 11 11 0 0 1 27 16 h 2 A 13 13 0 0 0 6 7.68 V 4 H 4 v 8 h 8 Z M 20 22 h 5.22 A 11 11 0 0 1 5 16 H 3 a 13 13 0 0 0 23 8.32 V 28 h 2 V 20 H 20 Z</StreamGeometry>
+  <!-- launch -->
+  <StreamGeometry x:Key="CarbonIcon.launch">F1 M 26 28 H 6 a 2.0027 2.0027 0 0 1 -2 -2 V 6 A 2.0027 2.0027 0 0 1 6 4 H 16 V 6 H 6 V 26 H 26 V 16 h 2 V 26 A 2.0027 2.0027 0 0 1 26 28 Z M 20 2 20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.launch.16">F1 M 13 14 H 3 c -0.6 0 -1 -0.4 -1 -1 V 3 c 0 -0.6 0.4 -1 1 -1 h 5 v 1 H 3 v 10 h 10 V 8 h 1 v 5 C 14 13.6 13.6 14 13 14 z M 10 1 10 2 13.3 2 9 6.3 9.7 7 14 2.7 14 6 15 6 15 1 z</StreamGeometry>
+  <!-- menu -->
+  <StreamGeometry x:Key="CarbonIcon.menu">F1 M 4 6 H 28 V 8 H 4 z M 4 24 H 28 V 26 H 4 z M 4 12 H 28 V 14 H 4 z M 4 18 H 28 V 20 H 4 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.menu.16">F1 M 2 12 H 14 V 13 H 2 z M 2 9 H 14 V 10 H 2 z M 2 6 H 14 V 7 H 2 z M 2 3 H 14 V 4 H 2 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.menu.20">F1 M 2 14.8 H 18 V 16 H 2 z M 2 11.2 H 18 V 12.399999999999999 H 2 z M 2 7.6 H 18 V 8.799999999999999 H 2 z M 2 4 H 18 V 5.2 H 2 z</StreamGeometry>
+  <!-- chat -->
+  <StreamGeometry x:Key="CarbonIcon.chat">F1 M 17.74 30 16 29 l 4 -7 h 6 a 2 2 0 0 0 2 -2 V 8 a 2 2 0 0 0 -2 -2 H 6 A 2 2 0 0 0 4 8 V 20 a 2 2 0 0 0 2 2 h 9 v 2 H 6 a 4 4 0 0 1 -4 -4 V 8 A 4 4 0 0 1 6 4 H 26 a 4 4 0 0 1 4 4 V 20 a 4 4 0 0 1 -4 4 H 21.16 Z M 8 10 H 24 V 12 H 8 z M 8 16 H 18 V 18 H 8 z</StreamGeometry>
+  <!-- machine-learning -->
+  <StreamGeometry x:Key="CarbonIcon.machine-learning">F1 M 16 25 a 6.9908 6.9908 0 0 1 -5.833 -3.1287 l 1.666 -1.1074 a 5.0007 5.0007 0 0 0 8.334 0 l 1.666 1.1074 A 6.9908 6.9908 0 0 1 16 25 Z M 20 14 a 2 2 0 1 0 2 2 A 1.9806 1.9806 0 0 0 20 14 Z M 12 14 a 2 2 0 1 0 2 2 A 1.9806 1.9806 0 0 0 12 14 Z M 30 16 V 14 H 28 V 10 a 4.0045 4.0045 0 0 0 -4 -4 H 22 V 2 H 20 V 6 H 12 V 2 H 10 V 6 H 8 a 4.0045 4.0045 0 0 0 -4 4 v 4 H 2 v 2 H 4 v 5 H 2 v 2 H 4 v 3 a 4.0045 4.0045 0 0 0 4 4 H 24 a 4.0045 4.0045 0 0 0 4 -4 V 23 h 2 V 21 H 28 V 16 Z M 26 26 a 2.0023 2.0023 0 0 1 -2 2 H 8 a 2.0023 2.0023 0 0 1 -2 -2 V 10 A 2.0023 2.0023 0 0 1 8 8 H 24 a 2.0023 2.0023 0 0 1 2 2 Z</StreamGeometry>
+  <!-- magic-wand -->
+  <StreamGeometry x:Key="CarbonIcon.magic-wand">F1 M 29.4141 24 12 6.5859 a 2.0476 2.0476 0 0 0 -2.8281 0 l -2.586 2.586 a 2.0021 2.0021 0 0 0 0 2.8281 L 23.999 29.4141 a 2.0024 2.0024 0 0 0 2.8281 0 l 2.587 -2.5865 a 1.9993 1.9993 0 0 0 0 -2.8281 Z M 8 10.5859 10.5859 8 l 5 5 -2.5866 2.5869 -5 -5 Z M 25.4131 28 l -11 -10.999 L 17 14.4141 l 11 11 Z M 2.0003 16 L 4 14.0003 L 5.9997 16 L 4 17.9997 Z M 14.0003 4 L 16 2.0003 L 17.9997 4 L 16 5.9997 Z M 2.0003 4 L 4 2.0003 L 5.9997 4 L 4 5.9997 Z</StreamGeometry>
+  <!-- locked -->
+  <StreamGeometry x:Key="CarbonIcon.locked">F1 M 24 14 H 22 V 8 A 6 6 0 0 0 10 8 v 6 H 8 a 2 2 0 0 0 -2 2 V 28 a 2 2 0 0 0 2 2 H 24 a 2 2 0 0 0 2 -2 V 16 A 2 2 0 0 0 24 14 Z M 12 8 a 4 4 0 0 1 8 0 v 6 H 12 Z M 24 28 H 8 V 16 H 24 Z</StreamGeometry>
+  <!-- unlocked -->
+  <StreamGeometry x:Key="CarbonIcon.unlocked">F1 M 24 14 H 12 V 8 a 4 4 0 0 1 8 0 h 2 A 6 6 0 0 0 10 8 v 6 H 8 a 2 2 0 0 0 -2 2 V 28 a 2 2 0 0 0 2 2 H 24 a 2 2 0 0 0 2 -2 V 16 A 2 2 0 0 0 24 14 Z m 0 14 H 8 V 16 H 24 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.unlocked.16">F1 M 12 7 H 6 V 4 c 0 -1.1 0.9 -2 2 -2 s 2 0.9 2 2 h 1 c 0 -1.7 -1.3 -3 -3 -3 S 5 2.3 5 4 v 3 H 4 C 3.4 7 3 7.4 3 8 v 6 c 0 0.6 0.4 1 1 1 h 8 c 0.6 0 1 -0.4 1 -1 V 8 C 13 7.4 12.6 7 12 7 z M 12 14 H 4 V 8 h 8 V 14 z</StreamGeometry>
+  <!-- filter -->
+  <StreamGeometry x:Key="CarbonIcon.filter">F1 M 18 28 H 14 a 2 2 0 0 1 -2 -2 V 18.41 L 4.59 11 A 2 2 0 0 1 4 9.59 V 6 A 2 2 0 0 1 6 4 H 26 a 2 2 0 0 1 2 2 V 9.59 A 2 2 0 0 1 27.41 11 L 20 18.41 V 26 A 2 2 0 0 1 18 28 Z M 6 6 V 9.59 l 8 8 V 26 h 4 V 17.59 l 8 -8 V 6 Z</StreamGeometry>
+  <!-- sort-ascending -->
+  <StreamGeometry x:Key="CarbonIcon.sort-ascending">F1 M 18 22 19.414 20.586 23 24.172 23 4 25 4 25 24.172 28.586 20.586 30 22 24 28 18 22 z M 2 18 H 16 V 20 H 2 z M 6 12 H 16 V 14 H 6 z M 10 6 H 16 V 8 H 10 z</StreamGeometry>
+  <!-- sort-descending -->
+  <StreamGeometry x:Key="CarbonIcon.sort-descending">F1 M 18 22 19.414 20.586 23 24.172 23 4 25 4 25 24.172 28.586 20.586 30 22 24 28 18 22 z M 2 6 H 16 V 8 H 2 z M 6 12 H 16 V 14 H 6 z M 10 18 H 16 V 20 H 10 z</StreamGeometry>
+  <!-- arrows-vertical -->
+  <StreamGeometry x:Key="CarbonIcon.arrows-vertical">F1 M 27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22 z M 9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10 z</StreamGeometry>
+  <!-- arrow-up -->
+  <StreamGeometry x:Key="CarbonIcon.arrow-up">F1 M 16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.arrow-up.16">F1 M 3.7 6.7 7.5 2.9 7.5 15 8.5 15 8.5 2.9 12.3 6.7 13 6 8 1 3 6 z</StreamGeometry>
+  <!-- arrow-down -->
+  <StreamGeometry x:Key="CarbonIcon.arrow-down">F1 M 24.59 16.59 17 24.17 17 4 15 4 15 24.17 7.41 16.59 6 18 16 28 26 18 24.59 16.59 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.arrow-down.16">F1 M 12.3 9.3 8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10 z</StreamGeometry>
+  <!-- arrow-left -->
+  <StreamGeometry x:Key="CarbonIcon.arrow-left">F1 M 14 26 15.41 24.59 7.83 17 28 17 28 15 7.83 15 15.41 7.41 14 6 4 16 14 26 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.arrow-left.16">F1 M 6.7 12.3 2.9 8.5 15 8.5 15 7.5 2.9 7.5 6.7 3.7 6 3 1 8 6 13 z</StreamGeometry>
+  <!-- arrow-right -->
+  <StreamGeometry x:Key="CarbonIcon.arrow-right">F1 M 18 6 16.57 7.393 24.15 15 4 15 4 17 24.15 17 16.57 24.573 18 26 28 16 18 6 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.arrow-right.16">F1 M 9.3 3.7 13.1 7.5 1 7.5 1 8.5 13.1 8.5 9.3 12.3 10 13 15 8 10 3 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.arrow-right.20">F1 M 11.8 2.8 10.8 3.8 16.2 9.3 1 9.3 1 10.7 16.2 10.7 10.8 16.2 11.8 17.2 19 10 z</StreamGeometry>
+  <!-- home -->
+  <StreamGeometry x:Key="CarbonIcon.home">F1 M 16.6123 2.2138 a 1.01 1.01 0 0 0 -1.2427 0 L 1 13.4194 l 1.2427 1.5717 L 4 13.6209 V 26 a 2.0041 2.0041 0 0 0 2 2 H 26 a 2.0037 2.0037 0 0 0 2 -2 V 13.63 L 29.7573 15 31 13.4282 Z M 18 26 H 14 V 18 h 4 Z m 2 0 V 18 a 2.0023 2.0023 0 0 0 -2 -2 H 14 a 2.002 2.002 0 0 0 -2 2 v 8 H 6 V 12.0615 l 10 -7.79 10 7.8005 V 26 Z</StreamGeometry>
+  <!-- subtract -->
+  <StreamGeometry x:Key="CarbonIcon.subtract">F1 M 8 15 H 24 V 17 H 8 z</StreamGeometry>
+  <!-- logout -->
+  <StreamGeometry x:Key="CarbonIcon.logout">F1 M 6 30 H 18 a 2.0023 2.0023 0 0 0 2 -2 V 25 H 18 v 3 H 6 V 4 H 18 V 7 h 2 V 4 a 2.0023 2.0023 0 0 0 -2 -2 H 6 A 2.0023 2.0023 0 0 0 4 4 V 28 A 2.0023 2.0023 0 0 0 6 30 Z M 20.586 20.586 24.172 17 10 17 10 15 24.172 15 20.586 11.414 22 10 28 16 22 22 20.586 20.586 z</StreamGeometry>
+  <!-- time -->
+  <StreamGeometry x:Key="CarbonIcon.time">F1 M 16 30 A 14 14 0 1 1 30 16 14 14 0 0 1 16 30 Z M 16 4 A 12 12 0 1 0 28 16 12 12 0 0 0 16 4 Z M 20.59 22 15 16.41 15 7 17 7 17 15.58 22 20.59 20.59 22 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.time.20">F1 M 10 19 c -5 0 -9 -4 -9 -9 s 4 -9 9 -9 s 9 4 9 9 S 15 19 10 19 z M 10 2.3 c -4.3 0 -7.7 3.5 -7.7 7.7 s 3.5 7.7 7.7 7.7 s 7.7 -3.5 7.7 -7.7 S 14.3 2.3 10 2.3 z M 13 13.9 9.4 10.3 9.4 4 10.6 4 10.6 9.7 13.9 13 z</StreamGeometry>
+  <!-- cloud -->
+  <StreamGeometry x:Key="CarbonIcon.cloud">F1 M 16 7 h 0 a 7.66 7.66 0 0 1 1.51 0.15 8 8 0 0 1 6.35 6.34 l 0.26 1.35 1.35 0.24 a 5.5 5.5 0 0 1 -1 10.92 H 7.5 a 5.5 5.5 0 0 1 -1 -10.92 l 1.34 -0.24 0.26 -1.35 A 8 8 0 0 1 16 7 m 0 -2 a 10 10 0 0 0 -9.83 8.12 A 7.5 7.5 0 0 0 7.49 28 h 17 a 7.5 7.5 0 0 0 1.32 -14.88 10 10 0 0 0 -7.94 -7.94 A 10.27 10.27 0 0 0 16 5 Z</StreamGeometry>
+  <!-- pin -->
+  <StreamGeometry x:Key="CarbonIcon.pin">F1 M 28.59 13.31 30 11.9 20 2 18.69 3.42 19.87 4.6 8.38 14.32 6.66 12.61 5.25 14 l 5.66 5.68 L 2 28.58 3.41 30 l 8.91 -8.91 L 18 26.75 l 1.39 -1.42 -1.71 -1.71 L 27.4 12.13 Z M 16.26 22.2 9.8 15.74 21.29 6 26 10.71 Z</StreamGeometry>
+  <!-- star -->
+  <StreamGeometry x:Key="CarbonIcon.star">F1 M 16 6.52 l 2.76 5.58 0.46 1 1 0.15 6.16 0.89 L 22 18.44 l -0.75 0.73 0.18 1 1.05 6.13 -5.51 -2.89 L 16 23 l -0.93 0.49 L 9.56 26.34 l 1 -6.13 0.18 -1 L 10 18.44 5.58 14.09 l 6.16 -0.89 1 -0.15 0.46 -1 L 16 6.52 M 16 2 l -4.55 9.22 L 1.28 12.69 l 7.36 7.18 L 6.9 30 16 25.22 25.1 30 23.36 19.87 l 7.36 -7.17 L 20.55 11.22 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.star.16">F1 M 8 3.3 l 1.4 2.8 l 0.2 0.5 l 0.5 0.1 l 3.1 0.4 L 11 9.2 l -0.4 0.4 l 0.1 0.5 l 0.5 3.1 l -2.8 -1.4 L 8 11.5 l -0.5 0.2 l -2.8 1.4 l 0.5 -3.1 l 0.1 -0.5 L 5 9.2 L 2.8 7 l 3.1 -0.4 l 0.5 -0.1 L 6.6 6 L 8 3.3 M 8 1 L 5.7 5.6 L 0.6 6.3 l 3.7 3.6 L 3.5 15 L 8 12.6 l 4.6 2.4 l -0.9 -5.1 l 3.7 -3.6 l -5.1 -0.7 L 8 1 z</StreamGeometry>
+  <!-- light -->
+  <StreamGeometry x:Key="CarbonIcon.light">F1 M 15 2 H 17 V 7 H 15 z M 21.6877 8.8995 L 25.1935 5.3937 L 26.6077 6.8079 L 23.1019 10.3137 Z M 25 15 H 30 V 17 H 25 z M 21.6877 23.1009 L 23.1019 21.6867 L 26.6077 25.1925 L 25.1935 26.6067 Z M 15 25 H 17 V 30 H 15 z M 5.3944 25.1918 L 8.9002 21.686 L 10.3144 23.1002 L 6.8086 26.606 Z M 2 15 H 7 V 17 H 2 z M 5.3947 6.8079 L 6.8089 5.3937 L 10.3147 8.8995 L 8.9005 10.3137 Z M 16 12 a 4 4 0 1 1 -4 4 4.0045 4.0045 0 0 1 4 -4 m 0 -2 a 6 6 0 1 0 6 6 6 6 0 0 0 -6 -6 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.light.16">F1 M 7.5 1 H 8.5 V 3.5 H 7.5 z M 10.7937 4.4307 L 12.5614 2.6629 L 13.2685 3.37 L 11.5008 5.1378 Z M 12.5 7.5 H 15 V 8.5 H 12.5 z M 10.8623 11.4991 L 11.5694 10.792 L 13.3372 12.5597 L 12.6301 13.2668 Z M 7.5 12.5 H 8.5 V 15 H 7.5 z M 2.731 12.631 L 4.4988 10.8632 L 5.2059 11.5703 L 3.4382 13.3381 Z M 1 7.5 H 3.5 V 8.5 H 1 z M 2.6621 3.4406 L 3.3692 2.7335 L 5.137 4.5012 L 4.4299 5.2083 Z M 8 6 c 1.1 0 2 0.9 2 2 s -0.9 2 -2 2 S 6 9.1 6 8 S 6.9 6 8 6 M 8 5 C 6.3 5 5 6.3 5 8 s 1.3 3 3 3 s 3 -1.3 3 -3 S 9.7 5 8 5 z</StreamGeometry>
+  <!-- asleep -->
+  <StreamGeometry x:Key="CarbonIcon.asleep">F1 M 13.5025 5.4136 A 15.0755 15.0755 0 0 0 25.096 23.6082 a 11.1134 11.1134 0 0 1 -7.9749 3.3893 c -0.1385 0 -0.2782 0.0051 -0.4178 0 A 11.0944 11.0944 0 0 1 13.5025 5.4136 M 14.98 3 a 1.0024 1.0024 0 0 0 -0.1746 0.0156 A 13.0959 13.0959 0 0 0 16.63 28.9973 c 0.1641 0.006 0.3282 0 0.4909 0 a 13.0724 13.0724 0 0 0 10.702 -5.5556 1.0094 1.0094 0 0 0 -0.7833 -1.5644 A 13.08 13.08 0 0 1 15.8892 4.38 1.0149 1.0149 0 0 0 14.98 3 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.asleep.16">F1 M 7.2 2.3 c -1 4.4 1.7 8.7 6.1 9.8 c 0.1 0 0.1 0 0.2 0 c -1.1 1.2 -2.7 1.8 -4.3 1.8 c -0.1 0 -0.2 0 -0.2 0 C 5.6 13.8 3 11 3.2 7.7 C 3.2 5.3 4.8 3.1 7.2 2.3 M 8 1 L 8 1 C 4.1 1.6 1.5 5.3 2.1 9.1 c 0.6 3.3 3.4 5.8 6.8 5.9 c 0.1 0 0.2 0 0.3 0 c 2.3 0 4.4 -1.1 5.8 -3 c 0.2 -0.2 0.1 -0.6 -0.1 -0.7 c -0.1 -0.1 -0.2 -0.1 -0.3 -0.1 c -3.9 -0.3 -6.7 -3.8 -6.4 -7.6 C 8.3 3 8.4 2.4 8.6 1.8 c 0.1 -0.3 0 -0.6 -0.3 -0.7 C 8.1 1 8.1 1 8 1 z</StreamGeometry>
+  <!-- translate -->
+  <StreamGeometry x:Key="CarbonIcon.translate">F1 M 27.85 29 H 30 L 24 14 H 21.65 l -6 15 H 17.8 l 1.6 -4 h 6.85 Z M 20.2 23 l 2.62 -6.56 L 25.45 23 Z M 18 7 V 5 H 11 V 2 H 9 V 5 H 2 V 7 H 12.74 a 14.71 14.71 0 0 1 -3.19 6.18 A 13.5 13.5 0 0 1 7.26 9 H 5.16 a 16.47 16.47 0 0 0 3 5.58 A 16.84 16.84 0 0 1 3 18 l 0.75 1.86 A 18.47 18.47 0 0 0 9.53 16 a 16.92 16.92 0 0 0 5.76 3.84 L 16 18 a 14.48 14.48 0 0 1 -5.12 -3.37 A 17.64 17.64 0 0 0 14.8 7 Z</StreamGeometry>
+  <!-- notification -->
+  <StreamGeometry x:Key="CarbonIcon.notification">F1 M 28.7071 19.293 26 16.5859 V 13 a 10.0136 10.0136 0 0 0 -9 -9.9492 V 1 H 15 V 3.0508 A 10.0136 10.0136 0 0 0 6 13 v 3.5859 L 3.2929 19.293 A 1 1 0 0 0 3 20 v 3 a 1 1 0 0 0 1 1 h 7 v 0.7768 a 5.152 5.152 0 0 0 4.5 5.1987 A 5.0057 5.0057 0 0 0 21 25 V 24 h 7 a 1 1 0 0 0 1 -1 V 20 A 1 1 0 0 0 28.7071 19.293 Z M 19 25 a 3 3 0 0 1 -6 0 V 24 h 6 Z m 8 -3 H 5 V 20.4141 L 7.707 17.707 A 1 1 0 0 0 8 17 V 13 a 8 8 0 0 1 16 0 v 4 a 1 1 0 0 0 0.293 0.707 L 27 20.4141 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.notification.16">F1 M 14.4 10.1 L 13 8.8 V 6.5 c 0 -2.6 -1.9 -4.7 -4.5 -5 v -1 h -1 v 1 C 5 1.8 3 3.9 3 6.5 v 2.3 l -1.4 1.3 c -0.1 0.1 -0.2 0.2 -0.1 0.4 V 12 c 0 0.3 0.2 0.5 0.4 0.5 c 0 0 0 0 0.1 0 h 3.5 C 5.5 13.9 6.6 15 8 15 s 2.5 -1.1 2.5 -2.5 H 14 c 0.3 0 0.5 -0.2 0.5 -0.4 c 0 0 0 0 0 -0.1 v -1.5 C 14.5 10.4 14.4 10.2 14.4 10.1 z M 8 14 c -0.8 0 -1.5 -0.7 -1.5 -1.5 h 3 C 9.5 13.3 8.8 14 8 14 z M 13.5 11.5 h -11 v -0.8 l 1.3 -1.4 C 3.9 9.3 4 9.1 4 9 V 6.5 c 0 -2.2 1.8 -4 4 -4 s 4 1.8 4 4 V 9 c 0 0.1 0.1 0.3 0.1 0.4 l 1.4 1.3 V 11.5 z</StreamGeometry>
+  <!-- switcher -->
+  <StreamGeometry x:Key="CarbonIcon.switcher">F1 M 14 4 H 18 V 8 H 14 z M 4 4 H 8 V 8 H 4 z M 24 4 H 28 V 8 H 24 z M 14 14 H 18 V 18 H 14 z M 4 14 H 8 V 18 H 4 z M 24 14 H 28 V 18 H 24 z M 14 24 H 18 V 28 H 14 z M 4 24 H 8 V 28 H 4 z M 24 24 H 28 V 28 H 24 z</StreamGeometry>
+  <!-- save -->
+  <StreamGeometry x:Key="CarbonIcon.save">F1 M 27.71 9.29 l -5 -5 A 1 1 0 0 0 22 4 H 6 A 2 2 0 0 0 4 6 V 26 a 2 2 0 0 0 2 2 H 26 a 2 2 0 0 0 2 -2 V 10 A 1 1 0 0 0 27.71 9.29 Z M 12 6 h 8 v 4 H 12 Z m 8 20 H 12 V 18 h 8 Z m 2 0 V 18 a 2 2 0 0 0 -2 -2 H 12 a 2 2 0 0 0 -2 2 v 8 H 6 V 6 h 4 v 4 a 2 2 0 0 0 2 2 h 8 a 2 2 0 0 0 2 -2 V 6.41 l 4 4 V 26 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.save.16">F1 M 13.9 4.6 l -2.5 -2.5 C 11.3 2.1 11.1 2 11 2 H 3 C 2.4 2 2 2.4 2 3 v 10 c 0 0.6 0.4 1 1 1 h 10 c 0.6 0 1 -0.4 1 -1 V 5 C 14 4.9 13.9 4.7 13.9 4.6 z M 6 3 h 4 v 2 H 6 V 3 z M 10 13 H 6 V 9 h 4 V 13 z M 11 13 V 9 c 0 -0.6 -0.4 -1 -1 -1 H 6 C 5.4 8 5 8.4 5 9 v 4 H 3 V 3 h 2 v 2 c 0 0.6 0.4 1 1 1 h 4 c 0.6 0 1 -0.4 1 -1 V 3.2 l 2 2 V 13 H 11 z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.save.20">F1 M 17.8 5.5 l -3.3 -3.3 C 14.3 2.1 14.2 2 14 2 H 3.3 C 2.6 2 2 2.6 2 3.3 v 13.3 C 2 17.4 2.6 18 3.3 18 h 13.3 c 0.7 0 1.4 -0.5 1.4 -1.2 V 6.1 C 18 5.7 17.9 5.7 17.8 5.5 z M 7.3 3.3 h 5.3 v 3.3 H 7.3 V 3.3 z M 12.7 16.7 H 7.3 v -5.3 h 5.3 L 12.7 16.7 L 12.7 16.7 z M 14 16.7 v -5.3 c 0 -0.7 -0.6 -1.3 -1.3 -1.3 H 7.3 C 6.6 10 6 10.6 6 11.3 v 5.3 H 3.3 V 3.3 H 6 v 3.3 C 6 7.4 6.6 8 7.3 8 h 5.3 C 13.4 8 14 7.4 14 6.7 v -3 l 2.7 2.7 v 10.4 L 14 16.7 L 14 16.7 z</StreamGeometry>
+  <!-- play -->
+  <StreamGeometry x:Key="CarbonIcon.play">F1 M 7 28 a 1 1 0 0 1 -1 -1 V 5 a 1 1 0 0 1 1.4819 -0.8763 l 20 11 a 1 1 0 0 1 0 1.7525 l -20 11 A 1.0005 1.0005 0 0 1 7 28 Z M 8 6.6909 V 25.3088 L 24.9248 16 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.play.16">F1 M 3.5 14 C 3.2 14 3 13.8 3 13.5 v -11 c 0 -0.2 0.1 -0.3 0.2 -0.4 C 3.4 2 3.6 2 3.8 2.1 l 9.5 5.5 c 0.2 0.1 0.3 0.4 0.2 0.7 c 0 0.1 -0.1 0.1 -0.2 0.2 l -9.5 5.5 C 3.7 14 3.6 14 3.5 14 z M 4 3.4 v 9.3 L 12 8 L 4 3.4 z</StreamGeometry>
+  <!-- stop -->
+  <StreamGeometry x:Key="CarbonIcon.stop">F1 M 24 8 V 24 H 8 V 8 H 24 m 0 -2 H 8 A 2 2 0 0 0 6 8 V 24 a 2 2 0 0 0 2 2 H 24 a 2 2 0 0 0 2 -2 V 8 a 2 2 0 0 0 -2 -2 Z</StreamGeometry>
+  <StreamGeometry x:Key="CarbonIcon.stop.16">F1 M 12 4 v 8 H 4 V 4 H 12 M 12 3 H 4 C 3.4 3 3 3.4 3 4 v 8 c 0 0.6 0.4 1 1 1 h 8 c 0.6 0 1 -0.4 1 -1 V 4 C 13 3.4 12.6 3 12 3 z</StreamGeometry>
+  <!-- list -->
+  <StreamGeometry x:Key="CarbonIcon.list">F1 M 10 6 H 28 V 8 H 10 z M 10 24 H 28 V 26 H 10 z M 10 15 H 28 V 17 H 10 z M 4 15 H 6 V 17 H 4 z M 4 6 H 6 V 8 H 4 z M 4 24 H 6 V 26 H 4 z</StreamGeometry>
+  <!-- data-table -->
+  <StreamGeometry x:Key="CarbonIcon.data-table">F1 M 8 18 H 12 V 20 H 8 z M 14 18 H 18 V 20 H 14 z M 8 14 H 12 V 16 H 8 z M 14 22 H 18 V 24 H 14 z M 20 14 H 24 V 16 H 20 z M 20 22 H 24 V 24 H 20 z M 27 3 H 5 A 2.0025 2.0025 0 0 0 3 5 V 27 a 2.0025 2.0025 0 0 0 2 2 H 27 a 2.0025 2.0025 0 0 0 2 -2 V 5 A 2.0025 2.0025 0 0 0 27 3 Z m 0 2 0 4 H 5 V 5 Z M 5 27 V 11 H 27 l 0 16 Z</StreamGeometry>
+  <!-- tag -->
+  <StreamGeometry x:Key="CarbonIcon.tag">F1 M 10 14 a 4 4 0 1 1 4 -4 A 4.0045 4.0045 0 0 1 10 14 Z m 0 -6 a 2 2 0 1 0 1.998 2.0044 A 2.002 2.002 0 0 0 10 8 Z M 16.6436 29.4145 2.5858 15.3555 A 2 2 0 0 1 2 13.9414 V 4 A 2 2 0 0 1 4 2 h 9.9413 a 2 2 0 0 1 1.4142 0.5858 L 29.4144 16.6436 a 2.0005 2.0005 0 0 1 0 2.8285 l -9.9424 9.9425 a 2.0008 2.0008 0 0 1 -2.8285 0 Z M 4 4 v 9.9417 L 18.0578 28 28 18.0579 13.9416 4 Z</StreamGeometry>
+  <!-- text-font -->
+  <StreamGeometry x:Key="CarbonIcon.text-font">F1 M 25 12 H 20 v 2 h 5 a 1.0008 1.0008 0 0 1 1 1 v 2 H 22 a 3.0033 3.0033 0 0 0 -3 3 v 1 a 3.0033 3.0033 0 0 0 3 3 h 6 V 15 A 3.0033 3.0033 0 0 0 25 12 Z M 22 22 a 1.0008 1.0008 0 0 1 -1 -1 V 20 a 1.0008 1.0008 0 0 1 1 -1 h 4 v 3 Z M 16 24 h 2 L 12 7 H 10 L 4 24 H 6 l 1.6936 -5 h 6.6135 Z M 8.3711 17 l 2.4966 -7.3711 0.2668 0.0005 L 13.63 17 Z</StreamGeometry>
+  <!-- color-palette -->
+  <StreamGeometry x:Key="CarbonIcon.color-palette">F1 M 8 12 A 2 2 0 1 0 12 12 A 2 2 0 1 0 8 12 Z M 14 9 A 2 2 0 1 0 18 9 A 2 2 0 1 0 14 9 Z M 20 12 A 2 2 0 1 0 24 12 A 2 2 0 1 0 20 12 Z M 21 18 A 2 2 0 1 0 25 18 A 2 2 0 1 0 21 18 Z M 17 23 A 2 2 0 1 0 21 23 A 2 2 0 1 0 17 23 Z M 16.54 2 A 14 14 0 0 0 2 16 a 4.82 4.82 0 0 0 6.09 4.65 l 1.12 -0.31 A 3 3 0 0 1 13 23.24 V 27 a 3 3 0 0 0 3 3 A 14 14 0 0 0 30 15.46 14.05 14.05 0 0 0 16.54 2 Z m 8.11 22.31 A 11.93 11.93 0 0 1 16 28 a 1 1 0 0 1 -1 -1 V 23.24 a 5 5 0 0 0 -5 -5 5.07 5.07 0 0 0 -1.33 0.18 l -1.12 0.31 A 2.82 2.82 0 0 1 4 16 12 12 0 0 1 16.47 4 12.18 12.18 0 0 1 28 15.53 11.89 11.89 0 0 1 24.65 24.32 Z</StreamGeometry>
+  <!-- application -->
+  <StreamGeometry x:Key="CarbonIcon.application">F1 M 16 18 H 6 a 2 2 0 0 1 -2 -2 V 6 A 2 2 0 0 1 6 4 H 16 a 2 2 0 0 1 2 2 V 16 A 2 2 0 0 1 16 18 Z M 6 6 V 16 H 16 V 6 Z M 26 12 v 4 H 22 V 12 h 4 m 0 -2 H 22 a 2 2 0 0 0 -2 2 v 4 a 2 2 0 0 0 2 2 h 4 a 2 2 0 0 0 2 -2 V 12 a 2 2 0 0 0 -2 -2 Z M 26 22 v 4 H 22 V 22 h 4 m 0 -2 H 22 a 2 2 0 0 0 -2 2 v 4 a 2 2 0 0 0 2 2 h 4 a 2 2 0 0 0 2 -2 V 22 a 2 2 0 0 0 -2 -2 Z M 16 22 v 4 H 12 V 22 h 4 m 0 -2 H 12 a 2 2 0 0 0 -2 2 v 4 a 2 2 0 0 0 2 2 h 4 a 2 2 0 0 0 2 -2 V 22 a 2 2 0 0 0 -2 -2 Z</StreamGeometry>
+</ResourceDictionary>

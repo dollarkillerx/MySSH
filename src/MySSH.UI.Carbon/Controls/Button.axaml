@@ -1,0 +1,415 @@
+<!--
+  Carbon Button. Kinds (Classes): primary (default) | secondary | tertiary | ghost | danger | danger-tertiary | danger-ghost
+  Sizes (Classes): sm 32 | md 40 (default) | lg 48.  Icon: carbon:ButtonAssist.Icon="add" (right-aligned slot).
+  Icon-only: Classes="ghost icon-only" carbon:ButtonAssist.Icon="settings" ToolTip.Tip="Settings".
+  Also themes ToggleButton (same kinds; :checked = selected) and RepeatButton.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <ControlTemplate x:Key="CarbonButtonTemplate" TargetType="ContentControl">
+    <Panel>
+      <Border Name="PART_Background"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{TemplateBinding CornerRadius}" />
+      <Grid ColumnDefinitions="*,Auto">
+        <ContentPresenter Name="PART_ContentPresenter"
+                          Padding="{TemplateBinding Padding}"
+                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Foreground="{TemplateBinding Foreground}"
+                          RecognizesAccessKey="True" />
+        <carbon:CarbonIcon Name="PART_Icon"
+                           VerticalAlignment="Center"
+                           Foreground="{TemplateBinding Foreground}"
+                           Kind="{TemplateBinding (carbon:ButtonAssist.Icon)}" />
+      </Grid>
+      <Border Name="PART_FocusRing"
+              BorderBrush="{DynamicResource CarbonFocus}"
+              BorderThickness="2"
+              IsHitTestVisible="False"
+              IsVisible="False">
+        <Border Name="PART_FocusInset"
+                BorderBrush="{DynamicResource CarbonFocusInset}"
+                BorderThickness="1" />
+      </Border>
+    </Panel>
+  </ControlTemplate>
+
+  <ControlTheme x:Key="CarbonButtonBase" TargetType="Button">
+    <Setter Property="Background" Value="{DynamicResource CarbonButtonPrimary}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0,64,0" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template" Value="{StaticResource CarbonButtonTemplate}" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.07" Easing="0.2,0,0.38,0.9" />
+      </Transitions>
+    </Setter>
+
+    <!-- icon slot defaults (set by style, not in the template, so derived themes can override them) -->
+    <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Grid.Column" Value="1" />
+      <Setter Property="Margin" Value="0,0,16,0" />
+      <Setter Property="Size" Value="16" />
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <!-- icon slot -->
+    <Style Selector="^:has-icon">
+      <Setter Property="Padding" Value="16,0,32,0" />
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+    </Style>
+
+    <!-- focus: 2px focus + 1px inset (Carbon) -->
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <!-- sizes -->
+    <Style Selector="^.sm">
+      <Setter Property="MinHeight" Value="32" />
+      <Setter Property="Padding" Value="12,0,60,0" />
+    </Style>
+    <Style Selector="^.sm:has-icon">
+      <Setter Property="Padding" Value="12,0,32,0" />
+    </Style>
+    <Style Selector="^.lg">
+      <Setter Property="MinHeight" Value="48" />
+    </Style>
+
+    <!-- primary (default) -->
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonPrimaryHover}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonPrimaryActive}" />
+    </Style>
+
+    <!-- secondary -->
+    <Style Selector="^.secondary">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonSecondary}" />
+    </Style>
+    <Style Selector="^.secondary:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonSecondaryHover}" />
+    </Style>
+    <Style Selector="^.secondary:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonSecondaryActive}" />
+    </Style>
+
+    <!-- tertiary -->
+    <Style Selector="^.tertiary">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonButtonTertiary}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonButtonTertiary}" />
+    </Style>
+    <Style Selector="^.tertiary:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonTertiaryHover}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextInverse}" />
+    </Style>
+    <Style Selector="^.tertiary:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonTertiaryActive}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextInverse}" />
+    </Style>
+    <Style Selector="^.tertiary:focus-visible">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonTertiary}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextInverse}" />
+    </Style>
+
+    <!-- ghost -->
+    <Style Selector="^.ghost">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonLinkPrimary}" />
+      <Setter Property="Padding" Value="16,0,16,0" />
+    </Style>
+    <Style Selector="^.ghost:has-icon">
+      <Setter Property="Padding" Value="16,0,8,0" />
+    </Style>
+    <Style Selector="^.ghost:has-icon /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+    <Style Selector="^.ghost:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonLinkPrimaryHover}" />
+    </Style>
+    <Style Selector="^.ghost:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundActive}" />
+    </Style>
+
+    <!-- danger -->
+    <Style Selector="^.danger">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerPrimary}" />
+    </Style>
+    <Style Selector="^.danger:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerHover}" />
+    </Style>
+    <Style Selector="^.danger:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerActive}" />
+    </Style>
+    <Style Selector="^.danger-tertiary">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonButtonDangerSecondary}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonButtonDangerSecondary}" />
+    </Style>
+    <Style Selector="^.danger-tertiary:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerHover}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonButtonDangerHover}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    </Style>
+    <Style Selector="^.danger-tertiary:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerActive}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    </Style>
+    <Style Selector="^.danger-ghost">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonButtonDangerSecondary}" />
+      <Setter Property="Padding" Value="16,0,16,0" />
+    </Style>
+    <Style Selector="^.danger-ghost:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerHover}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    </Style>
+    <Style Selector="^.danger-ghost:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDangerActive}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColor}" />
+    </Style>
+
+    <!-- icon-only: square, icon centered -->
+    <Style Selector="^.icon-only">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Width" Value="40" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="IsVisible" Value="False" />
+      </Style>
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+        <Setter Property="Grid.Column" Value="0" />
+        <Setter Property="Grid.ColumnSpan" Value="2" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+      </Style>
+    </Style>
+    <Style Selector="^.icon-only.sm">
+      <Setter Property="Width" Value="32" />
+      <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="^.icon-only.lg">
+      <Setter Property="Width" Value="48" />
+    </Style>
+    <Style Selector="^.ghost.icon-only /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+
+    <!-- disabled -->
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="Background" Value="{DynamicResource CarbonButtonDisabled}" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextOnColorDisabled}" />
+    </Style>
+    <Style Selector="^.tertiary:disabled, ^.danger-tertiary:disabled">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonButtonDisabled}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+    </Style>
+    <Style Selector="^.ghost:disabled, ^.danger-ghost:disabled">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+    </Style>
+    <Style Selector="^.ghost:disabled /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type Button}" TargetType="Button" BasedOn="{StaticResource CarbonButtonBase}" />
+
+  <!-- Header global action (48x48, used inside carbon:ShellHeader; always on Gray 100) -->
+  <ControlTheme x:Key="CarbonHeaderActionButton" TargetType="Button" BasedOn="{StaticResource CarbonButtonBase}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonIconSecondary}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Width" Value="48" />
+    <Setter Property="Height" Value="48" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Grid.ColumnSpan" Value="2" />
+    </Style>
+    <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Size" Value="20" />
+      <Setter Property="Grid.Column" Value="0" />
+      <Setter Property="Grid.ColumnSpan" Value="2" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="Margin" Value="0" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundActive}" />
+    </Style>
+    <Style Selector="^.active">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+    <Style Selector="^:has-icon">
+      <Setter Property="Padding" Value="0" />
+    </Style>
+  </ControlTheme>
+
+  <!-- Small dismiss "x" used inside tabs / tags / notifications -->
+  <ControlTheme x:Key="CarbonCloseButton" TargetType="Button" BasedOn="{StaticResource CarbonButtonBase}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Width" Value="24" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="carbon:ButtonAssist.Icon" Value="close" />
+    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Grid.Column" Value="0" />
+      <Setter Property="Grid.ColumnSpan" Value="2" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="Margin" Value="0" />
+    </Style>
+    <Style Selector="^:has-icon">
+      <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundActive}" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ToggleButton: Carbon "selected" ghost/secondary behaviour -->
+  <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0,16,0" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template" Value="{StaticResource CarbonButtonTemplate}" />
+    <!-- icon slot defaults (set by style, not in the template, so derived themes can override them) -->
+    <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+      <Setter Property="Grid.Column" Value="1" />
+      <Setter Property="Margin" Value="0,0,16,0" />
+      <Setter Property="Size" Value="16" />
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:has-icon">
+      <Setter Property="Padding" Value="16,0,8,0" />
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundHover}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundActive}" />
+    </Style>
+    <Style Selector="^:checked">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundSelected}" />
+    </Style>
+    <Style Selector="^:checked:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonBackgroundSelectedHover}" />
+    </Style>
+    <Style Selector="^.sm">
+      <Setter Property="MinHeight" Value="32" />
+    </Style>
+    <Style Selector="^.lg">
+      <Setter Property="MinHeight" Value="48" />
+    </Style>
+    <Style Selector="^.icon-only">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Width" Value="40" />
+      <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="IsVisible" Value="False" />
+      </Style>
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_Icon">
+        <Setter Property="Grid.Column" Value="0" />
+        <Setter Property="Grid.ColumnSpan" Value="2" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+      </Style>
+    </Style>
+    <Style Selector="^.icon-only.sm">
+      <Setter Property="Width" Value="32" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+  </ControlTheme>
+
+  <!-- RepeatButton: neutral ghost (used by ScrollBar/NumericUpDown in Simple templates) -->
+  <ControlTheme x:Key="{x:Type RepeatButton}" TargetType="RepeatButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="4" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ContentPresenter Name="PART_ContentPresenter"
+                          Padding="{TemplateBinding Padding}"
+                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                          Background="{TemplateBinding Background}"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Foreground="{TemplateBinding Foreground}" />
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerHover01}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayerActive01}" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconDisabled}" />
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

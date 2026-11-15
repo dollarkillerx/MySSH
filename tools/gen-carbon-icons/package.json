@@ -1,0 +1,13 @@
+{
+  "name": "gen-carbon-icons",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Converts a curated set of @carbon/icons SVGs into Avalonia StreamGeometry resources (src/MySSH.UI.Carbon/Icons/CarbonIcons.axaml).",
+  "type": "module",
+  "scripts": {
+    "gen": "node gen.mjs"
+  },
+  "devDependencies": {
+    "@carbon/icons": "11.91.0"
+  }
+}

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../MySSH.Tools/MySSH.Tools.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Anthropic" />
+    <PackageReference Include="OpenAI" />
+    <PackageReference Include="JsonSchema.Net" />
+  </ItemGroup>
+</Project>

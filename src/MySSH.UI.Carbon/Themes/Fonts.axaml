@@ -1,0 +1,16 @@
+<!-- IBM Plex Sans / Mono (SIL OFL 1.1, see Assets/Fonts/OFL.txt), bundled Latin/Greek/Cyrillic only.
+     CJK text falls back to the platform font (PingFang / Microsoft YaHei / Noto CJK) via Avalonia font fallback;
+     IBM Plex Sans SC/JP are not bundled in P1 because of their size. -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <FontFamily x:Key="CarbonFontSans">avares://MySSH.UI.Carbon/Assets/Fonts#IBM Plex Sans, $Default</FontFamily>
+  <FontFamily x:Key="CarbonFontMono">avares://MySSH.UI.Carbon/Assets/Fonts#IBM Plex Mono, Menlo, Consolas, $Default</FontFamily>
+  <!-- Simple theme compatibility -->
+  <StaticResource x:Key="ContentControlThemeFontFamily" ResourceKey="CarbonFontSans" />
+  <x:Double x:Key="FontSizeSmall">12</x:Double>
+  <x:Double x:Key="FontSizeNormal">14</x:Double>
+  <x:Double x:Key="FontSizeLarge">16</x:Double>
+  <Thickness x:Key="ThemeBorderThickness">1</Thickness>
+  <x:Double x:Key="ThemeDisabledOpacity">0.5</x:Double>
+  <x:Double x:Key="ScrollBarThickness">8</x:Double>
+</ResourceDictionary>

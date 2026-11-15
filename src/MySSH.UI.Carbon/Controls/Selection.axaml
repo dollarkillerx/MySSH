@@ -1,0 +1,282 @@
+<!-- Carbon Checkbox, Radio button and Toggle (ToggleSwitch; Classes="sm" for the small toggle). -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <!-- ============================================================ CheckBox -->
+  <ControlTheme x:Key="{x:Type CheckBox}" TargetType="CheckBox">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonIconPrimary}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="Padding" Value="8,0,0,0" />
+    <Setter Property="MinHeight" Value="24" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="Auto,*" Background="Transparent">
+          <Panel Width="16" Height="16" VerticalAlignment="Center">
+            <Border Name="PART_Box"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}" />
+            <Path Name="PART_CheckMark"
+                  Data="M 3.5 8 L 6.5 11 L 12.5 5"
+                  Stroke="{DynamicResource CarbonIconInverse}"
+                  StrokeThickness="1.5"
+                  StrokeLineCap="Square"
+                  IsVisible="False" />
+            <Rectangle Name="PART_Indeterminate"
+                       Width="8"
+                       Height="2"
+                       Fill="{DynamicResource CarbonIconInverse}"
+                       IsVisible="False" />
+            <Border Name="PART_FocusRing"
+                    Margin="-3"
+                    BorderBrush="{DynamicResource CarbonFocus}"
+                    BorderThickness="2"
+                    CornerRadius="2"
+                    IsHitTestVisible="False"
+                    IsVisible="False" />
+          </Panel>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}"
+                            RecognizesAccessKey="True"
+                            IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:checked, ^:indeterminate">
+      <Setter Property="Background" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+    <Style Selector="^:checked /template/ Path#PART_CheckMark">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:indeterminate /template/ Rectangle#PART_Indeterminate">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:invalid">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportError}" />
+      <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonIconDisabled}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+    </Style>
+    <Style Selector="^:disabled:checked, ^:disabled:indeterminate">
+      <Setter Property="Background" Value="{DynamicResource CarbonIconDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ RadioButton -->
+  <ControlTheme x:Key="{x:Type RadioButton}" TargetType="RadioButton">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonIconPrimary}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="Padding" Value="8,0,0,0" />
+    <Setter Property="MinHeight" Value="24" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="Auto,*" Background="Transparent">
+          <Panel Width="18" Height="18" VerticalAlignment="Center">
+            <Ellipse Name="PART_Ring"
+                     Fill="{TemplateBinding Background}"
+                     Stroke="{TemplateBinding BorderBrush}"
+                     StrokeThickness="1" />
+            <Ellipse Name="PART_Dot"
+                     Width="8"
+                     Height="8"
+                     Fill="{TemplateBinding BorderBrush}"
+                     IsVisible="False" />
+            <Ellipse Name="PART_FocusRing"
+                     Margin="-3"
+                     Stroke="{DynamicResource CarbonFocus}"
+                     StrokeThickness="2"
+                     IsHitTestVisible="False"
+                     IsVisible="False" />
+          </Panel>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}"
+                            RecognizesAccessKey="True"
+                            IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:checked /template/ Ellipse#PART_Dot">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Ellipse#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:invalid">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportError}" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonIconDisabled}" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ ToggleSwitch (Carbon Toggle) -->
+  <ControlTheme x:Key="{x:Type ToggleSwitch}" TargetType="ToggleSwitch">
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="OnContent" Value="On" />
+    <Setter Property="OffContent" Value="Off" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="KnobTransitions">
+      <Transitions>
+        <DoubleTransition Property="Canvas.Left" Duration="0:0:0.07" Easing="0.2,0,0.38,0.9" />
+      </Transitions>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Background="{TemplateBinding Background}" Spacing="16">
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{DynamicResource CarbonTextSecondary}"
+                            FontSize="12"
+                            LetterSpacing="0.32"
+                            RecognizesAccessKey="True"
+                            IsVisible="{TemplateBinding Content, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Grid ColumnDefinitions="Auto,Auto" HorizontalAlignment="Left">
+            <Panel Name="SwitchAreaGrid" TemplatedControl.IsTemplateFocusTarget="True">
+              <Border Name="PART_Track"
+                      Width="48"
+                      Height="24"
+                      CornerRadius="12"
+                      Background="{DynamicResource CarbonToggleOff}">
+                <Border.Transitions>
+                  <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.07" />
+                  </Transitions>
+                </Border.Transitions>
+              </Border>
+              <Border Name="PART_FocusRing"
+                      Margin="-3"
+                      CornerRadius="15"
+                      BorderBrush="{DynamicResource CarbonFocus}"
+                      BorderThickness="2"
+                      IsHitTestVisible="False"
+                      IsVisible="False" />
+              <Canvas Name="PART_SwitchKnob" Width="24" Height="24" HorizontalAlignment="Left">
+                <Panel Name="PART_MovingKnobs" Width="24" Height="24" Background="Transparent">
+                  <Ellipse Name="PART_Knob" Width="18" Height="18" Fill="{DynamicResource CarbonIconOnColor}" />
+                  <Path Name="PART_KnobCheck"
+                        Data="M 0 2.5 L 2 4.5 L 6 0.5"
+                        Width="6"
+                        Height="5"
+                        Stretch="None"
+                        Stroke="{DynamicResource CarbonSupportSuccess}"
+                        StrokeThickness="1.2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsVisible="False" />
+                </Panel>
+              </Canvas>
+            </Panel>
+            <Panel Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center">
+              <ContentPresenter Name="PART_OffContentPresenter"
+                                Content="{TemplateBinding OffContent}"
+                                ContentTemplate="{TemplateBinding OffContentTemplate}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" />
+              <ContentPresenter Name="PART_OnContentPresenter"
+                                Content="{TemplateBinding OnContent}"
+                                ContentTemplate="{TemplateBinding OnContentTemplate}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" />
+            </Panel>
+          </Grid>
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:checked /template/ Border#PART_Track">
+      <Setter Property="Background" Value="{DynamicResource CarbonSupportSuccess}" />
+    </Style>
+    <Style Selector="^:checked /template/ ContentPresenter#PART_OffContentPresenter">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:unchecked /template/ ContentPresenter#PART_OnContentPresenter">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <!-- small: 32 x 16, knob 10, checkmark in knob -->
+    <Style Selector="^.sm">
+      <Style Selector="^ /template/ Border#PART_Track">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="CornerRadius" Value="8" />
+      </Style>
+      <Style Selector="^ /template/ Border#PART_FocusRing">
+        <Setter Property="CornerRadius" Value="11" />
+      </Style>
+      <Style Selector="^ /template/ Canvas#PART_SwitchKnob">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+      </Style>
+      <Style Selector="^ /template/ Panel#PART_MovingKnobs">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+      </Style>
+      <Style Selector="^ /template/ Ellipse#PART_Knob">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+      </Style>
+    </Style>
+    <Style Selector="^.sm:checked /template/ Path#PART_KnobCheck">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Cursor" Value="No" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Style Selector="^ /template/ Border#PART_Track">
+        <Setter Property="Background" Value="{DynamicResource CarbonButtonDisabled}" />
+      </Style>
+      <Style Selector="^ /template/ Ellipse#PART_Knob">
+        <Setter Property="Fill" Value="{DynamicResource CarbonIconOnColorDisabled}" />
+      </Style>
+      <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      </Style>
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,17 @@
+# Reviewed third-party trim/AOT warnings in the NativeAOT app (checked by tools/aot/check-aot-warnings.sh).
+# Format: "<code> <member>" exactly as printed by the script. Every entry needs a reason.
+
+# Avalonia.Controls.DataGrid 12.1.2 -------------------------------------------------------------
+# Column auto-generation: never used (AutoGenerateColumns="False", explicit compiled-binding columns).
+IL2026 Avalonia.Controls.DataGrid.GenerateColumn(Type,String,String)
+IL3050 Avalonia.Controls.DataGrid.GenerateColumn(Type,String,String)
+# Edit-mode value conversion: our grids are IsReadOnly="True".
+IL2026 Avalonia.Controls.DataGridValueConverter.Convert(Object,Type,Object,CultureInfo)
+IL2026 Avalonia.Controls.DataGridValueConverter.ConvertBack(Object,Type,Object,CultureInfo)
+# Header-click sorting resolves the column's property path by reflection. Row types shown in a DataGrid
+# must be rooted with [DynamicDependency(PublicProperties | Interfaces, typeof(Row))] (see MainWindow.axaml.cs).
+IL2070 Avalonia.Controls.Utils.TypeHelper.FindGenericType(Type,Type)
+IL2070 Avalonia.Controls.Utils.TypeHelper.GetPropertyOrIndexer(Type,String,Object[]&)
+IL3050 Avalonia.Controls.Utils.TypeHelper.GetPropertyOrIndexer(Type,String,Object[]&)
+IL2075 Avalonia.Collections.DataGridCollectionView.GetItemType(Boolean)
+IL2075 Avalonia.Controls.DataGridDataConnection.UpdateDataProperties()

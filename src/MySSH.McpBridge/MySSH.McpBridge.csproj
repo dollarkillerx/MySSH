@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- myssh-mcp: stdio <-> local socket byte pump for stdio-only MCP clients (design §6.4). Implemented in P3. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>myssh-mcp</AssemblyName>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+</Project>

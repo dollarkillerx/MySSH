@@ -1,0 +1,125 @@
+<!--
+  GENERATED FILE - DO NOT EDIT.
+  Carbon productive type styles as TextBlock classes, e.g. <TextBlock Classes="heading-03" />.
+  Source: @carbon/themes 11.84.0, @carbon/type 11.70.0, @carbon/layout 11.62.0, @carbon/motion 11.55.0 (Apache-2.0).
+  Regenerate: cd tools/gen-carbon-tokens && npm ci && npm run gen   (see tools/gen-carbon-tokens/README.md)
+-->
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style Selector=":is(TextBlock).label-01">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineHeight" Value="16" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.32" />
+  </Style>
+  <Style Selector=":is(TextBlock).label-02">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="18" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).helper-text-01">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineHeight" Value="16" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.32" />
+  </Style>
+  <Style Selector=":is(TextBlock).helper-text-02">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="18" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).legal-01">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineHeight" Value="16" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.32" />
+  </Style>
+  <Style Selector=":is(TextBlock).legal-02">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="18" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).body-compact-01">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="18" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).body-compact-02">
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="LineHeight" Value="22" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+  <Style Selector=":is(TextBlock).body-01">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="20" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).body-02">
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="LineHeight" Value="24" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+  <Style Selector=":is(TextBlock).code-01">
+    <Setter Property="FontFamily" Value="{DynamicResource CarbonFontMono}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineHeight" Value="16" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.32" />
+  </Style>
+  <Style Selector=":is(TextBlock).code-02">
+    <Setter Property="FontFamily" Value="{DynamicResource CarbonFontMono}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="20" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0.32" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-compact-01">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="18" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-compact-02">
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="LineHeight" Value="22" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-01">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LineHeight" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-02">
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="LineHeight" Value="24" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-03">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="LineHeight" Value="28" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-04">
+    <Setter Property="FontSize" Value="28" />
+    <Setter Property="LineHeight" Value="36" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+  <Style Selector=":is(TextBlock).heading-05">
+    <Setter Property="FontSize" Value="32" />
+    <Setter Property="LineHeight" Value="40" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="LetterSpacing" Value="0" />
+  </Style>
+</Styles>

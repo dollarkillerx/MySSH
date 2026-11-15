@@ -1,0 +1,276 @@
+<!--
+  Carbon Text input / Password input / Text area.
+  carbon:Field.Label / HelperText / IsInvalid / InvalidText; sizes Classes="sm" (32) | md (40, default) | "lg" (48).
+  Password: set PasswordChar="●" and Classes="password" (adds the view / view-off toggle).
+  Text area: AcceptsReturn="True" (multi-line, top-aligned, 16px padding top/bottom... per Carbon 11px).
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <MenuFlyout x:Key="CarbonTextBoxContextFlyout" Placement="Bottom">
+    <MenuItem Header="{DynamicResource StringTextFlyoutCutText}" Command="{Binding $parent[TextBox].Cut}"
+              IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
+    <MenuItem Header="{DynamicResource StringTextFlyoutCopyText}" Command="{Binding $parent[TextBox].Copy}"
+              IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
+    <MenuItem Header="{DynamicResource StringTextFlyoutPasteText}" Command="{Binding $parent[TextBox].Paste}"
+              IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}" />
+  </MenuFlyout>
+
+  <ControlTheme x:Key="CarbonPasswordRevealButton" TargetType="ToggleButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonIconPrimary}" />
+    <Setter Property="Width" Value="40" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}">
+          <Panel>
+            <carbon:CarbonIcon Name="PART_Show" Kind="view" Size="16" Foreground="{TemplateBinding Foreground}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <carbon:CarbonIcon Name="PART_Hide" Kind="view-off" Size="16" Foreground="{TemplateBinding Foreground}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False" />
+          </Panel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonFieldHover01}" />
+    </Style>
+    <Style Selector="^:checked /template/ carbon|CarbonIcon#PART_Show">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:checked /template/ carbon|CarbonIcon#PART_Hide">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:disabled">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonIconDisabled}" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type TextBox}" TargetType="TextBox">
+    <Setter Property="Background" Value="{DynamicResource CarbonField01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderStrong01}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="CaretBrush" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="PlaceholderForeground" Value="{DynamicResource CarbonTextPlaceholder}" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource CarbonHighlight}" />
+    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="CornerRadius" Value="0" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="ContextFlyout" Value="{StaticResource CarbonTextBoxContextFlyout}" />
+    <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <DockPanel>
+          <TextBlock Name="PART_Label"
+                     DockPanel.Dock="Top"
+                     Margin="0,0,0,8"
+                     Classes="label-01"
+                     Foreground="{DynamicResource CarbonTextSecondary}"
+                     Text="{TemplateBinding (carbon:Field.Label)}"
+                     IsVisible="{TemplateBinding (carbon:Field.Label), Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <Panel Name="PART_HelperPanel" DockPanel.Dock="Bottom">
+            <TextBlock Name="PART_Helper"
+                       Margin="0,4,0,0"
+                       Classes="helper-text-01"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource CarbonTextHelper}"
+                       Text="{TemplateBinding (carbon:Field.HelperText)}"
+                       IsVisible="{TemplateBinding (carbon:Field.HelperText), Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <TextBlock Name="PART_InvalidText"
+                       Margin="0,4,0,0"
+                       Classes="helper-text-01"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource CarbonTextError}"
+                       Text="{TemplateBinding (carbon:Field.InvalidText)}"
+                       IsVisible="False" />
+            <ItemsControl Name="PART_Errors"
+                          Margin="0,4,0,0"
+                          IsVisible="False"
+                          ItemsSource="{TemplateBinding (DataValidationErrors.Errors)}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:Object">
+                  <TextBlock Classes="helper-text-01" Foreground="{DynamicResource CarbonTextError}" Text="{Binding}" TextWrapping="Wrap" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Panel>
+          <Panel Name="PART_Field" MinHeight="{TemplateBinding MinHeight}">
+            <Border Name="PART_Border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}" />
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+              <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}" />
+              <ScrollViewer Name="PART_ScrollViewer"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                            BringIntoViewOnFocusChange="{TemplateBinding (ScrollViewer.BringIntoViewOnFocusChange)}"
+                            HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                            IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                            VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                <Panel VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                  <TextBlock Name="PART_Placeholder"
+                             Foreground="{TemplateBinding PlaceholderForeground}"
+                             Text="{TemplateBinding PlaceholderText}"
+                             TextAlignment="{TemplateBinding TextAlignment}"
+                             TextWrapping="{TemplateBinding TextWrapping}"
+                             LetterSpacing="{TemplateBinding LetterSpacing}">
+                    <TextBlock.IsVisible>
+                      <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding ElementName="PART_TextPresenter" Path="PreeditText" Converter="{x:Static StringConverters.IsNullOrEmpty}" />
+                        <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Text" Converter="{x:Static StringConverters.IsNullOrEmpty}" />
+                      </MultiBinding>
+                    </TextBlock.IsVisible>
+                  </TextBlock>
+                  <TextPresenter Name="PART_TextPresenter"
+                                 CaretBlinkInterval="{TemplateBinding CaretBlinkInterval}"
+                                 CaretBrush="{TemplateBinding CaretBrush}"
+                                 CaretIndex="{TemplateBinding CaretIndex}"
+                                 LineHeight="{TemplateBinding LineHeight}"
+                                 LetterSpacing="{TemplateBinding LetterSpacing}"
+                                 PasswordChar="{TemplateBinding PasswordChar}"
+                                 RevealPassword="{TemplateBinding RevealPassword}"
+                                 SelectionBrush="{TemplateBinding SelectionBrush}"
+                                 SelectionEnd="{TemplateBinding SelectionEnd}"
+                                 SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                                 SelectionStart="{TemplateBinding SelectionStart}"
+                                 Text="{TemplateBinding Text, Mode=TwoWay}"
+                                 TextAlignment="{TemplateBinding TextAlignment}"
+                                 TextWrapping="{TemplateBinding TextWrapping}" />
+                </Panel>
+                <ScrollViewer.Styles>
+                  <Style Selector="ScrollContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Cursor" Value="IBeam" />
+                  </Style>
+                </ScrollViewer.Styles>
+              </ScrollViewer>
+              <carbon:CarbonIcon Name="PART_InvalidIcon"
+                                 Grid.Column="2"
+                                 Margin="0,0,16,0"
+                                 VerticalAlignment="Center"
+                                 Kind="warning-filled"
+                                 Size="16"
+                                 Foreground="{DynamicResource CarbonSupportError}"
+                                 IsVisible="False" />
+              <ContentPresenter Grid.Column="3" Content="{TemplateBinding InnerRightContent}" />
+            </Grid>
+            <Border Name="PART_FocusRing"
+                    BorderBrush="{DynamicResource CarbonFocus}"
+                    BorderThickness="2"
+                    IsHitTestVisible="False"
+                    IsVisible="False" />
+          </Panel>
+        </DockPanel>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^ /template/ Panel#PART_Field">
+      <Setter Property="Cursor" Value="IBeam" />
+    </Style>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonFieldHover01}" />
+    </Style>
+    <Style Selector="^:focus-within /template/ Border#PART_FocusRing">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <!-- sizes -->
+    <Style Selector="^.sm">
+      <Setter Property="MinHeight" Value="32" />
+    </Style>
+    <Style Selector="^.lg">
+      <Setter Property="MinHeight" Value="48" />
+    </Style>
+
+    <!-- light: on layer-01 surfaces use field-02 -->
+    <Style Selector="^.on-layer">
+      <Setter Property="Background" Value="{DynamicResource CarbonField02}" />
+    </Style>
+    <Style Selector="^.on-layer:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonFieldHover02}" />
+    </Style>
+
+    <!-- invalid: 2px support-error outline, warning icon, error text -->
+    <Style Selector="^:invalid, ^:error">
+      <Style Selector="^ /template/ Border#PART_FocusRing">
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CarbonSupportError}" />
+      </Style>
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_InvalidIcon">
+        <Setter Property="IsVisible" Value="True" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Helper">
+        <Setter Property="IsVisible" Value="False" />
+      </Style>
+    </Style>
+    <Style Selector="^:invalid /template/ TextBlock#PART_InvalidText">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:error /template/ ItemsControl#PART_Errors">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:invalid:focus-within /template/ Border#PART_FocusRing, ^:error:focus-within /template/ Border#PART_FocusRing">
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonFocus}" />
+    </Style>
+
+    <!-- read-only -->
+    <Style Selector="^[IsReadOnly=True]">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CarbonBorderSubtle01}" />
+    </Style>
+
+    <!-- disabled -->
+    <Style Selector="^:disabled">
+      <Setter Property="Background" Value="{DynamicResource CarbonField01}" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Setter Property="PlaceholderForeground" Value="{DynamicResource CarbonTextDisabled}" />
+      <Style Selector="^ /template/ TextBlock#PART_Label">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Helper">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextDisabled}" />
+      </Style>
+      <Style Selector="^ /template/ Panel#PART_Field">
+        <Setter Property="Cursor" Value="No" />
+      </Style>
+    </Style>
+
+    <!-- text area -->
+    <Style Selector="^[AcceptsReturn=True]">
+      <Setter Property="Padding" Value="16,11" />
+      <Setter Property="VerticalContentAlignment" Value="Top" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="LineHeight" Value="20" />
+    </Style>
+    <Style Selector="^[AcceptsReturn=True] /template/ carbon|CarbonIcon#PART_InvalidIcon">
+      <Setter Property="VerticalAlignment" Value="Top" />
+      <Setter Property="Margin" Value="0,12,16,0" />
+    </Style>
+
+    <!-- password: view / hide toggle -->
+    <Style Selector="^.password, ^.revealPasswordButton">
+      <Setter Property="InnerRightContent">
+        <Template>
+          <ToggleButton Theme="{StaticResource CarbonPasswordRevealButton}"
+                        IsChecked="{Binding $parent[TextBox].RevealPassword, Mode=TwoWay}"
+                        IsEnabled="{Binding $parent[TextBox].IsEnabled}"
+                        ToolTip.Tip="{DynamicResource CarbonStringShowPassword}" />
+        </Template>
+      </Setter>
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

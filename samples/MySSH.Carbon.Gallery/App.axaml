@@ -1,0 +1,30 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.App"
+             RequestedThemeVariant="Light">
+  <Application.Styles>
+    <carbon:CarbonTheme />
+    <!-- gallery layout helpers -->
+    <Style Selector="StackPanel.page">
+      <Setter Property="Margin" Value="32,24,32,48" />
+      <Setter Property="Spacing" Value="8" />
+      <Setter Property="MaxWidth" Value="1100" />
+      <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style Selector="StackPanel.section">
+      <Setter Property="Spacing" Value="16" />
+      <Setter Property="Margin" Value="0,24,0,0" />
+    </Style>
+    <Style Selector="WrapPanel.row > :is(Control)">
+      <Setter Property="Margin" Value="0,0,16,16" />
+    </Style>
+    <Style Selector="Grid.matrix > :is(Control)">
+      <Setter Property="Margin" Value="0,0,16,16" />
+    </Style>
+    <Style Selector="Border.tile">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+      <Setter Property="Padding" Value="16" />
+    </Style>
+  </Application.Styles>
+</Application>

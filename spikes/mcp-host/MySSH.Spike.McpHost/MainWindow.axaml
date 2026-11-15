@@ -1,0 +1,10 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MySSH.Spike.McpHost.MainWindow"
+        Width="560" Height="220"
+        Title="MySSH MCP host spike">
+    <StackPanel Margin="16" Spacing="6">
+        <TextBlock FontSize="16" FontWeight="SemiBold" Text="MySSH MCP host spike"/>
+        <SelectableTextBlock x:Name="Info" Text="Starting MCP host…" TextWrapping="Wrap"/>
+    </StackPanel>
+</Window>

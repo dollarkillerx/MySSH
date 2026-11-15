@@ -1,0 +1,12 @@
+<Project>
+  <!-- SDK 10.0.401 ships ILCompiler 10.0.12, flagged by GHSA-p3jp-9v83-76w9 (fixed in runtime 10.0.15 / SDK 10.0.404).
+       On an older local SDK keep building but say so loudly; on 10.0.404+ (CI) NU1903 stays an error. -->
+  <PropertyGroup Condition="'$(NETCoreSdkVersion)' != '' And $([MSBuild]::VersionLessThan('$(NETCoreSdkVersion)', '10.0.404'))">
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1903</WarningsNotAsErrors>
+    <MySshOutdatedSdk>true</MySshOutdatedSdk>
+  </PropertyGroup>
+
+  <Target Name="MySshWarnOutdatedSdk" BeforeTargets="Build" Condition="'$(MySshOutdatedSdk)' == 'true' And '$(PublishAot)' == 'true'">
+    <Warning Code="MYSSH001" Text=".NET SDK $(NETCoreSdkVersion) bundles a vulnerable NativeAOT compiler (GHSA-p3jp-9v83-76w9). Install .NET SDK 10.0.404 or newer before publishing." />
+  </Target>
+</Project>

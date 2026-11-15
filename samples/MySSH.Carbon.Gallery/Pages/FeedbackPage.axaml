@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.FeedbackPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Notifications, tags, progress" />
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Inline notification (high contrast, default)" />
+      <Grid ColumnDefinitions="*,24,*" RowDefinitions="Auto,16,Auto">
+        <carbon:InlineNotification Kind="Error" Title="Connection failed" Subtitle="Host key for prod-web-01 changed." />
+        <carbon:InlineNotification Grid.Column="2" Kind="Success" Title="Connected" Subtitle="bastion → prod-web-01 · 23 ms" />
+        <carbon:InlineNotification Grid.Row="2" Kind="Warning" Title="Unsaved changes" Subtitle="Close anyway?">
+          <carbon:InlineNotification.Action>
+            <Button Classes="ghost sm" Foreground="{DynamicResource CarbonLinkInverse}" Content="Review" />
+          </carbon:InlineNotification.Action>
+        </carbon:InlineNotification>
+        <carbon:InlineNotification Grid.Row="2" Grid.Column="2" Kind="Info" Title="MCP" Subtitle="Claude Code connected as client #1." IsCloseButtonVisible="False" />
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Inline notification (low contrast)" />
+      <Grid ColumnDefinitions="*,24,*" RowDefinitions="Auto,16,Auto">
+        <carbon:InlineNotification IsLowContrast="True" Kind="Error" Title="Connection failed" Subtitle="Host key for prod-web-01 changed." />
+        <carbon:InlineNotification Grid.Column="2" IsLowContrast="True" Kind="Success" Title="Saved" Subtitle="3 hosts imported." />
+        <carbon:InlineNotification Grid.Row="2" IsLowContrast="True" Kind="Warning" Title="Weak backup password" Subtitle="Use at least 12 characters." />
+        <carbon:InlineNotification Grid.Row="2" Grid.Column="2" IsLowContrast="True" Kind="Info" Title="Tip" Subtitle="Press Ctrl+K to open the command palette." />
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Tag" />
+      <WrapPanel Name="TagTypes" Classes="row" />
+      <WrapPanel Classes="row">
+        <carbon:Tag Type="Blue" Size="Small" Content="Small" />
+        <carbon:Tag Type="Blue" Content="Medium" />
+        <carbon:Tag Type="Blue" Size="Large" Content="Large" />
+        <carbon:Tag Type="Gray" Icon="server" Content="prod-web-01" IsDismissible="True" />
+        <carbon:Tag Type="Gray" Icon="terminal" Content="Terminal · last 200 lines" IsDismissible="True" />
+        <carbon:Tag Type="Purple" Icon="machine-learning" Content="AI" />
+        <carbon:Tag Type="Red" Content="Disabled" IsEnabled="False" />
+      </WrapPanel>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Progress bar" />
+      <Grid ColumnDefinitions="*,32,*" RowDefinitions="Auto,24,Auto">
+        <ProgressBar Value="42" carbon:Field.Label="Uploading nginx.conf" carbon:Field.HelperText="42 KB of 100 KB" />
+        <ProgressBar Grid.Column="2" Classes="sm" Value="75" carbon:Field.Label="Small" carbon:Field.HelperText="Transfer 2 / 5" />
+        <ProgressBar Grid.Row="2" Classes="success" Value="100" carbon:Field.Label="Backup finished" carbon:Field.HelperText="12 hosts, 3 identities" />
+        <ProgressBar Grid.Row="2" Grid.Column="2" Classes="error" Value="30" carbon:Field.Label="Download failed" carbon:Field.HelperText="Connection reset by peer" />
+      </Grid>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

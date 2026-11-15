@@ -1,0 +1,1783 @@
+<!--
+  GENERATED FILE - DO NOT EDIT.
+  Carbon Design System v11 tokens for Avalonia: Light = White, Dark = Gray 100, plus G10 / G90 variants.
+  Source: @carbon/themes 11.84.0, @carbon/type 11.70.0, @carbon/layout 11.62.0, @carbon/motion 11.55.0 (Apache-2.0).
+  Regenerate: cd tools/gen-carbon-tokens && npm ci && npm run gen   (see tools/gen-carbon-tokens/README.md)
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+  <!-- Color tokens: Carbon{Token} is a SolidColorBrush, Carbon{Token}Color the Color (e.g. CarbonLayer01, CarbonTextPrimaryColor). -->
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <Color x:Key="CarbonBackgroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonBackground" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonBackgroundActiveColor">#808D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundActive" Color="#808D8D8D" />
+      <Color x:Key="CarbonBackgroundBrandColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundBrand" Color="#FF0F62FE" />
+      <Color x:Key="CarbonBackgroundHoverColor">#1F8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundHover" Color="#1F8D8D8D" />
+      <Color x:Key="CarbonBackgroundInverseColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverse" Color="#FF393939" />
+      <Color x:Key="CarbonBackgroundInverseHoverColor">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverseHover" Color="#FF474747" />
+      <Color x:Key="CarbonBackgroundSelectedColor">#338D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelected" Color="#338D8D8D" />
+      <Color x:Key="CarbonBackgroundSelectedHoverColor">#528D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelectedHover" Color="#528D8D8D" />
+      <Color x:Key="CarbonBorderDisabledColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderDisabled" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderInteractiveColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonBorderInteractive" Color="#FF0F62FE" />
+      <Color x:Key="CarbonBorderInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonBorderInverse" Color="#FF161616" />
+      <Color x:Key="CarbonBorderStrong01Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong01" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderStrong02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderStrong03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderSubtle00Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle00" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonBorderSubtle01Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle01" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtle02Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle02" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonBorderSubtle03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtleSelected01Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected01" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtleSelected02Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected02" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtleSelected03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderTile01Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile01" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderTile02Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile02" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonBorderTile03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonField01Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonField01" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonField02Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonField02" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonField03Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonField03" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonFieldHover01Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover01" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonFieldHover02Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover02" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonFieldHover03Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover03" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonFocusColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonFocus" Color="#FF0F62FE" />
+      <Color x:Key="CarbonFocusInsetColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonFocusInset" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonFocusInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonFocusInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonHighlightColor">#FFD0E2FF</Color>
+      <SolidColorBrush x:Key="CarbonHighlight" Color="#FFD0E2FF" />
+      <Color x:Key="CarbonIconDisabledColor">#40161616</Color>
+      <SolidColorBrush x:Key="CarbonIconDisabled" Color="#40161616" />
+      <Color x:Key="CarbonIconInteractiveColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonIconInteractive" Color="#FF0F62FE" />
+      <Color x:Key="CarbonIconInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconOnColorDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColorDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonIconPrimaryColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonIconPrimary" Color="#FF161616" />
+      <Color x:Key="CarbonIconSecondaryColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonIconSecondary" Color="#FF525252" />
+      <Color x:Key="CarbonInteractiveColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonInteractive" Color="#FF0F62FE" />
+      <Color x:Key="CarbonLayer01Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayer01" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLayer02Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonLayer02" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonLayer03Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayer03" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLayerAccent01Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent01" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerAccent02Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent02" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerAccent03Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent03" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerAccentActive01Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive01" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerAccentActive02Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive02" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerAccentActive03Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive03" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerAccentHover01Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover01" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerAccentHover02Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover02" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerAccentHover03Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover03" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerActive01Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive01" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonLayerActive02Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive02" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonLayerActive03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonLayerBackground01Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground01" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonLayerBackground02Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground02" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLayerBackground03Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground03" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonLayerHover01Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover01" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonLayerHover02Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover02" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonLayerHover03Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover03" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonLayerSelected01Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected01" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerSelected02Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected02" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerSelected03Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected03" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerSelectedDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerSelectedHover01Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover01" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerSelectedHover02Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover02" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerSelectedHover03Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover03" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerSelectedInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedInverse" Color="#FF161616" />
+      <Color x:Key="CarbonLinkInverseColor">#FF78A9FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverse" Color="#FF78A9FF" />
+      <Color x:Key="CarbonLinkInverseActiveColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseActive" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLinkInverseHoverColor">#FFA6C8FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseHover" Color="#FFA6C8FF" />
+      <Color x:Key="CarbonLinkInverseVisitedColor">#FFBE95FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseVisited" Color="#FFBE95FF" />
+      <Color x:Key="CarbonLinkPrimaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonLinkPrimaryHoverColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimaryHover" Color="#FF0043CE" />
+      <Color x:Key="CarbonLinkSecondaryColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonLinkSecondary" Color="#FF0043CE" />
+      <Color x:Key="CarbonLinkVisitedColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonLinkVisited" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonOverlayColor">#99000000</Color>
+      <SolidColorBrush x:Key="CarbonOverlay" Color="#99000000" />
+      <Color x:Key="CarbonShadowColor">#4D000000</Color>
+      <SolidColorBrush x:Key="CarbonShadow" Color="#4D000000" />
+      <Color x:Key="CarbonSkeletonBackgroundColor">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonBackground" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonSkeletonElementColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonElement" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonSupportCautionMajorColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMajor" Color="#FFFF832B" />
+      <Color x:Key="CarbonSupportCautionMinorColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMinor" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportCautionUndefinedColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionUndefined" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonSupportErrorColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonSupportError" Color="#FFDA1E28" />
+      <Color x:Key="CarbonSupportErrorInverseColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonSupportErrorInverse" Color="#FFFA4D56" />
+      <Color x:Key="CarbonSupportInfoColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfo" Color="#FF0043CE" />
+      <Color x:Key="CarbonSupportInfoInverseColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfoInverse" Color="#FF4589FF" />
+      <Color x:Key="CarbonSupportSuccessColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccess" Color="#FF24A148" />
+      <Color x:Key="CarbonSupportSuccessInverseColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccessInverse" Color="#FF42BE65" />
+      <Color x:Key="CarbonSupportWarningColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarning" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportWarningInverseColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarningInverse" Color="#FFF1C21B" />
+      <Color x:Key="CarbonTextDisabledColor">#40161616</Color>
+      <SolidColorBrush x:Key="CarbonTextDisabled" Color="#40161616" />
+      <Color x:Key="CarbonTextErrorColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonTextError" Color="#FFDA1E28" />
+      <Color x:Key="CarbonTextHelperColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonTextHelper" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonTextInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonTextOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonTextOnColorDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColorDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonTextPlaceholderColor">#66161616</Color>
+      <SolidColorBrush x:Key="CarbonTextPlaceholder" Color="#66161616" />
+      <Color x:Key="CarbonTextPrimaryColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonTextPrimary" Color="#FF161616" />
+      <Color x:Key="CarbonTextSecondaryColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonTextSecondary" Color="#FF525252" />
+      <Color x:Key="CarbonToggleOffColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonToggleOff" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonButtonDangerActiveColor">#FF750E13</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerActive" Color="#FF750E13" />
+      <Color x:Key="CarbonButtonDangerHoverColor">#FFB81921</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerHover" Color="#FFB81921" />
+      <Color x:Key="CarbonButtonDangerPrimaryColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerPrimary" Color="#FFDA1E28" />
+      <Color x:Key="CarbonButtonDangerSecondaryColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerSecondary" Color="#FFDA1E28" />
+      <Color x:Key="CarbonButtonDisabledColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonButtonDisabled" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonButtonPrimaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonButtonPrimaryActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonButtonPrimaryHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonButtonSecondaryColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondary" Color="#FF393939" />
+      <Color x:Key="CarbonButtonSecondaryActiveColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryActive" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonButtonSecondaryHoverColor">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryHover" Color="#FF474747" />
+      <Color x:Key="CarbonButtonSeparatorColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonButtonSeparator" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonButtonTertiaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonButtonTertiaryActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonButtonTertiaryHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonTagBackgroundBlueColor">#FFD0E2FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundBlue" Color="#FFD0E2FF" />
+      <Color x:Key="CarbonTagBackgroundCoolGrayColor">#FFDDE1E6</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCoolGray" Color="#FFDDE1E6" />
+      <Color x:Key="CarbonTagBackgroundCyanColor">#FFBAE6FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCyan" Color="#FFBAE6FF" />
+      <Color x:Key="CarbonTagBackgroundGrayColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGray" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonTagBackgroundGreenColor">#FFA7F0BA</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGreen" Color="#FFA7F0BA" />
+      <Color x:Key="CarbonTagBackgroundMagentaColor">#FFFFD6E8</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundMagenta" Color="#FFFFD6E8" />
+      <Color x:Key="CarbonTagBackgroundPurpleColor">#FFE8DAFF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundPurple" Color="#FFE8DAFF" />
+      <Color x:Key="CarbonTagBackgroundRedColor">#FFFFD7D9</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundRed" Color="#FFFFD7D9" />
+      <Color x:Key="CarbonTagBackgroundTealColor">#FF9EF0F0</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundTeal" Color="#FF9EF0F0" />
+      <Color x:Key="CarbonTagBackgroundWarmGrayColor">#FFE5E0DF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundWarmGray" Color="#FFE5E0DF" />
+      <Color x:Key="CarbonTagBorderBlueColor">#FF78A9FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderBlue" Color="#FF78A9FF" />
+      <Color x:Key="CarbonTagBorderCoolGrayColor">#FFA2A9B0</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCoolGray" Color="#FFA2A9B0" />
+      <Color x:Key="CarbonTagBorderCyanColor">#FF33B1FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCyan" Color="#FF33B1FF" />
+      <Color x:Key="CarbonTagBorderGrayColor">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGray" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonTagBorderGreenColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGreen" Color="#FF42BE65" />
+      <Color x:Key="CarbonTagBorderMagentaColor">#FFFF7EB6</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderMagenta" Color="#FFFF7EB6" />
+      <Color x:Key="CarbonTagBorderPurpleColor">#FFBE95FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderPurple" Color="#FFBE95FF" />
+      <Color x:Key="CarbonTagBorderRedColor">#FFFF8389</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderRed" Color="#FFFF8389" />
+      <Color x:Key="CarbonTagBorderTealColor">#FF08BDBA</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderTeal" Color="#FF08BDBA" />
+      <Color x:Key="CarbonTagBorderWarmGrayColor">#FFADA8A8</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderWarmGray" Color="#FFADA8A8" />
+      <Color x:Key="CarbonTagColorBlueColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonTagColorBlue" Color="#FF0043CE" />
+      <Color x:Key="CarbonTagColorCoolGrayColor">#FF121619</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCoolGray" Color="#FF121619" />
+      <Color x:Key="CarbonTagColorCyanColor">#FF00539A</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCyan" Color="#FF00539A" />
+      <Color x:Key="CarbonTagColorGrayColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGray" Color="#FF161616" />
+      <Color x:Key="CarbonTagColorGreenColor">#FF0E6027</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGreen" Color="#FF0E6027" />
+      <Color x:Key="CarbonTagColorMagentaColor">#FF9F1853</Color>
+      <SolidColorBrush x:Key="CarbonTagColorMagenta" Color="#FF9F1853" />
+      <Color x:Key="CarbonTagColorPurpleColor">#FF6929C4</Color>
+      <SolidColorBrush x:Key="CarbonTagColorPurple" Color="#FF6929C4" />
+      <Color x:Key="CarbonTagColorRedColor">#FFA2191F</Color>
+      <SolidColorBrush x:Key="CarbonTagColorRed" Color="#FFA2191F" />
+      <Color x:Key="CarbonTagColorTealColor">#FF005D5D</Color>
+      <SolidColorBrush x:Key="CarbonTagColorTeal" Color="#FF005D5D" />
+      <Color x:Key="CarbonTagColorWarmGrayColor">#FF171414</Color>
+      <SolidColorBrush x:Key="CarbonTagColorWarmGray" Color="#FF171414" />
+      <Color x:Key="CarbonTagHoverBlueColor">#FFB8D3FF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverBlue" Color="#FFB8D3FF" />
+      <Color x:Key="CarbonTagHoverCoolGrayColor">#FFCDD3DA</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCoolGray" Color="#FFCDD3DA" />
+      <Color x:Key="CarbonTagHoverCyanColor">#FF99DAFF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCyan" Color="#FF99DAFF" />
+      <Color x:Key="CarbonTagHoverGrayColor">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGray" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonTagHoverGreenColor">#FF74E792</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGreen" Color="#FF74E792" />
+      <Color x:Key="CarbonTagHoverMagentaColor">#FFFFBDDA</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverMagenta" Color="#FFFFBDDA" />
+      <Color x:Key="CarbonTagHoverPurpleColor">#FFDCC7FF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverPurple" Color="#FFDCC7FF" />
+      <Color x:Key="CarbonTagHoverRedColor">#FFFFC2C5</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverRed" Color="#FFFFC2C5" />
+      <Color x:Key="CarbonTagHoverTealColor">#FF57E5E5</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverTeal" Color="#FF57E5E5" />
+      <Color x:Key="CarbonTagHoverWarmGrayColor">#FFD8D0CF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverWarmGray" Color="#FFD8D0CF" />
+      <Color x:Key="CarbonNotificationActionHoverColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionHover" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseActiveColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseActive" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseHoverColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseHover" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseText" Color="#FF161616" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabledColor">#40FFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabled" Color="#40FFFFFF" />
+      <Color x:Key="CarbonNotificationBackgroundErrorColor">#FFFFF1F1</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundError" Color="#FFFFF1F1" />
+      <Color x:Key="CarbonNotificationBackgroundInfoColor">#FFEDF5FF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundInfo" Color="#FFEDF5FF" />
+      <Color x:Key="CarbonNotificationBackgroundSuccessColor">#FFDEFBE6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundSuccess" Color="#FFDEFBE6" />
+      <Color x:Key="CarbonNotificationBackgroundWarningColor">#FFFCF4D6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundWarning" Color="#FFFCF4D6" />
+      <Color x:Key="CarbonStatusAccessibilityBackgroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonStatusAccessibilityBackground" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonStatusBlueColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonStatusBlue" Color="#FF0043CE" />
+      <Color x:Key="CarbonStatusGrayColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonStatusGray" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonStatusGreenColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonStatusGreen" Color="#FF24A148" />
+      <Color x:Key="CarbonStatusOrangeColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonStatusOrange" Color="#FFFF832B" />
+      <Color x:Key="CarbonStatusOrangeOutlineColor">#FFBA4E00</Color>
+      <SolidColorBrush x:Key="CarbonStatusOrangeOutline" Color="#FFBA4E00" />
+      <Color x:Key="CarbonStatusPurpleColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonStatusPurple" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonStatusRedColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonStatusRed" Color="#FFDA1E28" />
+      <Color x:Key="CarbonStatusYellowColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonStatusYellow" Color="#FFF1C21B" />
+      <Color x:Key="CarbonStatusYellowOutlineColor">#FF8E6A00</Color>
+      <SolidColorBrush x:Key="CarbonStatusYellowOutline" Color="#FF8E6A00" />
+      <Color x:Key="CarbonContentSwitcherBackgroundColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackground" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonContentSwitcherBackgroundHoverColor">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackgroundHover" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonContentSwitcherSelectedColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherSelected" Color="#FFFFFFFF" />
+      <!-- Avalonia.Themes.Simple compatibility (controls without a Carbon template) -->
+      <Color x:Key="ThemeBackgroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#FFFFFFFF" />
+      <Color x:Key="ThemeForegroundColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeForegroundBrush" Color="#FF161616" />
+      <Color x:Key="ThemeForegroundLowColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeForegroundLowBrush" Color="#FF525252" />
+      <Color x:Key="ThemeBorderLowColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeBorderLowBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeBorderMidColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="#FF8D8D8D" />
+      <Color x:Key="ThemeBorderHighColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeBorderHighBrush" Color="#FF161616" />
+      <Color x:Key="ThemeControlLowColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="ThemeControlLowBrush" Color="#FF8D8D8D" />
+      <Color x:Key="ThemeControlMidColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeControlMidBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeControlMidHighColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="ThemeControlMidHighBrush" Color="#FFE0E0E0" />
+      <Color x:Key="ThemeControlHighColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeControlHighBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeControlVeryHighColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeControlVeryHighBrush" Color="#FF161616" />
+      <Color x:Key="ThemeControlHighlightLowColor">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightLowBrush" Color="#FFE8E8E8" />
+      <Color x:Key="ThemeControlHighlightMidColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightMidBrush" Color="#FFE0E0E0" />
+      <Color x:Key="ThemeControlHighlightHighColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightHighBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeAccentColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccentBrush" Color="#FF0F62FE" />
+      <Color x:Key="ThemeAccent2Color">#990F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccent2Brush" Color="#990F62FE" />
+      <Color x:Key="ThemeAccent3Color">#660F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccent3Brush" Color="#660F62FE" />
+      <Color x:Key="ThemeAccent4Color">#330F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccent4Brush" Color="#330F62FE" />
+      <Color x:Key="HighlightColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="HighlightBrush" Color="#FF0F62FE" />
+      <Color x:Key="Highlight2Color">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="Highlight2Brush" Color="#FF0F62FE" />
+      <Color x:Key="HighlightForegroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="HighlightForegroundBrush" Color="#FFFFFFFF" />
+      <Color x:Key="ErrorColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="ErrorBrush" Color="#FFDA1E28" />
+      <Color x:Key="ErrorLowColor">#10DA1E28</Color>
+      <SolidColorBrush x:Key="ErrorLowBrush" Color="#10DA1E28" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <Color x:Key="CarbonBackgroundColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonBackground" Color="#FF161616" />
+      <Color x:Key="CarbonBackgroundActiveColor">#668D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundActive" Color="#668D8D8D" />
+      <Color x:Key="CarbonBackgroundBrandColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundBrand" Color="#FF0F62FE" />
+      <Color x:Key="CarbonBackgroundHoverColor">#298D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundHover" Color="#298D8D8D" />
+      <Color x:Key="CarbonBackgroundInverseColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverse" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonBackgroundInverseHoverColor">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverseHover" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonBackgroundSelectedColor">#3D8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelected" Color="#3D8D8D8D" />
+      <Color x:Key="CarbonBackgroundSelectedHoverColor">#528D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelectedHover" Color="#528D8D8D" />
+      <Color x:Key="CarbonBorderDisabledColor">#808D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderDisabled" Color="#808D8D8D" />
+      <Color x:Key="CarbonBorderInteractiveColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonBorderInteractive" Color="#FF4589FF" />
+      <Color x:Key="CarbonBorderInverseColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonBorderInverse" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonBorderStrong01Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong01" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderStrong02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderStrong03Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong03" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonBorderSubtle00Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle00" Color="#FF393939" />
+      <Color x:Key="CarbonBorderSubtle01Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle01" Color="#FF525252" />
+      <Color x:Key="CarbonBorderSubtle02Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle02" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderSubtle03Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle03" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderSubtleSelected01Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected01" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderSubtleSelected02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderSubtleSelected03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderTile01Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile01" Color="#FF525252" />
+      <Color x:Key="CarbonBorderTile02Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile02" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderTile03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonField01Color">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonField01" Color="#FF262626" />
+      <Color x:Key="CarbonField02Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonField02" Color="#FF393939" />
+      <Color x:Key="CarbonField03Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonField03" Color="#FF525252" />
+      <Color x:Key="CarbonFieldHover01Color">#FF333333</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover01" Color="#FF333333" />
+      <Color x:Key="CarbonFieldHover02Color">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover02" Color="#FF474747" />
+      <Color x:Key="CarbonFieldHover03Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover03" Color="#FF636363" />
+      <Color x:Key="CarbonFocusColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonFocus" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonFocusInsetColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonFocusInset" Color="#FF161616" />
+      <Color x:Key="CarbonFocusInverseColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonFocusInverse" Color="#FF0F62FE" />
+      <Color x:Key="CarbonHighlightColor">#FF001D6C</Color>
+      <SolidColorBrush x:Key="CarbonHighlight" Color="#FF001D6C" />
+      <Color x:Key="CarbonIconDisabledColor">#40F4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonIconDisabled" Color="#40F4F4F4" />
+      <Color x:Key="CarbonIconInteractiveColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconInteractive" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonIconInverse" Color="#FF161616" />
+      <Color x:Key="CarbonIconOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconOnColorDisabledColor">#40FFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColorDisabled" Color="#40FFFFFF" />
+      <Color x:Key="CarbonIconPrimaryColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonIconPrimary" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonIconSecondaryColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonIconSecondary" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonInteractiveColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonInteractive" Color="#FF4589FF" />
+      <Color x:Key="CarbonLayer01Color">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonLayer01" Color="#FF262626" />
+      <Color x:Key="CarbonLayer02Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayer02" Color="#FF393939" />
+      <Color x:Key="CarbonLayer03Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayer03" Color="#FF525252" />
+      <Color x:Key="CarbonLayerAccent01Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent01" Color="#FF393939" />
+      <Color x:Key="CarbonLayerAccent02Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent02" Color="#FF525252" />
+      <Color x:Key="CarbonLayerAccent03Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent03" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerAccentActive01Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive01" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerAccentActive02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerAccentActive03Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive03" Color="#FF393939" />
+      <Color x:Key="CarbonLayerAccentHover01Color">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover01" Color="#FF474747" />
+      <Color x:Key="CarbonLayerAccentHover02Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover02" Color="#FF636363" />
+      <Color x:Key="CarbonLayerAccentHover03Color">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover03" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonLayerActive01Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive01" Color="#FF525252" />
+      <Color x:Key="CarbonLayerActive02Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive02" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerActive03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerBackground01Color">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground01" Color="#FF161616" />
+      <Color x:Key="CarbonLayerBackground02Color">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground02" Color="#FF262626" />
+      <Color x:Key="CarbonLayerBackground03Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground03" Color="#FF393939" />
+      <Color x:Key="CarbonLayerHover01Color">#FF333333</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover01" Color="#FF333333" />
+      <Color x:Key="CarbonLayerHover02Color">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover02" Color="#FF474747" />
+      <Color x:Key="CarbonLayerHover03Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover03" Color="#FF636363" />
+      <Color x:Key="CarbonLayerSelected01Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected01" Color="#FF393939" />
+      <Color x:Key="CarbonLayerSelected02Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected02" Color="#FF525252" />
+      <Color x:Key="CarbonLayerSelected03Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected03" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerSelectedDisabledColor">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedDisabled" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerSelectedHover01Color">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover01" Color="#FF474747" />
+      <Color x:Key="CarbonLayerSelectedHover02Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover02" Color="#FF636363" />
+      <Color x:Key="CarbonLayerSelectedHover03Color">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover03" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonLayerSelectedInverseColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedInverse" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLinkInverseColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverse" Color="#FF0F62FE" />
+      <Color x:Key="CarbonLinkInverseActiveColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseActive" Color="#FF161616" />
+      <Color x:Key="CarbonLinkInverseHoverColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseHover" Color="#FF0043CE" />
+      <Color x:Key="CarbonLinkInverseVisitedColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseVisited" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonLinkPrimaryColor">#FF78A9FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimary" Color="#FF78A9FF" />
+      <Color x:Key="CarbonLinkPrimaryHoverColor">#FFA6C8FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimaryHover" Color="#FFA6C8FF" />
+      <Color x:Key="CarbonLinkSecondaryColor">#FFA6C8FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkSecondary" Color="#FFA6C8FF" />
+      <Color x:Key="CarbonLinkVisitedColor">#FFBE95FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkVisited" Color="#FFBE95FF" />
+      <Color x:Key="CarbonOverlayColor">#99000000</Color>
+      <SolidColorBrush x:Key="CarbonOverlay" Color="#99000000" />
+      <Color x:Key="CarbonShadowColor">#CC000000</Color>
+      <SolidColorBrush x:Key="CarbonShadow" Color="#CC000000" />
+      <Color x:Key="CarbonSkeletonBackgroundColor">#FF292929</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonBackground" Color="#FF292929" />
+      <Color x:Key="CarbonSkeletonElementColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonElement" Color="#FF393939" />
+      <Color x:Key="CarbonSupportCautionMajorColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMajor" Color="#FFFF832B" />
+      <Color x:Key="CarbonSupportCautionMinorColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMinor" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportCautionUndefinedColor">#FFA56EFF</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionUndefined" Color="#FFA56EFF" />
+      <Color x:Key="CarbonSupportErrorColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonSupportError" Color="#FFFA4D56" />
+      <Color x:Key="CarbonSupportErrorInverseColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonSupportErrorInverse" Color="#FFDA1E28" />
+      <Color x:Key="CarbonSupportInfoColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfo" Color="#FF4589FF" />
+      <Color x:Key="CarbonSupportInfoInverseColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfoInverse" Color="#FF0043CE" />
+      <Color x:Key="CarbonSupportSuccessColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccess" Color="#FF42BE65" />
+      <Color x:Key="CarbonSupportSuccessInverseColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccessInverse" Color="#FF24A148" />
+      <Color x:Key="CarbonSupportWarningColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarning" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportWarningInverseColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarningInverse" Color="#FFF1C21B" />
+      <Color x:Key="CarbonTextDisabledColor">#40F4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTextDisabled" Color="#40F4F4F4" />
+      <Color x:Key="CarbonTextErrorColor">#FFFF8389</Color>
+      <SolidColorBrush x:Key="CarbonTextError" Color="#FFFF8389" />
+      <Color x:Key="CarbonTextHelperColor">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonTextHelper" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonTextInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonTextInverse" Color="#FF161616" />
+      <Color x:Key="CarbonTextOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonTextOnColorDisabledColor">#40FFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColorDisabled" Color="#40FFFFFF" />
+      <Color x:Key="CarbonTextPlaceholderColor">#66F4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTextPlaceholder" Color="#66F4F4F4" />
+      <Color x:Key="CarbonTextPrimaryColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTextPrimary" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonTextSecondaryColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonTextSecondary" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonToggleOffColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonToggleOff" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonButtonDangerActiveColor">#FF750E13</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerActive" Color="#FF750E13" />
+      <Color x:Key="CarbonButtonDangerHoverColor">#FFB81921</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerHover" Color="#FFB81921" />
+      <Color x:Key="CarbonButtonDangerPrimaryColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerPrimary" Color="#FFDA1E28" />
+      <Color x:Key="CarbonButtonDangerSecondaryColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerSecondary" Color="#FFFA4D56" />
+      <Color x:Key="CarbonButtonDisabledColor">#4D8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonButtonDisabled" Color="#4D8D8D8D" />
+      <Color x:Key="CarbonButtonPrimaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonButtonPrimaryActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonButtonPrimaryHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonButtonSecondaryColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondary" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonButtonSecondaryActiveColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryActive" Color="#FF393939" />
+      <Color x:Key="CarbonButtonSecondaryHoverColor">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryHover" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonButtonSeparatorColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonButtonSeparator" Color="#FF161616" />
+      <Color x:Key="CarbonButtonTertiaryColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiary" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonButtonTertiaryActiveColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryActive" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonButtonTertiaryHoverColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryHover" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonTagBackgroundBlueColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundBlue" Color="#FF0043CE" />
+      <Color x:Key="CarbonTagBackgroundCoolGrayColor">#FF4D5358</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCoolGray" Color="#FF4D5358" />
+      <Color x:Key="CarbonTagBackgroundCyanColor">#FF00539A</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCyan" Color="#FF00539A" />
+      <Color x:Key="CarbonTagBackgroundGrayColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGray" Color="#FF525252" />
+      <Color x:Key="CarbonTagBackgroundGreenColor">#FF0E6027</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGreen" Color="#FF0E6027" />
+      <Color x:Key="CarbonTagBackgroundMagentaColor">#FF9F1853</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundMagenta" Color="#FF9F1853" />
+      <Color x:Key="CarbonTagBackgroundPurpleColor">#FF6929C4</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundPurple" Color="#FF6929C4" />
+      <Color x:Key="CarbonTagBackgroundRedColor">#FFA2191F</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundRed" Color="#FFA2191F" />
+      <Color x:Key="CarbonTagBackgroundTealColor">#FF005D5D</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundTeal" Color="#FF005D5D" />
+      <Color x:Key="CarbonTagBackgroundWarmGrayColor">#FF565151</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundWarmGray" Color="#FF565151" />
+      <Color x:Key="CarbonTagBorderBlueColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderBlue" Color="#FF4589FF" />
+      <Color x:Key="CarbonTagBorderCoolGrayColor">#FF878D96</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCoolGray" Color="#FF878D96" />
+      <Color x:Key="CarbonTagBorderCyanColor">#FF1192E8</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCyan" Color="#FF1192E8" />
+      <Color x:Key="CarbonTagBorderGrayColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGray" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonTagBorderGreenColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGreen" Color="#FF24A148" />
+      <Color x:Key="CarbonTagBorderMagentaColor">#FFEE5396</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderMagenta" Color="#FFEE5396" />
+      <Color x:Key="CarbonTagBorderPurpleColor">#FFA56EFF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderPurple" Color="#FFA56EFF" />
+      <Color x:Key="CarbonTagBorderRedColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderRed" Color="#FFFA4D56" />
+      <Color x:Key="CarbonTagBorderTealColor">#FF009D9A</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderTeal" Color="#FF009D9A" />
+      <Color x:Key="CarbonTagBorderWarmGrayColor">#FF8F8B8B</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderWarmGray" Color="#FF8F8B8B" />
+      <Color x:Key="CarbonTagColorBlueColor">#FFD0E2FF</Color>
+      <SolidColorBrush x:Key="CarbonTagColorBlue" Color="#FFD0E2FF" />
+      <Color x:Key="CarbonTagColorCoolGrayColor">#FFF2F4F8</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCoolGray" Color="#FFF2F4F8" />
+      <Color x:Key="CarbonTagColorCyanColor">#FFBAE6FF</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCyan" Color="#FFBAE6FF" />
+      <Color x:Key="CarbonTagColorGrayColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGray" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonTagColorGreenColor">#FFA7F0BA</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGreen" Color="#FFA7F0BA" />
+      <Color x:Key="CarbonTagColorMagentaColor">#FFFFD6E8</Color>
+      <SolidColorBrush x:Key="CarbonTagColorMagenta" Color="#FFFFD6E8" />
+      <Color x:Key="CarbonTagColorPurpleColor">#FFE8DAFF</Color>
+      <SolidColorBrush x:Key="CarbonTagColorPurple" Color="#FFE8DAFF" />
+      <Color x:Key="CarbonTagColorRedColor">#FFFFD7D9</Color>
+      <SolidColorBrush x:Key="CarbonTagColorRed" Color="#FFFFD7D9" />
+      <Color x:Key="CarbonTagColorTealColor">#FF9EF0F0</Color>
+      <SolidColorBrush x:Key="CarbonTagColorTeal" Color="#FF9EF0F0" />
+      <Color x:Key="CarbonTagColorWarmGrayColor">#FFF7F3F2</Color>
+      <SolidColorBrush x:Key="CarbonTagColorWarmGray" Color="#FFF7F3F2" />
+      <Color x:Key="CarbonTagHoverBlueColor">#FF0053FF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverBlue" Color="#FF0053FF" />
+      <Color x:Key="CarbonTagHoverCoolGrayColor">#FF5D646A</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCoolGray" Color="#FF5D646A" />
+      <Color x:Key="CarbonTagHoverCyanColor">#FF0066BD</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCyan" Color="#FF0066BD" />
+      <Color x:Key="CarbonTagHoverGrayColor">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGray" Color="#FF636363" />
+      <Color x:Key="CarbonTagHoverGreenColor">#FF11742F</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGreen" Color="#FF11742F" />
+      <Color x:Key="CarbonTagHoverMagentaColor">#FFBF1D63</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverMagenta" Color="#FFBF1D63" />
+      <Color x:Key="CarbonTagHoverPurpleColor">#FF7C3DD6</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverPurple" Color="#FF7C3DD6" />
+      <Color x:Key="CarbonTagHoverRedColor">#FFC21E25</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverRed" Color="#FFC21E25" />
+      <Color x:Key="CarbonTagHoverTealColor">#FF007070</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverTeal" Color="#FF007070" />
+      <Color x:Key="CarbonTagHoverWarmGrayColor">#FF696363</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverWarmGray" Color="#FF696363" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverse" Color="#FF0F62FE" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseText" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonNotificationBackgroundErrorColor">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundError" Color="#FF262626" />
+      <Color x:Key="CarbonNotificationBackgroundInfoColor">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundInfo" Color="#FF262626" />
+      <Color x:Key="CarbonNotificationBackgroundSuccessColor">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundSuccess" Color="#FF262626" />
+      <Color x:Key="CarbonNotificationBackgroundWarningColor">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundWarning" Color="#FF262626" />
+      <Color x:Key="CarbonStatusAccessibilityBackgroundColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonStatusAccessibilityBackground" Color="#FF161616" />
+      <Color x:Key="CarbonStatusBlueColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonStatusBlue" Color="#FF4589FF" />
+      <Color x:Key="CarbonStatusGrayColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonStatusGray" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonStatusGreenColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonStatusGreen" Color="#FF42BE65" />
+      <Color x:Key="CarbonStatusOrangeColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonStatusOrange" Color="#FFFF832B" />
+      <Color x:Key="CarbonStatusPurpleColor">#FFA56EFF</Color>
+      <SolidColorBrush x:Key="CarbonStatusPurple" Color="#FFA56EFF" />
+      <Color x:Key="CarbonStatusRedColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonStatusRed" Color="#FFFA4D56" />
+      <Color x:Key="CarbonStatusYellowColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonStatusYellow" Color="#FFF1C21B" />
+      <Color x:Key="CarbonContentSwitcherBackgroundColor">#00000000</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackground" Color="#00000000" />
+      <Color x:Key="CarbonContentSwitcherBackgroundHoverColor">#1F8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackgroundHover" Color="#1F8D8D8D" />
+      <Color x:Key="CarbonContentSwitcherSelectedColor">#3D8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherSelected" Color="#3D8D8D8D" />
+      <!-- Avalonia.Themes.Simple compatibility (controls without a Carbon template) -->
+      <Color x:Key="ThemeBackgroundColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#FF161616" />
+      <Color x:Key="ThemeForegroundColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeForegroundBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeForegroundLowColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeForegroundLowBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeBorderLowColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeBorderLowBrush" Color="#FF525252" />
+      <Color x:Key="ThemeBorderMidColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="#FF6F6F6F" />
+      <Color x:Key="ThemeBorderHighColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeBorderHighBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeControlLowColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="ThemeControlLowBrush" Color="#FF6F6F6F" />
+      <Color x:Key="ThemeControlMidColor">#FF262626</Color>
+      <SolidColorBrush x:Key="ThemeControlMidBrush" Color="#FF262626" />
+      <Color x:Key="ThemeControlMidHighColor">#FF393939</Color>
+      <SolidColorBrush x:Key="ThemeControlMidHighBrush" Color="#FF393939" />
+      <Color x:Key="ThemeControlHighColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeControlHighBrush" Color="#FF525252" />
+      <Color x:Key="ThemeControlVeryHighColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeControlVeryHighBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeControlHighlightLowColor">#FF333333</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightLowBrush" Color="#FF333333" />
+      <Color x:Key="ThemeControlHighlightMidColor">#FF393939</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightMidBrush" Color="#FF393939" />
+      <Color x:Key="ThemeControlHighlightHighColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightHighBrush" Color="#FF525252" />
+      <Color x:Key="ThemeAccentColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccentBrush" Color="#FF4589FF" />
+      <Color x:Key="ThemeAccent2Color">#994589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccent2Brush" Color="#994589FF" />
+      <Color x:Key="ThemeAccent3Color">#664589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccent3Brush" Color="#664589FF" />
+      <Color x:Key="ThemeAccent4Color">#334589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccent4Brush" Color="#334589FF" />
+      <Color x:Key="HighlightColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="HighlightBrush" Color="#FF4589FF" />
+      <Color x:Key="Highlight2Color">#FF4589FF</Color>
+      <SolidColorBrush x:Key="Highlight2Brush" Color="#FF4589FF" />
+      <Color x:Key="HighlightForegroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="HighlightForegroundBrush" Color="#FFFFFFFF" />
+      <Color x:Key="ErrorColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="ErrorBrush" Color="#FFFA4D56" />
+      <Color x:Key="ErrorLowColor">#10FA4D56</Color>
+      <SolidColorBrush x:Key="ErrorLowBrush" Color="#10FA4D56" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="{x:Static carbon:CarbonThemeVariants.G10}">
+      <Color x:Key="CarbonBackgroundColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonBackground" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonBackgroundActiveColor">#808D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundActive" Color="#808D8D8D" />
+      <Color x:Key="CarbonBackgroundBrandColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundBrand" Color="#FF0F62FE" />
+      <Color x:Key="CarbonBackgroundHoverColor">#1F8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundHover" Color="#1F8D8D8D" />
+      <Color x:Key="CarbonBackgroundInverseColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverse" Color="#FF393939" />
+      <Color x:Key="CarbonBackgroundInverseHoverColor">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverseHover" Color="#FF474747" />
+      <Color x:Key="CarbonBackgroundSelectedColor">#338D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelected" Color="#338D8D8D" />
+      <Color x:Key="CarbonBackgroundSelectedHoverColor">#528D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelectedHover" Color="#528D8D8D" />
+      <Color x:Key="CarbonBorderDisabledColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderDisabled" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderInteractiveColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonBorderInteractive" Color="#FF0F62FE" />
+      <Color x:Key="CarbonBorderInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonBorderInverse" Color="#FF161616" />
+      <Color x:Key="CarbonBorderStrong01Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong01" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderStrong02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderStrong03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderSubtle00Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle00" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtle01Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle01" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonBorderSubtle02Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle02" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtle03Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle03" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonBorderSubtleSelected01Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected01" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtleSelected02Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected02" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtleSelected03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderTile01Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile01" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonBorderTile02Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile02" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderTile03Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile03" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonField01Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonField01" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonField02Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonField02" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonField03Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonField03" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonFieldHover01Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover01" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonFieldHover02Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover02" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonFieldHover03Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover03" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonFocusColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonFocus" Color="#FF0F62FE" />
+      <Color x:Key="CarbonFocusInsetColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonFocusInset" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonFocusInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonFocusInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonHighlightColor">#FFD0E2FF</Color>
+      <SolidColorBrush x:Key="CarbonHighlight" Color="#FFD0E2FF" />
+      <Color x:Key="CarbonIconDisabledColor">#40161616</Color>
+      <SolidColorBrush x:Key="CarbonIconDisabled" Color="#40161616" />
+      <Color x:Key="CarbonIconInteractiveColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonIconInteractive" Color="#FF0F62FE" />
+      <Color x:Key="CarbonIconInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconOnColorDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColorDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonIconPrimaryColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonIconPrimary" Color="#FF161616" />
+      <Color x:Key="CarbonIconSecondaryColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonIconSecondary" Color="#FF525252" />
+      <Color x:Key="CarbonInteractiveColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonInteractive" Color="#FF0F62FE" />
+      <Color x:Key="CarbonLayer01Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonLayer01" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonLayer02Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayer02" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLayer03Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonLayer03" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonLayerAccent01Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent01" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerAccent02Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent02" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerAccent03Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent03" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerAccentActive01Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive01" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerAccentActive02Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive02" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerAccentActive03Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive03" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerAccentHover01Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover01" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerAccentHover02Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover02" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerAccentHover03Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover03" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerActive01Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive01" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonLayerActive02Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive02" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonLayerActive03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonLayerBackground01Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground01" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLayerBackground02Color">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground02" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonLayerBackground03Color">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground03" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLayerHover01Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover01" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonLayerHover02Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover02" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonLayerHover03Color">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover03" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonLayerSelected01Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected01" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerSelected02Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected02" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerSelected03Color">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected03" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonLayerSelectedDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerSelectedHover01Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover01" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerSelectedHover02Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover02" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerSelectedHover03Color">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover03" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonLayerSelectedInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedInverse" Color="#FF161616" />
+      <Color x:Key="CarbonLinkInverseColor">#FF78A9FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverse" Color="#FF78A9FF" />
+      <Color x:Key="CarbonLinkInverseActiveColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseActive" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLinkInverseHoverColor">#FFA6C8FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseHover" Color="#FFA6C8FF" />
+      <Color x:Key="CarbonLinkInverseVisitedColor">#FFBE95FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseVisited" Color="#FFBE95FF" />
+      <Color x:Key="CarbonLinkPrimaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonLinkPrimaryHoverColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimaryHover" Color="#FF0043CE" />
+      <Color x:Key="CarbonLinkSecondaryColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonLinkSecondary" Color="#FF0043CE" />
+      <Color x:Key="CarbonLinkVisitedColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonLinkVisited" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonOverlayColor">#99000000</Color>
+      <SolidColorBrush x:Key="CarbonOverlay" Color="#99000000" />
+      <Color x:Key="CarbonShadowColor">#4D000000</Color>
+      <SolidColorBrush x:Key="CarbonShadow" Color="#4D000000" />
+      <Color x:Key="CarbonSkeletonBackgroundColor">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonBackground" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonSkeletonElementColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonElement" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonSupportCautionMajorColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMajor" Color="#FFFF832B" />
+      <Color x:Key="CarbonSupportCautionMinorColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMinor" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportCautionUndefinedColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionUndefined" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonSupportErrorColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonSupportError" Color="#FFDA1E28" />
+      <Color x:Key="CarbonSupportErrorInverseColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonSupportErrorInverse" Color="#FFFA4D56" />
+      <Color x:Key="CarbonSupportInfoColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfo" Color="#FF0043CE" />
+      <Color x:Key="CarbonSupportInfoInverseColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfoInverse" Color="#FF4589FF" />
+      <Color x:Key="CarbonSupportSuccessColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccess" Color="#FF24A148" />
+      <Color x:Key="CarbonSupportSuccessInverseColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccessInverse" Color="#FF42BE65" />
+      <Color x:Key="CarbonSupportWarningColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarning" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportWarningInverseColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarningInverse" Color="#FFF1C21B" />
+      <Color x:Key="CarbonTextDisabledColor">#40161616</Color>
+      <SolidColorBrush x:Key="CarbonTextDisabled" Color="#40161616" />
+      <Color x:Key="CarbonTextErrorColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonTextError" Color="#FFDA1E28" />
+      <Color x:Key="CarbonTextHelperColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonTextHelper" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonTextInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonTextOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonTextOnColorDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColorDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonTextPlaceholderColor">#66161616</Color>
+      <SolidColorBrush x:Key="CarbonTextPlaceholder" Color="#66161616" />
+      <Color x:Key="CarbonTextPrimaryColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonTextPrimary" Color="#FF161616" />
+      <Color x:Key="CarbonTextSecondaryColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonTextSecondary" Color="#FF525252" />
+      <Color x:Key="CarbonToggleOffColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonToggleOff" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonButtonDangerActiveColor">#FF750E13</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerActive" Color="#FF750E13" />
+      <Color x:Key="CarbonButtonDangerHoverColor">#FFB81921</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerHover" Color="#FFB81921" />
+      <Color x:Key="CarbonButtonDangerPrimaryColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerPrimary" Color="#FFDA1E28" />
+      <Color x:Key="CarbonButtonDangerSecondaryColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerSecondary" Color="#FFDA1E28" />
+      <Color x:Key="CarbonButtonDisabledColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonButtonDisabled" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonButtonPrimaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonButtonPrimaryActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonButtonPrimaryHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonButtonSecondaryColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondary" Color="#FF393939" />
+      <Color x:Key="CarbonButtonSecondaryActiveColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryActive" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonButtonSecondaryHoverColor">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryHover" Color="#FF474747" />
+      <Color x:Key="CarbonButtonSeparatorColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonButtonSeparator" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonButtonTertiaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonButtonTertiaryActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonButtonTertiaryHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonTagBackgroundBlueColor">#FFD0E2FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundBlue" Color="#FFD0E2FF" />
+      <Color x:Key="CarbonTagBackgroundCoolGrayColor">#FFDDE1E6</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCoolGray" Color="#FFDDE1E6" />
+      <Color x:Key="CarbonTagBackgroundCyanColor">#FFBAE6FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCyan" Color="#FFBAE6FF" />
+      <Color x:Key="CarbonTagBackgroundGrayColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGray" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonTagBackgroundGreenColor">#FFA7F0BA</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGreen" Color="#FFA7F0BA" />
+      <Color x:Key="CarbonTagBackgroundMagentaColor">#FFFFD6E8</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundMagenta" Color="#FFFFD6E8" />
+      <Color x:Key="CarbonTagBackgroundPurpleColor">#FFE8DAFF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundPurple" Color="#FFE8DAFF" />
+      <Color x:Key="CarbonTagBackgroundRedColor">#FFFFD7D9</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundRed" Color="#FFFFD7D9" />
+      <Color x:Key="CarbonTagBackgroundTealColor">#FF9EF0F0</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundTeal" Color="#FF9EF0F0" />
+      <Color x:Key="CarbonTagBackgroundWarmGrayColor">#FFE5E0DF</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundWarmGray" Color="#FFE5E0DF" />
+      <Color x:Key="CarbonTagBorderBlueColor">#FF78A9FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderBlue" Color="#FF78A9FF" />
+      <Color x:Key="CarbonTagBorderCoolGrayColor">#FFA2A9B0</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCoolGray" Color="#FFA2A9B0" />
+      <Color x:Key="CarbonTagBorderCyanColor">#FF33B1FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCyan" Color="#FF33B1FF" />
+      <Color x:Key="CarbonTagBorderGrayColor">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGray" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonTagBorderGreenColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGreen" Color="#FF42BE65" />
+      <Color x:Key="CarbonTagBorderMagentaColor">#FFFF7EB6</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderMagenta" Color="#FFFF7EB6" />
+      <Color x:Key="CarbonTagBorderPurpleColor">#FFBE95FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderPurple" Color="#FFBE95FF" />
+      <Color x:Key="CarbonTagBorderRedColor">#FFFF8389</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderRed" Color="#FFFF8389" />
+      <Color x:Key="CarbonTagBorderTealColor">#FF08BDBA</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderTeal" Color="#FF08BDBA" />
+      <Color x:Key="CarbonTagBorderWarmGrayColor">#FFADA8A8</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderWarmGray" Color="#FFADA8A8" />
+      <Color x:Key="CarbonTagColorBlueColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonTagColorBlue" Color="#FF0043CE" />
+      <Color x:Key="CarbonTagColorCoolGrayColor">#FF121619</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCoolGray" Color="#FF121619" />
+      <Color x:Key="CarbonTagColorCyanColor">#FF00539A</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCyan" Color="#FF00539A" />
+      <Color x:Key="CarbonTagColorGrayColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGray" Color="#FF161616" />
+      <Color x:Key="CarbonTagColorGreenColor">#FF0E6027</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGreen" Color="#FF0E6027" />
+      <Color x:Key="CarbonTagColorMagentaColor">#FF9F1853</Color>
+      <SolidColorBrush x:Key="CarbonTagColorMagenta" Color="#FF9F1853" />
+      <Color x:Key="CarbonTagColorPurpleColor">#FF6929C4</Color>
+      <SolidColorBrush x:Key="CarbonTagColorPurple" Color="#FF6929C4" />
+      <Color x:Key="CarbonTagColorRedColor">#FFA2191F</Color>
+      <SolidColorBrush x:Key="CarbonTagColorRed" Color="#FFA2191F" />
+      <Color x:Key="CarbonTagColorTealColor">#FF005D5D</Color>
+      <SolidColorBrush x:Key="CarbonTagColorTeal" Color="#FF005D5D" />
+      <Color x:Key="CarbonTagColorWarmGrayColor">#FF171414</Color>
+      <SolidColorBrush x:Key="CarbonTagColorWarmGray" Color="#FF171414" />
+      <Color x:Key="CarbonTagHoverBlueColor">#FFB8D3FF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverBlue" Color="#FFB8D3FF" />
+      <Color x:Key="CarbonTagHoverCoolGrayColor">#FFCDD3DA</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCoolGray" Color="#FFCDD3DA" />
+      <Color x:Key="CarbonTagHoverCyanColor">#FF99DAFF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCyan" Color="#FF99DAFF" />
+      <Color x:Key="CarbonTagHoverGrayColor">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGray" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonTagHoverGreenColor">#FF74E792</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGreen" Color="#FF74E792" />
+      <Color x:Key="CarbonTagHoverMagentaColor">#FFFFBDDA</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverMagenta" Color="#FFFFBDDA" />
+      <Color x:Key="CarbonTagHoverPurpleColor">#FFDCC7FF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverPurple" Color="#FFDCC7FF" />
+      <Color x:Key="CarbonTagHoverRedColor">#FFFFC2C5</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverRed" Color="#FFFFC2C5" />
+      <Color x:Key="CarbonTagHoverTealColor">#FF57E5E5</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverTeal" Color="#FF57E5E5" />
+      <Color x:Key="CarbonTagHoverWarmGrayColor">#FFD8D0CF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverWarmGray" Color="#FFD8D0CF" />
+      <Color x:Key="CarbonNotificationActionHoverColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionHover" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverse" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseActiveColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseActive" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseHoverColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseHover" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseText" Color="#FF161616" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabledColor">#40FFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabled" Color="#40FFFFFF" />
+      <Color x:Key="CarbonNotificationBackgroundErrorColor">#FFFFF1F1</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundError" Color="#FFFFF1F1" />
+      <Color x:Key="CarbonNotificationBackgroundInfoColor">#FFEDF5FF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundInfo" Color="#FFEDF5FF" />
+      <Color x:Key="CarbonNotificationBackgroundSuccessColor">#FFDEFBE6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundSuccess" Color="#FFDEFBE6" />
+      <Color x:Key="CarbonNotificationBackgroundWarningColor">#FFFCF4D6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundWarning" Color="#FFFCF4D6" />
+      <Color x:Key="CarbonStatusAccessibilityBackgroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonStatusAccessibilityBackground" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonStatusBlueColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonStatusBlue" Color="#FF0043CE" />
+      <Color x:Key="CarbonStatusGrayColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonStatusGray" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonStatusGreenColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonStatusGreen" Color="#FF24A148" />
+      <Color x:Key="CarbonStatusOrangeColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonStatusOrange" Color="#FFFF832B" />
+      <Color x:Key="CarbonStatusOrangeOutlineColor">#FFBA4E00</Color>
+      <SolidColorBrush x:Key="CarbonStatusOrangeOutline" Color="#FFBA4E00" />
+      <Color x:Key="CarbonStatusPurpleColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonStatusPurple" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonStatusRedColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonStatusRed" Color="#FFDA1E28" />
+      <Color x:Key="CarbonStatusYellowColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonStatusYellow" Color="#FFF1C21B" />
+      <Color x:Key="CarbonStatusYellowOutlineColor">#FF8E6A00</Color>
+      <SolidColorBrush x:Key="CarbonStatusYellowOutline" Color="#FF8E6A00" />
+      <Color x:Key="CarbonContentSwitcherBackgroundColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackground" Color="#FFE0E0E0" />
+      <Color x:Key="CarbonContentSwitcherBackgroundHoverColor">#FFD1D1D1</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackgroundHover" Color="#FFD1D1D1" />
+      <Color x:Key="CarbonContentSwitcherSelectedColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherSelected" Color="#FFFFFFFF" />
+      <!-- Avalonia.Themes.Simple compatibility (controls without a Carbon template) -->
+      <Color x:Key="ThemeBackgroundColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeForegroundColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeForegroundBrush" Color="#FF161616" />
+      <Color x:Key="ThemeForegroundLowColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeForegroundLowBrush" Color="#FF525252" />
+      <Color x:Key="ThemeBorderLowColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="ThemeBorderLowBrush" Color="#FFE0E0E0" />
+      <Color x:Key="ThemeBorderMidColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="#FF8D8D8D" />
+      <Color x:Key="ThemeBorderHighColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeBorderHighBrush" Color="#FF161616" />
+      <Color x:Key="ThemeControlLowColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="ThemeControlLowBrush" Color="#FF8D8D8D" />
+      <Color x:Key="ThemeControlMidColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="ThemeControlMidBrush" Color="#FFFFFFFF" />
+      <Color x:Key="ThemeControlMidHighColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="ThemeControlMidHighBrush" Color="#FFE0E0E0" />
+      <Color x:Key="ThemeControlHighColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeControlHighBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeControlVeryHighColor">#FF161616</Color>
+      <SolidColorBrush x:Key="ThemeControlVeryHighBrush" Color="#FF161616" />
+      <Color x:Key="ThemeControlHighlightLowColor">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightLowBrush" Color="#FFE8E8E8" />
+      <Color x:Key="ThemeControlHighlightMidColor">#FFE0E0E0</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightMidBrush" Color="#FFE0E0E0" />
+      <Color x:Key="ThemeControlHighlightHighColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightHighBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeAccentColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccentBrush" Color="#FF0F62FE" />
+      <Color x:Key="ThemeAccent2Color">#990F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccent2Brush" Color="#990F62FE" />
+      <Color x:Key="ThemeAccent3Color">#660F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccent3Brush" Color="#660F62FE" />
+      <Color x:Key="ThemeAccent4Color">#330F62FE</Color>
+      <SolidColorBrush x:Key="ThemeAccent4Brush" Color="#330F62FE" />
+      <Color x:Key="HighlightColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="HighlightBrush" Color="#FF0F62FE" />
+      <Color x:Key="Highlight2Color">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="Highlight2Brush" Color="#FF0F62FE" />
+      <Color x:Key="HighlightForegroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="HighlightForegroundBrush" Color="#FFFFFFFF" />
+      <Color x:Key="ErrorColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="ErrorBrush" Color="#FFDA1E28" />
+      <Color x:Key="ErrorLowColor">#10DA1E28</Color>
+      <SolidColorBrush x:Key="ErrorLowBrush" Color="#10DA1E28" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="{x:Static carbon:CarbonThemeVariants.G90}">
+      <Color x:Key="CarbonBackgroundColor">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonBackground" Color="#FF262626" />
+      <Color x:Key="CarbonBackgroundActiveColor">#668D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundActive" Color="#668D8D8D" />
+      <Color x:Key="CarbonBackgroundBrandColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundBrand" Color="#FF0F62FE" />
+      <Color x:Key="CarbonBackgroundHoverColor">#298D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundHover" Color="#298D8D8D" />
+      <Color x:Key="CarbonBackgroundInverseColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverse" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonBackgroundInverseHoverColor">#FFE8E8E8</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundInverseHover" Color="#FFE8E8E8" />
+      <Color x:Key="CarbonBackgroundSelectedColor">#3D8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelected" Color="#3D8D8D8D" />
+      <Color x:Key="CarbonBackgroundSelectedHoverColor">#528D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBackgroundSelectedHover" Color="#528D8D8D" />
+      <Color x:Key="CarbonBorderDisabledColor">#808D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderDisabled" Color="#808D8D8D" />
+      <Color x:Key="CarbonBorderInteractiveColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonBorderInteractive" Color="#FF4589FF" />
+      <Color x:Key="CarbonBorderInverseColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonBorderInverse" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonBorderStrong01Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong01" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderStrong02Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong02" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonBorderStrong03Color">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonBorderStrong03" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonBorderSubtle00Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle00" Color="#FF525252" />
+      <Color x:Key="CarbonBorderSubtle01Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle01" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderSubtle02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderSubtle03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtle03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderSubtleSelected01Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected01" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderSubtleSelected02Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected02" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonBorderSubtleSelected03Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderSubtleSelected03" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonBorderTile01Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile01" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonBorderTile02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonBorderTile03Color">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonBorderTile03" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonField01Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonField01" Color="#FF393939" />
+      <Color x:Key="CarbonField02Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonField02" Color="#FF525252" />
+      <Color x:Key="CarbonField03Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonField03" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonFieldHover01Color">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover01" Color="#FF474747" />
+      <Color x:Key="CarbonFieldHover02Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover02" Color="#FF636363" />
+      <Color x:Key="CarbonFieldHover03Color">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonFieldHover03" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonFocusColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonFocus" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonFocusInsetColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonFocusInset" Color="#FF161616" />
+      <Color x:Key="CarbonFocusInverseColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonFocusInverse" Color="#FF0F62FE" />
+      <Color x:Key="CarbonHighlightColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonHighlight" Color="#FF002D9C" />
+      <Color x:Key="CarbonIconDisabledColor">#40F4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonIconDisabled" Color="#40F4F4F4" />
+      <Color x:Key="CarbonIconInteractiveColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconInteractive" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonIconInverse" Color="#FF161616" />
+      <Color x:Key="CarbonIconOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonIconOnColorDisabledColor">#40FFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonIconOnColorDisabled" Color="#40FFFFFF" />
+      <Color x:Key="CarbonIconPrimaryColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonIconPrimary" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonIconSecondaryColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonIconSecondary" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonInteractiveColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonInteractive" Color="#FF4589FF" />
+      <Color x:Key="CarbonLayer01Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayer01" Color="#FF393939" />
+      <Color x:Key="CarbonLayer02Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayer02" Color="#FF525252" />
+      <Color x:Key="CarbonLayer03Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayer03" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerAccent01Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent01" Color="#FF525252" />
+      <Color x:Key="CarbonLayerAccent02Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent02" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerAccent03Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccent03" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerAccentActive01Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive01" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerAccentActive02Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive02" Color="#FF393939" />
+      <Color x:Key="CarbonLayerAccentActive03Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentActive03" Color="#FF525252" />
+      <Color x:Key="CarbonLayerAccentHover01Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover01" Color="#FF636363" />
+      <Color x:Key="CarbonLayerAccentHover02Color">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover02" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonLayerAccentHover03Color">#FF7A7A7A</Color>
+      <SolidColorBrush x:Key="CarbonLayerAccentHover03" Color="#FF7A7A7A" />
+      <Color x:Key="CarbonLayerActive01Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive01" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerActive02Color">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive02" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonLayerActive03Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerActive03" Color="#FF393939" />
+      <Color x:Key="CarbonLayerBackground01Color">#FF262626</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground01" Color="#FF262626" />
+      <Color x:Key="CarbonLayerBackground02Color">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground02" Color="#FF393939" />
+      <Color x:Key="CarbonLayerBackground03Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerBackground03" Color="#FF525252" />
+      <Color x:Key="CarbonLayerHover01Color">#FF474747</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover01" Color="#FF474747" />
+      <Color x:Key="CarbonLayerHover02Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover02" Color="#FF636363" />
+      <Color x:Key="CarbonLayerHover03Color">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonLayerHover03" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonLayerSelected01Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected01" Color="#FF525252" />
+      <Color x:Key="CarbonLayerSelected02Color">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected02" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonLayerSelected03Color">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelected03" Color="#FF525252" />
+      <Color x:Key="CarbonLayerSelectedDisabledColor">#FFA8A8A8</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedDisabled" Color="#FFA8A8A8" />
+      <Color x:Key="CarbonLayerSelectedHover01Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover01" Color="#FF636363" />
+      <Color x:Key="CarbonLayerSelectedHover02Color">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover02" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonLayerSelectedHover03Color">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedHover03" Color="#FF636363" />
+      <Color x:Key="CarbonLayerSelectedInverseColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonLayerSelectedInverse" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonLinkInverseColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverse" Color="#FF0F62FE" />
+      <Color x:Key="CarbonLinkInverseActiveColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseActive" Color="#FF161616" />
+      <Color x:Key="CarbonLinkInverseHoverColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseHover" Color="#FF0043CE" />
+      <Color x:Key="CarbonLinkInverseVisitedColor">#FF8A3FFC</Color>
+      <SolidColorBrush x:Key="CarbonLinkInverseVisited" Color="#FF8A3FFC" />
+      <Color x:Key="CarbonLinkPrimaryColor">#FF78A9FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimary" Color="#FF78A9FF" />
+      <Color x:Key="CarbonLinkPrimaryHoverColor">#FFA6C8FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkPrimaryHover" Color="#FFA6C8FF" />
+      <Color x:Key="CarbonLinkSecondaryColor">#FFA6C8FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkSecondary" Color="#FFA6C8FF" />
+      <Color x:Key="CarbonLinkVisitedColor">#FFBE95FF</Color>
+      <SolidColorBrush x:Key="CarbonLinkVisited" Color="#FFBE95FF" />
+      <Color x:Key="CarbonOverlayColor">#99000000</Color>
+      <SolidColorBrush x:Key="CarbonOverlay" Color="#99000000" />
+      <Color x:Key="CarbonShadowColor">#CC000000</Color>
+      <SolidColorBrush x:Key="CarbonShadow" Color="#CC000000" />
+      <Color x:Key="CarbonSkeletonBackgroundColor">#FF333333</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonBackground" Color="#FF333333" />
+      <Color x:Key="CarbonSkeletonElementColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonSkeletonElement" Color="#FF525252" />
+      <Color x:Key="CarbonSupportCautionMajorColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMajor" Color="#FFFF832B" />
+      <Color x:Key="CarbonSupportCautionMinorColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionMinor" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportCautionUndefinedColor">#FFA56EFF</Color>
+      <SolidColorBrush x:Key="CarbonSupportCautionUndefined" Color="#FFA56EFF" />
+      <Color x:Key="CarbonSupportErrorColor">#FFFF8389</Color>
+      <SolidColorBrush x:Key="CarbonSupportError" Color="#FFFF8389" />
+      <Color x:Key="CarbonSupportErrorInverseColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonSupportErrorInverse" Color="#FFDA1E28" />
+      <Color x:Key="CarbonSupportInfoColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfo" Color="#FF4589FF" />
+      <Color x:Key="CarbonSupportInfoInverseColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonSupportInfoInverse" Color="#FF0043CE" />
+      <Color x:Key="CarbonSupportSuccessColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccess" Color="#FF42BE65" />
+      <Color x:Key="CarbonSupportSuccessInverseColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonSupportSuccessInverse" Color="#FF24A148" />
+      <Color x:Key="CarbonSupportWarningColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarning" Color="#FFF1C21B" />
+      <Color x:Key="CarbonSupportWarningInverseColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonSupportWarningInverse" Color="#FFF1C21B" />
+      <Color x:Key="CarbonTextDisabledColor">#40F4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTextDisabled" Color="#40F4F4F4" />
+      <Color x:Key="CarbonTextErrorColor">#FFFFB3B8</Color>
+      <SolidColorBrush x:Key="CarbonTextError" Color="#FFFFB3B8" />
+      <Color x:Key="CarbonTextHelperColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonTextHelper" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonTextInverseColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonTextInverse" Color="#FF161616" />
+      <Color x:Key="CarbonTextOnColorColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColor" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonTextOnColorDisabledColor">#40FFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonTextOnColorDisabled" Color="#40FFFFFF" />
+      <Color x:Key="CarbonTextPlaceholderColor">#66F4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTextPlaceholder" Color="#66F4F4F4" />
+      <Color x:Key="CarbonTextPrimaryColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTextPrimary" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonTextSecondaryColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonTextSecondary" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonToggleOffColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonToggleOff" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonButtonDangerActiveColor">#FF750E13</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerActive" Color="#FF750E13" />
+      <Color x:Key="CarbonButtonDangerHoverColor">#FFB81921</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerHover" Color="#FFB81921" />
+      <Color x:Key="CarbonButtonDangerPrimaryColor">#FFDA1E28</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerPrimary" Color="#FFDA1E28" />
+      <Color x:Key="CarbonButtonDangerSecondaryColor">#FFFF8389</Color>
+      <SolidColorBrush x:Key="CarbonButtonDangerSecondary" Color="#FFFF8389" />
+      <Color x:Key="CarbonButtonDisabledColor">#4D8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonButtonDisabled" Color="#4D8D8D8D" />
+      <Color x:Key="CarbonButtonPrimaryColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimary" Color="#FF0F62FE" />
+      <Color x:Key="CarbonButtonPrimaryActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonButtonPrimaryHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonButtonPrimaryHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonButtonSecondaryColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondary" Color="#FF6F6F6F" />
+      <Color x:Key="CarbonButtonSecondaryActiveColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryActive" Color="#FF393939" />
+      <Color x:Key="CarbonButtonSecondaryHoverColor">#FF5E5E5E</Color>
+      <SolidColorBrush x:Key="CarbonButtonSecondaryHover" Color="#FF5E5E5E" />
+      <Color x:Key="CarbonButtonSeparatorColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonButtonSeparator" Color="#FF161616" />
+      <Color x:Key="CarbonButtonTertiaryColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiary" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonButtonTertiaryActiveColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryActive" Color="#FFC6C6C6" />
+      <Color x:Key="CarbonButtonTertiaryHoverColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonButtonTertiaryHover" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonTagBackgroundBlueColor">#FF0043CE</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundBlue" Color="#FF0043CE" />
+      <Color x:Key="CarbonTagBackgroundCoolGrayColor">#FF4D5358</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCoolGray" Color="#FF4D5358" />
+      <Color x:Key="CarbonTagBackgroundCyanColor">#FF00539A</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundCyan" Color="#FF00539A" />
+      <Color x:Key="CarbonTagBackgroundGrayColor">#FF525252</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGray" Color="#FF525252" />
+      <Color x:Key="CarbonTagBackgroundGreenColor">#FF0E6027</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundGreen" Color="#FF0E6027" />
+      <Color x:Key="CarbonTagBackgroundMagentaColor">#FF9F1853</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundMagenta" Color="#FF9F1853" />
+      <Color x:Key="CarbonTagBackgroundPurpleColor">#FF6929C4</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundPurple" Color="#FF6929C4" />
+      <Color x:Key="CarbonTagBackgroundRedColor">#FFA2191F</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundRed" Color="#FFA2191F" />
+      <Color x:Key="CarbonTagBackgroundTealColor">#FF005D5D</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundTeal" Color="#FF005D5D" />
+      <Color x:Key="CarbonTagBackgroundWarmGrayColor">#FF565151</Color>
+      <SolidColorBrush x:Key="CarbonTagBackgroundWarmGray" Color="#FF565151" />
+      <Color x:Key="CarbonTagBorderBlueColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderBlue" Color="#FF4589FF" />
+      <Color x:Key="CarbonTagBorderCoolGrayColor">#FF878D96</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCoolGray" Color="#FF878D96" />
+      <Color x:Key="CarbonTagBorderCyanColor">#FF1192E8</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderCyan" Color="#FF1192E8" />
+      <Color x:Key="CarbonTagBorderGrayColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGray" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonTagBorderGreenColor">#FF24A148</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderGreen" Color="#FF24A148" />
+      <Color x:Key="CarbonTagBorderMagentaColor">#FFEE5396</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderMagenta" Color="#FFEE5396" />
+      <Color x:Key="CarbonTagBorderPurpleColor">#FFA56EFF</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderPurple" Color="#FFA56EFF" />
+      <Color x:Key="CarbonTagBorderRedColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderRed" Color="#FFFA4D56" />
+      <Color x:Key="CarbonTagBorderTealColor">#FF009D9A</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderTeal" Color="#FF009D9A" />
+      <Color x:Key="CarbonTagBorderWarmGrayColor">#FF8F8B8B</Color>
+      <SolidColorBrush x:Key="CarbonTagBorderWarmGray" Color="#FF8F8B8B" />
+      <Color x:Key="CarbonTagColorBlueColor">#FFD0E2FF</Color>
+      <SolidColorBrush x:Key="CarbonTagColorBlue" Color="#FFD0E2FF" />
+      <Color x:Key="CarbonTagColorCoolGrayColor">#FFF2F4F8</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCoolGray" Color="#FFF2F4F8" />
+      <Color x:Key="CarbonTagColorCyanColor">#FFBAE6FF</Color>
+      <SolidColorBrush x:Key="CarbonTagColorCyan" Color="#FFBAE6FF" />
+      <Color x:Key="CarbonTagColorGrayColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGray" Color="#FFF4F4F4" />
+      <Color x:Key="CarbonTagColorGreenColor">#FFA7F0BA</Color>
+      <SolidColorBrush x:Key="CarbonTagColorGreen" Color="#FFA7F0BA" />
+      <Color x:Key="CarbonTagColorMagentaColor">#FFFFD6E8</Color>
+      <SolidColorBrush x:Key="CarbonTagColorMagenta" Color="#FFFFD6E8" />
+      <Color x:Key="CarbonTagColorPurpleColor">#FFE8DAFF</Color>
+      <SolidColorBrush x:Key="CarbonTagColorPurple" Color="#FFE8DAFF" />
+      <Color x:Key="CarbonTagColorRedColor">#FFFFD7D9</Color>
+      <SolidColorBrush x:Key="CarbonTagColorRed" Color="#FFFFD7D9" />
+      <Color x:Key="CarbonTagColorTealColor">#FF9EF0F0</Color>
+      <SolidColorBrush x:Key="CarbonTagColorTeal" Color="#FF9EF0F0" />
+      <Color x:Key="CarbonTagColorWarmGrayColor">#FFF7F3F2</Color>
+      <SolidColorBrush x:Key="CarbonTagColorWarmGray" Color="#FFF7F3F2" />
+      <Color x:Key="CarbonTagHoverBlueColor">#FF0053FF</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverBlue" Color="#FF0053FF" />
+      <Color x:Key="CarbonTagHoverCoolGrayColor">#FF5D646A</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCoolGray" Color="#FF5D646A" />
+      <Color x:Key="CarbonTagHoverCyanColor">#FF0066BD</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverCyan" Color="#FF0066BD" />
+      <Color x:Key="CarbonTagHoverGrayColor">#FF636363</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGray" Color="#FF636363" />
+      <Color x:Key="CarbonTagHoverGreenColor">#FF11742F</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverGreen" Color="#FF11742F" />
+      <Color x:Key="CarbonTagHoverMagentaColor">#FFBF1D63</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverMagenta" Color="#FFBF1D63" />
+      <Color x:Key="CarbonTagHoverPurpleColor">#FF7C3DD6</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverPurple" Color="#FF7C3DD6" />
+      <Color x:Key="CarbonTagHoverRedColor">#FFC21E25</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverRed" Color="#FFC21E25" />
+      <Color x:Key="CarbonTagHoverTealColor">#FF007070</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverTeal" Color="#FF007070" />
+      <Color x:Key="CarbonTagHoverWarmGrayColor">#FF696363</Color>
+      <SolidColorBrush x:Key="CarbonTagHoverWarmGray" Color="#FF696363" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseColor">#FF0F62FE</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverse" Color="#FF0F62FE" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseActiveColor">#FF002D9C</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseActive" Color="#FF002D9C" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseHoverColor">#FF0050E6</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseHover" Color="#FF0050E6" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseText" Color="#FFFFFFFF" />
+      <Color x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabledColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonNotificationActionTertiaryInverseTextOnColorDisabled" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonNotificationBackgroundErrorColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundError" Color="#FF393939" />
+      <Color x:Key="CarbonNotificationBackgroundInfoColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundInfo" Color="#FF393939" />
+      <Color x:Key="CarbonNotificationBackgroundSuccessColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundSuccess" Color="#FF393939" />
+      <Color x:Key="CarbonNotificationBackgroundWarningColor">#FF393939</Color>
+      <SolidColorBrush x:Key="CarbonNotificationBackgroundWarning" Color="#FF393939" />
+      <Color x:Key="CarbonStatusAccessibilityBackgroundColor">#FF161616</Color>
+      <SolidColorBrush x:Key="CarbonStatusAccessibilityBackground" Color="#FF161616" />
+      <Color x:Key="CarbonStatusBlueColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="CarbonStatusBlue" Color="#FF4589FF" />
+      <Color x:Key="CarbonStatusGrayColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonStatusGray" Color="#FF8D8D8D" />
+      <Color x:Key="CarbonStatusGreenColor">#FF42BE65</Color>
+      <SolidColorBrush x:Key="CarbonStatusGreen" Color="#FF42BE65" />
+      <Color x:Key="CarbonStatusOrangeColor">#FFFF832B</Color>
+      <SolidColorBrush x:Key="CarbonStatusOrange" Color="#FFFF832B" />
+      <Color x:Key="CarbonStatusPurpleColor">#FFA56EFF</Color>
+      <SolidColorBrush x:Key="CarbonStatusPurple" Color="#FFA56EFF" />
+      <Color x:Key="CarbonStatusRedColor">#FFFA4D56</Color>
+      <SolidColorBrush x:Key="CarbonStatusRed" Color="#FFFA4D56" />
+      <Color x:Key="CarbonStatusYellowColor">#FFF1C21B</Color>
+      <SolidColorBrush x:Key="CarbonStatusYellow" Color="#FFF1C21B" />
+      <Color x:Key="CarbonContentSwitcherBackgroundColor">#00000000</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackground" Color="#00000000" />
+      <Color x:Key="CarbonContentSwitcherBackgroundHoverColor">#1F8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherBackgroundHover" Color="#1F8D8D8D" />
+      <Color x:Key="CarbonContentSwitcherSelectedColor">#3D8D8D8D</Color>
+      <SolidColorBrush x:Key="CarbonContentSwitcherSelected" Color="#3D8D8D8D" />
+      <!-- Avalonia.Themes.Simple compatibility (controls without a Carbon template) -->
+      <Color x:Key="ThemeBackgroundColor">#FF262626</Color>
+      <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#FF262626" />
+      <Color x:Key="ThemeForegroundColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeForegroundBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeForegroundLowColor">#FFC6C6C6</Color>
+      <SolidColorBrush x:Key="ThemeForegroundLowBrush" Color="#FFC6C6C6" />
+      <Color x:Key="ThemeBorderLowColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="ThemeBorderLowBrush" Color="#FF6F6F6F" />
+      <Color x:Key="ThemeBorderMidColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="#FF8D8D8D" />
+      <Color x:Key="ThemeBorderHighColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeBorderHighBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeControlLowColor">#FF8D8D8D</Color>
+      <SolidColorBrush x:Key="ThemeControlLowBrush" Color="#FF8D8D8D" />
+      <Color x:Key="ThemeControlMidColor">#FF393939</Color>
+      <SolidColorBrush x:Key="ThemeControlMidBrush" Color="#FF393939" />
+      <Color x:Key="ThemeControlMidHighColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeControlMidHighBrush" Color="#FF525252" />
+      <Color x:Key="ThemeControlHighColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="ThemeControlHighBrush" Color="#FF6F6F6F" />
+      <Color x:Key="ThemeControlVeryHighColor">#FFF4F4F4</Color>
+      <SolidColorBrush x:Key="ThemeControlVeryHighBrush" Color="#FFF4F4F4" />
+      <Color x:Key="ThemeControlHighlightLowColor">#FF474747</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightLowBrush" Color="#FF474747" />
+      <Color x:Key="ThemeControlHighlightMidColor">#FF525252</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightMidBrush" Color="#FF525252" />
+      <Color x:Key="ThemeControlHighlightHighColor">#FF6F6F6F</Color>
+      <SolidColorBrush x:Key="ThemeControlHighlightHighBrush" Color="#FF6F6F6F" />
+      <Color x:Key="ThemeAccentColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccentBrush" Color="#FF4589FF" />
+      <Color x:Key="ThemeAccent2Color">#994589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccent2Brush" Color="#994589FF" />
+      <Color x:Key="ThemeAccent3Color">#664589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccent3Brush" Color="#664589FF" />
+      <Color x:Key="ThemeAccent4Color">#334589FF</Color>
+      <SolidColorBrush x:Key="ThemeAccent4Brush" Color="#334589FF" />
+      <Color x:Key="HighlightColor">#FF4589FF</Color>
+      <SolidColorBrush x:Key="HighlightBrush" Color="#FF4589FF" />
+      <Color x:Key="Highlight2Color">#FF4589FF</Color>
+      <SolidColorBrush x:Key="Highlight2Brush" Color="#FF4589FF" />
+      <Color x:Key="HighlightForegroundColor">#FFFFFFFF</Color>
+      <SolidColorBrush x:Key="HighlightForegroundBrush" Color="#FFFFFFFF" />
+      <Color x:Key="ErrorColor">#FFFF8389</Color>
+      <SolidColorBrush x:Key="ErrorBrush" Color="#FFFF8389" />
+      <Color x:Key="ErrorLowColor">#10FF8389</Color>
+      <SolidColorBrush x:Key="ErrorLowBrush" Color="#10FF8389" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+
+  <!-- Spacing scale (spacing-01..13, px) -->
+  <x:Double x:Key="CarbonSpacing01">2</x:Double>
+  <Thickness x:Key="CarbonSpacing01Thickness">2</Thickness>
+  <x:Double x:Key="CarbonSpacing02">4</x:Double>
+  <Thickness x:Key="CarbonSpacing02Thickness">4</Thickness>
+  <x:Double x:Key="CarbonSpacing03">8</x:Double>
+  <Thickness x:Key="CarbonSpacing03Thickness">8</Thickness>
+  <x:Double x:Key="CarbonSpacing04">12</x:Double>
+  <Thickness x:Key="CarbonSpacing04Thickness">12</Thickness>
+  <x:Double x:Key="CarbonSpacing05">16</x:Double>
+  <Thickness x:Key="CarbonSpacing05Thickness">16</Thickness>
+  <x:Double x:Key="CarbonSpacing06">24</x:Double>
+  <Thickness x:Key="CarbonSpacing06Thickness">24</Thickness>
+  <x:Double x:Key="CarbonSpacing07">32</x:Double>
+  <Thickness x:Key="CarbonSpacing07Thickness">32</Thickness>
+  <x:Double x:Key="CarbonSpacing08">40</x:Double>
+  <Thickness x:Key="CarbonSpacing08Thickness">40</Thickness>
+  <x:Double x:Key="CarbonSpacing09">48</x:Double>
+  <Thickness x:Key="CarbonSpacing09Thickness">48</Thickness>
+  <x:Double x:Key="CarbonSpacing10">64</x:Double>
+  <Thickness x:Key="CarbonSpacing10Thickness">64</Thickness>
+  <x:Double x:Key="CarbonSpacing11">80</x:Double>
+  <Thickness x:Key="CarbonSpacing11Thickness">80</Thickness>
+  <x:Double x:Key="CarbonSpacing12">96</x:Double>
+  <Thickness x:Key="CarbonSpacing12Thickness">96</Thickness>
+  <x:Double x:Key="CarbonSpacing13">160</x:Double>
+  <Thickness x:Key="CarbonSpacing13Thickness">160</Thickness>
+
+  <!-- Component sizes (xs 24, sm 32, md 40, lg 48, xl 64, 2xl 80) and icon sizes -->
+  <x:Double x:Key="CarbonSizeXSmall">24</x:Double>
+  <x:Double x:Key="CarbonSizeSmall">32</x:Double>
+  <x:Double x:Key="CarbonSizeMedium">40</x:Double>
+  <x:Double x:Key="CarbonSizeLarge">48</x:Double>
+  <x:Double x:Key="CarbonSizeXLarge">64</x:Double>
+  <x:Double x:Key="CarbonSize2XLarge">80</x:Double>
+  <x:Double x:Key="CarbonIconSize01">16</x:Double>
+  <x:Double x:Key="CarbonIconSize02">20</x:Double>
+
+  <!-- Type tokens -->
+  <x:Double x:Key="CarbonLabel01FontSize">12</x:Double>
+  <x:Double x:Key="CarbonLabel01LineHeight">16</x:Double>
+  <FontWeight x:Key="CarbonLabel01FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonLabel01LetterSpacing">0.32</x:Double>
+  <x:Double x:Key="CarbonLabel02FontSize">14</x:Double>
+  <x:Double x:Key="CarbonLabel02LineHeight">18</x:Double>
+  <FontWeight x:Key="CarbonLabel02FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonLabel02LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonHelperText01FontSize">12</x:Double>
+  <x:Double x:Key="CarbonHelperText01LineHeight">16</x:Double>
+  <FontWeight x:Key="CarbonHelperText01FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonHelperText01LetterSpacing">0.32</x:Double>
+  <x:Double x:Key="CarbonHelperText02FontSize">14</x:Double>
+  <x:Double x:Key="CarbonHelperText02LineHeight">18</x:Double>
+  <FontWeight x:Key="CarbonHelperText02FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonHelperText02LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonLegal01FontSize">12</x:Double>
+  <x:Double x:Key="CarbonLegal01LineHeight">16</x:Double>
+  <FontWeight x:Key="CarbonLegal01FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonLegal01LetterSpacing">0.32</x:Double>
+  <x:Double x:Key="CarbonLegal02FontSize">14</x:Double>
+  <x:Double x:Key="CarbonLegal02LineHeight">18</x:Double>
+  <FontWeight x:Key="CarbonLegal02FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonLegal02LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonBodyCompact01FontSize">14</x:Double>
+  <x:Double x:Key="CarbonBodyCompact01LineHeight">18</x:Double>
+  <FontWeight x:Key="CarbonBodyCompact01FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonBodyCompact01LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonBodyCompact02FontSize">16</x:Double>
+  <x:Double x:Key="CarbonBodyCompact02LineHeight">22</x:Double>
+  <FontWeight x:Key="CarbonBodyCompact02FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonBodyCompact02LetterSpacing">0</x:Double>
+  <x:Double x:Key="CarbonBody01FontSize">14</x:Double>
+  <x:Double x:Key="CarbonBody01LineHeight">20</x:Double>
+  <FontWeight x:Key="CarbonBody01FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonBody01LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonBody02FontSize">16</x:Double>
+  <x:Double x:Key="CarbonBody02LineHeight">24</x:Double>
+  <FontWeight x:Key="CarbonBody02FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonBody02LetterSpacing">0</x:Double>
+  <x:Double x:Key="CarbonCode01FontSize">12</x:Double>
+  <x:Double x:Key="CarbonCode01LineHeight">16</x:Double>
+  <FontWeight x:Key="CarbonCode01FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonCode01LetterSpacing">0.32</x:Double>
+  <x:Double x:Key="CarbonCode02FontSize">14</x:Double>
+  <x:Double x:Key="CarbonCode02LineHeight">20</x:Double>
+  <FontWeight x:Key="CarbonCode02FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonCode02LetterSpacing">0.32</x:Double>
+  <x:Double x:Key="CarbonHeadingCompact01FontSize">14</x:Double>
+  <x:Double x:Key="CarbonHeadingCompact01LineHeight">18</x:Double>
+  <FontWeight x:Key="CarbonHeadingCompact01FontWeight">SemiBold</FontWeight>
+  <x:Double x:Key="CarbonHeadingCompact01LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonHeadingCompact02FontSize">16</x:Double>
+  <x:Double x:Key="CarbonHeadingCompact02LineHeight">22</x:Double>
+  <FontWeight x:Key="CarbonHeadingCompact02FontWeight">SemiBold</FontWeight>
+  <x:Double x:Key="CarbonHeadingCompact02LetterSpacing">0</x:Double>
+  <x:Double x:Key="CarbonHeading01FontSize">14</x:Double>
+  <x:Double x:Key="CarbonHeading01LineHeight">20</x:Double>
+  <FontWeight x:Key="CarbonHeading01FontWeight">SemiBold</FontWeight>
+  <x:Double x:Key="CarbonHeading01LetterSpacing">0.16</x:Double>
+  <x:Double x:Key="CarbonHeading02FontSize">16</x:Double>
+  <x:Double x:Key="CarbonHeading02LineHeight">24</x:Double>
+  <FontWeight x:Key="CarbonHeading02FontWeight">SemiBold</FontWeight>
+  <x:Double x:Key="CarbonHeading02LetterSpacing">0</x:Double>
+  <x:Double x:Key="CarbonHeading03FontSize">20</x:Double>
+  <x:Double x:Key="CarbonHeading03LineHeight">28</x:Double>
+  <FontWeight x:Key="CarbonHeading03FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonHeading03LetterSpacing">0</x:Double>
+  <x:Double x:Key="CarbonHeading04FontSize">28</x:Double>
+  <x:Double x:Key="CarbonHeading04LineHeight">36</x:Double>
+  <FontWeight x:Key="CarbonHeading04FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonHeading04LetterSpacing">0</x:Double>
+  <x:Double x:Key="CarbonHeading05FontSize">32</x:Double>
+  <x:Double x:Key="CarbonHeading05LineHeight">40</x:Double>
+  <FontWeight x:Key="CarbonHeading05FontWeight">Normal</FontWeight>
+  <x:Double x:Key="CarbonHeading05LetterSpacing">0</x:Double>
+
+  <!-- Motion: durations and productive / expressive easings -->
+  <x:TimeSpan x:Key="CarbonDurationFast01">0:0:0.070</x:TimeSpan>
+  <x:TimeSpan x:Key="CarbonDurationFast02">0:0:0.110</x:TimeSpan>
+  <x:TimeSpan x:Key="CarbonDurationModerate01">0:0:0.150</x:TimeSpan>
+  <x:TimeSpan x:Key="CarbonDurationModerate02">0:0:0.240</x:TimeSpan>
+  <x:TimeSpan x:Key="CarbonDurationSlow01">0:0:0.400</x:TimeSpan>
+  <x:TimeSpan x:Key="CarbonDurationSlow02">0:0:0.700</x:TimeSpan>
+  <SplineEasing x:Key="CarbonEasingStandardProductive" X1="0.2" Y1="0" X2="0.38" Y2="0.9" />
+  <SplineEasing x:Key="CarbonEasingStandardExpressive" X1="0.4" Y1="0.14" X2="0.3" Y2="1" />
+  <SplineEasing x:Key="CarbonEasingEntranceProductive" X1="0" Y1="0" X2="0.38" Y2="0.9" />
+  <SplineEasing x:Key="CarbonEasingEntranceExpressive" X1="0" Y1="0" X2="0.3" Y2="1" />
+  <SplineEasing x:Key="CarbonEasingExitProductive" X1="0.2" Y1="0" X2="1" Y2="0.9" />
+  <SplineEasing x:Key="CarbonEasingExitExpressive" X1="0.4" Y1="0.14" X2="1" Y2="1" />
+</ResourceDictionary>

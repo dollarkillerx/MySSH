@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.InputsPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Text input, password, text area, dropdown" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="Field background with a 1px bottom border; label / helper / invalid text via carbon:Field.*; 2px focus outline." />
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Text input" />
+      <Grid ColumnDefinitions="320,320,320" RowDefinitions="Auto,Auto,Auto" Classes="matrix">
+        <TextBox carbon:Field.Label="Host name" PlaceholderText="e.g. prod-web-01" carbon:Field.HelperText="Name shown in the host list" />
+        <TextBox Grid.Column="1" Classes="demo-hover" carbon:Field.Label="Hover" Text="bastion.example.com" carbon:Field.HelperText="Helper text" />
+        <TextBox Grid.Column="2" Classes="demo-focus" carbon:Field.Label="Focus" Text="10.0.0.12" carbon:Field.HelperText="Helper text" />
+        <TextBox Grid.Row="1" carbon:Field.Label="Port" Text="22x" carbon:Field.IsInvalid="True" carbon:Field.InvalidText="Port must be a number between 1 and 65535" carbon:Field.HelperText="hidden while invalid" />
+        <TextBox Grid.Row="1" Grid.Column="1" carbon:Field.Label="Disabled" Text="root" IsEnabled="False" carbon:Field.HelperText="Helper text" />
+        <TextBox Grid.Row="1" Grid.Column="2" carbon:Field.Label="Read only" Text="SHA256:3b9f…a1c2" IsReadOnly="True" />
+        <TextBox Grid.Row="2" Classes="sm" carbon:Field.Label="Small (32)" PlaceholderText="Placeholder" />
+        <TextBox Grid.Row="2" Grid.Column="1" carbon:Field.Label="Medium (40)" PlaceholderText="Placeholder" />
+        <TextBox Grid.Row="2" Grid.Column="2" Classes="lg" carbon:Field.Label="Large (48)" PlaceholderText="Placeholder" />
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Password input" />
+      <Grid ColumnDefinitions="320,320,320" Classes="matrix">
+        <TextBox Classes="password" PasswordChar="●" carbon:Field.Label="Password" Text="hunter2hunter2" carbon:Field.HelperText="Stored in the system keychain" />
+        <TextBox Grid.Column="1" Classes="password" PasswordChar="●" RevealPassword="True" carbon:Field.Label="Revealed" Text="hunter2hunter2" />
+        <TextBox Grid.Column="2" Classes="password" PasswordChar="●" carbon:Field.Label="Key passphrase" Text="x" carbon:Field.IsInvalid="True" carbon:Field.InvalidText="Wrong passphrase or damaged key" />
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Text area" />
+      <Grid ColumnDefinitions="480,480" Classes="matrix">
+        <TextBox AcceptsReturn="True" MinHeight="96" carbon:Field.Label="Notes" PlaceholderText="Anything worth remembering about this host"
+                 carbon:Field.HelperText="Plain text, up to 1000 characters" />
+        <TextBox Grid.Column="1" AcceptsReturn="True" MinHeight="96" carbon:Field.Label="Command allow-list"
+                 Text="systemctl status *&#10;journalctl -u nginx&#10;df -h" carbon:Field.IsInvalid="True" carbon:Field.InvalidText="Line 4: pattern is empty" />
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Dropdown (ComboBox)" />
+      <Grid ColumnDefinitions="320,320,320" RowDefinitions="Auto,Auto" Classes="matrix">
+        <ComboBox carbon:Field.Label="Authentication" SelectedIndex="1" HorizontalAlignment="Stretch" carbon:Field.HelperText="How MySSH signs in">
+          <ComboBoxItem Content="Password" />
+          <ComboBoxItem Content="Private key" />
+          <ComboBoxItem Content="SSH agent" />
+        </ComboBox>
+        <ComboBox Grid.Column="1" Classes="demo-hover" carbon:Field.Label="Jump host" PlaceholderText="Choose a host" HorizontalAlignment="Stretch">
+          <ComboBoxItem Content="bastion-01" />
+          <ComboBoxItem Content="bastion-02" />
+        </ComboBox>
+        <ComboBox Grid.Column="2" Classes="demo-focus" carbon:Field.Label="Focus" SelectedIndex="0" HorizontalAlignment="Stretch">
+          <ComboBoxItem Content="UTF-8" />
+        </ComboBox>
+        <ComboBox Grid.Row="1" carbon:Field.Label="Policy" PlaceholderText="Required" carbon:Field.IsInvalid="True" carbon:Field.InvalidText="Choose an MCP policy" HorizontalAlignment="Stretch">
+          <ComboBoxItem Content="Off" />
+        </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="1" carbon:Field.Label="Disabled" SelectedIndex="0" IsEnabled="False" HorizontalAlignment="Stretch">
+          <ComboBoxItem Content="Ask every time" />
+        </ComboBox>
+        <StackPanel Grid.Row="1" Grid.Column="2" Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Open menu (inline preview)" />
+          <Border Background="{DynamicResource CarbonLayer01}" BoxShadow="0 2 6 0 #4D000000">
+            <StackPanel>
+              <ComboBoxItem Content="Password" />
+              <ComboBoxItem Content="Private key" IsSelected="True" />
+              <ComboBoxItem Classes="demo-hover" Content="SSH agent" />
+              <ComboBoxItem Content="Keyboard-interactive" />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

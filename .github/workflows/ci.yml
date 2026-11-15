@@ -1,0 +1,79 @@
+name: ci
+
+on:
+  push:
+    branches: [main, "p*-*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  # 10.0.404 carries the fixed NativeAOT compiler (GHSA-p3jp-9v83-76w9); with it NU1903 stays a hard error.
+  DOTNET_SDK: "10.0.404"
+
+jobs:
+  build-test:
+    name: build & test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK }}
+      - name: Linux UI test dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libfontconfig1 libice6 libsm6 fonts-noto-cjk
+      - run: dotnet restore MySSH.slnx
+      - run: dotnet build MySSH.slnx -c Release --no-restore
+      - run: dotnet test MySSH.slnx -c Release --no-build
+      - name: Upload test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.os }}
+          path: tests/**/.work/**/*.png
+          if-no-files-found: ignore
+
+  aot-publish:
+    name: NativeAOT publish (${{ matrix.rid }})
+    needs: build-test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest, rid: osx-arm64 }
+          - { os: windows-latest, rid: win-x64 }
+          - { os: ubuntu-latest, rid: linux-x64 }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK }}
+      - name: Linux AOT toolchain
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends clang zlib1g-dev
+      # Our libraries: trim/AOT warnings are build errors. Third-party: per-member warnings vs reviewed allowlist.
+      - name: AOT warning gate
+        shell: bash
+        run: tools/aot/check-aot-warnings.sh ${{ matrix.rid }}
+      - run: dotnet publish src/MySSH.Desktop -c Release -r ${{ matrix.rid }} -o publish/desktop
+      - name: NativeAOT runtime smoke test (storage, crypto, legacy import, resources; no UI, no OS keystore)
+        shell: bash
+        run: publish/desktop/MySSH --self-test tests/fixtures/legacy/appdata/myssh
+      - run: dotnet publish src/MySSH.McpBridge -c Release -r ${{ matrix.rid }} -o publish/bridge
+      - uses: actions/upload-artifact@v4
+        with:
+          name: myssh-${{ matrix.rid }}
+          path: publish/

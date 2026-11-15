@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>MySSH</AssemblyName>
+    <RootNamespace>MySSH.Desktop</RootNamespace>
+    <ApplicationIcon>../../assets/icons/icon.ico</ApplicationIcon>
+    <PublishAot>true</PublishAot>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <!-- Third-party assemblies only report collapsed IL2104/IL3053; tools/aot/check-aot-warnings.sh gates the
+         individual warnings against a reviewed allowlist. Our own libraries are analysed member-by-member. -->
+    <NoWarn>$(NoWarn);IL2104;IL3053</NoWarn>
+    <SatelliteResourceLanguages>en-US;zh-CN;ja-JP</SatelliteResourceLanguages>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySSH.Desktop.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../MySSH.Core/MySSH.Core.csproj" />
+    <ProjectReference Include="../MySSH.Storage/MySSH.Storage.csproj" />
+    <ProjectReference Include="../MySSH.UI.Carbon/MySSH.UI.Carbon.csproj" />
+    <ProjectReference Include="../MySSH.Terminal/MySSH.Terminal.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Simple" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets/**" />
+  </ItemGroup>
+</Project>

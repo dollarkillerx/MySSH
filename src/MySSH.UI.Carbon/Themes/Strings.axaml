@@ -1,0 +1,9 @@
+<!-- Default (English) strings used inside Carbon templates. Override these keys in Application.Resources to localize. -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="using:System">
+  <sys:String x:Key="CarbonStringShowPassword">Show password</sys:String>
+  <sys:String x:Key="CarbonStringMenu">Menu</sys:String>
+  <sys:String x:Key="CarbonStringClose">Close</sys:String>
+  <sys:String x:Key="CarbonStringDismiss">Dismiss</sys:String>
+</ResourceDictionary>

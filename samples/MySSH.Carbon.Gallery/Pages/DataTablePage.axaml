@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:local="using:MySSH.Carbon.Gallery.Pages"
+             x:Class="MySSH.Carbon.Gallery.Pages.DataTablePage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Data table" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="DataGrid with Carbon data-table styling: 48px rows, header layer-accent, hover / selected tokens, sort arrows." />
+
+    <StackPanel Classes="section">
+      <!-- Carbon table toolbar -->
+      <Border Background="{DynamicResource CarbonLayer01}">
+        <StackPanel>
+          <StackPanel Margin="16,16,16,24" Spacing="4">
+            <TextBlock Classes="heading-03" Text="Hosts" />
+            <TextBlock Classes="body-compact-01 secondary" Text="Imported from the previous version" />
+          </StackPanel>
+          <Grid ColumnDefinitions="*,Auto,Auto,Auto" Height="48">
+            <TextBox Classes="lg" PlaceholderText="Search hosts" BorderThickness="0" Background="Transparent">
+              <TextBox.InnerLeftContent>
+                <carbon:CarbonIcon Kind="search" Margin="16,0,0,0" VerticalAlignment="Center" />
+              </TextBox.InnerLeftContent>
+            </TextBox>
+            <Button Grid.Column="1" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="filter" ToolTip.Tip="Filter" />
+            <Button Grid.Column="2" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="settings" ToolTip.Tip="Settings" />
+            <Button Grid.Column="3" Classes="lg" carbon:ButtonAssist.Icon="add" Content="Add host" />
+          </Grid>
+          <DataGrid Name="Hosts" x:DataType="local:HostRow" Height="345" CanUserSortColumns="True" IsReadOnly="True">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+              <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*" />
+              <DataGridTextColumn Header="User" Binding="{Binding User}" Width="*" />
+              <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="*" />
+              <DataGridTextColumn Header="Last connected" Binding="{Binding LastConnected}" Width="*" />
+            </DataGrid.Columns>
+          </DataGrid>
+        </StackPanel>
+      </Border>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Compact (Classes=&quot;sm&quot;, 32px rows)" />
+      <DataGrid Name="Compact" Classes="sm" x:DataType="local:HostRow" Height="200" IsReadOnly="True">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+          <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*" />
+          <DataGridTextColumn Header="User" Binding="{Binding User}" Width="*" />
+        </DataGrid.Columns>
+      </DataGrid>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

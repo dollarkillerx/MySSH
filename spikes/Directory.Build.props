@@ -1,0 +1,3 @@
+<Project>
+  <!-- Spikes are throwaway and self-contained: stop inheriting the repo-wide build settings. -->
+</Project>

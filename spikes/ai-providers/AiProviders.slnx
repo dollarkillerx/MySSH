@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AiSpike.Console/AiSpike.Console.csproj" />
+    <Project Path="src/AiSpike.Core/AiSpike.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AiSpike.Tests/AiSpike.Tests.csproj" />
+  </Folder>
+</Solution>

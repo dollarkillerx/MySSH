@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/MySSH.Carbon.Gallery/MySSH.Carbon.Gallery.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/MySSH.Ai/MySSH.Ai.csproj" />
+    <Project Path="src/MySSH.Core/MySSH.Core.csproj" />
+    <Project Path="src/MySSH.Desktop/MySSH.Desktop.csproj" />
+    <Project Path="src/MySSH.Mcp/MySSH.Mcp.csproj" />
+    <Project Path="src/MySSH.McpBridge/MySSH.McpBridge.csproj" />
+    <Project Path="src/MySSH.Ssh/MySSH.Ssh.csproj" />
+    <Project Path="src/MySSH.Storage/MySSH.Storage.csproj" />
+    <Project Path="src/MySSH.Terminal/MySSH.Terminal.csproj" />
+    <Project Path="src/MySSH.Tools/MySSH.Tools.csproj" />
+    <Project Path="src/MySSH.UI.Carbon/MySSH.UI.Carbon.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MySSH.Core.Tests/MySSH.Core.Tests.csproj" />
+    <Project Path="tests/MySSH.Desktop.Tests/MySSH.Desktop.Tests.csproj" />
+    <Project Path="tests/MySSH.Storage.Tests/MySSH.Storage.Tests.csproj" />
+    <Project Path="tests/MySSH.UI.Carbon.Tests/MySSH.UI.Carbon.Tests.csproj" />
+  </Folder>
+</Solution>

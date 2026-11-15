@@ -1,0 +1,16 @@
+<!-- All Carbon control themes. Cross-file references use DynamicResource (or StaticResource of {x:Type} keys). -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.MergedDictionaries>
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Button.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/TextBox.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/ComboBox.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Selection.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/TabControl.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/ListBox.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Menu.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Misc.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/DataGrid.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Custom.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

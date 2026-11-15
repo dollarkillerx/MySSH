@@ -1,0 +1,88 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.ShellPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="UI shell and modal" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="Header and side-nav rail are always Gray 100. The modal covers its host with the overlay token." />
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Main window (design §9.4)" />
+      <Border Height="460" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="1" ClipToBounds="True">
+        <DockPanel>
+          <carbon:ShellHeader DockPanel.Dock="Top" ProductPrefix="MySSH" IsMenuButtonVisible="True"
+                              IsMenuOpen="{Binding #Rail.IsExpanded, Mode=TwoWay}">
+            <TextBox Classes="search" Width="360" HorizontalAlignment="Left" PlaceholderText="Search hosts, commands, ?ask…"
+                     Background="{DynamicResource CarbonField01}" BorderThickness="0" MinHeight="32" Margin="0,8">
+              <TextBox.InnerLeftContent>
+                <carbon:CarbonIcon Kind="search" Margin="12,0,-8,0" VerticalAlignment="Center" />
+              </TextBox.InnerLeftContent>
+            </TextBox>
+            <carbon:ShellHeader.GlobalActions>
+              <StackPanel Orientation="Horizontal">
+                <carbon:Tag Type="Green" Size="Small" Content="MCP · 1" Margin="0,0,8,0" />
+                <Button Classes="header-action" carbon:ButtonAssist.Icon="chat" ToolTip.Tip="AI assistant" />
+                <Button Classes="header-action active" carbon:ButtonAssist.Icon="notification" ToolTip.Tip="Notifications" />
+                <Button Classes="header-action" carbon:ButtonAssist.Icon="settings" ToolTip.Tip="Settings" />
+              </StackPanel>
+            </carbon:ShellHeader.GlobalActions>
+          </carbon:ShellHeader>
+          <carbon:SideNavRail Name="Rail" DockPanel.Dock="Left" SelectedIndex="1">
+            <carbon:SideNavItem Icon="home" Content="Home" />
+            <carbon:SideNavItem Icon="server" Content="Hosts" />
+            <carbon:SideNavItem Icon="password" Content="Identities" />
+            <carbon:SideNavItem Icon="locked" Content="Known hosts" />
+            <carbon:SideNavItem Icon="machine-learning" Content="AI assistant" />
+            <carbon:SideNavRail.FooterContent>
+              <carbon:SideNavItem Icon="settings" Content="Settings" Classes="demo-hover" />
+            </carbon:SideNavRail.FooterContent>
+          </carbon:SideNavRail>
+          <Panel>
+            <TabControl Classes="contained">
+              <TabItem Header="prod-web-01">
+                <Border Background="#161616" Padding="16">
+                  <TextBlock Classes="code-02" Foreground="#F4F4F4"
+                             Text="deploy@prod-web-01:~$ systemctl status nginx&#10;● nginx.service - failed" />
+                </Border>
+              </TabItem>
+              <TabItem Header="db-master" />
+              <TabItem Header="prod-web-01 · SFTP" />
+            </TabControl>
+            <carbon:Modal IsOpen="True" Size="ExtraSmall" Label="MCP · Claude Code" Heading="Allow run_command?"
+                          PrimaryButtonText="Allow" SecondaryButtonText="Deny" IsDanger="True">
+              <TextBlock Text="sudo systemctl restart nginx on prod-web-01. This is a high-risk command." />
+            </carbon:Modal>
+          </Panel>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Side nav (expanded)" />
+      <Border Height="240" Width="256" HorizontalAlignment="Left">
+        <carbon:SideNavRail IsExpanded="True" SelectedIndex="0">
+          <carbon:SideNavItem Icon="server" Content="Hosts" />
+          <carbon:SideNavItem Icon="password" Content="Identities" Classes="demo-hover" />
+          <carbon:SideNavItem Icon="network" Content="Port forwarding" />
+          <carbon:SideNavItem Icon="document" Content="Audit log" IsEnabled="False" />
+        </carbon:SideNavRail>
+      </Border>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Modal (md, passive content + form)" />
+      <Panel Height="420">
+        <carbon:Modal IsOpen="True" Label="Hosts" Heading="Add host" PrimaryButtonText="Save" SecondaryButtonText="Cancel">
+          <StackPanel Spacing="24">
+            <TextBlock Text="Hosts are stored encrypted in the local vault. You can edit them later." />
+            <Grid ColumnDefinitions="*,16,120">
+              <TextBox carbon:Field.Label="Address" Classes="on-layer" Text="10.0.1.21" />
+              <TextBox Grid.Column="2" carbon:Field.Label="Port" Classes="on-layer" Text="22" />
+            </Grid>
+          </StackPanel>
+        </carbon:Modal>
+      </Panel>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

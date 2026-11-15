@@ -1,0 +1,260 @@
+<!-- Carbon ToolTip, ProgressBar, FlyoutPresenter, ScrollBar (thin overlay) and ScrollViewer. -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:carbon="using:MySSH.UI.Carbon">
+
+  <!-- ============================================================ ToolTip (inverse surface) -->
+  <ControlTheme x:Key="{x:Type ToolTip}" TargetType="ToolTip">
+    <Setter Property="Background" Value="{DynamicResource CarbonBackgroundInverse}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextInverse}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="2" />
+    <Setter Property="Padding" Value="16,8" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="LetterSpacing" Value="0.16" />
+    <Setter Property="MaxWidth" Value="288" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Margin="0,0,0,4" BoxShadow="0 2 6 0 #33000000" CornerRadius="{TemplateBinding CornerRadius}">
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}">
+            <ContentPresenter.Styles>
+              <Style Selector="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
+              </Style>
+            </ContentPresenter.Styles>
+          </ContentPresenter>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <!-- ============================================================ ProgressBar -->
+  <!-- carbon:Field.Label above, carbon:Field.HelperText below. Classes: sm (4px), success, error. -->
+  <ControlTheme x:Key="{x:Type ProgressBar}" TargetType="ProgressBar">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayerAccent01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonInteractive}" />
+    <Setter Property="MinWidth" Value="64" />
+    <Setter Property="Template">
+      <ControlTemplate TargetType="ProgressBar">
+        <DockPanel>
+          <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto"
+                IsVisible="{TemplateBinding (carbon:Field.Label), Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                Margin="0,0,0,8">
+            <TextBlock Name="PART_Label" Classes="body-compact-01" Foreground="{DynamicResource CarbonTextPrimary}"
+                       Text="{TemplateBinding (carbon:Field.Label)}" TextTrimming="CharacterEllipsis" />
+            <carbon:CarbonIcon Name="PART_StatusIcon" Grid.Column="1" Size="16" IsVisible="False" Margin="8,0,0,0" />
+          </Grid>
+          <TextBlock Name="PART_Helper" DockPanel.Dock="Bottom" Margin="0,8,0,0" Classes="helper-text-01"
+                     Foreground="{DynamicResource CarbonTextSecondary}"
+                     Text="{TemplateBinding (carbon:Field.HelperText)}"
+                     IsVisible="{TemplateBinding (carbon:Field.HelperText), Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <Border Name="PART_Track" Height="8" Background="{TemplateBinding Background}" ClipToBounds="True"
+                  VerticalAlignment="Center">
+            <Panel>
+              <Border Name="PART_Indicator"
+                      Background="{TemplateBinding Foreground}"
+                      HorizontalAlignment="Left"
+                      IsVisible="{Binding !IsIndeterminate, RelativeSource={RelativeSource TemplatedParent}}" />
+              <Border Name="PART_IndeterminateIndicator"
+                      Background="{TemplateBinding Foreground}"
+                      HorizontalAlignment="Left"
+                      IsVisible="{Binding IsIndeterminate, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Panel>
+          </Border>
+        </DockPanel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^.sm /template/ Border#PART_Track">
+      <Setter Property="Height" Value="4" />
+    </Style>
+    <Style Selector="^.success">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonSupportSuccess}" />
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_StatusIcon">
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="Kind" Value="checkmark-filled" />
+        <Setter Property="Foreground" Value="{DynamicResource CarbonSupportSuccess}" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Helper">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextSecondary}" />
+      </Style>
+    </Style>
+    <Style Selector="^.error">
+      <Setter Property="Foreground" Value="{DynamicResource CarbonSupportError}" />
+      <Style Selector="^ /template/ carbon|CarbonIcon#PART_StatusIcon">
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="Kind" Value="error-filled" />
+        <Setter Property="Foreground" Value="{DynamicResource CarbonSupportError}" />
+      </Style>
+      <Style Selector="^ /template/ TextBlock#PART_Helper">
+        <Setter Property="Foreground" Value="{DynamicResource CarbonTextError}" />
+      </Style>
+      <Style Selector="^ /template/ Border#PART_Track">
+        <Setter Property="Background" Value="{DynamicResource CarbonSupportError}" />
+      </Style>
+    </Style>
+    <Style Selector="^:indeterminate /template/ Border#PART_IndeterminateIndicator">
+      <Setter Property="Width" Value="{Binding TemplateSettings.ContainerWidth, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Style.Animations>
+        <Animation Easing="LinearEasing" IterationCount="Infinite" Duration="0:0:1.4">
+          <KeyFrame Cue="0%">
+            <Setter Property="TranslateTransform.X" Value="{Binding $parent[ProgressBar].TemplateSettings.IndeterminateStartingOffset}" />
+          </KeyFrame>
+          <KeyFrame Cue="100%">
+            <Setter Property="TranslateTransform.X" Value="{Binding $parent[ProgressBar].TemplateSettings.IndeterminateEndingOffset}" />
+          </KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+  </ControlTheme>
+
+  <!-- ============================================================ FlyoutPresenter -->
+  <ControlTheme x:Key="{x:Type FlyoutPresenter}" TargetType="FlyoutPresenter">
+    <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    <Setter Property="Foreground" Value="{DynamicResource CarbonTextPrimary}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="16" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Margin="0,0,0,6"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BoxShadow="0 2 6 0 #4D000000">
+          <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+            <ContentPresenter Name="PART_ContentPresenter"
+                              Padding="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+          </ScrollViewer>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <!-- ============================================================ ScrollBar: thin overlay, expands on hover -->
+  <ControlTheme x:Key="CarbonScrollBarThumb" TargetType="Thumb">
+    <Setter Property="Background" Value="{DynamicResource CarbonBorderStrong01}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" />
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CarbonIconSecondary}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource CarbonIconPrimary}" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="CarbonScrollBarPageButton" TargetType="RepeatButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type ScrollBar}" TargetType="ScrollBar">
+    <Setter Property="Cursor" Value="Arrow" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Root" Background="{TemplateBinding Background}">
+          <Track Name="PART_Track"
+                 Maximum="{TemplateBinding Maximum}"
+                 Minimum="{TemplateBinding Minimum}"
+                 Orientation="{TemplateBinding Orientation}"
+                 ViewportSize="{TemplateBinding ViewportSize}"
+                 DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                 Value="{TemplateBinding Value, Mode=TwoWay}">
+            <Track.DecreaseButton>
+              <RepeatButton Name="PART_PageUpButton" Theme="{StaticResource CarbonScrollBarPageButton}" />
+            </Track.DecreaseButton>
+            <Track.IncreaseButton>
+              <RepeatButton Name="PART_PageDownButton" Theme="{StaticResource CarbonScrollBarPageButton}" />
+            </Track.IncreaseButton>
+            <Thumb Name="thumb" Theme="{StaticResource CarbonScrollBarThumb}" />
+          </Track>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:vertical">
+      <Setter Property="Width" Value="8" />
+      <Style Selector="^ /template/ Thumb#thumb">
+        <Setter Property="Width" Value="4" />
+        <Setter Property="Margin" Value="0,2" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="MinHeight" Value="24" />
+      </Style>
+    </Style>
+    <Style Selector="^:horizontal">
+      <Setter Property="Height" Value="8" />
+      <Style Selector="^ /template/ Thumb#thumb">
+        <Setter Property="Height" Value="4" />
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="MinWidth" Value="24" />
+      </Style>
+    </Style>
+    <Style Selector="^[IsExpanded=true]:vertical /template/ Thumb#thumb">
+      <Setter Property="Width" Value="8" />
+    </Style>
+    <Style Selector="^[IsExpanded=true]:horizontal /template/ Thumb#thumb">
+      <Setter Property="Height" Value="8" />
+    </Style>
+    <Style Selector="^[IsExpanded=true] /template/ Border#PART_Root">
+      <Setter Property="Background" Value="{DynamicResource CarbonLayer01}" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type ScrollViewer}" TargetType="ScrollViewer">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
+          <ScrollContentPresenter Name="PART_ContentPresenter"
+                                  Grid.RowSpan="2"
+                                  Grid.ColumnSpan="2"
+                                  Padding="{TemplateBinding Padding}"
+                                  HorizontalSnapPointsType="{TemplateBinding HorizontalSnapPointsType}"
+                                  VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}"
+                                  HorizontalSnapPointsAlignment="{TemplateBinding HorizontalSnapPointsAlignment}"
+                                  VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}"
+                                  Background="{TemplateBinding Background}"
+                                  ScrollViewer.IsScrollInertiaEnabled="{TemplateBinding IsScrollInertiaEnabled}">
+            <ScrollContentPresenter.GestureRecognizers>
+              <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}"
+                                       CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}"
+                                       IsScrollInertiaEnabled="{Binding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_ContentPresenter}"
+                                       Offset="{Binding Offset, ElementName=PART_ContentPresenter}"
+                                       Viewport="{Binding Viewport, ElementName=PART_ContentPresenter}"
+                                       Extent="{Binding Extent, ElementName=PART_ContentPresenter}" />
+            </ScrollContentPresenter.GestureRecognizers>
+          </ScrollContentPresenter>
+          <ScrollBar Name="PART_HorizontalScrollBar"
+                     Grid.Row="1"
+                     Orientation="Horizontal"
+                     AllowAutoHide="{TemplateBinding AllowAutoHide}" />
+          <ScrollBar Name="PART_VerticalScrollBar"
+                     Grid.Column="1"
+                     Orientation="Vertical"
+                     AllowAutoHide="{TemplateBinding AllowAutoHide}" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

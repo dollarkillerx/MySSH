@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MySSH.Carbon.Gallery.Pages.TypographyPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Typography" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="IBM Plex Sans / Mono (bundled). Carbon productive type styles as TextBlock classes, e.g. Classes=&quot;heading-03&quot;. CJK falls back to the system font." />
+    <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Margin="0,24,0,0" Classes="matrix">
+      <TextBlock Grid.Row="0" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-05" />
+      <TextBlock Grid.Row="0" Grid.Column="1" Classes="heading-05" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="1" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-04" />
+      <TextBlock Grid.Row="1" Grid.Column="1" Classes="heading-04" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="2" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-03" />
+      <TextBlock Grid.Row="2" Grid.Column="1" Classes="heading-03" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="3" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-02" />
+      <TextBlock Grid.Row="3" Grid.Column="1" Classes="heading-02" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="4" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-01" />
+      <TextBlock Grid.Row="4" Grid.Column="1" Classes="heading-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="5" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-compact-02" />
+      <TextBlock Grid.Row="5" Grid.Column="1" Classes="heading-compact-02" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="6" Classes="label-01 secondary" VerticalAlignment="Center" Text="heading-compact-01" />
+      <TextBlock Grid.Row="6" Grid.Column="1" Classes="heading-compact-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="7" Classes="label-01 secondary" VerticalAlignment="Center" Text="body-02" />
+      <TextBlock Grid.Row="7" Grid.Column="1" Classes="body-02" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="8" Classes="label-01 secondary" VerticalAlignment="Center" Text="body-01" />
+      <TextBlock Grid.Row="8" Grid.Column="1" Classes="body-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="9" Classes="label-01 secondary" VerticalAlignment="Center" Text="body-compact-02" />
+      <TextBlock Grid.Row="9" Grid.Column="1" Classes="body-compact-02" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="10" Classes="label-01 secondary" VerticalAlignment="Center" Text="body-compact-01" />
+      <TextBlock Grid.Row="10" Grid.Column="1" Classes="body-compact-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="11" Classes="label-01 secondary" VerticalAlignment="Center" Text="label-02" />
+      <TextBlock Grid.Row="11" Grid.Column="1" Classes="label-02" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="12" Classes="label-01 secondary" VerticalAlignment="Center" Text="label-01" />
+      <TextBlock Grid.Row="12" Grid.Column="1" Classes="label-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="13" Classes="label-01 secondary" VerticalAlignment="Center" Text="helper-text-02" />
+      <TextBlock Grid.Row="13" Grid.Column="1" Classes="helper-text-02" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="14" Classes="label-01 secondary" VerticalAlignment="Center" Text="helper-text-01" />
+      <TextBlock Grid.Row="14" Grid.Column="1" Classes="helper-text-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="15" Classes="label-01 secondary" VerticalAlignment="Center" Text="legal-01" />
+      <TextBlock Grid.Row="15" Grid.Column="1" Classes="legal-01" TextTrimming="CharacterEllipsis" Text="Connect to prod-web-01 · 接続 · 连接主机" />
+      <TextBlock Grid.Row="16" Classes="label-01 secondary" VerticalAlignment="Center" Text="code-02" />
+      <TextBlock Grid.Row="16" Grid.Column="1" Classes="code-02" TextTrimming="CharacterEllipsis" Text="deploy@prod-web-01:~$ tail -f /var/log/nginx/error.log" />
+      <TextBlock Grid.Row="17" Classes="label-01 secondary" VerticalAlignment="Center" Text="code-01" />
+      <TextBlock Grid.Row="17" Grid.Column="1" Classes="code-01" TextTrimming="CharacterEllipsis" Text="deploy@prod-web-01:~$ tail -f /var/log/nginx/error.log" />
+    </Grid>
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Weights" />
+      <StackPanel Orientation="Horizontal" Spacing="24">
+        <TextBlock FontSize="20" FontWeight="Normal" Text="Regular 400" />
+        <TextBlock FontSize="20" FontStyle="Italic" Text="Italic 400" />
+        <TextBlock FontSize="20" FontWeight="Medium" Text="Medium 500" />
+        <TextBlock FontSize="20" FontWeight="SemiBold" Text="SemiBold 600" />
+        <TextBlock FontSize="20" Classes="mono" Text="Mono 400" />
+        <TextBlock FontSize="20" Classes="mono" FontWeight="Bold" Text="Mono Bold" />
+      </StackPanel>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

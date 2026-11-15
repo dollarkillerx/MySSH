@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.ListsPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="List, overflow menu, tooltip, scrollbar" />
+
+    <Grid ColumnDefinitions="360,32,300,32,*" Margin="0,24,0,0">
+      <StackPanel Spacing="16">
+        <TextBlock Classes="heading-02" Text="List (ListBox)" />
+        <ListBox Classes="divided" Background="{DynamicResource CarbonLayer01}" SelectedIndex="1" Height="248">
+          <ListBoxItem>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+              <carbon:CarbonIcon Kind="server" VerticalAlignment="Center" />
+              <TextBlock Text="prod-web-01" VerticalAlignment="Center" />
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+              <carbon:CarbonIcon Kind="database" VerticalAlignment="Center" />
+              <TextBlock Text="db-master (selected)" VerticalAlignment="Center" />
+            </StackPanel>
+          </ListBoxItem>
+          <ListBoxItem Classes="demo-hover" Content="bastion (hover)" />
+          <ListBoxItem Content="staging-api" />
+          <ListBoxItem Content="build-agent-3" />
+          <ListBoxItem Content="nas (disabled)" IsEnabled="False" />
+          <ListBoxItem Content="router" />
+          <ListBoxItem Content="printer" />
+        </ListBox>
+      </StackPanel>
+
+      <StackPanel Grid.Column="2" Spacing="16">
+        <TextBlock Classes="heading-02" Text="Overflow menu" />
+        <Button Classes="ghost icon-only" HorizontalAlignment="Left" carbon:ButtonAssist.Icon="overflow-menu-vertical" ToolTip.Tip="Options">
+          <Button.Flyout>
+            <MenuFlyout Placement="BottomEdgeAlignedLeft">
+              <MenuItem Header="Connect" />
+              <MenuItem Header="Open SFTP" />
+              <MenuItem Header="Delete" Classes="danger" />
+            </MenuFlyout>
+          </Button.Flyout>
+        </Button>
+        <TextBlock Classes="label-01 secondary" Text="Open menu (inline preview)" />
+        <MenuFlyoutPresenter HorizontalAlignment="Left" Width="240">
+          <MenuItem Header="Connect" InputGesture="Enter">
+            <MenuItem.Icon>
+              <carbon:CarbonIcon Kind="connect" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="Open SFTP" Classes="demo-hover">
+            <MenuItem.Icon>
+              <carbon:CarbonIcon Kind="folder" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="Duplicate" InputGesture="Ctrl+D">
+            <MenuItem.Icon>
+              <carbon:CarbonIcon Kind="copy" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="Move to group">
+            <MenuItem Header="Production" />
+          </MenuItem>
+          <MenuItem Header="Disabled item" IsEnabled="False" />
+          <Separator />
+          <MenuItem Header="Delete host" Classes="danger demo-hover" InputGesture="Delete">
+            <MenuItem.Icon>
+              <carbon:CarbonIcon Kind="trash-can" />
+            </MenuItem.Icon>
+          </MenuItem>
+        </MenuFlyoutPresenter>
+      </StackPanel>
+
+      <StackPanel Grid.Column="4" Spacing="16">
+        <TextBlock Classes="heading-02" Text="Tooltip" />
+        <Button Classes="ghost icon-only" carbon:ButtonAssist.Icon="information" ToolTip.Tip="Host keys are verified on every hop." HorizontalAlignment="Left" />
+        <TextBlock Classes="label-01 secondary" Text="Inline preview" />
+        <ToolTip HorizontalAlignment="Left" Content="Host keys are verified on every hop of the jump chain." />
+        <ToolTip HorizontalAlignment="Left" Content="Copy" />
+
+        <TextBlock Classes="heading-02" Margin="0,24,0,0" Text="Scrollbar (thin overlay)" />
+        <Border Classes="tile" Height="120" Padding="0">
+          <ScrollViewer>
+            <TextBlock Margin="16" TextWrapping="Wrap" Classes="body-01"
+                       Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel arcu id erat facilisis ullamcorper. Sed tincidunt, mi id porttitor congue, sem lacus tempus nisi, vitae gravida nunc lectus et justo. Mauris at urna non sapien vulputate placerat. Curabitur congue pellentesque est, a tristique metus egestas nec. Donec vitae mauris ultricies, euismod mi in, porta libero." />
+          </ScrollViewer>
+        </Border>
+      </StackPanel>
+    </Grid>
+  </StackPanel>
+</UserControl>

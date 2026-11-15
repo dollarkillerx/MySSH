@@ -1,0 +1,26 @@
+<!--
+  Carbon Design System v11 theme for Avalonia 12.
+  Usage (App.axaml):  xmlns:carbon="https://myssh.app/carbon"
+                      <Application.Styles><carbon:CarbonTheme /></Application.Styles>
+  RequestedThemeVariant: Light = White, Dark = Gray 100, carbon:CarbonThemeVariants.G10 / G90.
+  Controls without a Carbon template fall back to Avalonia.Themes.Simple, re-colored with Carbon tokens.
+-->
+<Styles x:Class="MySSH.UI.Carbon.CarbonTheme"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Themes/Tokens.axaml" />
+        <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Themes/Fonts.axaml" />
+        <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Themes/Strings.axaml" />
+        <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Icons/CarbonIcons.axaml" />
+        <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Controls.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <SimpleTheme />
+  <StyleInclude Source="avares://MySSH.UI.Carbon/Themes/Typography.axaml" />
+  <StyleInclude Source="avares://MySSH.UI.Carbon/Styles/Global.axaml" />
+</Styles>

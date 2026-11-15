@@ -1,0 +1,123 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:carbon="https://myssh.app/carbon"
+        xmlns:l="using:MySSH.Desktop.Localization"
+        xmlns:vm="using:MySSH.Desktop.ViewModels"
+        xmlns:local="using:MySSH.Desktop"
+        x:Class="MySSH.Desktop.MainWindow"
+        x:DataType="vm:ShellViewModel"
+        Width="1280" Height="800" MinWidth="900" MinHeight="560"
+        Title="MySSH"
+        Icon="avares://MySSH/Assets/icon.png"
+        ExtendClientAreaToDecorationsHint="True"
+        Background="{DynamicResource CarbonBackground}">
+  <Panel>
+    <DockPanel>
+      <!-- UI Shell header (design §9.4): always Gray 100 -->
+      <carbon:ShellHeader DockPanel.Dock="Top" ProductPrefix="MySSH" IsMenuButtonVisible="True"
+                          IsMenuOpen="{Binding #Nav.IsExpanded, Mode=TwoWay}">
+        <carbon:ShellHeader.GlobalActions>
+          <StackPanel Orientation="Horizontal">
+            <Button Name="ThemeToggle" Classes="header-action" carbon:ButtonAssist.Icon="asleep" />
+            <Button Name="LanguageButton" Classes="header-action" carbon:ButtonAssist.Icon="translate">
+              <Button.Flyout>
+                <MenuFlyout>
+                  <MenuItem Header="English" Tag="en-US" Click="OnLanguageClick" />
+                  <MenuItem Header="简体中文" Tag="zh-CN" Click="OnLanguageClick" />
+                  <MenuItem Header="日本語" Tag="ja-JP" Click="OnLanguageClick" />
+                </MenuFlyout>
+              </Button.Flyout>
+            </Button>
+          </StackPanel>
+        </carbon:ShellHeader.GlobalActions>
+      </carbon:ShellHeader>
+
+      <carbon:SideNavRail Name="Nav" DockPanel.Dock="Left" />
+
+      <Grid RowDefinitions="Auto,*">
+        <!-- inline notifications (import results, storage problems) -->
+        <ItemsControl ItemsSource="{Binding Notifications}" Margin="32,16,32,0">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><StackPanel Spacing="8" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:NotificationViewModel">
+              <carbon:InlineNotification Kind="{Binding Kind, Converter={x:Static local:Converters.NotificationKind}}"
+                                         Title="{Binding Title}" Subtitle="{Binding Message}" IsLowContrast="True"
+                                         Closed="OnNotificationClosed" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Hosts page (design §9.4: Carbon data table with toolbar) -->
+        <Grid Grid.Row="1" Name="HostsPage" Margin="32,24,32,32" RowDefinitions="Auto,Auto,*"
+              IsVisible="{Binding Hosts, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <StackPanel Spacing="4" Margin="0,0,0,24">
+            <TextBlock Classes="heading-04" Text="{l:Tr hosts.title}" />
+            <TextBlock Classes="body-compact-01 secondary" Text="{Binding Hosts.CountText}" />
+          </StackPanel>
+          <Border Grid.Row="1" Background="{DynamicResource CarbonLayer01}">
+            <Grid ColumnDefinitions="*,Auto" Height="48">
+              <TextBox Classes="lg" BorderThickness="0" Background="Transparent"
+                       Text="{Binding Hosts.SearchText}" PlaceholderText="{l:Tr hosts.search}">
+                <TextBox.InnerLeftContent>
+                  <carbon:CarbonIcon Kind="search" Margin="16,0,0,0" VerticalAlignment="Center" />
+                </TextBox.InnerLeftContent>
+              </TextBox>
+              <Button Grid.Column="1" Classes="lg" carbon:ButtonAssist.Icon="add" Content="{l:Tr hosts.add}" IsEnabled="False" />
+            </Grid>
+          </Border>
+          <Panel Grid.Row="2">
+            <DataGrid Name="HostGrid" ItemsSource="{Binding Hosts.Rows}" SelectedItem="{Binding Hosts.SelectedRow}"
+                      IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
+              <DataGrid.Columns>
+                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.name}" Binding="{Binding Name}" Width="2*" />
+                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.address}" Binding="{Binding Address}" Width="2*" />
+                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.user}" Binding="{Binding User}" Width="*" />
+                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.auth}" Binding="{Binding Auth}" Width="*" />
+                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.via}" Binding="{Binding Via}" Width="2*" />
+                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.ai}" Binding="{Binding AiPolicyText}" Width="*" />
+              </DataGrid.Columns>
+            </DataGrid>
+            <!-- empty state -->
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8" Margin="0,48,0,0"
+                        IsVisible="{Binding Hosts.IsEmpty}">
+              <carbon:CarbonIcon Kind="virtual-machine" Size="32" HorizontalAlignment="Center" />
+              <TextBlock Classes="heading-03" HorizontalAlignment="Center" Text="{l:Tr hosts.empty}" />
+              <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{l:Tr hosts.emptyHint}" />
+            </StackPanel>
+          </Panel>
+        </Grid>
+
+        <!-- pages that arrive in later phases -->
+        <StackPanel Grid.Row="1" Name="LaterPage" Margin="32,24" Spacing="8" IsVisible="False">
+          <TextBlock Name="LaterTitle" Classes="heading-04" />
+          <TextBlock Classes="body-01 secondary" Text="P2+" />
+        </StackPanel>
+
+        <ProgressBar Grid.Row="1" Classes="sm" IsIndeterminate="True" VerticalAlignment="Top"
+                     IsVisible="{Binding IsBusy}" />
+      </Grid>
+    </DockPanel>
+
+    <!-- Vault: unlock / create master password (design §5.1) -->
+    <carbon:Modal Name="VaultModal" Size="Small" IsDismissible="False" SecondaryButtonText=""
+                  Heading="{l:Tr vault.unlock.title}" PrimaryButtonText="{l:Tr vault.unlock.action}">
+      <StackPanel Spacing="16">
+        <TextBlock Classes="body-01" TextWrapping="Wrap" Text="{l:Tr vault.unlock.body}" />
+        <TextBox Name="MasterPasswordBox" Classes="password" PasswordChar="●"
+                 carbon:Field.Label="{l:Tr vault.unlock.password}"
+                 carbon:Field.IsInvalid="{Binding VaultError, Converter={x:Static ObjectConverters.IsNotNull}}"
+                 carbon:Field.InvalidText="{Binding VaultError}"
+                 Text="{Binding MasterPassword}" />
+      </StackPanel>
+    </carbon:Modal>
+
+    <!-- Legacy (Tauri) data import offer (design §5.4) -->
+    <carbon:Modal Name="LegacyModal" Size="Small"
+                  Heading="{l:Tr legacy.found.title}"
+                  PrimaryButtonText="{l:Tr legacy.import}" SecondaryButtonText="{l:Tr legacy.later}">
+      <TextBlock Classes="body-01" TextWrapping="Wrap" Text="{Binding LegacyOfferText}" />
+    </carbon:Modal>
+  </Panel>
+</Window>

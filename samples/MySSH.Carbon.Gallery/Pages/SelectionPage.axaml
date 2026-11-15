@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.SelectionPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Checkbox, radio button, toggle" />
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Checkbox" />
+      <Grid ColumnDefinitions="220,220,220,220" Classes="matrix">
+        <StackPanel Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Default" />
+          <CheckBox Content="Remember password" />
+          <CheckBox Content="Use SSH agent" IsChecked="True" />
+          <CheckBox Content="Some hosts" IsThreeState="True" IsChecked="{x:Null}" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Focus" />
+          <CheckBox Classes="demo-focus" Content="Focused" />
+          <CheckBox Classes="demo-focus" Content="Focused, checked" IsChecked="True" />
+        </StackPanel>
+        <StackPanel Grid.Column="2" Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Disabled" />
+          <CheckBox Content="Disabled" IsEnabled="False" />
+          <CheckBox Content="Disabled, checked" IsChecked="True" IsEnabled="False" />
+        </StackPanel>
+        <StackPanel Grid.Column="3" Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Invalid" />
+          <CheckBox Content="Accept host key" carbon:Field.IsInvalid="True" />
+          <TextBlock Classes="helper-text-01 error" Text="Required to connect" />
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Radio button" />
+      <Grid ColumnDefinitions="220,220,220" Classes="matrix">
+        <StackPanel Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="MCP policy" />
+          <RadioButton GroupName="policy" Content="Off" />
+          <RadioButton GroupName="policy" Content="Ask every time" IsChecked="True" />
+          <RadioButton GroupName="policy" Content="Allow read-only" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Focus" />
+          <RadioButton GroupName="f" Classes="demo-focus" Content="Focused" IsChecked="True" />
+        </StackPanel>
+        <StackPanel Grid.Column="2" Spacing="8">
+          <TextBlock Classes="label-01 secondary" Text="Disabled" />
+          <RadioButton GroupName="d" Content="Disabled" IsEnabled="False" />
+          <RadioButton GroupName="d" Content="Disabled, checked" IsChecked="True" IsEnabled="False" />
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+
+    <StackPanel Classes="section">
+      <TextBlock Classes="heading-02" Text="Toggle" />
+      <WrapPanel Classes="row">
+        <ToggleSwitch Content="Keep running in tray" />
+        <ToggleSwitch Content="MCP server" IsChecked="True" />
+        <ToggleSwitch Content="Focus" Classes="demo-focus" IsChecked="True" />
+        <ToggleSwitch Content="Disabled" IsEnabled="False" />
+        <ToggleSwitch Content="Disabled on" IsEnabled="False" IsChecked="True" />
+        <ToggleSwitch Content="Small" Classes="sm" />
+        <ToggleSwitch Content="Small on" Classes="sm" IsChecked="True" />
+        <ToggleSwitch Content="Custom state text" OnContent="Enabled" OffContent="Disabled" IsChecked="True" />
+      </WrapPanel>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

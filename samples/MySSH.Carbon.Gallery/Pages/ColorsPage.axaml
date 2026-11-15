@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             x:Class="MySSH.Carbon.Gallery.Pages.ColorsPage">
+  <StackPanel Classes="page">
+    <TextBlock Classes="heading-04" Text="Color tokens" />
+    <TextBlock Classes="body-01 secondary" TextWrapping="Wrap"
+               Text="Resources are named Carbon{Token} (SolidColorBrush) and Carbon{Token}Color, generated from @carbon/themes. Light = White, Dark = Gray 100; G10 / G90 via carbon:CarbonThemeVariants." />
+    <ComboBox Name="Variant" Width="240" HorizontalAlignment="Left" Margin="0,16,0,0" carbon:Field.Label="Theme" SelectedIndex="0">
+      <ComboBoxItem Content="Follow app" />
+      <ComboBoxItem Content="White" />
+      <ComboBoxItem Content="Gray 10" />
+      <ComboBoxItem Content="Gray 90" />
+      <ComboBoxItem Content="Gray 100" />
+    </ComboBox>
+    <WrapPanel Name="Swatches" Margin="0,24,0,0" />
+  </StackPanel>
+</UserControl>
