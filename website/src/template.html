@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{meta.title}}</title>
+<meta name="description" content="{{meta.description}}">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="{{canonical}}">
+{{hreflang}}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{meta.title}}">
+<meta property="og:description" content="{{meta.description}}">
+<meta property="og:url" content="{{canonical}}">
+<meta property="og:image" content="{{site}}/assets/terminal-dark.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v={{build}}">
+{{langredirect}}
+</head>
+<body>
+<a class="skip" href="#main">{{nav.skip}}</a>
+<header class="shell">
+  <div class="shell__inner">
+    <a class="brand" href="{{home}}" aria-label="MySSH">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6 15 16 5 26 2 23 9 16 2 9Z"/><path d="M17 22H28V26H17Z"/></svg>
+      <span>MySSH</span>
+    </a>
+    <nav class="shell__nav" aria-label="{{nav.label}}">
+      <a href="#features">{{nav.features}}</a>
+      <a href="#ai">{{nav.ai}}</a>
+      <a href="#security">{{nav.security}}</a>
+      <a href="#download">{{nav.download}}</a>
+    </nav>
+    <div class="shell__actions">
+      <details class="lang">
+        <summary aria-label="{{nav.language}}">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27.85 29H30l-6-15h-2.35l-6 15h2.15l1.6-4h6.85zm-7.65-6 2.62-6.56L25.45 23zM18 7V5h-7V2H9v3H2v2h10.74a14.7 14.7 0 0 1-3.19 6.18A13.5 13.5 0 0 1 7.26 9h-2.1a16.5 16.5 0 0 0 3 5.58A16.8 16.8 0 0 1 3 18l.75 1.86A18.5 18.5 0 0 0 9.53 16a16.9 16.9 0 0 0 5.76 3.84L16 18a14.5 14.5 0 0 1-5.12-3.37A17.6 17.6 0 0 0 14.8 7z"/></svg>
+          <span>{{langname}}</span>
+        </summary>
+        <ul>{{langmenu}}</ul>
+      </details>
+      <a class="icon-link" href="https://github.com/dollarkillerx/MySSH" aria-label="GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow">{{hero.eyebrow}}</p>
+        <h1>{{hero.title}}</h1>
+        <p class="lead">{{hero.lead}}</p>
+        <div class="cta">
+          <a class="btn btn--primary" href="{{download.url}}" data-dl>
+            <span>{{hero.download}}</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 15l-1.41-1.41L17 21.17V2h-2v19.17l-7.59-7.58L6 15l10 10z"/><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/></svg>
+          </a>
+          <a class="btn btn--tertiary" href="https://github.com/dollarkillerx/MySSH">
+            <span>{{hero.github}}</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 6l-1.43 1.39L24.15 15H4v2h20.15l-7.58 7.57L18 26l10-10z"/></svg>
+          </a>
+        </div>
+        <p class="fine">{{hero.fine}}</p>
+      </div>
+      <figure class="hero__shot window">
+        <div class="window__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="/assets/terminal-dark.png" width="1280" height="800" alt="{{shots.terminal}}">
+      </figure>
+    </div>
+  </section>
+
+  <section class="band" aria-label="{{facts.label}}">
+    <div class="wrap facts">
+      <div><strong>{{facts.native}}</strong><span>{{facts.nativeSub}}</span></div>
+      <div><strong>{{facts.mcp}}</strong><span>{{facts.mcpSub}}</span></div>
+      <div><strong>{{facts.ai}}</strong><span>{{facts.aiSub}}</span></div>
+      <div><strong>{{facts.open}}</strong><span>{{facts.openSub}}</span></div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">{{features.eyebrow}}</p>
+        <h2>{{features.title}}</h2>
+        <p class="lead">{{features.lead}}</p>
+      </header>
+      <div class="tiles">
+        <article class="tile"><span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M26 2H6a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2m0 26H6v-6h20zm0-8H6v-6h20zm0-8H6V4h20z"/><circle cx="9" cy="7" r="1"/><circle cx="9" cy="17" r="1"/><circle cx="9" cy="25" r="1"/></svg></span><h3>{{f.hosts.t}}</h3><p>{{f.hosts.d}}</p></article>
+        <article class="tile"><span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 2v4H6V6zM6 26V12h20v14z"/><path d="M10.26 23.94 8.85 22.53 12.38 19l-3.53-3.53 1.41-1.41L15.21 19zM16 22h6v2h-6z"/></svg></span><h3>{{f.terminal.t}}</h3><p>{{f.terminal.d}}</p></article>
+        <article class="tile"><span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M28 8H16l-3.41-3.41A2 2 0 0 0 11.17 4H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2m0 18H4V6h7.17l3.42 3.41.58.59H28z"/><path d="m16 13-5 5 1.41 1.41L15 16.83V24h2v-7.17l2.59 2.58L21 18z"/></svg></span><h3>{{f.sftp.t}}</h3><p>{{f.sftp.d}}</p></article>
+        <article class="tile"><span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M22 4v2h4.59l-6.3 6.29 1.42 1.42L28 7.41V12h2V4zM4 30h8v-2H7.41l6.3-6.29-1.42-1.42L6 26.59V22H4z"/><circle cx="7" cy="7" r="3"/><circle cx="25" cy="25" r="3"/><path d="M16 15a1 1 0 1 0 1 1 1 1 0 0 0-1-1"/></svg></span><h3>{{f.jump.t}}</h3><p>{{f.jump.d}}</p></article>
+        <article class="tile"><span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M28 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8v4H8v2h16v-2h-4v-4h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2M18 28h-4v-4h4zm10-6H4V6h24z"/></svg></span><h3>{{f.rdp.t}}</h3><p>{{f.rdp.d}}</p></article>
+        <article class="tile"><span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 28a5.32 5.32 0 0 1-.6-.06A5.5 5.5 0 0 1 13 27V24.5a4 4 0 0 0 3 1.5 4 4 0 0 0 4-4v-1h2v1a6 6 0 0 1-6 6M9 17H7v-1a9 9 0 0 1 18 0v1h-2v-1a7 7 0 0 0-14 0z"/><path d="M16 22a6 6 0 0 1-6-6v-1h2v1a4 4 0 0 0 8 0v-1h2v1a6 6 0 0 1-6 6"/></svg></span><h3>{{f.backup.t}}</h3><p>{{f.backup.d}}</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai" class="section section--layer">
+    <div class="wrap split">
+      <div class="split__copy">
+        <p class="eyebrow">{{ai.eyebrow}}</p>
+        <h2>{{ai.title}}</h2>
+        <p class="lead">{{ai.lead}}</p>
+        <ol class="policy" aria-label="{{ai.policyLabel}}">
+          <li><b>{{ai.p.off}}</b><span>{{ai.p.offD}}</span></li>
+          <li><b>{{ai.p.read}}</b><span>{{ai.p.readD}}</span></li>
+          <li><b>{{ai.p.ask}}</b><span>{{ai.p.askD}}</span></li>
+          <li><b>{{ai.p.trusted}}</b><span>{{ai.p.trustedD}}</span></li>
+          <li><b>{{ai.p.full}}</b><span>{{ai.p.fullD}}</span></li>
+        </ol>
+        <p class="note">{{ai.note}}</p>
+      </div>
+      <figure class="split__shot split__shot--narrow window">
+        <div class="window__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="/assets/ai-approval-dark.png" width="460" height="760" loading="lazy" alt="{{shots.approval}}">
+      </figure>
+    </div>
+  </section>
+
+  <section id="mcp" class="section">
+    <div class="wrap split split--reverse">
+      <div class="split__copy">
+        <p class="eyebrow">{{mcp.eyebrow}}</p>
+        <h2>{{mcp.title}}</h2>
+        <p class="lead">{{mcp.lead}}</p>
+        <ul class="steps">
+          <li>{{mcp.s1}}</li>
+          <li>{{mcp.s2}}</li>
+          <li>{{mcp.s3}}</li>
+        </ul>
+        <p class="label">{{mcp.tools}}</p>
+        <ul class="chips">
+          <li>list_hosts</li><li>run_command</li><li>list_sessions</li><li>read_terminal</li><li>send_to_terminal</li><li>sftp_list</li><li>sftp_stat</li><li>sftp_read</li><li>sftp_write</li><li>sftp_mkdir</li><li>sftp_delete</li>
+        </ul>
+      </div>
+      <figure class="split__shot window">
+        <div class="window__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="/assets/mcp-light.png" width="1280" height="800" loading="lazy" alt="{{shots.mcp}}">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--layer" aria-labelledby="tour-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">{{tour.eyebrow}}</p>
+        <h2 id="tour-title">{{tour.title}}</h2>
+      </header>
+      <div class="gallery">
+        <figure><img src="/assets/hosts-dark.png" width="1280" height="800" loading="lazy" alt="{{shots.hosts}}"><figcaption>{{shots.hosts}}</figcaption></figure>
+        <figure><img src="/assets/sftp-dark.png" width="1280" height="800" loading="lazy" alt="{{shots.sftp}}"><figcaption>{{shots.sftp}}</figcaption></figure>
+        <figure><img src="/assets/host-editor-light.png" width="1280" height="800" loading="lazy" alt="{{shots.editor}}"><figcaption>{{shots.editor}}</figcaption></figure>
+        <figure><img src="/assets/rdp-dark.png" width="1280" height="800" loading="lazy" alt="{{shots.rdp}}"><figcaption>{{shots.rdp}}</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="security" class="section">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">{{sec.eyebrow}}</p>
+        <h2>{{sec.title}}</h2>
+        <p class="lead">{{sec.lead}}</p>
+      </header>
+      <dl class="specs">
+        <div><dt>{{sec.storage.t}}</dt><dd>{{sec.storage.d}}</dd></div>
+        <div><dt>{{sec.key.t}}</dt><dd>{{sec.key.d}}</dd></div>
+        <div><dt>{{sec.local.t}}</dt><dd>{{sec.local.d}}</dd></div>
+        <div><dt>{{sec.redact.t}}</dt><dd>{{sec.redact.d}}</dd></div>
+        <div><dt>{{sec.audit.t}}</dt><dd>{{sec.audit.d}}</dd></div>
+        <div><dt>{{sec.hostkey.t}}</dt><dd>{{sec.hostkey.d}}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="download" class="section section--download">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">{{dl.eyebrow}}</p>
+        <h2>{{dl.title}}</h2>
+      </header>
+      <div class="platforms">
+        <article class="platform platform--main">
+          <h3>macOS</h3>
+          <p class="platform__meta">{{dl.mac.meta}}</p>
+          <p>{{dl.mac.d}}</p>
+          <a class="btn btn--primary" href="{{download.url}}" data-dl><span>{{dl.mac.btn}}</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 15l-1.41-1.41L17 21.17V2h-2v19.17l-7.59-7.58L6 15l10 10z"/><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/></svg></a>
+          <p class="fine">{{dl.mac.fine}}</p>
+        </article>
+        <article class="platform">
+          <h3>Windows</h3>
+          <p class="platform__meta">{{dl.soon}}</p>
+          <p>{{dl.source}}</p>
+        </article>
+        <article class="platform">
+          <h3>Linux</h3>
+          <p class="platform__meta">{{dl.soon}}</p>
+          <p>{{dl.source}}</p>
+        </article>
+      </div>
+      <div class="build">
+        <p class="label">{{dl.build}}</p>
+<pre><code>git clone https://github.com/dollarkillerx/MySSH.git
+cd MySSH
+dotnet run --project src/MySSH.Desktop</code></pre>
+        <p class="fine">{{dl.buildNote}}</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="brand brand--small">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6 15 16 5 26 2 23 9 16 2 9Z"/><path d="M17 22H28V26H17Z"/></svg>
+      <span>MySSH</span>
+    </div>
+    <p>{{footer.text}}</p>
+    <nav class="footer__links" aria-label="{{footer.links}}">
+      <a href="https://github.com/dollarkillerx/MySSH">GitHub</a>
+      <a href="https://github.com/dollarkillerx/MySSH/releases">{{footer.releases}}</a>
+      <a href="https://github.com/dollarkillerx/MySSH/issues">{{footer.issues}}</a>
+      <a href="https://github.com/dollarkillerx/MySSH/blob/main/LICENSE">MIT</a>
+    </nav>
+  </div>
+</footer>
+<script>
+(function () {
+  // Remember an explicit language choice (the root page follows it on the next visit).
+  document.querySelectorAll('[data-lang]').forEach(function (a) {
+    a.addEventListener('click', function () { try { localStorage.setItem('myssh-lang', a.dataset.lang); } catch (e) {} });
+  });
+  // Close the language menu on an outside click or Escape.
+  var menu = document.querySelector('.lang');
+  document.addEventListener('click', function (e) { if (menu && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu) menu.open = false; });
+})();
+</script>
+</body>
+</html>

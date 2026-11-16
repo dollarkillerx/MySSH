@@ -23,3 +23,7 @@ TestResults/
 
 # Node tooling (tools/gen-carbon-*)
 node_modules/
+
+# website build output (python3 website/build.py)
+website/dist/
+.wrangler/
