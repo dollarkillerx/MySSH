@@ -49,6 +49,15 @@ public class ShellHeader : ContentControl
     public static readonly DirectProperty<ShellHeader, Thickness> ChromePaddingProperty =
         AvaloniaProperty.RegisterDirect<ShellHeader, Thickness>(nameof(ChromePadding), o => o.ChromePadding);
 
+    /// <summary>
+    /// Width reserved on the right for the app-drawn caption buttons on Windows (minimize, maximize, close: 3 x 46px,
+    /// Controls/WindowDecorations.axaml). macOS draws its traffic lights natively on the left.
+    /// </summary>
+    public const double CaptionButtonsWidth = 3 * 46;
+
+    /// <summary>Width reserved on the left for the macOS traffic lights.</summary>
+    public const double TrafficLightsWidth = 72;
+
     private Button? _menuButton;
     private Window? _window;
     private Thickness _chromePadding;
@@ -201,12 +210,12 @@ public class ShellHeader : ContentControl
         var right = TrailingInset;
         if (double.IsNaN(left))
         {
-            left = extended && OperatingSystem.IsMacOS() ? 72 : 0;
+            left = extended && OperatingSystem.IsMacOS() ? TrafficLightsWidth : 0;
         }
 
         if (double.IsNaN(right))
         {
-            right = extended && !OperatingSystem.IsMacOS() ? 138 : 0;
+            right = extended && !OperatingSystem.IsMacOS() ? CaptionButtonsWidth : 0;
         }
 
         ChromePadding = new Thickness(left, 0, right, 0);

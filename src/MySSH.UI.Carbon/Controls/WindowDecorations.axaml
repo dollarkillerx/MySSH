@@ -3,7 +3,9 @@
   Carbon UI Shell header, which is always Gray 100. Simple's template colours its glyphs from the app theme (dark glyphs
   in the light theme: invisible on the header) and adds a 30px title text, so Carbon draws its own: 46x48 buttons with
   fixed g100 colours, Carbon hover / active, a red close button, and no title (the header shows the product name).
-  ShellHeader reserves 3 x 46 = 138px on the right for them.
+  Exactly three buttons (minimize, maximize, close), as in other Windows apps: ShellHeader.CaptionButtonsWidth reserves
+  3 x 46 = 138px for them. No full-screen button: Win32 allows full screen, so Simple shows a fourth button that overlaps
+  the header actions, and in full screen Avalonia hides the caption bar until the pointer touches the top edge.
 -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -73,13 +75,6 @@
                           HorizontalAlignment="Right"
                           Orientation="Horizontal"
                           IsVisible="{TemplateBinding HasTitleBar}">
-                <Button x:Name="PART_FullScreenButton"
-                        Theme="{StaticResource CarbonCaptionButton}"
-                        WindowDecorationProperties.ElementRole="FullScreenButton"
-                        AutomationProperties.Name="Full screen">
-                  <Path Width="10" Height="10" Stretch="Uniform" Fill="{Binding $parent[Button].Foreground}"
-                        Data="M2048 2048v-819h-205v469l-1493 -1493h469v-205h-819v819h205v-469l1493 1493h-469v205h819z" />
-                </Button>
                 <Button x:Name="PART_MinimizeButton"
                         Theme="{StaticResource CarbonCaptionButton}"
                         WindowDecorationProperties.ElementRole="MinimizeButton"
@@ -157,9 +152,6 @@
       <Setter Property="IsVisible" Value="False" />
     </Style>
     <Style Selector="^:not(:has-maximize) /template/ Button#PART_MaximizeButton">
-      <Setter Property="IsVisible" Value="False" />
-    </Style>
-    <Style Selector="^:not(:has-fullscreen) /template/ Button#PART_FullScreenButton">
       <Setter Property="IsVisible" Value="False" />
     </Style>
     <Style Selector="^:not(:has-fullscreen) /template/ Button#PART_PopoverFullScreenButton">

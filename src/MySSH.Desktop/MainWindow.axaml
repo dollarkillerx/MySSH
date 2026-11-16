@@ -10,7 +10,6 @@
         Width="1280" Height="800" MinWidth="900" MinHeight="560"
         Title="MySSH"
         Icon="avares://MySSH/Assets/icon.png"
-        ExtendClientAreaToDecorationsHint="True"
         Background="{DynamicResource CarbonBackground}">
   <Panel>
     <DockPanel>

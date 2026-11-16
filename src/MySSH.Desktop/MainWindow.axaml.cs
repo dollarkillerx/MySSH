@@ -23,6 +23,10 @@ public sealed partial class MainWindow : Window, IUiServices
     public MainWindow()
     {
         InitializeComponent();
+        // The Carbon header doubles as the title bar on macOS (native traffic lights) and Windows (app-drawn caption
+        // buttons, which only need the title bar part). On Linux the drawn decorations add a shadow and border that an
+        // extended window has to inset itself (WindowDecorationMargin), so Linux keeps the window manager's title bar.
+        ExtendClientAreaToDecorationsHint = OperatingSystem.IsMacOS() || OperatingSystem.IsWindows();
         // macOS uses the padded Apple-grid tile for the Dock (unbundled runs); elsewhere the full-bleed icon from XAML.
         if (OperatingSystem.IsMacOS())
             Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://MySSH/Assets/icon-macos.png")));

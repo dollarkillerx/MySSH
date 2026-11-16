@@ -32,8 +32,10 @@ public sealed class WindowDecorationsTests
         var template = Assert.IsAssignableFrom<IWindowDrawnDecorationsTemplate>(Setter(theme, WindowDrawnDecorations.TemplateProperty));
         var content = template.Build().Result;
         var overlay = Assert.IsAssignableFrom<Control>(content.Overlay);
+        // Exactly minimize / maximize / close: Win32 allows full screen, and a fourth (full-screen) button overlapped the
+        // header actions, since ShellHeader reserves room for three.
         var names = overlay.GetLogicalDescendants().OfType<Button>().Select(b => b.Name).ToList();
-        Assert.Equal(["PART_FullScreenButton", "PART_MinimizeButton", "PART_MaximizeButton", "PART_CloseButton"], names);
+        Assert.Equal(["PART_MinimizeButton", "PART_MaximizeButton", "PART_CloseButton"], names);
         // No title text over the header (the header shows the product name).
         Assert.Empty(overlay.GetLogicalDescendants().OfType<TextBlock>());
     }
@@ -52,12 +54,15 @@ public sealed class WindowDecorationsTests
         };
         window.Show();
         var paths = overlay.GetVisualDescendants().OfType<Avalonia.Controls.Shapes.Path>().ToList();
-        Assert.Equal(4, paths.Count);
+        Assert.Equal(3, paths.Count);
         foreach (var path in paths)
             Assert.Equal(Color.Parse("#f4f4f4"), Assert.IsAssignableFrom<ISolidColorBrush>(path.Fill).Color);
         var close = overlay.GetLogicalDescendants().OfType<Button>().Single(b => b.Name == "PART_CloseButton");
         Assert.Equal(46, close.Bounds.Width);
         Assert.Equal(48, close.Bounds.Height);
+        // The buttons take exactly the width the header keeps free on the right.
+        var panel = overlay.GetLogicalDescendants().OfType<StackPanel>().Single(p => p.Name == "PART_OverlayPanel");
+        Assert.Equal(ShellHeader.CaptionButtonsWidth, panel.Bounds.Width);
         window.Close();
     }
 }
