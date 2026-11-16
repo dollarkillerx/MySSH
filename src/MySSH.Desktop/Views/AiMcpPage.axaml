@@ -3,6 +3,7 @@
              xmlns:carbon="https://myssh.app/carbon"
              xmlns:l="using:MySSH.Desktop.Localization"
              xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:v="using:MySSH.Desktop.Views"
              x:Class="MySSH.Desktop.Views.AiMcpPage"
              x:DataType="vm:AiMcpPageViewModel">
   <DockPanel Margin="32,24,32,32">
@@ -144,6 +145,11 @@
           <Button Grid.Row="2" Classes="ghost md" HorizontalAlignment="Left" Margin="0,8,0,0" Content="{l:Tr audit.loadMore}"
                   Command="{Binding LoadMoreCommand}" IsVisible="{Binding HasMore}" />
         </Grid>
+      </TabItem>
+
+      <!-- ============================================================ AI assistant (P4) -->
+      <TabItem Header="{l:Tr aiSettings.tab}">
+        <v:AiSettingsView Name="AiSettings" DataContext="{Binding Assistant}" />
       </TabItem>
     </TabControl>
   </DockPanel>

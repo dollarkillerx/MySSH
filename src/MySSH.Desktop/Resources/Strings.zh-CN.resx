@@ -5,6 +5,68 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ai.allowSession" xml:space="preserve"><value>本会话允许相同操作</value></data>
+  <data name="ai.ask.analyzeError" xml:space="preserve"><value>这个报错是什么意思？怎么修？</value></data>
+  <data name="ai.ask.explain" xml:space="preserve"><value>解释一下这段输出。</value></data>
+  <data name="ai.attachHost" xml:space="preserve"><value>主机</value></data>
+  <data name="ai.attachTerminal" xml:space="preserve"><value>终端</value></data>
+  <data name="ai.chat.unreadable" xml:space="preserve"><value>这个会话已无法读取（它是用另一个保管库密钥保存的）。</value></data>
+  <data name="ai.chip.selection" xml:space="preserve"><value>选中内容 · {title}</value></data>
+  <data name="ai.chip.terminal" xml:space="preserve"><value>{title} · 最近 {lines} 行</value></data>
+  <data name="ai.context.noHost" xml:space="preserve"><value>当前标签页对应的主机已不存在。</value></data>
+  <data name="ai.context.noTerminal" xml:space="preserve"><value>请先打开一个终端标签页，才能附带它的输出。</value></data>
+  <data name="ai.dataNotice.accept" xml:space="preserve"><value>继续</value></data>
+  <data name="ai.dataNotice.body" xml:space="preserve"><value>你发送的内容（问题、附带的上下文和工具结果）会传给 {provider}，并受其数据政策约束。开启脱敏时，私钥、token 等敏感信息会先被遮盖。</value></data>
+  <data name="ai.dataNotice.title" xml:space="preserve"><value>发送给 {provider}？</value></data>
+  <data name="ai.deleteChat.body" xml:space="preserve"><value>将从本机删除「{title}」。</value></data>
+  <data name="ai.deleteChat.title" xml:space="preserve"><value>删除会话？</value></data>
+  <data name="ai.empty.body" xml:space="preserve"><value>可以问服务为什么起不来、日志是什么意思、怎么修。附带终端就能把屏幕上的内容一起发过去。执行命令和修改文件遵循每台主机的 AI 权限，可能需要你批准。</value></data>
+  <data name="ai.empty.title" xml:space="preserve"><value>需要什么帮助？</value></data>
+  <data name="ai.error.Authentication" xml:space="preserve"><value>提供商拒绝了 API Key，请在 AI 设置中检查。（{detail}）</value></data>
+  <data name="ai.error.InvalidRequest" xml:space="preserve"><value>提供商拒绝了请求：{detail}</value></data>
+  <data name="ai.error.MalformedResponse" xml:space="preserve"><value>提供商返回的内容 MySSH 无法解析：{detail}</value></data>
+  <data name="ai.error.Network" xml:space="preserve"><value>无法连接到提供商：{detail}</value></data>
+  <data name="ai.error.None" xml:space="preserve"><value>{detail}</value></data>
+  <data name="ai.error.Other" xml:space="preserve"><value>提供商返回了错误：{detail}</value></data>
+  <data name="ai.error.Overloaded" xml:space="preserve"><value>提供商当前负载过高，请稍后再试。（{detail}）</value></data>
+  <data name="ai.error.RateLimited" xml:space="preserve"><value>已达到提供商的速率限制，请稍后再试。（{detail}）</value></data>
+  <data name="ai.error.unexpected" xml:space="preserve"><value>出错了：{error}</value></data>
+  <data name="ai.fallback" xml:space="preserve"><value>{from} 拒绝了这个请求，已改由 {to} 回答。</value></data>
+  <data name="ai.history" xml:space="preserve"><value>会话</value></data>
+  <data name="ai.history.empty" xml:space="preserve"><value>还没有保存的会话。</value></data>
+  <data name="ai.inline.declined" xml:space="preserve"><value>未发送。</value></data>
+  <data name="ai.inline.hint" xml:space="preserve"><value>Enter：生成 · Tab：填入命令行（不执行）· Esc：关闭</value></data>
+  <data name="ai.inline.none" xml:space="preserve"><value>没有对应的命令，换个说法试试。</value></data>
+  <data name="ai.inline.placeholder" xml:space="preserve"><value>描述要做的事，例如：找出大于 1 GB 的文件</value></data>
+  <data name="ai.maxTokens" xml:space="preserve"><value>回答达到长度上限，被截断了。</value></data>
+  <data name="ai.menu.analyzeError" xml:space="preserve"><value>用 AI 分析这个报错</value></data>
+  <data name="ai.menu.explain" xml:space="preserve"><value>用 AI 解释</value></data>
+  <data name="ai.menu.inline" xml:space="preserve"><value>生成命令…（Ctrl+I）</value></data>
+  <data name="ai.newChat" xml:space="preserve"><value>新会话</value></data>
+  <data name="ai.noModel" xml:space="preserve"><value>请先在 AI 设置中为 {provider} 选择模型。</value></data>
+  <data name="ai.noProvider" xml:space="preserve"><value>还没有设置 AI 提供商，请在 AI 设置中添加。</value></data>
+  <data name="ai.placeholder" xml:space="preserve"><value>问问这台服务器…（Enter 发送，Shift+Enter 换行）</value></data>
+  <data name="ai.redacted" xml:space="preserve"><value>发送前已遮盖 {count} 处敏感信息。</value></data>
+  <data name="ai.refusal" xml:space="preserve"><value>模型拒绝了这个请求。{detail}</value></data>
+  <data name="ai.send" xml:space="preserve"><value>发送</value></data>
+  <data name="ai.settings" xml:space="preserve"><value>AI 设置</value></data>
+  <data name="ai.setup.action" xml:space="preserve"><value>添加提供商</value></data>
+  <data name="ai.setup.body" xml:space="preserve"><value>可以使用 Claude、OpenAI、DeepSeek，或本地的 OpenAI 兼容服务（如 Ollama）。API Key 加密保存在本机。</value></data>
+  <data name="ai.setup.title" xml:space="preserve"><value>设置 AI 提供商</value></data>
+  <data name="ai.stepLimit" xml:space="preserve"><value>已执行 {steps} 步，先停在这里。再问一次即可继续。</value></data>
+  <data name="ai.stop" xml:space="preserve"><value>停止</value></data>
+  <data name="ai.stopped" xml:space="preserve"><value>已停止。</value></data>
+  <data name="ai.thinking" xml:space="preserve"><value>思考过程</value></data>
+  <data name="ai.title" xml:space="preserve"><value>AI 助手</value></data>
+  <data name="ai.toggle" xml:space="preserve"><value>AI 助手（Ctrl+Shift+A）</value></data>
+  <data name="ai.tool.awaiting" xml:space="preserve"><value>等待批准</value></data>
+  <data name="ai.tool.denied" xml:space="preserve"><value>已拒绝</value></data>
+  <data name="ai.tool.done" xml:space="preserve"><value>完成</value></data>
+  <data name="ai.tool.failed" xml:space="preserve"><value>失败</value></data>
+  <data name="ai.tool.output" xml:space="preserve"><value>输出</value></data>
+  <data name="ai.tool.running" xml:space="preserve"><value>执行中</value></data>
+  <data name="ai.untitled" xml:space="preserve"><value>未命名会话</value></data>
+  <data name="ai.usage" xml:space="preserve"><value>输入 {input} · 输出 {output} tokens</value></data>
   <data name="aiPolicy.Ask" xml:space="preserve"><value>询问</value></data>
   <data name="aiPolicy.Ask.help" xml:space="preserve"><value>AI 可以读取；每次执行命令或写入都会先询问你。</value></data>
   <data name="aiPolicy.FullAccess" xml:space="preserve"><value>完全授权</value></data>
@@ -17,6 +79,107 @@
   <data name="aiPolicy.ReadOnly.help" xml:space="preserve"><value>AI 可以读取文件，只能执行白名单里的命令。</value></data>
   <data name="aiPolicy.Trusted" xml:space="preserve"><value>信任</value></data>
   <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI 执行命令、修改文件无需询问；高风险命令（rm、stop、reboot 等）、覆盖、删除以及在你的终端里按回车仍会先问你。建议给 AI 配一个低权限身份。</value></data>
+  <data name="aiSettings.add" xml:space="preserve"><value>添加提供商</value></data>
+  <data name="aiSettings.attachHost" xml:space="preserve"><value>默认附带当前主机</value></data>
+  <data name="aiSettings.attachHostHelp" xml:space="preserve"><value>新问题会附带主机名称、地址、用户和当前目录（不含密码或密钥）。终端内容只在你添加时附带。</value></data>
+  <data name="aiSettings.bearer" xml:space="preserve"><value>以 Bearer 令牌发送 Key</value></data>
+  <data name="aiSettings.bearerHelp" xml:space="preserve"><value>适用于要求「Authorization: Bearer」而不是「x-api-key」的网关。</value></data>
+  <data name="aiSettings.behaviour" xml:space="preserve"><value>行为</value></data>
+  <data name="aiSettings.caps" xml:space="preserve"><value>能力</value></data>
+  <data name="aiSettings.caps.streaming" xml:space="preserve"><value>支持流式输出</value></data>
+  <data name="aiSettings.caps.tools" xml:space="preserve"><value>支持工具调用</value></data>
+  <data name="aiSettings.capsHelp" xml:space="preserve"><value>「测试连接」会自动检测这些能力。如果服务拒绝工具调用或流式输出，请关闭对应选项。</value></data>
+  <data name="aiSettings.claude" xml:space="preserve"><value>Claude 选项</value></data>
+  <data name="aiSettings.col.baseUrl" xml:space="preserve"><value>Base URL</value></data>
+  <data name="aiSettings.col.default" xml:space="preserve"><value>默认</value></data>
+  <data name="aiSettings.col.model" xml:space="preserve"><value>模型</value></data>
+  <data name="aiSettings.col.name" xml:space="preserve"><value>名称</value></data>
+  <data name="aiSettings.col.status" xml:space="preserve"><value>状态</value></data>
+  <data name="aiSettings.default" xml:space="preserve"><value>默认</value></data>
+  <data name="aiSettings.delete.body" xml:space="preserve"><value>删除「{name}」及其保存的 API Key？使用过它的对话会保留，但之后需要换用其他提供商。</value></data>
+  <data name="aiSettings.delete.title" xml:space="preserve"><value>删除提供商</value></data>
+  <data name="aiSettings.eager" xml:space="preserve"><value>工具参数即时流式输出</value></data>
+  <data name="aiSettings.eagerHelp" xml:space="preserve"><value>在生成工具参数的同时显示出来。部分网关不支持。</value></data>
+  <data name="aiSettings.editor.addTitle" xml:space="preserve"><value>添加 {name}</value></data>
+  <data name="aiSettings.editor.baseUrl" xml:space="preserve"><value>Base URL</value></data>
+  <data name="aiSettings.editor.baseUrlHelp" xml:space="preserve"><value>按填写的地址使用，不读取环境变量。</value></data>
+  <data name="aiSettings.editor.connection" xml:space="preserve"><value>连接</value></data>
+  <data name="aiSettings.editor.editTitle" xml:space="preserve"><value>编辑 {name}</value></data>
+  <data name="aiSettings.editor.model" xml:space="preserve"><value>模型</value></data>
+  <data name="aiSettings.editor.modelId" xml:space="preserve"><value>模型 ID</value></data>
+  <data name="aiSettings.editor.modelPlaceholder" xml:space="preserve"><value>输入模型 ID，或获取模型列表</value></data>
+  <data name="aiSettings.editor.name" xml:space="preserve"><value>名称</value></data>
+  <data name="aiSettings.editor.protocol" xml:space="preserve"><value>协议</value></data>
+  <data name="aiSettings.effort" xml:space="preserve"><value>Effort 档位</value></data>
+  <data name="aiSettings.effort.high" xml:space="preserve"><value>高</value></data>
+  <data name="aiSettings.effort.low" xml:space="preserve"><value>低</value></data>
+  <data name="aiSettings.effort.medium" xml:space="preserve"><value>中</value></data>
+  <data name="aiSettings.empty" xml:space="preserve"><value>还没有 AI 提供商</value></data>
+  <data name="aiSettings.emptyHint" xml:space="preserve"><value>MySSH 可以使用 Claude、OpenAI、DeepSeek，或本地的 OpenAI 兼容服务（例如 Ollama）。点击「添加提供商」开始配置。</value></data>
+  <data name="aiSettings.fallback" xml:space="preserve"><value>服务端备用模型</value></data>
+  <data name="aiSettings.fallbackHelp" xml:space="preserve"><value>模型拒绝请求时，Claude 可以交给另一个模型继续处理，而不是直接失败。</value></data>
+  <data name="aiSettings.headers" xml:space="preserve"><value>额外请求头</value></data>
+  <data name="aiSettings.headersHelp" xml:space="preserve"><value>每行一个「名称: 值」。API Key 有单独的输入框，这里不能设置 Authorization 和 x-api-key。</value></data>
+  <data name="aiSettings.history" xml:space="preserve"><value>对话记录</value></data>
+  <data name="aiSettings.history.deleteAll" xml:space="preserve"><value>删除所有对话</value></data>
+  <data name="aiSettings.history.deleteAllConfirm" xml:space="preserve"><value>删除所有已保存的 AI 对话？此操作无法撤销。</value></data>
+  <data name="aiSettings.history.deleted" xml:space="preserve"><value>已删除 {count} 个对话。</value></data>
+  <data name="aiSettings.key" xml:space="preserve"><value>API Key</value></data>
+  <data name="aiSettings.key.help" xml:space="preserve"><value>加密保存在保险库中。</value></data>
+  <data name="aiSettings.key.optionalHelp" xml:space="preserve"><value>可选：Ollama 等本地服务不需要 Key。</value></data>
+  <data name="aiSettings.key.placeholder" xml:space="preserve"><value>粘贴 API Key</value></data>
+  <data name="aiSettings.key.remove" xml:space="preserve"><value>删除 Key</value></data>
+  <data name="aiSettings.key.removedHelp" xml:space="preserve"><value>保存时会删除已保存的 Key。</value></data>
+  <data name="aiSettings.key.savedHelp" xml:space="preserve"><value>已保存 Key。留空则继续使用已保存的 Key。</value></data>
+  <data name="aiSettings.key.show" xml:space="preserve"><value>显示已保存的 Key</value></data>
+  <data name="aiSettings.key.unreadable" xml:space="preserve"><value>无法读取已保存的 Key：{error}</value></data>
+  <data name="aiSettings.maxSteps" xml:space="preserve"><value>每次回答的最大步数</value></data>
+  <data name="aiSettings.maxStepsHelp" xml:space="preserve"><value>每次回答最多调用 1 到 100 次工具。</value></data>
+  <data name="aiSettings.models.failed" xml:space="preserve"><value>无法获取模型列表：{error}</value></data>
+  <data name="aiSettings.models.fetch" xml:space="preserve"><value>获取模型列表</value></data>
+  <data name="aiSettings.models.found" xml:space="preserve"><value>找到 {count} 个模型。</value></data>
+  <data name="aiSettings.models.none" xml:space="preserve"><value>提供商没有返回任何模型。</value></data>
+  <data name="aiSettings.no" xml:space="preserve"><value>不支持</value></data>
+  <data name="aiSettings.off" xml:space="preserve"><value>关</value></data>
+  <data name="aiSettings.on" xml:space="preserve"><value>开</value></data>
+  <data name="aiSettings.preset.custom" xml:space="preserve"><value>自定义提供商</value></data>
+  <data name="aiSettings.preset.customMenu" xml:space="preserve"><value>自定义（OpenAI 或 Anthropic 兼容）…</value></data>
+  <data name="aiSettings.protocol.anthropic" xml:space="preserve"><value>Anthropic 兼容</value></data>
+  <data name="aiSettings.protocol.openai" xml:space="preserve"><value>OpenAI 兼容</value></data>
+  <data name="aiSettings.providers" xml:space="preserve"><value>提供商</value></data>
+  <data name="aiSettings.providersHelp" xml:space="preserve"><value>AI 助手可以使用的 AI 服务。API Key 加密保存在保险库中。</value></data>
+  <data name="aiSettings.redact" xml:space="preserve"><value>发送前隐藏敏感信息</value></data>
+  <data name="aiSettings.redactHelp" xml:space="preserve"><value>终端文本和命令输出中的密码、密钥和令牌，会在发送给提供商之前替换成占位符。</value></data>
+  <data name="aiSettings.retention" xml:space="preserve"><value>自动删除对话</value></data>
+  <data name="aiSettings.retention.days" xml:space="preserve"><value>{days} 天无活动后</value></data>
+  <data name="aiSettings.retention.off" xml:space="preserve"><value>从不</value></data>
+  <data name="aiSettings.saveHistory" xml:space="preserve"><value>保存对话</value></data>
+  <data name="aiSettings.saveHistoryHelp" xml:space="preserve"><value>对话加密保存在这台电脑上。</value></data>
+  <data name="aiSettings.setDefault" xml:space="preserve"><value>设为默认</value></data>
+  <data name="aiSettings.status.failed" xml:space="preserve"><value>上次测试失败</value></data>
+  <data name="aiSettings.status.unverified" xml:space="preserve"><value>未验证</value></data>
+  <data name="aiSettings.status.verified" xml:space="preserve"><value>已验证</value></data>
+  <data name="aiSettings.tab" xml:space="preserve"><value>AI 助手</value></data>
+  <data name="aiSettings.terminalLines" xml:space="preserve"><value>附带的终端行数</value></data>
+  <data name="aiSettings.terminalLinesHelp" xml:space="preserve"><value>从终端末尾取 1 到 2000 行。</value></data>
+  <data name="aiSettings.test" xml:space="preserve"><value>测试连接</value></data>
+  <data name="aiSettings.test.failed" xml:space="preserve"><value>连接失败</value></data>
+  <data name="aiSettings.test.failedUnknown" xml:space="preserve"><value>提供商没有接受测试请求。</value></data>
+  <data name="aiSettings.test.ok" xml:space="preserve"><value>可用模型 {count} 个。工具调用：{tools}。流式输出：{streaming}。</value></data>
+  <data name="aiSettings.test.okTitle" xml:space="preserve"><value>连接正常</value></data>
+  <data name="aiSettings.test.running" xml:space="preserve"><value>正在测试连接…</value></data>
+  <data name="aiSettings.thinking" xml:space="preserve"><value>思考过程显示</value></data>
+  <data name="aiSettings.thinking.omitted" xml:space="preserve"><value>不显示</value></data>
+  <data name="aiSettings.thinking.summarized" xml:space="preserve"><value>摘要</value></data>
+  <data name="aiSettings.thinking.updates" xml:space="preserve"><value>仅进度说明</value></data>
+  <data name="aiSettings.validation.headerDuplicate" xml:space="preserve"><value>{name} 出现了不止一次。</value></data>
+  <data name="aiSettings.validation.headerKey" xml:space="preserve"><value>不能在这里设置 {name}，请使用 API Key 输入框。</value></data>
+  <data name="aiSettings.validation.headerLine" xml:space="preserve"><value>第 {line} 行不是「名称: 值」的格式。</value></data>
+  <data name="aiSettings.validation.key" xml:space="preserve"><value>请输入 API Key。</value></data>
+  <data name="aiSettings.validation.model" xml:space="preserve"><value>请选择或输入模型。</value></data>
+  <data name="aiSettings.validation.range" xml:space="preserve"><value>请输入 {min} 到 {max} 之间的整数。</value></data>
+  <data name="aiSettings.validation.url" xml:space="preserve"><value>请输入以 http:// 或 https:// 开头的完整地址。</value></data>
+  <data name="aiSettings.yes" xml:space="preserve"><value>支持</value></data>
   <data name="app.name" xml:space="preserve"><value>MySSH</value></data>
   <data name="app.openSftp" xml:space="preserve"><value>打开 SFTP</value></data>
   <data name="app.openTerminal" xml:space="preserve"><value>打开终端</value></data>

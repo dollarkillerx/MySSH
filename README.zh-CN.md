@@ -8,7 +8,7 @@
   一个简单的开源 SSH 客户端，Termius 替代品
 </p>
 
-> **正在重写**：MySSH 正在用 .NET 10 + Avalonia 重新实现（IBM Carbon 界面、原生终端、MCP 服务，内置 AI 助手开发中）。
+> **正在重写**：MySSH 正在用 .NET 10 + Avalonia 重新实现（IBM Carbon 界面、原生终端、MCP 服务、内置 AI 助手）。
 > 旧的 Tauri/Vue/Rust 版本见 tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)，v0.0.4 及之前的发布都是该版本。
 > 设计文档：[docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md)。
 
@@ -24,6 +24,7 @@
 - **跳板机** - 多跳链路（ProxyJump），每一跳使用自己的身份；支持 HTTP / SOCKS5 代理
 - **Windows 远程桌面** - RDP 主机用系统远程桌面程序打开（mstsc、Windows App、Remmina / FreeRDP），可经 SSH 跳板机隧道；密码不会写入 `.rdp` 文件
 - **MCP 服务** - 让 Claude Code、Claude Desktop 等 MCP 客户端在你的主机上执行命令、读取终端、使用 SFTP
+- **AI 助手** - 内置对话面板（Claude、OpenAI、DeepSeek 或本地 OpenAI 兼容服务）：与 MCP 使用同一套工具和主机权限，审批直接在对话卡片上完成；终端里按 Ctrl+I 生成命令；发送前自动遮盖敏感信息
 - **按主机的 AI 权限** - 关闭 / 只读 / 询问 / 信任 / 完全授权；高危命令（`rm -rf`、`systemctl stop` 等）需要你批准，所有调用都有审计日志
 - **安全存储** - SQLite + AES-256-GCM 字段加密；主密钥存于系统钥匙串或由 Argon2id 主密码保护
 - **备份恢复** - 支持密码保护的导出 / 导入；可从旧版（Tauri）导入主机
@@ -80,7 +81,7 @@ dotnet run --project src/MySSH.Desktop
 - **终端**：基于 XTerm.NET VT 引擎的原生 Avalonia 控件
 - **SSH/SFTP**：SSH.NET
 - **存储**：SQLite、AES-256-GCM 字段加密，主密钥存于系统钥匙串或由 Argon2id 主密码保护
-- **集成**：MCP 服务（ModelContextProtocol C# SDK：Streamable HTTP + 本地 socket，`myssh-mcp` stdio 桥接）；内置 AI 助手（开发中）
+- **集成**：MCP 服务（ModelContextProtocol C# SDK：Streamable HTTP + 本地 socket，`myssh-mcp` stdio 桥接）；内置 AI 助手（自研 Claude HTTP/SSE 客户端 + OpenAI SDK）
 
 ## 许可证
 

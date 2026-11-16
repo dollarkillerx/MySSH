@@ -5,6 +5,68 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ai.allowSession" xml:space="preserve"><value>Allow same in this chat</value></data>
+  <data name="ai.ask.analyzeError" xml:space="preserve"><value>What does this error mean and how do I fix it?</value></data>
+  <data name="ai.ask.explain" xml:space="preserve"><value>Explain this output.</value></data>
+  <data name="ai.attachHost" xml:space="preserve"><value>Host</value></data>
+  <data name="ai.attachTerminal" xml:space="preserve"><value>Terminal</value></data>
+  <data name="ai.chat.unreadable" xml:space="preserve"><value>This conversation can't be read anymore (it was saved with a different vault key).</value></data>
+  <data name="ai.chip.selection" xml:space="preserve"><value>Selection · {title}</value></data>
+  <data name="ai.chip.terminal" xml:space="preserve"><value>{title} · last {lines} lines</value></data>
+  <data name="ai.context.noHost" xml:space="preserve"><value>The selected tab's host no longer exists.</value></data>
+  <data name="ai.context.noTerminal" xml:space="preserve"><value>Open a terminal tab first to attach its output.</value></data>
+  <data name="ai.dataNotice.accept" xml:space="preserve"><value>Continue</value></data>
+  <data name="ai.dataNotice.body" xml:space="preserve"><value>What you send — your questions, attached context and tool results — goes to {provider} and is subject to its data policy. Secrets such as private keys and tokens are masked first when redaction is on.</value></data>
+  <data name="ai.dataNotice.title" xml:space="preserve"><value>Send to {provider}?</value></data>
+  <data name="ai.deleteChat.body" xml:space="preserve"><value>"{title}" will be deleted from this computer.</value></data>
+  <data name="ai.deleteChat.title" xml:space="preserve"><value>Delete conversation?</value></data>
+  <data name="ai.empty.body" xml:space="preserve"><value>Ask why a service failed, what a log says, or how to fix something. Attach the terminal to include what is on your screen. Commands and file changes follow each host's AI policy and may ask for your approval.</value></data>
+  <data name="ai.empty.title" xml:space="preserve"><value>How can I help?</value></data>
+  <data name="ai.error.Authentication" xml:space="preserve"><value>The provider rejected the API key. Check it in AI settings. ({detail})</value></data>
+  <data name="ai.error.InvalidRequest" xml:space="preserve"><value>The provider rejected the request: {detail}</value></data>
+  <data name="ai.error.MalformedResponse" xml:space="preserve"><value>The provider sent a response MySSH couldn't read: {detail}</value></data>
+  <data name="ai.error.Network" xml:space="preserve"><value>Can't reach the provider: {detail}</value></data>
+  <data name="ai.error.None" xml:space="preserve"><value>{detail}</value></data>
+  <data name="ai.error.Other" xml:space="preserve"><value>The provider returned an error: {detail}</value></data>
+  <data name="ai.error.Overloaded" xml:space="preserve"><value>The provider is overloaded right now. Try again shortly. ({detail})</value></data>
+  <data name="ai.error.RateLimited" xml:space="preserve"><value>The provider's rate limit was reached. Wait a moment and try again. ({detail})</value></data>
+  <data name="ai.error.unexpected" xml:space="preserve"><value>Something went wrong: {error}</value></data>
+  <data name="ai.fallback" xml:space="preserve"><value>{from} declined this request; {to} answered instead.</value></data>
+  <data name="ai.history" xml:space="preserve"><value>Conversations</value></data>
+  <data name="ai.history.empty" xml:space="preserve"><value>No saved conversations yet.</value></data>
+  <data name="ai.inline.declined" xml:space="preserve"><value>Not sent.</value></data>
+  <data name="ai.inline.hint" xml:space="preserve"><value>Enter: suggest · Tab: insert into the prompt (not run) · Esc: close</value></data>
+  <data name="ai.inline.none" xml:space="preserve"><value>No command for that. Try describing it differently.</value></data>
+  <data name="ai.inline.placeholder" xml:space="preserve"><value>Describe what you want to do, e.g. find files larger than 1 GB</value></data>
+  <data name="ai.maxTokens" xml:space="preserve"><value>The answer was cut off because it reached the length limit.</value></data>
+  <data name="ai.menu.analyzeError" xml:space="preserve"><value>Analyze this error with AI</value></data>
+  <data name="ai.menu.explain" xml:space="preserve"><value>Explain with AI</value></data>
+  <data name="ai.menu.inline" xml:space="preserve"><value>Suggest a command… (Ctrl+I)</value></data>
+  <data name="ai.newChat" xml:space="preserve"><value>New conversation</value></data>
+  <data name="ai.noModel" xml:space="preserve"><value>Choose a model for {provider} in AI settings first.</value></data>
+  <data name="ai.noProvider" xml:space="preserve"><value>No AI provider is set up yet. Add one in AI settings.</value></data>
+  <data name="ai.placeholder" xml:space="preserve"><value>Ask about this server… (Enter to send, Shift+Enter for a new line)</value></data>
+  <data name="ai.redacted" xml:space="preserve"><value>Masked {count} secret(s) before sending.</value></data>
+  <data name="ai.refusal" xml:space="preserve"><value>The model declined this request. {detail}</value></data>
+  <data name="ai.send" xml:space="preserve"><value>Send</value></data>
+  <data name="ai.settings" xml:space="preserve"><value>AI settings</value></data>
+  <data name="ai.setup.action" xml:space="preserve"><value>Add a provider</value></data>
+  <data name="ai.setup.body" xml:space="preserve"><value>Use Claude, OpenAI, DeepSeek or a local OpenAI-compatible server such as Ollama. Your API key is stored encrypted on this computer.</value></data>
+  <data name="ai.setup.title" xml:space="preserve"><value>Set up an AI provider</value></data>
+  <data name="ai.stepLimit" xml:space="preserve"><value>Stopped after {steps} steps. Ask again to continue.</value></data>
+  <data name="ai.stop" xml:space="preserve"><value>Stop</value></data>
+  <data name="ai.stopped" xml:space="preserve"><value>Stopped.</value></data>
+  <data name="ai.thinking" xml:space="preserve"><value>Thinking</value></data>
+  <data name="ai.title" xml:space="preserve"><value>AI assistant</value></data>
+  <data name="ai.toggle" xml:space="preserve"><value>AI assistant (Ctrl+Shift+A)</value></data>
+  <data name="ai.tool.awaiting" xml:space="preserve"><value>Needs approval</value></data>
+  <data name="ai.tool.denied" xml:space="preserve"><value>Denied</value></data>
+  <data name="ai.tool.done" xml:space="preserve"><value>Done</value></data>
+  <data name="ai.tool.failed" xml:space="preserve"><value>Failed</value></data>
+  <data name="ai.tool.output" xml:space="preserve"><value>Output</value></data>
+  <data name="ai.tool.running" xml:space="preserve"><value>Running</value></data>
+  <data name="ai.untitled" xml:space="preserve"><value>Untitled conversation</value></data>
+  <data name="ai.usage" xml:space="preserve"><value>{input} in · {output} out tokens</value></data>
   <data name="aiPolicy.Ask" xml:space="preserve"><value>Ask</value></data>
   <data name="aiPolicy.Ask.help" xml:space="preserve"><value>AI may read; every command or write asks you first.</value></data>
   <data name="aiPolicy.FullAccess" xml:space="preserve"><value>Full access</value></data>
@@ -17,6 +79,107 @@
   <data name="aiPolicy.ReadOnly.help" xml:space="preserve"><value>AI may read files and run only allow-listed commands.</value></data>
   <data name="aiPolicy.Trusted" xml:space="preserve"><value>Trusted</value></data>
   <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI runs commands and edits files without asking. High-risk commands (rm, stop, reboot ...), overwrites, deletes and pressing Enter in your terminal still ask you. Prefer a low-privilege identity.</value></data>
+  <data name="aiSettings.add" xml:space="preserve"><value>Add provider</value></data>
+  <data name="aiSettings.attachHost" xml:space="preserve"><value>Attach the current host by default</value></data>
+  <data name="aiSettings.attachHostHelp" xml:space="preserve"><value>New questions include the host's name, address, user and current directory (never passwords or keys). Terminal text is only attached when you add it.</value></data>
+  <data name="aiSettings.bearer" xml:space="preserve"><value>Send the key as a Bearer token</value></data>
+  <data name="aiSettings.bearerHelp" xml:space="preserve"><value>For gateways that expect "Authorization: Bearer" instead of "x-api-key".</value></data>
+  <data name="aiSettings.behaviour" xml:space="preserve"><value>Behaviour</value></data>
+  <data name="aiSettings.caps" xml:space="preserve"><value>Capabilities</value></data>
+  <data name="aiSettings.caps.streaming" xml:space="preserve"><value>Supports streaming</value></data>
+  <data name="aiSettings.caps.tools" xml:space="preserve"><value>Supports tool calls</value></data>
+  <data name="aiSettings.capsHelp" xml:space="preserve"><value>"Test connection" detects these. Turn them off if the server rejects tool calls or streaming.</value></data>
+  <data name="aiSettings.claude" xml:space="preserve"><value>Claude options</value></data>
+  <data name="aiSettings.col.baseUrl" xml:space="preserve"><value>Base URL</value></data>
+  <data name="aiSettings.col.default" xml:space="preserve"><value>Default</value></data>
+  <data name="aiSettings.col.model" xml:space="preserve"><value>Model</value></data>
+  <data name="aiSettings.col.name" xml:space="preserve"><value>Name</value></data>
+  <data name="aiSettings.col.status" xml:space="preserve"><value>Status</value></data>
+  <data name="aiSettings.default" xml:space="preserve"><value>Default</value></data>
+  <data name="aiSettings.delete.body" xml:space="preserve"><value>Delete "{name}" and its saved API key? Conversations that used it stay, but will need another provider.</value></data>
+  <data name="aiSettings.delete.title" xml:space="preserve"><value>Delete provider</value></data>
+  <data name="aiSettings.eager" xml:space="preserve"><value>Eager tool input streaming</value></data>
+  <data name="aiSettings.eagerHelp" xml:space="preserve"><value>Shows tool arguments while they are written. Some gateways reject it.</value></data>
+  <data name="aiSettings.editor.addTitle" xml:space="preserve"><value>Add {name}</value></data>
+  <data name="aiSettings.editor.baseUrl" xml:space="preserve"><value>Base URL</value></data>
+  <data name="aiSettings.editor.baseUrlHelp" xml:space="preserve"><value>Used exactly as entered; environment variables are ignored.</value></data>
+  <data name="aiSettings.editor.connection" xml:space="preserve"><value>Connection</value></data>
+  <data name="aiSettings.editor.editTitle" xml:space="preserve"><value>Edit {name}</value></data>
+  <data name="aiSettings.editor.model" xml:space="preserve"><value>Model</value></data>
+  <data name="aiSettings.editor.modelId" xml:space="preserve"><value>Model ID</value></data>
+  <data name="aiSettings.editor.modelPlaceholder" xml:space="preserve"><value>Type a model ID or fetch the list</value></data>
+  <data name="aiSettings.editor.name" xml:space="preserve"><value>Name</value></data>
+  <data name="aiSettings.editor.protocol" xml:space="preserve"><value>Protocol</value></data>
+  <data name="aiSettings.effort" xml:space="preserve"><value>Effort</value></data>
+  <data name="aiSettings.effort.high" xml:space="preserve"><value>High</value></data>
+  <data name="aiSettings.effort.low" xml:space="preserve"><value>Low</value></data>
+  <data name="aiSettings.effort.medium" xml:space="preserve"><value>Medium</value></data>
+  <data name="aiSettings.empty" xml:space="preserve"><value>No AI provider yet</value></data>
+  <data name="aiSettings.emptyHint" xml:space="preserve"><value>MySSH can use Claude, OpenAI, DeepSeek or a local OpenAI-compatible server such as Ollama. Choose "Add provider" to set one up.</value></data>
+  <data name="aiSettings.fallback" xml:space="preserve"><value>Server-side fallback</value></data>
+  <data name="aiSettings.fallbackHelp" xml:space="preserve"><value>If the model declines a request, Claude can hand it to another model instead of failing.</value></data>
+  <data name="aiSettings.headers" xml:space="preserve"><value>Extra request headers</value></data>
+  <data name="aiSettings.headersHelp" xml:space="preserve"><value>One "Name: value" per line. The API key has its own field, so Authorization and x-api-key are not allowed here.</value></data>
+  <data name="aiSettings.history" xml:space="preserve"><value>Conversation history</value></data>
+  <data name="aiSettings.history.deleteAll" xml:space="preserve"><value>Delete all conversations</value></data>
+  <data name="aiSettings.history.deleteAllConfirm" xml:space="preserve"><value>Delete every saved AI conversation? This cannot be undone.</value></data>
+  <data name="aiSettings.history.deleted" xml:space="preserve"><value>Deleted {count} conversations.</value></data>
+  <data name="aiSettings.key" xml:space="preserve"><value>API key</value></data>
+  <data name="aiSettings.key.help" xml:space="preserve"><value>Stored encrypted in the vault.</value></data>
+  <data name="aiSettings.key.optionalHelp" xml:space="preserve"><value>Optional: local servers such as Ollama need no key.</value></data>
+  <data name="aiSettings.key.placeholder" xml:space="preserve"><value>Paste the API key</value></data>
+  <data name="aiSettings.key.remove" xml:space="preserve"><value>Remove key</value></data>
+  <data name="aiSettings.key.removedHelp" xml:space="preserve"><value>The saved key will be removed when you save.</value></data>
+  <data name="aiSettings.key.savedHelp" xml:space="preserve"><value>A key is saved. Leave the field empty to keep it.</value></data>
+  <data name="aiSettings.key.show" xml:space="preserve"><value>Show saved key</value></data>
+  <data name="aiSettings.key.unreadable" xml:space="preserve"><value>The saved key cannot be read: {error}</value></data>
+  <data name="aiSettings.maxSteps" xml:space="preserve"><value>Maximum steps per answer</value></data>
+  <data name="aiSettings.maxStepsHelp" xml:space="preserve"><value>1 to 100 tool calls per answer.</value></data>
+  <data name="aiSettings.models.failed" xml:space="preserve"><value>Could not fetch models: {error}</value></data>
+  <data name="aiSettings.models.fetch" xml:space="preserve"><value>Fetch models</value></data>
+  <data name="aiSettings.models.found" xml:space="preserve"><value>{count} models found.</value></data>
+  <data name="aiSettings.models.none" xml:space="preserve"><value>The provider returned no models.</value></data>
+  <data name="aiSettings.no" xml:space="preserve"><value>no</value></data>
+  <data name="aiSettings.off" xml:space="preserve"><value>Off</value></data>
+  <data name="aiSettings.on" xml:space="preserve"><value>On</value></data>
+  <data name="aiSettings.preset.custom" xml:space="preserve"><value>custom provider</value></data>
+  <data name="aiSettings.preset.customMenu" xml:space="preserve"><value>Custom (OpenAI- or Anthropic-compatible)…</value></data>
+  <data name="aiSettings.protocol.anthropic" xml:space="preserve"><value>Anthropic-compatible</value></data>
+  <data name="aiSettings.protocol.openai" xml:space="preserve"><value>OpenAI-compatible</value></data>
+  <data name="aiSettings.providers" xml:space="preserve"><value>Providers</value></data>
+  <data name="aiSettings.providersHelp" xml:space="preserve"><value>The AI services the assistant can talk to. API keys are stored encrypted in the vault.</value></data>
+  <data name="aiSettings.redact" xml:space="preserve"><value>Mask secrets before sending</value></data>
+  <data name="aiSettings.redactHelp" xml:space="preserve"><value>Passwords, keys and tokens found in terminal text and command output are replaced with placeholders before anything is sent to the provider.</value></data>
+  <data name="aiSettings.retention" xml:space="preserve"><value>Delete conversations after</value></data>
+  <data name="aiSettings.retention.days" xml:space="preserve"><value>{days} days without activity</value></data>
+  <data name="aiSettings.retention.off" xml:space="preserve"><value>Never</value></data>
+  <data name="aiSettings.saveHistory" xml:space="preserve"><value>Save conversations</value></data>
+  <data name="aiSettings.saveHistoryHelp" xml:space="preserve"><value>Conversations are stored encrypted on this computer.</value></data>
+  <data name="aiSettings.setDefault" xml:space="preserve"><value>Make default</value></data>
+  <data name="aiSettings.status.failed" xml:space="preserve"><value>Last test failed</value></data>
+  <data name="aiSettings.status.unverified" xml:space="preserve"><value>Not verified</value></data>
+  <data name="aiSettings.status.verified" xml:space="preserve"><value>Verified</value></data>
+  <data name="aiSettings.tab" xml:space="preserve"><value>AI assistant</value></data>
+  <data name="aiSettings.terminalLines" xml:space="preserve"><value>Terminal lines to attach</value></data>
+  <data name="aiSettings.terminalLinesHelp" xml:space="preserve"><value>1 to 2000 lines from the end of the terminal.</value></data>
+  <data name="aiSettings.test" xml:space="preserve"><value>Test connection</value></data>
+  <data name="aiSettings.test.failed" xml:space="preserve"><value>Connection failed</value></data>
+  <data name="aiSettings.test.failedUnknown" xml:space="preserve"><value>The provider did not accept the test request.</value></data>
+  <data name="aiSettings.test.ok" xml:space="preserve"><value>{count} models available. Tools: {tools}. Streaming: {streaming}.</value></data>
+  <data name="aiSettings.test.okTitle" xml:space="preserve"><value>Connection works</value></data>
+  <data name="aiSettings.test.running" xml:space="preserve"><value>Testing connection…</value></data>
+  <data name="aiSettings.thinking" xml:space="preserve"><value>Thinking display</value></data>
+  <data name="aiSettings.thinking.omitted" xml:space="preserve"><value>Hidden</value></data>
+  <data name="aiSettings.thinking.summarized" xml:space="preserve"><value>Summary</value></data>
+  <data name="aiSettings.thinking.updates" xml:space="preserve"><value>Progress notes only</value></data>
+  <data name="aiSettings.validation.headerDuplicate" xml:space="preserve"><value>{name} appears more than once.</value></data>
+  <data name="aiSettings.validation.headerKey" xml:space="preserve"><value>{name} cannot be set here; use the API key field.</value></data>
+  <data name="aiSettings.validation.headerLine" xml:space="preserve"><value>Line {line} is not in the form "Name: value".</value></data>
+  <data name="aiSettings.validation.key" xml:space="preserve"><value>Enter the API key.</value></data>
+  <data name="aiSettings.validation.model" xml:space="preserve"><value>Choose or type a model.</value></data>
+  <data name="aiSettings.validation.range" xml:space="preserve"><value>Enter a whole number from {min} to {max}.</value></data>
+  <data name="aiSettings.validation.url" xml:space="preserve"><value>Enter an absolute http:// or https:// URL.</value></data>
+  <data name="aiSettings.yes" xml:space="preserve"><value>yes</value></data>
   <data name="app.name" xml:space="preserve"><value>MySSH</value></data>
   <data name="app.openSftp" xml:space="preserve"><value>Open SFTP</value></data>
   <data name="app.openTerminal" xml:space="preserve"><value>Open Terminal</value></data>

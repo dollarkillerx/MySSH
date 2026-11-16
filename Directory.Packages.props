@@ -22,9 +22,7 @@
     <PackageVersion Include="SSH.NET" Version="2026.0.1" />
     <PackageVersion Include="ModelContextProtocol" Version="2.4.0" />
     <PackageVersion Include="ModelContextProtocol.AspNetCore" Version="2.4.0" />
-    <PackageVersion Include="Anthropic" Version="13.8.0" />
     <PackageVersion Include="OpenAI" Version="2.15.0" />
-    <PackageVersion Include="JsonSchema.Net" Version="9.7.0" />
   </ItemGroup>
   <ItemGroup Label="Storage / crypto / hosting">
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.15" />

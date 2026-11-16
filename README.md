@@ -8,7 +8,7 @@
   A simple, open-source SSH client - Termius alternative
 </p>
 
-> **Rewrite in progress.** MySSH is being rebuilt on .NET 10 + Avalonia (IBM Carbon UI, native terminal, MCP server; the built-in AI assistant is next).
+> **Rewrite in progress.** MySSH is being rebuilt on .NET 10 + Avalonia (IBM Carbon UI, native terminal, MCP server and a built-in AI assistant).
 > The last Tauri/Vue/Rust version is tagged [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final); releases up to v0.0.4 are that version.
 > Design: [docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md).
 
@@ -24,6 +24,7 @@
 - **Jump Hosts** - Multi-hop chains (ProxyJump), each hop with its own identity, plus HTTP / SOCKS5 proxies
 - **Windows Remote Desktop** - RDP hosts open in the system client (mstsc, Windows App, Remmina / FreeRDP), optionally tunnelled through an SSH jump host; the password is never written to the `.rdp` file
 - **MCP Server** - Let Claude Code, Claude Desktop and other MCP clients run commands, read terminals and use SFTP on your hosts
+- **AI Assistant** - Built-in chat panel (Claude, OpenAI, DeepSeek or a local OpenAI-compatible server): investigates with the same tools and per-host policy as MCP, approvals on inline cards, Ctrl+I command suggestions in the terminal, secrets masked before sending
 - **Per-host AI Policy** - Off / Read-only / Ask / Trusted / Full access; high-risk commands (`rm -rf`, `systemctl stop`, ...) ask for approval, every call is audited
 - **Secure Storage** - SQLite with AES-256-GCM field encryption; master key in the OS keystore or behind an Argon2id master password
 - **Backup & Restore** - Password-protected export / import; imports hosts from the previous (Tauri) version
@@ -85,7 +86,7 @@ On first start MySSH offers to import hosts from the previous (Tauri) version; t
 - **Terminal**: native Avalonia control on the XTerm.NET VT engine
 - **SSH/SFTP**: SSH.NET
 - **Storage**: SQLite, AES-256-GCM field encryption, master key in the OS keystore or behind an Argon2id master password
-- **Integrations**: MCP server (ModelContextProtocol C# SDK: Streamable HTTP + local socket, `myssh-mcp` stdio bridge); built-in AI assistant (planned)
+- **Integrations**: MCP server (ModelContextProtocol C# SDK: Streamable HTTP + local socket, `myssh-mcp` stdio bridge); built-in AI assistant (own Claude HTTP/SSE client + OpenAI SDK)
 
 ## License
 

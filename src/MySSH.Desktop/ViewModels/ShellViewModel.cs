@@ -15,7 +15,7 @@ public sealed record NotificationViewModel(NotificationKind Kind, string Title, 
 /// Root view model: SideNav, the active page, startup prompts (vault / legacy import) and inline notifications.
 /// Startup order (design §5): vault ready → legacy offer → host list → undecryptable-record scan.
 /// </summary>
-public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
+public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable, IAiWorkspace
 {
     readonly Func<CancellationToken, Task<AppSession>> _openSession;
     AppSession? _session;
@@ -41,6 +41,11 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
 
     /// <summary>Created after unlock; tests may replace it.</summary>
     public MySSH.Ssh.ISshConnector? Connector { get; set; }
+    /// <summary>The AI side panel (after unlock).</summary>
+    [ObservableProperty] public partial AiAssistantViewModel? Assistant { get; private set; }
+    public TerminalSessionViewModel? CurrentTerminal => Sessions?.SelectedTab as TerminalSessionViewModel;
+    /// <summary>AI assistant settings, API keys and providers (after unlock).</summary>
+    public AiSettingsService? AiSettings { get; private set; }
     [ObservableProperty] public partial SessionsWorkspaceViewModel? Sessions { get; private set; }
 
     /// <summary>Applies language / theme. The window wires the theme part; tests leave it null.</summary>
@@ -242,6 +247,16 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
         var mcp = new McpController(s.Storage.Settings, s.Storage.Secrets, Tools.Catalog, Tools.Invoker, ConfigureMcp);
         Mcp = mcp;
         AiMcp = new AiMcpPageViewModel(new McpSettingsViewModel(mcp, Ui), new AuditLogViewModel(s.Storage.AuditLog, s.Storage.Hosts));
+        AiSettings = new AiSettingsService(s.Storage.Settings, s.Storage.Secrets);
+        await AiSettings.LoadAsync(ct);
+        AiMcp.Assistant = new AiSettingsViewModel(AiSettings, Ui, s.Storage.AiConversations);
+        Assistant = new AiAssistantViewModel(AiSettings, s.Storage.AiConversations, s.Storage.Hosts, Tools.Invoker, Tools.Catalog, Ui, this);
+        Sessions.TerminalAi = Assistant;
+        Assistant.OpenSettingsRequested += () =>
+        {
+            SelectedNav = NavItems.First(n => n.Page == AppPage.Ai);
+            AiMcp.SelectedTab = 2;
+        };
         McpStartup = Task.Run(() => mcp.InitializeAsync(), CancellationToken.None); // starts the server only if the user enabled it before; never blocks startup
         await Hosts.LoadAsync(ct);
         CurrentPage = Hosts;
@@ -267,6 +282,8 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     {
         if (Sessions is not null) await Sessions.DisposeAsync();
         if (Connector is IAsyncDisposable c) await c.DisposeAsync();
+        AiMcp?.Assistant?.Dispose();
+        AiSettings?.Dispose();
         if (_session is not null) await _session.DisposeAsync();
     }
 }

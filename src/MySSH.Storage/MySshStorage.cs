@@ -58,6 +58,7 @@ public sealed class MySshStorage : IAsyncDisposable
         KnownHosts = new KnownHostStore(db);
         AuditLog = new AuditLogStore(db);
         Secrets = new SecretSettingsStore(db, vault);
+        AiConversations = new AiConversationStore(db, vault);
         UndecryptableRecords = new UndecryptableRecordStore(db, vault);
         LegacyImport = new LegacyImportService(options.Paths.LegacyDataDirectory, db, vault, settings, logger);
         Backup = new BackupService(db, vault, options.Argon2);
@@ -77,6 +78,7 @@ public sealed class MySshStorage : IAsyncDisposable
     public IAuditLogStore AuditLog { get; }
     /// <summary>Vault-encrypted named secrets (MCP token, ...). Requires an unlocked vault; never included in backups.</summary>
     public ISecretSettingsStore Secrets { get; }
+    public IAiConversationStore AiConversations { get; }
     public Vault Vault { get; }
     public LegacyImportService LegacyImport { get; }
     public BackupService Backup { get; }

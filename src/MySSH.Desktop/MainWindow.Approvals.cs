@@ -15,6 +15,17 @@ public sealed partial class MainWindow : IApprovalService
 {
     public async Task<ApprovalOutcome> RequestAsync(ApprovalRequest request, CancellationToken ct)
     {
+        // AI assistant calls are approved on their tool card in the chat (design §7.6); MCP (and anything unmatched) gets the modal.
+        if (request.Actor.Origin == MySSH.Core.ConnectionOrigin.Ai && MySSH.Ai.AiToolCallScope.Current is { } info)
+        {
+            Task<ApprovalOutcome>? inline = null;
+            await Dispatcher.UIThread.InvokeAsync(() => { inline = _vm?.Assistant?.TryRequestApproval(request, info, ct); });
+            if (inline is not null)
+            {
+                try { return await inline; }
+                catch (OperationCanceledException) { return ApprovalOutcome.Cancelled; }
+            }
+        }
         try
         {
             return await OneAtATimeAsync(() =>

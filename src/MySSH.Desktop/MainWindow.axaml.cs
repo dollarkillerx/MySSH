@@ -43,6 +43,17 @@ public sealed partial class MainWindow : Window, IUiServices
         LegacyModal.PrimaryClick += (_, e) => { e.Handled = true; _vm?.ImportLegacyCommand.Execute(null); };
         LegacyModal.Closed += (_, _) => { if (_vm?.IsLegacyOfferOpen == true) _vm.DismissLegacyOfferCommand.Execute(null); };
 
+        // Ctrl+Shift+A (Cmd+Shift+A on macOS) toggles the AI panel from anywhere, also while the terminal has focus.
+        AddHandler(KeyDownEvent, (_, e) =>
+        {
+            var mod = OperatingSystem.IsMacOS() ? Avalonia.Input.KeyModifiers.Meta : Avalonia.Input.KeyModifiers.Control;
+            if (e.Key == Avalonia.Input.Key.A && e.KeyModifiers == (mod | Avalonia.Input.KeyModifiers.Shift) && _vm?.Assistant is { } ai)
+            {
+                e.Handled = true;
+                ai.ToggleCommand.Execute(null);
+            }
+        }, RoutingStrategies.Tunnel);
+
         Nav.SelectionChanged += (_, _) =>
         {
             if (_vm is not null && Nav.SelectedItem is SideNavItem { Tag: NavItemViewModel item }) _vm.SelectedNav = item;

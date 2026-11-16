@@ -787,6 +787,15 @@ RDP = {
 }
 for _lang in NEW: NEW[_lang].update(RDP[_lang])
 
+# Later strings live in tools/legacy/locales-extra/*.json ({"en-US": {...}, "zh-CN": {...}, "ja-JP": {...}}), merged in file-name
+# order, so separate features can add keys without editing this file.
+import glob as _glob, json as _json, os as _os
+for _f in sorted(_glob.glob(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'locales-extra', '*.json'))):
+    with open(_f, encoding='utf-8') as _h:
+        _extra = _json.load(_h)
+    for _lang in NEW:
+        NEW[_lang].update(_extra[_lang])
+
 def flat(o, p=''):
     for k, v in o.items():
         if isinstance(v, dict): yield from flat(v, p + k + '.')

@@ -35,7 +35,38 @@
     </carbon:InlineNotification>
 
     <Panel Background="{DynamicResource CarbonBackground}">
-      <t:TerminalView Name="Term" Margin="8,8,0,0" />
+      <t:TerminalView Name="Term" Margin="8,8,0,0">
+        <t:TerminalView.ContextMenu>
+          <ContextMenu Name="TermMenu">
+            <MenuItem Name="MenuCopy" Header="{l:Tr common.copy}" Click="OnCopySelection" />
+            <Separator />
+            <MenuItem Name="MenuExplain" Header="{l:Tr ai.menu.explain}" Click="OnAskExplain" />
+            <MenuItem Name="MenuAnalyze" Header="{l:Tr ai.menu.analyzeError}" Click="OnAskAnalyze" />
+            <Separator />
+            <MenuItem Name="MenuInline" Header="{l:Tr ai.menu.inline}" Command="{Binding OpenInlineCommand}" />
+          </ContextMenu>
+        </t:TerminalView.ContextMenu>
+      </t:TerminalView>
+
+      <!-- Ctrl+I / Cmd+I: describe a command, Tab inserts it on the prompt line (never runs it) -->
+      <Border Name="InlineBar" IsVisible="{Binding IsInlineOpen}" VerticalAlignment="Bottom" Margin="24,0,24,16"
+              Background="{DynamicResource CarbonLayer01}" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="1"
+              MaxWidth="760">
+        <StackPanel Margin="12" Spacing="8">
+          <Grid ColumnDefinitions="Auto,*,Auto">
+            <carbon:CarbonIcon Kind="magic-wand" VerticalAlignment="Center" Margin="0,0,8,0" />
+            <TextBox Grid.Column="1" Name="InlineBox" Text="{Binding InlineRequest}" PlaceholderText="{l:Tr ai.inline.placeholder}"
+                     KeyDown="OnInlineKeyDown" />
+            <ProgressBar Grid.Column="2" Classes="sm" IsIndeterminate="True" Width="48" Margin="8,0,0,0" IsVisible="{Binding IsInlineBusy}" />
+          </Grid>
+          <Border Background="{DynamicResource CarbonField02}" Padding="8,6" IsVisible="{Binding HasInlineSuggestion}">
+            <SelectableTextBlock Name="InlineSuggestionText" Classes="code-01" TextWrapping="Wrap" Text="{Binding InlineSuggestion}" />
+          </Border>
+          <TextBlock Classes="helper-text-01 error" TextWrapping="Wrap" Text="{Binding InlineError}"
+                     IsVisible="{Binding InlineError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <TextBlock Classes="helper-text-01 secondary" Text="{l:Tr ai.inline.hint}" />
+        </StackPanel>
+      </Border>
       <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" IsVisible="{Binding IsConnecting}">
         <ProgressBar Classes="sm" IsIndeterminate="True" Width="240" />
         <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{Binding StatusMessage}" />

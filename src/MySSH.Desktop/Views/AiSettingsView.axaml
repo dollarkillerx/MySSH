@@ -1,0 +1,304 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:ai="using:MySSH.Ai"
+             x:Class="MySSH.Desktop.Views.AiSettingsView"
+             x:DataType="vm:AiSettingsViewModel">
+  <!-- "AI assistant" tab (design §7.1, §7.8): providers table + behaviour; provider editor as a side panel -->
+  <Grid ColumnDefinitions="*,Auto" Margin="0,24,0,0">
+    <ScrollViewer>
+      <StackPanel Spacing="40" Margin="0,0,24,32">
+        <carbon:InlineNotification Kind="Error" IsLowContrast="True" Title="{l:Tr common.error}" Subtitle="{Binding Error}"
+                                     IsCloseButtonVisible="False"
+                                     IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <carbon:InlineNotification Name="AiSettingsMessage" Kind="Success" IsLowContrast="True" Title="{Binding Message}"
+                                     IsCloseButtonVisible="False"
+                                     IsVisible="{Binding Message, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+        <!-- ============================================================ providers -->
+        <StackPanel Spacing="0">
+          <StackPanel Spacing="4" Margin="0,0,0,16">
+            <TextBlock Classes="heading-02" Text="{l:Tr aiSettings.providers}" />
+            <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{l:Tr aiSettings.providersHelp}" />
+          </StackPanel>
+
+          <!-- table toolbar -->
+          <Border Background="{DynamicResource CarbonLayer01}">
+            <Grid ColumnDefinitions="*,Auto" Height="48">
+              <Button Grid.Column="1" Name="AddProviderButton" Classes="lg" carbon:ButtonAssist.Icon="add" Content="{l:Tr aiSettings.add}">
+                <Button.Flyout>
+                  <MenuFlyout Placement="BottomEdgeAlignedRight">
+                    <MenuItem Header="Claude" Tag="Claude" Click="OnAddPreset" />
+                    <MenuItem Header="OpenAI" Tag="OpenAI" Click="OnAddPreset" />
+                    <MenuItem Header="DeepSeek" Tag="DeepSeek" Click="OnAddPreset" />
+                    <Separator />
+                    <MenuItem Header="{l:Tr aiSettings.preset.customMenu}" Tag="Custom" Click="OnAddPreset" />
+                  </MenuFlyout>
+                </Button.Flyout>
+              </Button>
+            </Grid>
+          </Border>
+
+          <!-- header row -->
+          <Border Background="{DynamicResource CarbonLayerAccent01}" Height="48" IsVisible="{Binding HasProviders}">
+            <Grid ColumnDefinitions="2*,2*,1.6*,128,120,88" Margin="16,0,0,0">
+              <Grid.Styles>
+                <Style Selector="TextBlock">
+                  <Setter Property="VerticalAlignment" Value="Center" />
+                  <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                  <Setter Property="Margin" Value="0,0,16,0" />
+                </Style>
+              </Grid.Styles>
+              <TextBlock Classes="heading-compact-01" Text="{l:Tr aiSettings.col.name}" />
+              <TextBlock Grid.Column="1" Classes="heading-compact-01" Text="{l:Tr aiSettings.col.baseUrl}" />
+              <TextBlock Grid.Column="2" Classes="heading-compact-01" Text="{l:Tr aiSettings.col.model}" />
+              <TextBlock Grid.Column="3" Classes="heading-compact-01" Text="{l:Tr aiSettings.col.status}" />
+              <TextBlock Grid.Column="4" Classes="heading-compact-01" Text="{l:Tr aiSettings.col.default}" />
+            </Grid>
+          </Border>
+
+          <ItemsControl Name="ProviderRows" ItemsSource="{Binding Providers}" IsVisible="{Binding HasProviders}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:AiProviderRowViewModel">
+                <Border Background="{DynamicResource CarbonLayer01}" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="0,0,0,1" MinHeight="48">
+                  <Grid ColumnDefinitions="2*,2*,1.6*,128,120,88" Margin="16,0,0,0">
+                    <Grid.Styles>
+                      <Style Selector="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                        <Setter Property="Margin" Value="0,0,16,0" />
+                      </Style>
+                    </Grid.Styles>
+                    <StackPanel VerticalAlignment="Center" Spacing="2" Margin="0,8">
+                      <TextBlock Classes="body-compact-01" Text="{Binding Name}" ToolTip.Tip="{Binding Name}" />
+                      <TextBlock Classes="helper-text-01 secondary" Text="{Binding ProtocolText}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Classes="body-compact-01 secondary" Text="{Binding BaseUrl}" ToolTip.Tip="{Binding BaseUrl}" />
+                    <TextBlock Grid.Column="2" Classes="body-compact-01 secondary" Text="{Binding ModelText}" ToolTip.Tip="{Binding ModelText}" />
+                    <carbon:Tag Grid.Column="3" Size="Small" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Type="{Binding StatusTag}" Content="{Binding StatusText}" />
+                    <carbon:Tag Grid.Column="4" Size="Small" Type="Blue" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Content="{l:Tr aiSettings.default}" IsVisible="{Binding IsDefault}" />
+                    <Button Grid.Column="4" Classes="ghost sm" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="8,0"
+                            Content="{l:Tr aiSettings.setDefault}" IsVisible="{Binding !IsDefault}"
+                            Command="{Binding $parent[ItemsControl].((vm:AiSettingsViewModel)DataContext).SetDefaultCommand}"
+                            CommandParameter="{Binding}" />
+                    <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                      <Button Classes="ghost icon-only md" carbon:ButtonAssist.Icon="edit" ToolTip.Tip="{l:Tr common.edit}"
+                              Command="{Binding $parent[ItemsControl].((vm:AiSettingsViewModel)DataContext).EditProviderCommand}"
+                              CommandParameter="{Binding}" />
+                      <Button Classes="ghost icon-only md" carbon:ButtonAssist.Icon="trash-can" ToolTip.Tip="{l:Tr common.delete}"
+                              Command="{Binding $parent[ItemsControl].((vm:AiSettingsViewModel)DataContext).DeleteProviderCommand}"
+                              CommandParameter="{Binding}" />
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+          <!-- empty state -->
+          <Border Name="ProvidersEmpty" Background="{DynamicResource CarbonLayer01}" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="0,1,0,0"
+                  Padding="16,32" IsVisible="{Binding !HasProviders}">
+            <StackPanel Spacing="8" MaxWidth="560" HorizontalAlignment="Left">
+              <carbon:CarbonIcon Kind="machine-learning" Size="32" HorizontalAlignment="Left" />
+              <TextBlock Classes="heading-03" Text="{l:Tr aiSettings.empty}" />
+              <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{l:Tr aiSettings.emptyHint}" />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+
+        <!-- ============================================================ behaviour -->
+        <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" MaxWidth="760" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Spacing="24">
+          <TextBlock Classes="heading-02" Text="{l:Tr aiSettings.behaviour}" />
+          <StackPanel Spacing="4">
+            <ToggleSwitch Name="RedactToggle" IsChecked="{Binding RedactSecrets}" Content="{l:Tr aiSettings.redact}"
+                          OnContent="{l:Tr aiSettings.on}" OffContent="{l:Tr aiSettings.off}" />
+            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr aiSettings.redactHelp}" />
+          </StackPanel>
+          <StackPanel Spacing="4">
+            <ToggleSwitch IsChecked="{Binding AttachHostByDefault}" Content="{l:Tr aiSettings.attachHost}"
+                          OnContent="{l:Tr aiSettings.on}" OffContent="{l:Tr aiSettings.off}" />
+            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr aiSettings.attachHostHelp}" />
+          </StackPanel>
+          <Grid ColumnDefinitions="*,16,*">
+            <TextBox Name="TerminalLinesBox" Text="{Binding TerminalLinesText}" carbon:Field.Label="{l:Tr aiSettings.terminalLines}"
+                     carbon:Field.HelperText="{l:Tr aiSettings.terminalLinesHelp}"
+                     carbon:Field.IsInvalid="{Binding TerminalLinesError, Converter={x:Static ObjectConverters.IsNotNull}}"
+                     carbon:Field.InvalidText="{Binding TerminalLinesError}" />
+            <TextBox Grid.Column="2" Text="{Binding MaxStepsText}" carbon:Field.Label="{l:Tr aiSettings.maxSteps}"
+                     carbon:Field.HelperText="{l:Tr aiSettings.maxStepsHelp}"
+                     carbon:Field.IsInvalid="{Binding MaxStepsError, Converter={x:Static ObjectConverters.IsNotNull}}"
+                     carbon:Field.InvalidText="{Binding MaxStepsError}" />
+          </Grid>
+
+          <StackPanel Spacing="16">
+            <TextBlock Classes="heading-compact-01" Text="{l:Tr aiSettings.history}" />
+            <StackPanel Spacing="4">
+              <ToggleSwitch IsChecked="{Binding SaveHistory}" Content="{l:Tr aiSettings.saveHistory}"
+                            OnContent="{l:Tr aiSettings.on}" OffContent="{l:Tr aiSettings.off}" />
+              <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr aiSettings.saveHistoryHelp}" />
+            </StackPanel>
+            <ComboBox ItemsSource="{Binding RetentionOptions}" SelectedItem="{Binding SelectedRetention}" Width="320" HorizontalAlignment="Left"
+                      carbon:Field.Label="{l:Tr aiSettings.retention}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:AiRetentionOption">
+                  <TextBlock Text="{Binding Label}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Name="DeleteAllConversationsButton" Classes="danger-tertiary md" HorizontalAlignment="Left" carbon:ButtonAssist.Icon="trash-can"
+                    Content="{l:Tr aiSettings.history.deleteAll}" Command="{Binding DeleteAllConversationsCommand}"
+                    IsVisible="{Binding CanDeleteConversations}" />
+          </StackPanel>
+        </StackPanel>
+        </Grid>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- ============================================================ editor side panel -->
+    <Border Grid.Column="1" Name="ProviderEditor" Width="460" Background="{DynamicResource CarbonLayer01}"
+            BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="1,0,0,0"
+            IsVisible="{Binding Editor, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <DockPanel DataContext="{Binding Editor}" x:DataType="vm:AiProviderEditorViewModel">
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="24,24,8,16">
+          <TextBlock Classes="heading-03" Text="{Binding Heading}" TextWrapping="Wrap" VerticalAlignment="Center" />
+          <Button Grid.Column="1" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="close" ToolTip.Tip="{l:Tr common.close}"
+                  Command="{Binding $parent[UserControl].((vm:AiSettingsViewModel)DataContext).CloseEditorCommand}" />
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,*" Height="64">
+          <Button Classes="secondary lg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{l:Tr common.cancel}"
+                  Command="{Binding $parent[UserControl].((vm:AiSettingsViewModel)DataContext).CloseEditorCommand}" />
+          <Button Grid.Column="1" Name="SaveProviderButton" Classes="primary lg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Content="{l:Tr common.save}" IsEnabled="{Binding !IsBusy}"
+                  Command="{Binding $parent[UserControl].((vm:AiSettingsViewModel)DataContext).SaveEditorCommand}" />
+        </Grid>
+        <ScrollViewer>
+          <StackPanel Margin="24,0,24,32" Spacing="24">
+            <carbon:InlineNotification Kind="Error" IsLowContrast="True" Title="{l:Tr common.error}" Subtitle="{Binding SaveError}"
+                                       IsCloseButtonVisible="False"
+                                       IsVisible="{Binding SaveError, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+            <!-- connection -->
+            <StackPanel Spacing="16">
+              <TextBlock Classes="heading-compact-01" Text="{l:Tr aiSettings.editor.connection}" />
+              <TextBox Name="ProviderNameBox" Classes="on-layer" Text="{Binding Name}" carbon:Field.Label="{l:Tr aiSettings.editor.name}"
+                       carbon:Field.IsInvalid="{Binding NameError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding NameError}" />
+              <StackPanel Spacing="8" IsVisible="{Binding IsCustom}">
+                <TextBlock Classes="label-01 secondary" Text="{l:Tr aiSettings.editor.protocol}" />
+                <StackPanel Orientation="Horizontal" Spacing="24">
+                  <RadioButton GroupName="aiProtocol" IsChecked="{Binding ProtocolIsOpenAI}" Content="{l:Tr aiSettings.protocol.openai}" />
+                  <RadioButton GroupName="aiProtocol" IsChecked="{Binding ProtocolIsAnthropic}" Content="{l:Tr aiSettings.protocol.anthropic}" />
+                </StackPanel>
+              </StackPanel>
+              <TextBox Name="BaseUrlBox" Classes="on-layer" Text="{Binding BaseUrl}" carbon:Field.Label="{l:Tr aiSettings.editor.baseUrl}"
+                       PlaceholderText="{Binding BaseUrlPlaceholder}" carbon:Field.HelperText="{l:Tr aiSettings.editor.baseUrlHelp}"
+                       carbon:Field.IsInvalid="{Binding BaseUrlError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding BaseUrlError}" />
+              <StackPanel Spacing="8">
+                <TextBox Name="ApiKeyBox" Classes="password on-layer" PasswordChar="●" Text="{Binding ApiKey}" carbon:Field.Label="{l:Tr aiSettings.key}"
+                         PlaceholderText="{l:Tr aiSettings.key.placeholder}" carbon:Field.HelperText="{Binding ApiKeyHelp}"
+                         carbon:Field.IsInvalid="{Binding ApiKeyError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding ApiKeyError}" />
+                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding HasStoredKey}">
+                  <Button Name="ShowKeyButton" Classes="ghost sm" carbon:ButtonAssist.Icon="view" Content="{l:Tr aiSettings.key.show}"
+                          Command="{Binding ShowStoredKeyCommand}" IsVisible="{Binding HasHiddenStoredKey}" />
+                  <Button Name="RemoveKeyButton" Classes="danger-ghost sm" carbon:ButtonAssist.Icon="trash-can" Content="{l:Tr aiSettings.key.remove}"
+                          Command="{Binding RemoveKeyCommand}" />
+                </StackPanel>
+              </StackPanel>
+            </StackPanel>
+
+            <!-- model + test -->
+            <StackPanel Spacing="12">
+              <TextBlock Classes="heading-compact-01" Text="{l:Tr aiSettings.editor.model}" />
+              <ComboBox Name="ModelBox" Classes="on-layer" IsEditable="True" ItemsSource="{Binding Models}" Text="{Binding Model}" HorizontalAlignment="Stretch"
+                        PlaceholderText="{l:Tr aiSettings.editor.modelPlaceholder}" carbon:Field.Label="{l:Tr aiSettings.editor.modelId}"
+                        carbon:Field.IsInvalid="{Binding ModelError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding ModelError}" />
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Name="FetchModelsButton" Classes="tertiary md" carbon:ButtonAssist.Icon="renew" Content="{l:Tr aiSettings.models.fetch}"
+                        Command="{Binding FetchModelsCommand}" IsEnabled="{Binding !IsBusy}" />
+                <TextBlock Classes="helper-text-01 secondary" VerticalAlignment="Center" Text="{Binding ModelsMessage}" TextWrapping="Wrap" />
+              </StackPanel>
+              <ProgressBar IsIndeterminate="True" Classes="sm" IsVisible="{Binding IsFetchingModels}" />
+
+              <StackPanel Spacing="12" Margin="0,8,0,0">
+                <Button Name="TestButton" Classes="secondary md" HorizontalAlignment="Left" carbon:ButtonAssist.Icon="connect"
+                        Content="{l:Tr aiSettings.test}" Command="{Binding TestConnectionCommand}" IsEnabled="{Binding !IsBusy}" />
+                <ProgressBar IsIndeterminate="True" carbon:Field.Label="{l:Tr aiSettings.test.running}" IsVisible="{Binding IsTesting}" />
+                <carbon:InlineNotification Name="TestSuccessNote" Kind="Success" IsLowContrast="True" IsCloseButtonVisible="False"
+                                           Title="{l:Tr aiSettings.test.okTitle}" Subtitle="{Binding TestSuccess}"
+                                           IsVisible="{Binding TestSuccess, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                <carbon:InlineNotification Name="TestErrorNote" Kind="Error" IsLowContrast="True" IsCloseButtonVisible="False"
+                                           Title="{l:Tr aiSettings.test.failed}" Subtitle="{Binding TestError}"
+                                           IsVisible="{Binding TestError, Converter={x:Static ObjectConverters.IsNotNull}}" />
+              </StackPanel>
+            </StackPanel>
+
+            <!-- capabilities (custom) -->
+            <StackPanel Spacing="8" IsVisible="{Binding IsCustom}">
+              <TextBlock Classes="heading-compact-01" Text="{l:Tr aiSettings.caps}" />
+              <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr aiSettings.capsHelp}" />
+              <CheckBox IsChecked="{Binding CapTools}" Content="{l:Tr aiSettings.caps.tools}" />
+              <CheckBox IsChecked="{Binding CapStreaming}" Content="{l:Tr aiSettings.caps.streaming}" />
+            </StackPanel>
+
+            <!-- Claude options -->
+            <StackPanel Spacing="16" IsVisible="{Binding IsAnthropic}">
+              <TextBlock Classes="heading-compact-01" Text="{l:Tr aiSettings.claude}" />
+              <Grid ColumnDefinitions="*,16,*">
+                <ComboBox Classes="on-layer" ItemsSource="{Binding EffortOptions}" SelectedItem="{Binding SelectedEffort}" HorizontalAlignment="Stretch"
+                          carbon:Field.Label="{l:Tr aiSettings.effort}">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:AiEffortOption">
+                      <TextBlock Text="{Binding Label}" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Grid.Column="2" Classes="on-layer" ItemsSource="{Binding ThinkingOptions}" SelectedItem="{Binding SelectedThinking}" HorizontalAlignment="Stretch"
+                          carbon:Field.Label="{l:Tr aiSettings.thinking}">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:AiThinkingOption">
+                      <TextBlock Text="{Binding Label}" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </Grid>
+              <StackPanel Spacing="4">
+                <CheckBox IsChecked="{Binding ServerSideFallback}" Content="{l:Tr aiSettings.fallback}" />
+                <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Margin="28,0,0,0" Text="{l:Tr aiSettings.fallbackHelp}" />
+              </StackPanel>
+              <StackPanel Spacing="4">
+                <CheckBox IsChecked="{Binding EagerInputStreaming}" Content="{l:Tr aiSettings.eager}" />
+                <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Margin="28,0,0,0" Text="{l:Tr aiSettings.eagerHelp}" />
+              </StackPanel>
+              <StackPanel Spacing="4">
+                <CheckBox IsChecked="{Binding UseBearerAuth}" Content="{l:Tr aiSettings.bearer}" />
+                <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Margin="28,0,0,0" Text="{l:Tr aiSettings.bearerHelp}" />
+              </StackPanel>
+            </StackPanel>
+
+            <!-- headers -->
+            <TextBox Name="HeadersBox" Classes="on-layer" Text="{Binding HeadersText}" AcceptsReturn="True" MinHeight="88"
+                     carbon:Field.Label="{l:Tr aiSettings.headers}" PlaceholderText="X-Gateway-Project: myssh"
+                     carbon:Field.HelperText="{l:Tr aiSettings.headersHelp}"
+                     carbon:Field.IsInvalid="{Binding HeadersError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding HeadersError}">
+              <!-- monospace input only; label and helper text keep the UI font -->
+              <TextBox.Styles>
+                <Style Selector="TextBox /template/ Panel#PART_Field">
+                  <Setter Property="TextElement.FontFamily" Value="{DynamicResource CarbonFontMono}" />
+                  <Setter Property="TextElement.FontSize" Value="12" />
+                </Style>
+              </TextBox.Styles>
+            </TextBox>
+          </StackPanel>
+        </ScrollViewer>
+      </DockPanel>
+    </Border>
+  </Grid>
+</UserControl>

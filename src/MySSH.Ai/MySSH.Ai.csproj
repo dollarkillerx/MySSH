@@ -3,8 +3,12 @@
     <ProjectReference Include="../MySSH.Tools/MySSH.Tools.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Anthropic" />
+    <!-- OpenAI / DeepSeek / compatible endpoints. Claude uses our own HTTP client (Providers/Anthropic): the Anthropic C#
+         SDK serializes with reflection and fails under NativeAOT (P4 finding, design §7.2). -->
     <PackageReference Include="OpenAI" />
-    <PackageReference Include="JsonSchema.Net" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySSH.Ai.Tests" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/MySSH.Ai/MySSH.Ai.csproj" />
+    <ProjectReference Include="../../src/MySSH.Storage/MySSH.Storage.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Local Kestrel mock of the provider HTTP APIs (no real API calls in tests). -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+</Project>

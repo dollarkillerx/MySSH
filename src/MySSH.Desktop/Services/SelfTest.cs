@@ -9,7 +9,7 @@ namespace MySSH.Desktop.Services;
 /// Argon2, source-generated JSON, the legacy importer and satellite resources in a throwaway directory,
 /// using master-password mode so it never touches the OS keystore. Exit code 0 = pass.
 /// </summary>
-internal static class SelfTest
+internal static partial class SelfTest
 {
     public static async Task<int> RunAsync(string legacyDir)
     {
@@ -41,6 +41,7 @@ internal static class SelfTest
                 Check(await reopened.UnlockAsync("self-test") == VaultUnlockResult.Unlocked, "unlock with master password");
                 Check((await reopened.Storage.Hosts.ListAsync()).Count == hosts, "data persisted");
                 await McpRoundTripAsync(reopened.Storage, root);
+                await AiRoundTripAsync(reopened.Storage);
             }
             foreach (var (culture, expected) in new[] { ("en-US", "Hosts"), ("zh-CN", "主机"), ("ja-JP", "ホスト") })
             {

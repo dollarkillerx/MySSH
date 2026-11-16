@@ -1,0 +1,196 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:ai="using:MySSH.Ai"
+             x:Class="MySSH.Desktop.Views.AiAssistantPanel"
+             x:DataType="vm:AiAssistantViewModel"
+             Width="420">
+  <!-- AI side panel (design §7.5): Carbon layer-01, subtle left border -->
+  <Border Background="{DynamicResource CarbonLayer01}" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="1,0,0,0">
+    <DockPanel>
+      <!-- header -->
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto,Auto,Auto" Height="48" Margin="16,0,0,0">
+        <StackPanel VerticalAlignment="Center" Spacing="0">
+          <TextBlock Classes="heading-compact-01" Text="{l:Tr ai.title}" />
+          <TextBlock Classes="helper-text-01 secondary" Text="{Binding Current.Title}" TextTrimming="CharacterEllipsis"
+                     IsVisible="{Binding Current.Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+        <Button Grid.Column="1" Name="HistoryButton" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="list"
+                ToolTip.Tip="{l:Tr ai.history}" Command="{Binding ToggleHistoryCommand}" />
+        <Button Grid.Column="2" Name="NewChatButton" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="add"
+                ToolTip.Tip="{l:Tr ai.newChat}" Command="{Binding NewChatCommand}" />
+        <Button Grid.Column="3" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="settings"
+                ToolTip.Tip="{l:Tr ai.settings}" Command="{Binding OpenSettingsCommand}" />
+        <Button Grid.Column="4" Name="ClosePanelButton" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="close"
+                ToolTip.Tip="{l:Tr common.close}" Command="{Binding CloseCommand}" />
+      </Grid>
+
+      <!-- provider -->
+      <ComboBox DockPanel.Dock="Top" Name="ProviderPicker" Margin="16,0,16,8" HorizontalAlignment="Stretch"
+                ItemsSource="{Binding Providers}" SelectedItem="{Binding SelectedProvider}" IsVisible="{Binding HasProvider}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="ai:AiProviderConfig">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="{Binding Name}" />
+              <TextBlock Classes="secondary" Text="{Binding Model}" />
+            </StackPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+      <!-- input area -->
+      <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="0,1,0,0"
+              IsVisible="{Binding !NeedsSetup}">
+        <StackPanel Margin="16,12,16,12" Spacing="8">
+          <ItemsControl ItemsSource="{Binding Current.Chips}" IsVisible="{Binding Current.HasChips}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:AiContextChipViewModel">
+                <carbon:Tag Classes="ai-chip" Margin="0,0,4,4" Size="Medium" Type="Outline" IsDismissible="True"
+                            Icon="{Binding Icon}" Content="{Binding Label}" Dismissed="OnChipDismissed" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <TextBox Name="AskBox" Text="{Binding Current.Input}" AcceptsReturn="True" TextWrapping="Wrap"
+                   MinHeight="64" MaxHeight="200" PlaceholderText="{l:Tr ai.placeholder}" KeyDown="OnAskKeyDown" />
+          <TextBlock Classes="helper-text-01 secondary" HorizontalAlignment="Right" Text="{Binding Current.UsageText}"
+                     IsVisible="{Binding Current.UsageText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+            <Button Classes="ghost sm" carbon:ButtonAssist.Icon="server" Content="{l:Tr ai.attachHost}"
+                    Command="{Binding Current.AttachHostCommand}" />
+            <Button Grid.Column="1" Name="AttachTerminalButton" Classes="ghost sm" carbon:ButtonAssist.Icon="terminal"
+                    Content="{l:Tr ai.attachTerminal}" Command="{Binding Current.AttachTerminalCommand}" />
+            <Panel Grid.Column="3">
+              <Button Name="SendButton" Classes="primary sm" carbon:ButtonAssist.Icon="arrow-up" Content="{l:Tr ai.send}"
+                      Command="{Binding Current.SendCommand}" IsEnabled="{Binding Current.CanSend}"
+                      IsVisible="{Binding !Current.IsRunning}" />
+              <Button Name="StopButton" Classes="danger sm" carbon:ButtonAssist.Icon="stop" Content="{l:Tr ai.stop}"
+                      Command="{Binding Current.StopCommand}" IsVisible="{Binding Current.IsRunning}" />
+            </Panel>
+          </Grid>
+        </StackPanel>
+      </Border>
+
+      <Panel>
+        <!-- no provider yet -->
+        <StackPanel IsVisible="{Binding NeedsSetup}" VerticalAlignment="Center" Margin="32" Spacing="12">
+          <carbon:CarbonIcon Kind="machine-learning" Size="32" HorizontalAlignment="Center" />
+          <TextBlock Classes="heading-compact-01" HorizontalAlignment="Center" Text="{l:Tr ai.setup.title}" />
+          <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" TextAlignment="Center" Text="{l:Tr ai.setup.body}" />
+          <Button Classes="primary md" HorizontalAlignment="Center" Content="{l:Tr ai.setup.action}" Command="{Binding OpenSettingsCommand}" />
+        </StackPanel>
+
+        <!-- conversation -->
+        <ScrollViewer Name="ChatScroll" IsVisible="{Binding !NeedsSetup}">
+          <StackPanel Margin="16,8,16,16" Spacing="12">
+            <StackPanel IsVisible="{Binding !Current.HasMessages}" Margin="0,32,0,0" Spacing="8">
+              <TextBlock Classes="heading-compact-01" Text="{l:Tr ai.empty.title}" />
+              <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{l:Tr ai.empty.body}" />
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Current.Items}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Spacing="12" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.DataTemplates>
+                <DataTemplate DataType="vm:AiUserItemViewModel">
+                  <Border Background="{DynamicResource CarbonLayer02}" Padding="12,10" HorizontalAlignment="Right" MaxWidth="340">
+                    <StackPanel Spacing="4">
+                      <SelectableTextBlock Classes="body-01" TextWrapping="Wrap" Text="{Binding Text}" />
+                      <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{Binding ContextText}" IsVisible="{Binding HasContext}" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+                <DataTemplate DataType="vm:AiAssistantItemViewModel">
+                  <StackPanel Spacing="6">
+                    <Button Classes="ghost sm" HorizontalAlignment="Left" IsVisible="{Binding HasThinking}"
+                            carbon:ButtonAssist.Icon="{Binding IsThinkingExpanded, Converter={x:Static vm:AiConverters.Chevron}}"
+                            Content="{l:Tr ai.thinking}" Command="{Binding ToggleThinkingCommand}" />
+                    <SelectableTextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{Binding Thinking}"
+                                         IsVisible="{Binding IsThinkingExpanded}" Margin="12,0,0,0" />
+                    <SelectableTextBlock Classes="body-01" TextWrapping="Wrap" Text="{Binding Text}" IsVisible="{Binding HasText}" />
+                    <ProgressBar Classes="sm" IsIndeterminate="True" IsVisible="{Binding IsStreaming}" Width="64" HorizontalAlignment="Left" />
+                  </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="vm:AiToolCardViewModel">
+                  <Border Classes="ai-tool-card" Background="{DynamicResource CarbonLayer02}" BorderBrush="{DynamicResource CarbonBorderSubtle02}"
+                          BorderThickness="1">
+                    <StackPanel Spacing="8" Margin="12,10">
+                      <Grid ColumnDefinitions="Auto,*,Auto">
+                        <carbon:CarbonIcon Kind="terminal" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Grid.Column="1" Classes="heading-compact-01" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                   Text="{Binding Title}" />
+                        <carbon:Tag Grid.Column="2" Size="Small" Type="{Binding StateTag}" Content="{Binding StateText}" />
+                      </Grid>
+                      <TextBlock Classes="helper-text-01 secondary" Text="{Binding HostLabel}"
+                                 IsVisible="{Binding HostLabel, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                      <SelectableTextBlock Classes="code-01" TextWrapping="Wrap" Text="{Binding Summary}" MaxHeight="160" />
+                      <!-- inline approval (design §7.6) -->
+                      <StackPanel Spacing="8" IsVisible="{Binding IsAwaitingApproval}">
+                        <carbon:InlineNotification Kind="Warning" IsLowContrast="True" IsCloseButtonVisible="False"
+                                                   Title="{l:Tr approval.highRisk}" Subtitle="{Binding ApprovalReason}" IsVisible="{Binding IsHighRisk}" />
+                        <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{Binding ApprovalReason}" IsVisible="{Binding !IsHighRisk}" />
+                        <Grid ColumnDefinitions="*,8,*" RowDefinitions="Auto,8,Auto">
+                          <Button Grid.ColumnSpan="3" Classes="tertiary sm" HorizontalAlignment="Stretch" Content="{l:Tr ai.allowSession}"
+                                  Command="{Binding AllowForSessionCommand}" />
+                          <Button Grid.Row="2" Classes="secondary sm" HorizontalAlignment="Stretch" Content="{l:Tr approval.deny}" Command="{Binding DenyCommand}" />
+                          <Button Grid.Row="2" Grid.Column="2" Classes="danger sm" HorizontalAlignment="Stretch" Content="{l:Tr approval.allow}"
+                                  Command="{Binding AllowCommand}" IsVisible="{Binding IsHighRisk}" />
+                          <Button Grid.Row="2" Grid.Column="2" Classes="primary sm" HorizontalAlignment="Stretch" Content="{l:Tr approval.allow}"
+                                  Command="{Binding AllowCommand}" IsVisible="{Binding !IsHighRisk}" />
+                        </Grid>
+                      </StackPanel>
+                      <Button Classes="ghost sm" HorizontalAlignment="Left" IsVisible="{Binding HasOutput}"
+                              carbon:ButtonAssist.Icon="{Binding IsOutputExpanded, Converter={x:Static vm:AiConverters.Chevron}}"
+                              Content="{l:Tr ai.tool.output}" Command="{Binding ToggleOutputCommand}" />
+                      <Border Background="{DynamicResource CarbonField02}" IsVisible="{Binding IsOutputExpanded}" MaxHeight="280">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                          <SelectableTextBlock Classes="code-01" Margin="8" Text="{Binding Output}" />
+                        </ScrollViewer>
+                      </Border>
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+                <DataTemplate DataType="vm:AiNoticeItemViewModel">
+                  <carbon:InlineNotification IsLowContrast="True" IsCloseButtonVisible="False"
+                                             Kind="{Binding Kind, Converter={x:Static vm:AiConverters.NoticeKind}}" Subtitle="{Binding Text}" />
+                </DataTemplate>
+              </ItemsControl.DataTemplates>
+            </ItemsControl>
+          </StackPanel>
+        </ScrollViewer>
+
+        <!-- history overlay -->
+        <Border Background="{DynamicResource CarbonLayer01}" IsVisible="{Binding IsHistoryOpen}">
+          <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Classes="heading-compact-01" Margin="16,8" Text="{l:Tr ai.history}" />
+            <TextBlock DockPanel.Dock="Top" Classes="body-01 secondary" Margin="16,8" Text="{l:Tr ai.history.empty}"
+                       IsVisible="{Binding !Conversations.Count}" />
+            <ListBox Name="HistoryList" ItemsSource="{Binding Conversations}" Background="Transparent">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:AiConversationItemViewModel">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <Button Classes="ghost md" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                            Command="{Binding $parent[UserControl].((vm:AiAssistantViewModel)DataContext).OpenConversationCommand}"
+                            CommandParameter="{Binding}">
+                      <StackPanel>
+                        <TextBlock Classes="body-compact-01" Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Classes="helper-text-01 secondary" Text="{Binding When}" />
+                      </StackPanel>
+                    </Button>
+                    <Button Grid.Column="1" Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="trash-can" ToolTip.Tip="{l:Tr common.delete}"
+                            Command="{Binding $parent[UserControl].((vm:AiAssistantViewModel)DataContext).DeleteConversationCommand}"
+                            CommandParameter="{Binding}" />
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </DockPanel>
+        </Border>
+      </Panel>
+    </DockPanel>
+  </Border>
+</UserControl>

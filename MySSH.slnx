@@ -15,6 +15,7 @@
     <Project Path="src/MySSH.UI.Carbon/MySSH.UI.Carbon.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/MySSH.Ai.Tests/MySSH.Ai.Tests.csproj" />
     <Project Path="tests/MySSH.Core.Tests/MySSH.Core.Tests.csproj" />
     <Project Path="tests/MySSH.Desktop.IntegrationTests/MySSH.Desktop.IntegrationTests.csproj" />
     <Project Path="tests/MySSH.Desktop.Tests/MySSH.Desktop.Tests.csproj" />

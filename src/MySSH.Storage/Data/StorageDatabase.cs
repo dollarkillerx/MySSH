@@ -225,6 +225,32 @@ internal static class Migrations
         new(3, """
             ALTER TABLE hosts ADD COLUMN protocol INTEGER NOT NULL DEFAULT 0 CHECK (protocol IN (0, 1));
             """),
+
+        // P4: AI assistant conversations (design §7.7). Title and message payloads are vault-encrypted field blobs
+        // (AAD "ai_conversations:{id}:title" / "ai_messages:{name-based id of conversation+seq}:payload"). Not in backups.
+        new(4, """
+            CREATE TABLE ai_conversations (
+                id                  TEXT    NOT NULL PRIMARY KEY,
+                title               BLOB    NOT NULL,
+                provider_config_id  TEXT    NULL,
+                model               TEXT    NULL,
+                created_at          TEXT    NOT NULL,
+                updated_at          INTEGER NOT NULL,   -- UTC ticks: ordering and retention
+                input_tokens        INTEGER NOT NULL DEFAULT 0,
+                output_tokens       INTEGER NOT NULL DEFAULT 0
+            );
+            CREATE INDEX ix_ai_conversations_updated ON ai_conversations(updated_at);
+
+            -- Append-only history; seq is 0-based and contiguous per conversation.
+            CREATE TABLE ai_messages (
+                conversation_id TEXT    NOT NULL,
+                seq             INTEGER NOT NULL CHECK (seq >= 0),
+                role            INTEGER NOT NULL,
+                payload         BLOB    NOT NULL,
+                created_at      TEXT    NOT NULL,
+                PRIMARY KEY (conversation_id, seq)
+            ) WITHOUT ROWID;
+            """),
     ];
 }
 

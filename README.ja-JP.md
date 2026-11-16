@@ -8,7 +8,7 @@
   シンプルなオープンソース SSH クライアント - Termius の代替品
 </p>
 
-> **書き直し中**：MySSH は .NET 10 + Avalonia で再実装しています（IBM Carbon UI、ネイティブターミナル、MCP サーバー。AI アシスタントは開発中）。
+> **書き直し中**：MySSH は .NET 10 + Avalonia で再実装しています（IBM Carbon UI、ネイティブターミナル、MCP サーバー、内蔵 AI アシスタント）。
 > 旧 Tauri/Vue/Rust 版はタグ [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final) を参照してください。v0.0.4 までのリリースはこのバージョンです。
 > 設計：[docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md)
 
@@ -24,6 +24,7 @@
 - **踏み台ホスト** - 多段接続（ProxyJump）、ホップごとに別の認証情報。HTTP / SOCKS5 プロキシにも対応
 - **Windows リモートデスクトップ** - RDP ホストを OS のクライアント（mstsc、Windows App、Remmina / FreeRDP）で開きます。SSH 踏み台経由のトンネルにも対応し、パスワードは `.rdp` ファイルに書き込みません
 - **MCP サーバー** - Claude Code、Claude Desktop などの MCP クライアントからホストでコマンド実行、ターミナルの読み取り、SFTP を利用できます
+- **AI アシスタント** - 内蔵のチャットパネル（Claude、OpenAI、DeepSeek、ローカルの OpenAI 互換サーバー）。MCP と同じツールとホストごとのポリシーで調査し、承認はチャット内のカードで行います。ターミナルでは Ctrl+I でコマンドを提案。送信前に機密情報を伏せます
 - **ホストごとの AI ポリシー** - オフ / 読み取り専用 / 確認 / 信頼 / フルアクセス。高リスクなコマンド（`rm -rf`、`systemctl stop` など）は承認が必要で、すべての呼び出しが監査ログに残ります
 - **安全なストレージ** - SQLite + AES-256-GCM のフィールド暗号化。マスターキーは OS のキーストア、または Argon2id マスターパスワードで保護
 - **バックアップ** - パスワード保護付きのエクスポート / インポート。旧バージョン（Tauri）からホストをインポート可能
@@ -80,7 +81,7 @@ dotnet run --project src/MySSH.Desktop
 - **ターミナル**：XTerm.NET VT エンジン上のネイティブ Avalonia コントロール
 - **SSH/SFTP**：SSH.NET
 - **ストレージ**：SQLite、AES-256-GCM のフィールド暗号化。マスターキーは OS のキーストア、または Argon2id マスターパスワードで保護
-- **連携**：MCP サーバー（ModelContextProtocol C# SDK：Streamable HTTP + ローカルソケット、`myssh-mcp` stdio ブリッジ）、内蔵 AI アシスタント（開発中）
+- **連携**：MCP サーバー（ModelContextProtocol C# SDK：Streamable HTTP + ローカルソケット、`myssh-mcp` stdio ブリッジ）、内蔵 AI アシスタント（自前の Claude HTTP/SSE クライアント + OpenAI SDK）
 
 ## ライセンス
 

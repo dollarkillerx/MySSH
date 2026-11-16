@@ -46,8 +46,8 @@ public class SchemaV2MigrationTests
         var (hostId, jumpId) = await CreateV1DatabaseAsync(dir);
 
         await using var s = await T.OpenUnlockedAsync(dir);
-        Assert.Equal(3, s.SchemaVersion);
-        Assert.Equal(3L, await T.ScalarAsync(s, "SELECT COUNT(*) FROM schema_version;"));
+        Assert.Equal(4, s.SchemaVersion);
+        Assert.Equal(4L, await T.ScalarAsync(s, "SELECT COUNT(*) FROM schema_version;"));
         var h = await s.Hosts.GetAsync(hostId, T.Ct);
         Assert.NotNull(h);
         Assert.Equal(("web", "h.example", 2222, "deploy", AiPolicy.Ask, "n"), (h.Label, h.Hostname, h.Port, h.Username, h.AiPolicy, h.Notes));

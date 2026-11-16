@@ -26,6 +26,7 @@
     <ProjectReference Include="../MySSH.UI.Carbon/MySSH.UI.Carbon.csproj" />
     <ProjectReference Include="../MySSH.Terminal/MySSH.Terminal.csproj" />
     <ProjectReference Include="../MySSH.Tools/MySSH.Tools.csproj" />
+    <ProjectReference Include="../MySSH.Ai/MySSH.Ai.csproj" />
     <ProjectReference Include="../MySSH.Mcp/MySSH.Mcp.csproj" />
     <!-- Built, not referenced: the myssh-mcp stdio bridge sits next to the app (McpClientSetup.DefaultBridgePath). -->
     <ProjectReference Include="../MySSH.McpBridge/MySSH.McpBridge.csproj" ReferenceOutputAssembly="false" />

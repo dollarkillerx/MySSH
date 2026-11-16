@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using MySSH.Desktop.Localization;
@@ -33,6 +35,8 @@ public sealed partial class TerminalSessionView : UserControl, ITerminalScreen
             e.Defer(ui.ConfirmAsync(Loc.Instance["paste.title"], Loc.Instance.Format("paste.body", ("lines", lines)), Loc.Instance["paste.action"], danger: false));
         };
         AttachedToVisualTree += (_, _) => Dispatcher.UIThread.Post(StartIfReady, DispatcherPriority.Background);
+        AddHandler(KeyDownEvent, OnTunnelKeyDown, Avalonia.Interactivity.RoutingStrategies.Tunnel);
+        TermMenu.Opening += OnMenuOpening;
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -52,6 +56,62 @@ public sealed partial class TerminalSessionView : UserControl, ITerminalScreen
     }
 
     string ITerminalScreen.GetRecentText(int maxLines) => Term.GetRecentText(maxLines);
+    string? ITerminalScreen.GetSelectionText() => Term.HasSelection ? Term.GetSelectionText() : null;
+
+    // ---------------------------------------------------------------- AI (Ctrl+I, ask about a selection)
+
+    static KeyModifiers ShortcutModifier => OperatingSystem.IsMacOS() ? KeyModifiers.Meta : KeyModifiers.Control;
+
+    void OnTunnelKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.I && e.KeyModifiers == ShortcutModifier && _vm is { Ai: not null })
+        {
+            e.Handled = true;
+            _vm.OpenInlineCommand.Execute(null);
+        }
+    }
+
+    void OnInlineKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (_vm is null) return;
+        switch (e.Key)
+        {
+            case Key.Enter:
+                e.Handled = true;
+                _vm.AskInlineCommand.Execute(null);
+                break;
+            case Key.Tab when _vm.HasInlineSuggestion:
+                e.Handled = true;
+                _vm.InsertInlineCommand.Execute(null);
+                Term.FocusTerminal();
+                break;
+            case Key.Escape:
+                e.Handled = true;
+                _vm.CloseInlineCommand.Execute(null);
+                Term.FocusTerminal();
+                break;
+        }
+    }
+
+    void OnMenuOpening(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        var hasSelection = Term.HasSelection;
+        MenuCopy.IsEnabled = hasSelection;
+        MenuExplain.IsEnabled = MenuAnalyze.IsEnabled = hasSelection && _vm?.Ai is not null;
+        MenuInline.IsEnabled = _vm?.Ai is not null;
+    }
+
+    async void OnCopySelection(object? sender, RoutedEventArgs e) => await Term.CopySelectionAsync();
+
+    void OnAskExplain(object? sender, RoutedEventArgs e) => AskAboutSelection(analyzeError: false);
+
+    void OnAskAnalyze(object? sender, RoutedEventArgs e) => AskAboutSelection(analyzeError: true);
+
+    async void AskAboutSelection(bool analyzeError)
+    {
+        if (_vm?.Ai is not { } ai || Term.GetSelectionText() is not { Length: > 0 } text) return;
+        await ai.AskAboutSelectionAsync(_vm, text, analyzeError);
+    }
     bool ITerminalScreen.TypeText(string text, bool pressEnter) => Term.TypeText(text, pressEnter);
 
     void StartIfReady()

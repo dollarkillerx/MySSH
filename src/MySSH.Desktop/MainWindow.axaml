@@ -19,6 +19,8 @@
                           IsMenuOpen="{Binding #Nav.IsExpanded, Mode=TwoWay}">
         <carbon:ShellHeader.GlobalActions>
           <StackPanel Orientation="Horizontal">
+            <Button Name="AiToggle" Classes="header-action" carbon:ButtonAssist.Icon="chat" ToolTip.Tip="{l:Tr ai.toggle}"
+                    Command="{Binding Assistant.ToggleCommand, FallbackValue={x:Null}}" IsVisible="{Binding Assistant, Converter={x:Static ObjectConverters.IsNotNull}}" />
             <Button Name="ThemeToggle" Classes="header-action" carbon:ButtonAssist.Icon="asleep" />
             <Button Name="LanguageButton" Classes="header-action" carbon:ButtonAssist.Icon="translate">
               <Button.Flyout>
@@ -34,6 +36,10 @@
       </carbon:ShellHeader>
 
       <carbon:SideNavRail Name="Nav" DockPanel.Dock="Left" />
+
+      <!-- AI assistant (Ctrl+Shift+A) -->
+      <v:AiAssistantPanel Name="AiPanel" DockPanel.Dock="Right" DataContext="{Binding Assistant}"
+                          IsVisible="{Binding IsOpen, FallbackValue=False}" />
 
       <Grid RowDefinitions="Auto,*">
         <!-- inline notifications (import results, storage problems) -->

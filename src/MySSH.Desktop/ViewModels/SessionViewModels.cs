@@ -83,6 +83,18 @@ public interface ITerminalScreen
 {
     string GetRecentText(int maxLines);
     bool TypeText(string text, bool pressEnter);
+    /// <summary>The mouse selection, or null.</summary>
+    string? GetSelectionText();
+}
+
+/// <summary>What the AI assistant offers inside a terminal tab (implemented by the AI panel).</summary>
+public interface ITerminalAiActions
+{
+    /// <summary>Ctrl+I: one command for <paramref name="request"/>; never executed.</summary>
+    Task<MySSH.Ai.AiCommandSuggester.Suggestion> SuggestCommandAsync(TerminalSessionViewModel terminal, string request, CancellationToken ct);
+
+    /// <summary>"Explain this output" / "Analyze this error" on a selection: opens the panel and asks.</summary>
+    Task AskAboutSelectionAsync(TerminalSessionViewModel terminal, string selection, bool analyzeError);
 }
 
 /// <summary>Interactive shell tab. The view attaches <see cref="Backend"/> to a TerminalView.</summary>
@@ -97,6 +109,68 @@ public sealed partial class TerminalSessionViewModel(ISshConnector connector, IU
     [ObservableProperty] public partial ITerminalBackend? Backend { get; set; }
     /// <summary>Set by the view while a TerminalView shows this session (UI thread only).</summary>
     public ITerminalScreen? Screen { get; set; }
+
+    /// <summary>Set by the workspace when the AI assistant is available.</summary>
+    public ITerminalAiActions? Ai { get; set; }
+
+    // ---- Ctrl+I inline command suggestion (design §7.5): Tab inserts the command, nothing is run.
+    CancellationTokenSource? _inlineCts;
+    [ObservableProperty] public partial bool IsInlineOpen { get; set; }
+    [ObservableProperty] public partial string InlineRequest { get; set; } = "";
+    [ObservableProperty] public partial bool IsInlineBusy { get; set; }
+    [ObservableProperty] public partial string? InlineSuggestion { get; set; }
+    [ObservableProperty] public partial string? InlineError { get; set; }
+    public bool HasInlineSuggestion => !string.IsNullOrEmpty(InlineSuggestion);
+    partial void OnInlineSuggestionChanged(string? value) => OnPropertyChanged(nameof(HasInlineSuggestion));
+
+    [RelayCommand]
+    void OpenInline()
+    {
+        if (Ai is null) return;
+        InlineError = null;
+        IsInlineOpen = true;
+    }
+
+    [RelayCommand]
+    void CloseInline()
+    {
+        _inlineCts?.Cancel();
+        IsInlineOpen = false;
+        IsInlineBusy = false;
+        InlineSuggestion = null;
+        InlineError = null;
+        InlineRequest = "";
+    }
+
+    [RelayCommand]
+    async Task AskInlineAsync()
+    {
+        if (Ai is not { } ai || InlineRequest.Trim().Length == 0 || IsInlineBusy) return;
+        _inlineCts?.Cancel();
+        using var cts = _inlineCts = new CancellationTokenSource();
+        IsInlineBusy = true;
+        InlineError = null;
+        InlineSuggestion = null;
+        try
+        {
+            var r = await ai.SuggestCommandAsync(this, InlineRequest.Trim(), cts.Token);
+            if (cts.IsCancellationRequested) return;
+            InlineSuggestion = r.Command;
+            InlineError = r.Error ?? (r.Command is null ? Loc.Instance["ai.inline.none"] : null);
+        }
+        catch (OperationCanceledException) when (cts.IsCancellationRequested) { }
+        finally
+        {
+            if (ReferenceEquals(_inlineCts, cts)) { _inlineCts = null; IsInlineBusy = false; }
+        }
+    }
+
+    /// <summary>Types the suggestion on the prompt line without Enter; the user reviews and runs it.</summary>
+    [RelayCommand]
+    void InsertInline()
+    {
+        if (InlineSuggestion is { Length: > 0 } cmd && Screen?.TypeText(cmd, pressEnter: false) == true) CloseInline();
+    }
 
     /// <summary>Remote working directory reported by the shell (OSC 7), when it does; SFTP opens there.</summary>
     public string? WorkingDirectory { get; private set; }
@@ -496,6 +570,17 @@ public sealed partial class SessionsWorkspaceViewModel(Func<ISshConnector?> conn
     /// <summary>Needed for RDP tabs (host / identity lookup, client launcher); set after unlock.</summary>
     public RdpServices? Rdp { get; set; }
 
+    /// <summary>AI actions for terminal tabs (Ctrl+I, ask about a selection); null when the assistant is not set up.</summary>
+    public ITerminalAiActions? TerminalAi
+    {
+        get;
+        set
+        {
+            field = value;
+            foreach (var t in Tabs.OfType<TerminalSessionViewModel>()) t.Ai = value;
+        }
+    }
+
     public ObservableCollection<SessionTabViewModel> Tabs { get; } = [];
     [ObservableProperty] public partial SessionTabViewModel? SelectedTab { get; set; }
     public bool IsEmpty => Tabs.Count == 0;
@@ -523,7 +608,11 @@ public sealed partial class SessionsWorkspaceViewModel(Func<ISshConnector?> conn
         OnPropertyChanged(nameof(HasTabs));
         if (tab is SftpSessionViewModel sftp) _ = sftp.ConnectAsync();
         if (tab is RdpSessionViewModel rdp) _ = rdp.ConnectAsync();
-        if (tab is TerminalSessionViewModel term) term.OpenSftpRequested += t => OpenSftpFor(t);
+        if (tab is TerminalSessionViewModel term)
+        {
+            term.OpenSftpRequested += t => OpenSftpFor(t);
+            term.Ai = TerminalAi;
+        }
         return tab;
     }
 

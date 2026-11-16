@@ -5,6 +5,68 @@
   <resheader name="version"><value>2.0</value></resheader>
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ai.allowSession" xml:space="preserve"><value>この会話では同じ操作を許可</value></data>
+  <data name="ai.ask.analyzeError" xml:space="preserve"><value>このエラーの意味と直し方を教えてください。</value></data>
+  <data name="ai.ask.explain" xml:space="preserve"><value>この出力を説明してください。</value></data>
+  <data name="ai.attachHost" xml:space="preserve"><value>ホスト</value></data>
+  <data name="ai.attachTerminal" xml:space="preserve"><value>ターミナル</value></data>
+  <data name="ai.chat.unreadable" xml:space="preserve"><value>この会話はもう読み取れません（別のボールトキーで保存されています）。</value></data>
+  <data name="ai.chip.selection" xml:space="preserve"><value>選択範囲 · {title}</value></data>
+  <data name="ai.chip.terminal" xml:space="preserve"><value>{title} · 直近 {lines} 行</value></data>
+  <data name="ai.context.noHost" xml:space="preserve"><value>選択中のタブのホストはもう存在しません。</value></data>
+  <data name="ai.context.noTerminal" xml:space="preserve"><value>出力を添付するには、まずターミナルのタブを開いてください。</value></data>
+  <data name="ai.dataNotice.accept" xml:space="preserve"><value>続ける</value></data>
+  <data name="ai.dataNotice.body" xml:space="preserve"><value>送信する内容（質問、添付したコンテキスト、ツールの結果）は {provider} に送られ、そのデータポリシーの対象になります。マスキングがオンのときは、秘密鍵やトークンなどは送信前に伏せられます。</value></data>
+  <data name="ai.dataNotice.title" xml:space="preserve"><value>{provider} に送信しますか？</value></data>
+  <data name="ai.deleteChat.body" xml:space="preserve"><value>「{title}」をこのコンピューターから削除します。</value></data>
+  <data name="ai.deleteChat.title" xml:space="preserve"><value>会話を削除しますか？</value></data>
+  <data name="ai.empty.body" xml:space="preserve"><value>サービスが起動しない理由、ログの意味、直し方などを質問できます。ターミナルを添付すると画面の内容も送られます。コマンド実行やファイル変更は各ホストの AI ポリシーに従い、承認を求めることがあります。</value></data>
+  <data name="ai.empty.title" xml:space="preserve"><value>何をお手伝いしましょうか？</value></data>
+  <data name="ai.error.Authentication" xml:space="preserve"><value>プロバイダーが API キーを拒否しました。AI 設定で確認してください。（{detail}）</value></data>
+  <data name="ai.error.InvalidRequest" xml:space="preserve"><value>プロバイダーがリクエストを拒否しました：{detail}</value></data>
+  <data name="ai.error.MalformedResponse" xml:space="preserve"><value>プロバイダーの応答を MySSH が読み取れませんでした：{detail}</value></data>
+  <data name="ai.error.Network" xml:space="preserve"><value>プロバイダーに接続できません：{detail}</value></data>
+  <data name="ai.error.None" xml:space="preserve"><value>{detail}</value></data>
+  <data name="ai.error.Other" xml:space="preserve"><value>プロバイダーがエラーを返しました：{detail}</value></data>
+  <data name="ai.error.Overloaded" xml:space="preserve"><value>プロバイダーが混雑しています。しばらくしてから再試行してください。（{detail}）</value></data>
+  <data name="ai.error.RateLimited" xml:space="preserve"><value>プロバイダーのレート制限に達しました。少し待ってから再試行してください。（{detail}）</value></data>
+  <data name="ai.error.unexpected" xml:space="preserve"><value>問題が発生しました：{error}</value></data>
+  <data name="ai.fallback" xml:space="preserve"><value>{from} がこのリクエストを断ったため、{to} が代わりに回答しました。</value></data>
+  <data name="ai.history" xml:space="preserve"><value>会話</value></data>
+  <data name="ai.history.empty" xml:space="preserve"><value>保存された会話はまだありません。</value></data>
+  <data name="ai.inline.declined" xml:space="preserve"><value>送信しませんでした。</value></data>
+  <data name="ai.inline.hint" xml:space="preserve"><value>Enter：提案 · Tab：プロンプトに入力（実行しない）· Esc：閉じる</value></data>
+  <data name="ai.inline.none" xml:space="preserve"><value>該当するコマンドがありません。言い方を変えてみてください。</value></data>
+  <data name="ai.inline.placeholder" xml:space="preserve"><value>やりたいことを入力（例：1 GB より大きいファイルを探す）</value></data>
+  <data name="ai.maxTokens" xml:space="preserve"><value>回答が長さの上限に達したため途中で切れました。</value></data>
+  <data name="ai.menu.analyzeError" xml:space="preserve"><value>AI でこのエラーを分析</value></data>
+  <data name="ai.menu.explain" xml:space="preserve"><value>AI で説明</value></data>
+  <data name="ai.menu.inline" xml:space="preserve"><value>コマンドを提案…（Ctrl+I）</value></data>
+  <data name="ai.newChat" xml:space="preserve"><value>新しい会話</value></data>
+  <data name="ai.noModel" xml:space="preserve"><value>先に AI 設定で {provider} のモデルを選んでください。</value></data>
+  <data name="ai.noProvider" xml:space="preserve"><value>AI プロバイダーがまだ設定されていません。AI 設定で追加してください。</value></data>
+  <data name="ai.placeholder" xml:space="preserve"><value>このサーバーについて質問…（Enter で送信、Shift+Enter で改行）</value></data>
+  <data name="ai.redacted" xml:space="preserve"><value>送信前に {count} 件の機密情報を伏せました。</value></data>
+  <data name="ai.refusal" xml:space="preserve"><value>モデルがこのリクエストを断りました。{detail}</value></data>
+  <data name="ai.send" xml:space="preserve"><value>送信</value></data>
+  <data name="ai.settings" xml:space="preserve"><value>AI 設定</value></data>
+  <data name="ai.setup.action" xml:space="preserve"><value>プロバイダーを追加</value></data>
+  <data name="ai.setup.body" xml:space="preserve"><value>Claude、OpenAI、DeepSeek、または Ollama などのローカルの OpenAI 互換サーバーを使えます。API キーはこのコンピューターに暗号化して保存されます。</value></data>
+  <data name="ai.setup.title" xml:space="preserve"><value>AI プロバイダーを設定</value></data>
+  <data name="ai.stepLimit" xml:space="preserve"><value>{steps} ステップで停止しました。続けるにはもう一度質問してください。</value></data>
+  <data name="ai.stop" xml:space="preserve"><value>停止</value></data>
+  <data name="ai.stopped" xml:space="preserve"><value>停止しました。</value></data>
+  <data name="ai.thinking" xml:space="preserve"><value>思考過程</value></data>
+  <data name="ai.title" xml:space="preserve"><value>AI アシスタント</value></data>
+  <data name="ai.toggle" xml:space="preserve"><value>AI アシスタント（Ctrl+Shift+A）</value></data>
+  <data name="ai.tool.awaiting" xml:space="preserve"><value>承認待ち</value></data>
+  <data name="ai.tool.denied" xml:space="preserve"><value>拒否</value></data>
+  <data name="ai.tool.done" xml:space="preserve"><value>完了</value></data>
+  <data name="ai.tool.failed" xml:space="preserve"><value>失敗</value></data>
+  <data name="ai.tool.output" xml:space="preserve"><value>出力</value></data>
+  <data name="ai.tool.running" xml:space="preserve"><value>実行中</value></data>
+  <data name="ai.untitled" xml:space="preserve"><value>無題の会話</value></data>
+  <data name="ai.usage" xml:space="preserve"><value>入力 {input} · 出力 {output} トークン</value></data>
   <data name="aiPolicy.Ask" xml:space="preserve"><value>確認</value></data>
   <data name="aiPolicy.Ask.help" xml:space="preserve"><value>AI は読み取れますが、コマンド実行や書き込みは毎回確認します。</value></data>
   <data name="aiPolicy.FullAccess" xml:space="preserve"><value>フルアクセス</value></data>
@@ -17,6 +79,107 @@
   <data name="aiPolicy.ReadOnly.help" xml:space="preserve"><value>AI はファイルを読み取り、許可リストのコマンドだけ実行できます。</value></data>
   <data name="aiPolicy.Trusted" xml:space="preserve"><value>信頼</value></data>
   <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI はコマンドの実行やファイルの変更を確認なしで行います。高リスクのコマンド（rm、stop、reboot など）、上書き、削除、ターミナルでの Enter は引き続き確認します。権限の低い ID を推奨します。</value></data>
+  <data name="aiSettings.add" xml:space="preserve"><value>プロバイダーを追加</value></data>
+  <data name="aiSettings.attachHost" xml:space="preserve"><value>現在のホストを既定で添付</value></data>
+  <data name="aiSettings.attachHostHelp" xml:space="preserve"><value>新しい質問にホストの名前、アドレス、ユーザー、現在のディレクトリを含めます（パスワードや鍵は含みません）。ターミナルのテキストは追加したときだけ添付されます。</value></data>
+  <data name="aiSettings.bearer" xml:space="preserve"><value>キーを Bearer トークンとして送信</value></data>
+  <data name="aiSettings.bearerHelp" xml:space="preserve"><value>「x-api-key」ではなく「Authorization: Bearer」を求めるゲートウェイ向けです。</value></data>
+  <data name="aiSettings.behaviour" xml:space="preserve"><value>動作</value></data>
+  <data name="aiSettings.caps" xml:space="preserve"><value>機能</value></data>
+  <data name="aiSettings.caps.streaming" xml:space="preserve"><value>ストリーミングに対応</value></data>
+  <data name="aiSettings.caps.tools" xml:space="preserve"><value>ツール呼び出しに対応</value></data>
+  <data name="aiSettings.capsHelp" xml:space="preserve"><value>「接続をテスト」で自動検出されます。サーバーがツール呼び出しやストリーミングを拒否する場合はオフにしてください。</value></data>
+  <data name="aiSettings.claude" xml:space="preserve"><value>Claude のオプション</value></data>
+  <data name="aiSettings.col.baseUrl" xml:space="preserve"><value>Base URL</value></data>
+  <data name="aiSettings.col.default" xml:space="preserve"><value>既定</value></data>
+  <data name="aiSettings.col.model" xml:space="preserve"><value>モデル</value></data>
+  <data name="aiSettings.col.name" xml:space="preserve"><value>名前</value></data>
+  <data name="aiSettings.col.status" xml:space="preserve"><value>状態</value></data>
+  <data name="aiSettings.default" xml:space="preserve"><value>既定</value></data>
+  <data name="aiSettings.delete.body" xml:space="preserve"><value>「{name}」と保存されている API キーを削除しますか？このプロバイダーを使った会話は残りますが、別のプロバイダーが必要になります。</value></data>
+  <data name="aiSettings.delete.title" xml:space="preserve"><value>プロバイダーを削除</value></data>
+  <data name="aiSettings.eager" xml:space="preserve"><value>ツール入力の即時ストリーミング</value></data>
+  <data name="aiSettings.eagerHelp" xml:space="preserve"><value>ツールの引数を生成しながら表示します。一部のゲートウェイでは使えません。</value></data>
+  <data name="aiSettings.editor.addTitle" xml:space="preserve"><value>{name} を追加</value></data>
+  <data name="aiSettings.editor.baseUrl" xml:space="preserve"><value>Base URL</value></data>
+  <data name="aiSettings.editor.baseUrlHelp" xml:space="preserve"><value>入力したとおりに使用します。環境変数は参照しません。</value></data>
+  <data name="aiSettings.editor.connection" xml:space="preserve"><value>接続</value></data>
+  <data name="aiSettings.editor.editTitle" xml:space="preserve"><value>{name} を編集</value></data>
+  <data name="aiSettings.editor.model" xml:space="preserve"><value>モデル</value></data>
+  <data name="aiSettings.editor.modelId" xml:space="preserve"><value>モデル ID</value></data>
+  <data name="aiSettings.editor.modelPlaceholder" xml:space="preserve"><value>モデル ID を入力するか一覧を取得</value></data>
+  <data name="aiSettings.editor.name" xml:space="preserve"><value>名前</value></data>
+  <data name="aiSettings.editor.protocol" xml:space="preserve"><value>プロトコル</value></data>
+  <data name="aiSettings.effort" xml:space="preserve"><value>Effort</value></data>
+  <data name="aiSettings.effort.high" xml:space="preserve"><value>高</value></data>
+  <data name="aiSettings.effort.low" xml:space="preserve"><value>低</value></data>
+  <data name="aiSettings.effort.medium" xml:space="preserve"><value>中</value></data>
+  <data name="aiSettings.empty" xml:space="preserve"><value>AI プロバイダーがまだありません</value></data>
+  <data name="aiSettings.emptyHint" xml:space="preserve"><value>MySSH では Claude、OpenAI、DeepSeek、または Ollama などのローカルの OpenAI 互換サーバーを利用できます。「プロバイダーを追加」から設定してください。</value></data>
+  <data name="aiSettings.fallback" xml:space="preserve"><value>サーバー側フォールバック</value></data>
+  <data name="aiSettings.fallbackHelp" xml:space="preserve"><value>モデルがリクエストを断った場合、失敗にせず Claude が別のモデルに引き継ぎます。</value></data>
+  <data name="aiSettings.headers" xml:space="preserve"><value>追加のリクエスト ヘッダー</value></data>
+  <data name="aiSettings.headersHelp" xml:space="preserve"><value>1 行に 1 つ「名前: 値」の形式で入力します。API キーは専用の欄があるため、Authorization と x-api-key はここでは指定できません。</value></data>
+  <data name="aiSettings.history" xml:space="preserve"><value>会話履歴</value></data>
+  <data name="aiSettings.history.deleteAll" xml:space="preserve"><value>すべての会話を削除</value></data>
+  <data name="aiSettings.history.deleteAllConfirm" xml:space="preserve"><value>保存されているすべての AI 会話を削除しますか？元に戻せません。</value></data>
+  <data name="aiSettings.history.deleted" xml:space="preserve"><value>{count} 件の会話を削除しました。</value></data>
+  <data name="aiSettings.key" xml:space="preserve"><value>API キー</value></data>
+  <data name="aiSettings.key.help" xml:space="preserve"><value>暗号化されて保管庫に保存されます。</value></data>
+  <data name="aiSettings.key.optionalHelp" xml:space="preserve"><value>省略可：Ollama などのローカル サーバーではキーは不要です。</value></data>
+  <data name="aiSettings.key.placeholder" xml:space="preserve"><value>API キーを貼り付け</value></data>
+  <data name="aiSettings.key.remove" xml:space="preserve"><value>キーを削除</value></data>
+  <data name="aiSettings.key.removedHelp" xml:space="preserve"><value>保存すると、保存済みのキーは削除されます。</value></data>
+  <data name="aiSettings.key.savedHelp" xml:space="preserve"><value>キーは保存済みです。空のままにすると保存済みのキーを使います。</value></data>
+  <data name="aiSettings.key.show" xml:space="preserve"><value>保存済みのキーを表示</value></data>
+  <data name="aiSettings.key.unreadable" xml:space="preserve"><value>保存済みのキーを読み取れません: {error}</value></data>
+  <data name="aiSettings.maxSteps" xml:space="preserve"><value>1 回の回答の最大ステップ数</value></data>
+  <data name="aiSettings.maxStepsHelp" xml:space="preserve"><value>1 回の回答でのツール呼び出しは 1～100 回。</value></data>
+  <data name="aiSettings.models.failed" xml:space="preserve"><value>モデル一覧を取得できません: {error}</value></data>
+  <data name="aiSettings.models.fetch" xml:space="preserve"><value>モデル一覧を取得</value></data>
+  <data name="aiSettings.models.found" xml:space="preserve"><value>{count} 個のモデルが見つかりました。</value></data>
+  <data name="aiSettings.models.none" xml:space="preserve"><value>プロバイダーからモデルが返されませんでした。</value></data>
+  <data name="aiSettings.no" xml:space="preserve"><value>非対応</value></data>
+  <data name="aiSettings.off" xml:space="preserve"><value>オフ</value></data>
+  <data name="aiSettings.on" xml:space="preserve"><value>オン</value></data>
+  <data name="aiSettings.preset.custom" xml:space="preserve"><value>カスタム プロバイダー</value></data>
+  <data name="aiSettings.preset.customMenu" xml:space="preserve"><value>カスタム（OpenAI 互換または Anthropic 互換）…</value></data>
+  <data name="aiSettings.protocol.anthropic" xml:space="preserve"><value>Anthropic 互換</value></data>
+  <data name="aiSettings.protocol.openai" xml:space="preserve"><value>OpenAI 互換</value></data>
+  <data name="aiSettings.providers" xml:space="preserve"><value>プロバイダー</value></data>
+  <data name="aiSettings.providersHelp" xml:space="preserve"><value>アシスタントが利用する AI サービスです。API キーは暗号化されて保管庫に保存されます。</value></data>
+  <data name="aiSettings.redact" xml:space="preserve"><value>送信前に機密情報を伏せる</value></data>
+  <data name="aiSettings.redactHelp" xml:space="preserve"><value>ターミナルのテキストやコマンド出力に含まれるパスワード、鍵、トークンは、プロバイダーに送信する前にプレースホルダーに置き換えられます。</value></data>
+  <data name="aiSettings.retention" xml:space="preserve"><value>会話を自動削除</value></data>
+  <data name="aiSettings.retention.days" xml:space="preserve"><value>{days} 日間操作がなければ削除</value></data>
+  <data name="aiSettings.retention.off" xml:space="preserve"><value>しない</value></data>
+  <data name="aiSettings.saveHistory" xml:space="preserve"><value>会話を保存</value></data>
+  <data name="aiSettings.saveHistoryHelp" xml:space="preserve"><value>会話はこのコンピューターに暗号化して保存されます。</value></data>
+  <data name="aiSettings.setDefault" xml:space="preserve"><value>既定にする</value></data>
+  <data name="aiSettings.status.failed" xml:space="preserve"><value>前回のテストに失敗</value></data>
+  <data name="aiSettings.status.unverified" xml:space="preserve"><value>未確認</value></data>
+  <data name="aiSettings.status.verified" xml:space="preserve"><value>確認済み</value></data>
+  <data name="aiSettings.tab" xml:space="preserve"><value>AI アシスタント</value></data>
+  <data name="aiSettings.terminalLines" xml:space="preserve"><value>添付するターミナルの行数</value></data>
+  <data name="aiSettings.terminalLinesHelp" xml:space="preserve"><value>ターミナル末尾から 1～2000 行。</value></data>
+  <data name="aiSettings.test" xml:space="preserve"><value>接続をテスト</value></data>
+  <data name="aiSettings.test.failed" xml:space="preserve"><value>接続に失敗しました</value></data>
+  <data name="aiSettings.test.failedUnknown" xml:space="preserve"><value>プロバイダーがテスト リクエストを受け付けませんでした。</value></data>
+  <data name="aiSettings.test.ok" xml:space="preserve"><value>利用可能なモデル {count} 個。ツール呼び出し: {tools}。ストリーミング: {streaming}。</value></data>
+  <data name="aiSettings.test.okTitle" xml:space="preserve"><value>接続できました</value></data>
+  <data name="aiSettings.test.running" xml:space="preserve"><value>接続をテストしています…</value></data>
+  <data name="aiSettings.thinking" xml:space="preserve"><value>思考の表示</value></data>
+  <data name="aiSettings.thinking.omitted" xml:space="preserve"><value>表示しない</value></data>
+  <data name="aiSettings.thinking.summarized" xml:space="preserve"><value>要約</value></data>
+  <data name="aiSettings.thinking.updates" xml:space="preserve"><value>進捗メモのみ</value></data>
+  <data name="aiSettings.validation.headerDuplicate" xml:space="preserve"><value>{name} が複数回指定されています。</value></data>
+  <data name="aiSettings.validation.headerKey" xml:space="preserve"><value>{name} はここでは指定できません。API キーの欄を使ってください。</value></data>
+  <data name="aiSettings.validation.headerLine" xml:space="preserve"><value>{line} 行目が「名前: 値」の形式になっていません。</value></data>
+  <data name="aiSettings.validation.key" xml:space="preserve"><value>API キーを入力してください。</value></data>
+  <data name="aiSettings.validation.model" xml:space="preserve"><value>モデルを選択または入力してください。</value></data>
+  <data name="aiSettings.validation.range" xml:space="preserve"><value>{min}～{max} の整数を入力してください。</value></data>
+  <data name="aiSettings.validation.url" xml:space="preserve"><value>http:// または https:// で始まる完全な URL を入力してください。</value></data>
+  <data name="aiSettings.yes" xml:space="preserve"><value>対応</value></data>
   <data name="app.name" xml:space="preserve"><value>MySSH</value></data>
   <data name="app.openSftp" xml:space="preserve"><value>SFTPを開く</value></data>
   <data name="app.openTerminal" xml:space="preserve"><value>ターミナルを開く</value></data>

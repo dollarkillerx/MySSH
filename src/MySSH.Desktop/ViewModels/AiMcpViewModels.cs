@@ -13,11 +13,14 @@ public sealed partial class AiMcpPageViewModel(McpSettingsViewModel mcp, AuditLo
 {
     public McpSettingsViewModel Mcp { get; } = mcp;
     public AuditLogViewModel Audit { get; } = audit;
+    /// <summary>"AI assistant" tab (index 2): providers and behaviour. Set after unlock.</summary>
+    [ObservableProperty] public partial AiSettingsViewModel? Assistant { get; set; }
     [ObservableProperty] public partial int SelectedTab { get; set; }
 
     partial void OnSelectedTabChanged(int value)
     {
         if (value == 1) _ = Audit.LoadAsync();
+        else if (value == 2 && Assistant is { } assistant) _ = assistant.LoadAsync();
     }
 
     public async Task LoadAsync(CancellationToken ct = default)

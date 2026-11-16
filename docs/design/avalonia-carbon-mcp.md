@@ -4,7 +4,7 @@
 > 范围：用 .NET + Avalonia 重写桌面端（Windows / macOS / Linux），**彻底删除** Tauri + Vue + Rust 实现
 
 **v0.3 的变更（P0 结论）**
-- 依赖版本锁定：Avalonia 12.1.6、XTerm.NET 3.0.3、SSH.NET 2026.0.1、ModelContextProtocol 2.4.0、Anthropic 13.8.0、OpenAI 2.15.0。
+- 依赖版本锁定：Avalonia 12.1.6、XTerm.NET 3.0.3、SSH.NET 2026.0.1、ModelContextProtocol 2.4.0、OpenAI 2.15.0（Claude 不用 SDK，见 §7.2）。
 - **从第一天起按 NativeAOT 设计**：JSON 全部使用 source-gen，绑定使用 compiled bindings（§1）。
 - 终端 VT 引擎确定为 XTerm.NET，不再保留自研解析器兜底方案；补充重绘性能目标（§4）。
 - SSH 层补充：`IHopTransport`、断线心跳、背压控制、SFTP 符号链接 bug 的规避方式（§8）。
@@ -49,7 +49,7 @@
 | 存储 | SQLite（Microsoft.Data.Sqlite） | |
 | 加密 | `AesGcm` + Argon2id | 主密钥存放在系统密钥库 |
 | MCP | `ModelContextProtocol` 2.x + `.AspNetCore` | 官方 C# SDK |
-| AI · Claude | 官方 **`Anthropic`** NuGet（`AnthropicClient`） | 原生 Messages API，**不走 OpenAI 兼容层** |
+| AI · Claude | 自研 HTTP + SSE 客户端（`MySSH.Ai/Providers/Anthropic`） | 原生 Messages API，**不走 OpenAI 兼容层**；官方 C# SDK 不兼容 NativeAOT（§7.2） |
 | AI · OpenAI 兼容 | 官方 **`OpenAI`** NuGet（Chat Completions + 自定义 Endpoint） | OpenAI、DeepSeek、自定义端点共用 |
 | 日志 | Microsoft.Extensions.Logging + Serilog | API Key 和终端内容不写入日志 |
 | 安装 / 更新 | Velopack | |
@@ -229,9 +229,10 @@ public interface IChatProvider {
 // 每轮的提供商原始 content 原样存入 AiMessage.rawContent，回放时原样送回
 ```
 
-**AnthropicProvider（官方 `Anthropic` SDK）**
-- **统一走 beta 端点**：`client.Beta.Messages.CreateStreaming(...)` 和 beta 命名空间的类型（服务端回退只有 beta 端点支持）。SDK 用 `Authorization: Bearer` 发送 Key；只认 `x-api-key` 的自定义网关由 handler 改写请求头。
-- **环境变量隔离（硬性要求）**：SDK 会读取 `ANTHROPIC_BASE_URL`、`ANTHROPIC_API_KEY`、`ANTHROPIC_AUTH_TOKEN`、`ANTHROPIC_CUSTOM_HEADERS` 等变量；即使显式设置了 BaseUrl 和 Key，`ANTHROPIC_CUSTOM_HEADERS` 仍会被附加，没填 Key 时还会带上 `ANTHROPIC_AUTH_TOKEN`。所以：始终显式设置 BaseUrl（只来自提供商配置）；使用 `IsolatedAnthropicClient` 加 `EnvIsolationHandler`；应用启动时清除进程内所有 `ANTHROPIC_*`；SSH 子进程不继承这些变量。
+**AnthropicProvider（自研 HTTP + SSE 客户端）**
+- **为什么不用官方 SDK（P4 结论）**：`Anthropic` 13.8.0（当前最新）用反射式 System.Text.Json 序列化，NativeAOT 发布有约 4,300 条裁剪警告，原生程序一运行就因泛型类型缺少原生代码而失败；强制保留整个程序集也只是换一个地方失败。OpenAI SDK 2.15.0 没有这个问题（0 警告，原生程序实测流式、工具调用、回放、模型列表都正常）。所以 Claude 直接调用 Messages API：`POST /v1/messages`（`stream: true`），JSON 用 `Utf8JsonWriter` / `JsonDocument`，没有反射。线格式以 spike ④ 的结论和 fixture 为准。
+- 请求头：`anthropic-version: 2026-10-21`，Key 用 `x-api-key`（网关可选 `Authorization: Bearer`），`anthropic-beta` 按需带 `server-side-fallback-2026-07-01`、`thinking-display-updates-2026-08-18`、`thinking-binding-controls-2026-08-01`（`block_binding.prefix_mismatch_behavior: "drop_block"` 作为前缀被改动时的兜底）。
+- **环境变量隔离（硬性要求）**：自研客户端不读取任何环境变量；BaseUrl 和 Key 只来自提供商配置。应用启动时仍清除进程内所有 `ANTHROPIC_*` / `OPENAI_*`（纵深防御）。
 - 思考设为 `{type:"adaptive"}`；`output_config.effort` 可以在界面上选「快速 / 标准 / 深入」，对应 low / medium / high。默认**显式设为 medium**（Opus 5.5 的默认值本来就是 medium，显式写出避免歧义）。不发送 temperature 等采样参数。
 - 工具使用 `tool_choice: auto`（Opus 5.5 不支持强制指定工具）。每个工具设 `strict: true` 和 `eager_input_streaming: true`。工具输入**执行前先按 Schema 校验**，校验失败时回传错误类型的 `tool_result`。执行工具前先检查 `stop_reason` 是否为 `max_tokens` 或 `refusal`。
 - **refusal 处理**：默认开启服务端回退（beta `server-side-fallback-2026-07-01` 加 `fallbacks: "default"`），设置里可以关闭。最终仍是 refusal 时，在界面上给出说明。
@@ -397,7 +398,7 @@ UI Shell Header / SideNav · Button（5 种）· Text input / Password / Text ar
 | **P1 基础** ✅ | 已完成（分支 `p1-foundation`）：删除 Tauri、解决方案骨架、Carbon 主题与控件和 Gallery、Storage/Vault、旧数据导入、known_hosts 存储、主窗口、CI。AOT 门禁：自有库逐成员分析；第三方警告对照 `tools/aot/allowed-warnings.txt`；AOT 二进制跑 `--self-test` | 已达成：UI 测试和 AOT 自检都覆盖「导入旧数据并展示主机列表」 |
 | **P2 终端与功能对齐** ✅（待真机验收） | 已完成（分支 `p2-terminal-ssh`）：TerminalView（按行缓存，160×50 满屏约 2.5ms；程序绘制框线；输入法；搜索；链接）、SSH 层（多跳、代理、两阶段 TOFU、心跳、Shell/Exec、SFTP 符号链接安全、传输队列）、主机/身份/已知主机/设置页、会话工作区（终端标签 + SFTP 面板 + 文本编辑 + 拖放上传）、主机密钥与口令提示、断线重连横幅 | 自动化：380 项测试（含真实 sshd 端到端）、AOT 门禁、原生自检通过；输入法和真实剪贴板需真机验收 |
 | **P3 工具层 + MCP** ✅（待真实客户端验收） | 已完成（分支 `p3-tools-mcp`）：`MySSH.Tools`（11 个工具、Schema 校验、策略引擎含 FullAccess、高风险规则与白名单防绕过、审批超时、审计）；存储 v2（白名单、audit_log、加密 Secret）；`MySSH.Mcp`（Stateless HTTP + 本地套接字/命名管道、资源与提示、客户端跟踪）；`myssh-mcp` AOT 桥（约 1.8MB）；桌面端审批 Modal、AI / MCP 页（开关、Token、一键接入、审计日志）、托盘常驻 | 策略矩阵（5 种策略 × 全部工具变体）与真实 sshd 端到端测试通过；SDK 客户端经 HTTP / 本地套接字 / 桥接入通过；Claude Code / Claude Desktop 需真机接入验收 |
-| **P4 AI 助手** | 提供商配置（预置三家 + 自定义）、Agent 循环、AI 面板、内联审批、终端内 `Ctrl+I`、上下文胶囊与脱敏、会话存储 | 三家预置加一个本地 OpenAI 兼容端点（如 Ollama）都能完成「分析报错 → 读终端 → 建议命令」的流程 |
+| **P4 AI 助手** ✅（待真实 API 验收） | 已完成（分支 `p4-ai-assistant`）：`MySSH.Ai`（自研 Claude HTTP/SSE 客户端，OpenAI SDK 用于 OpenAI / DeepSeek / 兼容服务；Agent 循环经 P3 工具层执行；脱敏；上下文胶囊）；存储 v4（会话加密、只追加）；AI 面板（`Ctrl+Shift+A`，工具卡片内联审批、本会话允许相同操作）；终端 `Ctrl+I` 命令建议与选中内容「用 AI 解释/分析报错」；AI 设置页（提供商、Key、模型、测试连接、行为）。原生自检包含两个提供商的完整工具循环 | 三家预置加一个本地 OpenAI 兼容端点（如 Ollama）都能完成「分析报错 → 读终端 → 建议命令」的流程 |
 | **P5 发布** | Velopack 打包和自动更新、macOS 签名公证、README 和截图 | 三个平台的安装包 |
 | P6 可选 | AI 助手连接外部 MCP Server、端口转发界面、Snippets | |
 

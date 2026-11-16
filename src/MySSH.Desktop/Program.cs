@@ -10,6 +10,7 @@ internal static class Program
     [STAThread]
     public static int Main(string[] args)
     {
+        ClearProviderEnvironment();
         if (args is ["--self-test", var legacyDir])
             return Services.SelfTest.RunAsync(legacyDir).GetAwaiter().GetResult();
         // --tray: started by myssh-mcp when MySSH was not running; no window unless the vault needs the master password.
@@ -21,6 +22,17 @@ internal static class Program
             return 0;
         }
         return BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+    }
+
+    /// <summary>
+    /// AI provider settings come only from MySSH's own configuration. A terminal-launched MySSH would otherwise inherit
+    /// e.g. a Claude Code proxy's ANTHROPIC_BASE_URL / ANTHROPIC_CUSTOM_HEADERS (design §7.2, spike ④ §4).
+    /// </summary>
+    internal static void ClearProviderEnvironment()
+    {
+        foreach (var name in Environment.GetEnvironmentVariables().Keys.OfType<string>())
+            if (name.StartsWith("ANTHROPIC_", StringComparison.OrdinalIgnoreCase) || name.StartsWith("OPENAI_", StringComparison.OrdinalIgnoreCase))
+                Environment.SetEnvironmentVariable(name, null);
     }
 
     public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
