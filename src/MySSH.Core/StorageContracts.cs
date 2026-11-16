@@ -49,3 +49,15 @@ public interface ISettingsStore
     Task<bool> RemoveAsync(string key, CancellationToken ct = default);
     Task<IReadOnlyList<string>> ListKeysAsync(CancellationToken ct = default);
 }
+
+/// <summary>
+/// Small named secrets encrypted with the vault master key (e.g. the MCP bearer token). Values never appear in logs or
+/// plain backups. Requires an unlocked vault.
+/// </summary>
+public interface ISecretSettingsStore
+{
+    /// <returns>null when absent.</returns>
+    Task<string?> GetAsync(string key, CancellationToken ct = default);
+    Task SetAsync(string key, string value, CancellationToken ct = default);
+    Task<bool> RemoveAsync(string key, CancellationToken ct = default);
+}

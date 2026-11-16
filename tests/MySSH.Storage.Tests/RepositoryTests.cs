@@ -26,6 +26,7 @@ public class RepositoryTests
             Label = "web · 本番", Hostname = "web.example.com", Port = 2222, Username = "deploy", IdentityId = identity.Id,
             GroupId = group.Id, Tags = ["prod", "web"], ProxyId = proxy.Id, JumpChain = [jump.Id], KeepAliveSeconds = 15,
             Encoding = "euc-jp", AiPolicy = AiPolicy.Ask, AiIdentityId = aiIdentity.Id, Notes = "notes",
+            AiCommandAllowlist = ["df -h", "systemctl status nginx"],
             CreatedAt = new DateTimeOffset(2024, 1, 2, 3, 4, 5, 678, TimeSpan.FromHours(9)).AddTicks(1234),
             UpdatedAt = DateTimeOffset.UtcNow,
         };
@@ -37,7 +38,8 @@ public class RepositoryTests
         Assert.Equal(host.JumpChain, loaded.JumpChain);
         Assert.Equal(host.CreatedAt, loaded.CreatedAt);
         Assert.Equal(host.CreatedAt.Offset, loaded.CreatedAt.Offset);
-        Assert.Equal(host with { Tags = loaded.Tags, JumpChain = loaded.JumpChain }, loaded);
+        Assert.Equal(host.AiCommandAllowlist, loaded.AiCommandAllowlist);
+        Assert.Equal(host with { Tags = loaded.Tags, JumpChain = loaded.JumpChain, AiCommandAllowlist = loaded.AiCommandAllowlist }, loaded);
         Assert.Equal(2, (await s.Hosts.ListAsync(T.Ct)).Count);
 
         await s.Hosts.SaveAsync(host with { Label = "web2", Tags = [], JumpChain = [] }, T.Ct);

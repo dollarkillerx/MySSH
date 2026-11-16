@@ -238,3 +238,19 @@ public sealed class HostKeyTests
         Assert.Empty(v.Checks);
     }
 }
+
+public sealed class RdpHostPlannerTests
+{
+    [Fact]
+    public async Task Rdp_hosts_are_neither_ssh_targets_nor_jump_hosts()
+    {
+        var rdp = new Host { Label = "win", Hostname = "10.0.0.9", Port = 3389, Protocol = HostProtocol.Rdp };
+        var viaRdp = new Host { Label = "linux", Hostname = "10.0.0.5", JumpChain = [rdp.Id] };
+        var hosts = new MemHosts(rdp, viaRdp);
+        var e = await Assert.ThrowsAsync<SshConnectException>(() => ChainPlanner.PlanAsync(rdp.Id, ConnectionOrigin.User, hosts, new MemIdentities(), new MemProxies()));
+        Assert.Equal(SshFailureKind.InvalidConfiguration, e.Kind);
+        Assert.Contains("remote desktop", e.Message, StringComparison.Ordinal);
+        e = await Assert.ThrowsAsync<SshConnectException>(() => ChainPlanner.PlanAsync(viaRdp.Id, ConnectionOrigin.User, hosts, new MemIdentities(), new MemProxies()));
+        Assert.Contains("cannot be a jump host", e.Message, StringComparison.Ordinal);
+    }
+}

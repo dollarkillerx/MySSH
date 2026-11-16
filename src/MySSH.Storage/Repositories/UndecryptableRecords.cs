@@ -68,6 +68,12 @@ public sealed class UndecryptableRecordStore
                 while (await r.ReadAsync(ct).ConfigureAwait(false))
                     blobs.Add((Rows.ProxiesTable, Guid.Parse(r.GetString(0)), Rows.FieldPassword, (byte[])r.GetValue(1)));
             }
+            await using (var cmd = Sql.Command(conn, null, "SELECT id, value FROM secret_settings;"))
+            await using (var r = await cmd.ExecuteReaderAsync(ct).ConfigureAwait(false))
+            {
+                while (await r.ReadAsync(ct).ConfigureAwait(false))
+                    blobs.Add((SecretSettingsStore.Table, Guid.Parse(r.GetString(0)), SecretSettingsStore.FieldValue, (byte[])r.GetValue(1)));
+            }
 
             foreach (var (table, id, field, blob) in blobs)
             {

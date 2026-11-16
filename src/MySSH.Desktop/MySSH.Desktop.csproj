@@ -3,6 +3,10 @@
     <OutputType>WinExe</OutputType>
     <AssemblyName>MySSH</AssemblyName>
     <RootNamespace>MySSH.Desktop</RootNamespace>
+    <!-- Reverse-DNS app identity (macOS CFBundleIdentifier, Linux desktop-file id, Windows AppUserModelID).
+         Same value as MySSH.Core.AppIdentity.BundleId and macOS/Info.plist. Never change it after a release. -->
+    <ApplicationId>cc.nyxnet.myssh</ApplicationId>
+    <ApplicationTitle>MySSH</ApplicationTitle>
     <ApplicationIcon>../../assets/icons/icon.ico</ApplicationIcon>
     <PublishAot>true</PublishAot>
     <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
@@ -21,6 +25,10 @@
     <ProjectReference Include="../MySSH.Ssh/MySSH.Ssh.csproj" />
     <ProjectReference Include="../MySSH.UI.Carbon/MySSH.UI.Carbon.csproj" />
     <ProjectReference Include="../MySSH.Terminal/MySSH.Terminal.csproj" />
+    <ProjectReference Include="../MySSH.Tools/MySSH.Tools.csproj" />
+    <ProjectReference Include="../MySSH.Mcp/MySSH.Mcp.csproj" />
+    <!-- Built, not referenced: the myssh-mcp stdio bridge sits next to the app (McpClientSetup.DefaultBridgePath). -->
+    <ProjectReference Include="../MySSH.McpBridge/MySSH.McpBridge.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" />
@@ -35,4 +43,26 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets/**" />
   </ItemGroup>
+
+  <!-- Dev builds: copy the bridge (JIT apphost + dll) next to MySSH so the Claude Desktop setup works with `dotnet run`. -->
+  <Target Name="CopyMcpBridge" AfterTargets="Build" Condition="'$(_IsPublishing)' != 'true'">
+    <MSBuild Projects="../MySSH.McpBridge/MySSH.McpBridge.csproj" Targets="GetTargetPath" Properties="Configuration=$(Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_McpBridgeTarget" />
+    </MSBuild>
+    <PropertyGroup>
+      <_McpBridgeDir>@(_McpBridgeTarget->'%(RootDir)%(Directory)')</_McpBridgeDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <_McpBridgeFiles Include="$(_McpBridgeDir)myssh-mcp*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_McpBridgeFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Publish: the bridge goes next to MySSH as its own NativeAOT executable (Claude Desktop runs it; it also starts MySSH
+       in the tray). The JIT leftovers of the build-only project reference are removed. -->
+  <Target Name="PublishMcpBridge" AfterTargets="Publish" Condition="'$(RuntimeIdentifier)' != ''">
+    <Delete Files="$(PublishDir)myssh-mcp.runtimeconfig.json;$(PublishDir)myssh-mcp.deps.json;$(PublishDir)myssh-mcp.dll;$(PublishDir)myssh-mcp.pdb" />
+    <MSBuild Projects="../MySSH.McpBridge/MySSH.McpBridge.csproj" Targets="Restore;Publish"
+             Properties="Configuration=$(Configuration);RuntimeIdentifier=$(RuntimeIdentifier);PublishDir=$([System.IO.Path]::GetFullPath('$(PublishDir)'));StripSymbols=$(StripSymbols)" />
+  </Target>
 </Project>

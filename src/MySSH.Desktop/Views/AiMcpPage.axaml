@@ -1,0 +1,150 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             x:Class="MySSH.Desktop.Views.AiMcpPage"
+             x:DataType="vm:AiMcpPageViewModel">
+  <DockPanel Margin="32,24,32,32">
+    <StackPanel DockPanel.Dock="Top" Spacing="4" Margin="0,0,0,16">
+      <TextBlock Classes="heading-04" Text="{l:Tr nav.ai}" />
+      <TextBlock Classes="body-compact-01 secondary" TextWrapping="Wrap" Text="{l:Tr mcp.pageSubtitle}" />
+    </StackPanel>
+    <TabControl SelectedIndex="{Binding SelectedTab}">
+      <!-- ============================================================ MCP server -->
+      <TabItem Header="{l:Tr mcp.tab}">
+        <ScrollViewer>
+          <StackPanel DataContext="{Binding Mcp}" x:DataType="vm:McpSettingsViewModel" Spacing="32" Margin="0,24,0,0" MaxWidth="760" HorizontalAlignment="Left">
+            <StackPanel Spacing="12">
+              <StackPanel Orientation="Horizontal" Spacing="16">
+                <ToggleSwitch Name="McpToggle" IsChecked="{Binding IsEnabled}" IsEnabled="{Binding !IsBusy}"
+                              OnContent="{l:Tr mcp.enabled}" OffContent="{l:Tr mcp.disabled}" />
+                <carbon:Tag VerticalAlignment="Center" Content="{Binding StatusText}" />
+              </StackPanel>
+              <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{l:Tr mcp.enableHelp}" />
+              <carbon:InlineNotification Kind="Error" IsLowContrast="True" IsCloseButtonVisible="False" Title="{l:Tr mcp.status.error}"
+                                         Subtitle="{Binding Error}" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}" />
+              <carbon:InlineNotification Kind="Info" IsLowContrast="True" IsCloseButtonVisible="False" Title="{l:Tr mcp.policyHintTitle}"
+                                         Subtitle="{l:Tr mcp.policyHint}" />
+            </StackPanel>
+
+            <!-- endpoint and token -->
+            <StackPanel Spacing="16" IsVisible="{Binding IsRunning}">
+              <TextBlock Classes="heading-02" Text="{l:Tr mcp.connection}" />
+              <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,4,Auto">
+                <TextBlock Classes="label-01 secondary" Text="{l:Tr mcp.endpoint}" />
+                <SelectableTextBlock Grid.Row="2" Name="McpEndpoint" Classes="code-01" Text="{Binding Endpoint}" VerticalAlignment="Center" />
+                <Button Grid.Row="2" Grid.Column="2" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="copy"
+                        ToolTip.Tip="{l:Tr common.copy}" Command="{Binding CopyEndpointCommand}" />
+              </Grid>
+              <Grid ColumnDefinitions="*,8,Auto,Auto,Auto" RowDefinitions="Auto,4,Auto">
+                <TextBlock Classes="label-01 secondary" Text="{l:Tr mcp.token}" />
+                <SelectableTextBlock Grid.Row="2" Classes="code-01" Text="{Binding TokenDisplay}" VerticalAlignment="Center" TextWrapping="Wrap" />
+                <ToggleButton Grid.Row="2" Grid.Column="2" Classes="ghost icon-only md" IsChecked="{Binding IsTokenRevealed}"
+                              carbon:ButtonAssist.Icon="view" ToolTip.Tip="{l:Tr mcp.token.reveal}" />
+                <Button Grid.Row="2" Grid.Column="3" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="copy"
+                        ToolTip.Tip="{l:Tr common.copy}" Command="{Binding CopyTokenCommand}" />
+                <Button Grid.Row="2" Grid.Column="4" Classes="danger-ghost md" carbon:ButtonAssist.Icon="renew"
+                        Content="{l:Tr mcp.token.regenerate}" Command="{Binding RegenerateTokenCommand}" />
+              </Grid>
+              <StackPanel Spacing="4">
+                <TextBlock Classes="label-01 secondary" Text="{l:Tr mcp.socket}" />
+                <SelectableTextBlock Classes="code-01" Text="{Binding SocketPath}" TextWrapping="Wrap" />
+              </StackPanel>
+            </StackPanel>
+
+            <!-- client setup -->
+            <StackPanel Spacing="16" IsVisible="{Binding IsRunning}">
+              <TextBlock Classes="heading-02" Text="{l:Tr mcp.setup}" />
+              <StackPanel Spacing="8">
+                <TextBlock Classes="heading-compact-01" Text="Claude Code" />
+                <Border Background="{DynamicResource CarbonLayer01}" Padding="16,12">
+                  <Grid ColumnDefinitions="*,8,Auto">
+                    <SelectableTextBlock Name="ClaudeCodeCommand" Classes="code-01" Text="{Binding ClaudeCodeCommand}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                    <Button Grid.Column="2" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="copy" VerticalAlignment="Top"
+                            ToolTip.Tip="{l:Tr common.copy}" Command="{Binding CopyClaudeCodeCommand}" />
+                  </Grid>
+                </Border>
+              </StackPanel>
+              <StackPanel Spacing="8">
+                <TextBlock Classes="heading-compact-01" Text="Claude Desktop" />
+                <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr mcp.setup.claudeDesktopHelp}" />
+                <Border Background="{DynamicResource CarbonLayer01}" Padding="16,12" IsVisible="{Binding HasBridge}">
+                  <Grid ColumnDefinitions="*,8,Auto">
+                    <SelectableTextBlock Classes="code-01" Text="{Binding ClaudeDesktopJson}" TextWrapping="Wrap" />
+                    <Button Grid.Column="2" Classes="ghost icon-only md" carbon:ButtonAssist.Icon="copy" VerticalAlignment="Top"
+                            ToolTip.Tip="{l:Tr common.copy}" Command="{Binding CopyClaudeDesktopCommand}" />
+                  </Grid>
+                </Border>
+                <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr mcp.setup.noBridge}" IsVisible="{Binding !HasBridge}" />
+              </StackPanel>
+              <Button Classes="tertiary md" HorizontalAlignment="Left" carbon:ButtonAssist.Icon="copy"
+                      Content="{l:Tr mcp.setup.copyGeneric}" Command="{Binding CopyGenericJsonCommand}" />
+            </StackPanel>
+
+            <!-- connected clients -->
+            <StackPanel Spacing="12" IsVisible="{Binding IsRunning}">
+              <TextBlock Classes="heading-02" Text="{l:Tr mcp.clients}" />
+              <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{l:Tr mcp.clients.empty}" IsVisible="{Binding !HasClients}" />
+              <ItemsControl ItemsSource="{Binding Clients}" IsVisible="{Binding HasClients}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:McpClientRowViewModel">
+                    <Border BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="0,0,0,1" Padding="0,8">
+                      <Grid ColumnDefinitions="2*,*,*,*,Auto">
+                        <TextBlock Classes="body-01" Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="1" Classes="body-01 secondary" Text="{Binding Transport}" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Classes="body-01 secondary" Text="{Binding LastSeen}" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="3" Classes="body-01 secondary" Text="{Binding Calls}" VerticalAlignment="Center" />
+                        <Button Grid.Column="4" Classes="danger-ghost sm" Content="{l:Tr mcp.clients.disconnect}" IsVisible="{Binding CanDisconnect}"
+                                Command="{Binding $parent[ItemsControl].((vm:McpSettingsViewModel)DataContext).DisconnectCommand}"
+                                CommandParameter="{Binding}" />
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr mcp.clients.httpNote}" />
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+
+      <!-- ============================================================ audit log -->
+      <TabItem Header="{l:Tr audit.tab}">
+        <Grid DataContext="{Binding Audit}" x:DataType="vm:AuditLogViewModel" RowDefinitions="Auto,*,Auto" Margin="0,24,0,0">
+          <Border Background="{DynamicResource CarbonLayer01}">
+            <Grid ColumnDefinitions="Auto,*,Auto" Height="48">
+              <ComboBox ItemsSource="{Binding Filters}" SelectedItem="{Binding SelectedFilter}" MinWidth="200" Margin="16,0,0,0"
+                        VerticalAlignment="Center" PlaceholderText="{l:Tr audit.filter.all}">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate x:DataType="vm:AuditFilterOption">
+                    <TextBlock Text="{Binding Label}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+              <Button Grid.Column="2" Classes="ghost lg" carbon:ButtonAssist.Icon="renew" Content="{l:Tr audit.refresh}"
+                      Command="{Binding LoadCommand}" />
+            </Grid>
+          </Border>
+          <DataGrid Grid.Row="1" Name="AuditGrid" ItemsSource="{Binding Rows}" SelectedItem="{Binding SelectedRow}"
+                    IsReadOnly="True" CanUserSortColumns="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.time}" Binding="{Binding Time}" Width="170" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.actor}" Binding="{Binding Actor}" Width="*" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.tool}" Binding="{Binding Tool}" Width="*" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.host}" Binding="{Binding Host}" Width="*" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.decision}" Binding="{Binding Decision}" Width="*" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.arguments}" Binding="{Binding Arguments}" Width="2*" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.result}" Binding="{Binding Result}" Width="*" />
+              <DataGridTextColumn x:DataType="vm:AuditRowViewModel" Header="{l:Tr audit.col.duration}" Binding="{Binding Duration}" Width="110" />
+            </DataGrid.Columns>
+          </DataGrid>
+          <TextBlock Grid.Row="1" Classes="body-01 secondary" Margin="16,64,16,0" HorizontalAlignment="Center" VerticalAlignment="Top"
+                     Text="{l:Tr audit.empty}" IsVisible="{Binding IsEmpty}" />
+          <Button Grid.Row="2" Classes="ghost md" HorizontalAlignment="Left" Margin="0,8,0,0" Content="{l:Tr audit.loadMore}"
+                  Command="{Binding LoadMoreCommand}" IsVisible="{Binding HasMore}" />
+        </Grid>
+      </TabItem>
+    </TabControl>
+  </DockPanel>
+</UserControl>

@@ -33,8 +33,11 @@
                 <DataTemplate x:DataType="vm:BreadcrumbItem">
                   <StackPanel Orientation="Horizontal">
                     <TextBlock Classes="body-compact-01 secondary" Text="/" VerticalAlignment="Center" Margin="2,0" IsVisible="{Binding ShowSeparator}" />
-                    <Button Classes="ghost sm" Content="{Binding Name}" FontFamily="{DynamicResource CarbonFontMono}"
-                            Command="{Binding $parent[UserControl].((vm:SftpSessionViewModel)DataContext).NavigateToCommand}" CommandParameter="{Binding}" />
+                    <!-- TextBlock content, not a string: a string becomes AccessText and "_b" would lose its underscore -->
+                    <Button Classes="ghost sm" FontFamily="{DynamicResource CarbonFontMono}"
+                            Command="{Binding $parent[UserControl].((vm:SftpSessionViewModel)DataContext).NavigateToCommand}" CommandParameter="{Binding}">
+                      <TextBlock Text="{Binding Name}" />
+                    </Button>
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>

@@ -106,8 +106,17 @@ internal static class T
             var dir = new DirectoryInfo(AppContext.BaseDirectory);
             while (dir is not null && !File.Exists(Path.Combine(dir.FullName, "MySSH.slnx")))
                 dir = dir.Parent;
-            return dir?.FullName ?? throw new InvalidOperationException("Repository root (MySSH.slnx) not found.");
+            return dir?.FullName ?? RepoRootFromSource() ?? throw new InvalidOperationException("Repository root (MySSH.slnx) not found.");
         }
+    }
+
+    /// <summary>Fallback when the build output lives outside the checkout (e.g. <c>--artifacts-path</c>).</summary>
+    private static string? RepoRootFromSource([System.Runtime.CompilerServices.CallerFilePath] string sourceFile = "")
+    {
+        var dir = string.IsNullOrEmpty(sourceFile) ? null : new DirectoryInfo(Path.GetDirectoryName(sourceFile)!);
+        while (dir is not null && !File.Exists(Path.Combine(dir.FullName, "MySSH.slnx")))
+            dir = dir.Parent;
+        return dir?.FullName;
     }
 
     public static string FixturesDir => Path.Combine(RepoRoot, "tests", "fixtures", "legacy");

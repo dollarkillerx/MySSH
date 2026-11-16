@@ -49,7 +49,10 @@ public sealed class MainWindowUiTests : IDisposable
         Directory.CreateDirectory(o.Paths.LegacyDataDirectory);
         foreach (var f in Directory.GetFiles(src)) File.Copy(f, Path.Combine(o.Paths.LegacyDataDirectory, Path.GetFileName(f)));
 
-        await using var vm = new ShellViewModel(ct => AppSession.OpenAsync(o, ct));
+        await using var vm = new ShellViewModel(ct => AppSession.OpenAsync(o, ct))
+        {
+            ConfigureMcp = m => m with { LocalSocketPath = Path.Combine(ShortTemp(), "m.sock") },
+        };
         var w = new MainWindow { DataContext = vm, Width = 1280, Height = 800 };
         Application.Current!.RequestedThemeVariant = ThemeVariant.Light;
         w.Show();
@@ -78,13 +81,27 @@ public sealed class MainWindowUiTests : IDisposable
         Pump();
         Save(w, "07-host-editor-errors-light");
         vm.Hosts.CancelEditorCommand.Execute(null);
-        foreach (var (page, name) in new[] { (1, "08-identities-light"), (2, "09-known-hosts-light"), (4, "10-settings-light") })
+        foreach (var (page, name) in new[] { (AppPage.Identities, "08-identities-light"), (AppPage.KnownHosts, "09-known-hosts-light"), (AppPage.Settings, "10-settings-light"), (AppPage.Ai, "13-mcp-off-light") })
         {
-            vm.SelectedNav = vm.NavItems[page];
+            vm.SelectedNav = vm.NavItems.First(n => n.Page == page);
             await Task.Delay(50);
             Pump();
             Save(w, name);
         }
+
+        // P3: turn the MCP server on (temp socket, random port) and show the running state
+        await vm.AiMcp!.Mcp.SetEnabledCommandForTests(true);
+        Pump();
+        Assert.True(vm.Mcp!.IsRunning, vm.Mcp.StartError);
+        Assert.True(w.GetVisualDescendants().OfType<ToggleSwitch>().Single(t => t.Name == "McpToggle").IsChecked);
+        Assert.Contains("/mcp", w.GetVisualDescendants().OfType<SelectableTextBlock>().Single(t => t.Name == "McpEndpoint").Text, StringComparison.Ordinal);
+        Save(w, "14-mcp-running-light");
+        vm.AiMcp.SelectedTab = 1;
+        await Task.Delay(50);
+        Pump();
+        Save(w, "15-audit-log-light");
+        vm.AiMcp.SelectedTab = 0;
+        await vm.AiMcp.Mcp.SetEnabledCommandForTests(false);
         vm.SelectedNav = vm.NavItems[0];
         await Task.Delay(50);
 
@@ -129,6 +146,9 @@ public sealed class MainWindowUiTests : IDisposable
         Application.Current.RequestedThemeVariant = ThemeVariant.Light;
         w.Close();
     }
+
+    /// <summary>Unix socket paths are limited to ~104 bytes: use a short dir under /tmp.</summary>
+    static string ShortTemp() => Directory.CreateTempSubdirectory("m").FullName;
 
     static void Pump()
     {

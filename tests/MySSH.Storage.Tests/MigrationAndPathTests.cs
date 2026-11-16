@@ -9,10 +9,10 @@ public class MigrationTests
     {
         using var dir = new TempDir();
         await using var s = await T.OpenUnlockedAsync(dir);
-        Assert.Equal(1, s.SchemaVersion);
-        Assert.Equal(1L, await T.ScalarAsync(s, "SELECT MAX(version) FROM schema_version;"));
+        Assert.Equal(3, s.SchemaVersion);
+        Assert.Equal(3L, await T.ScalarAsync(s, "SELECT MAX(version) FROM schema_version;"));
         Assert.Equal("wal", await T.ScalarAsync(s, "PRAGMA journal_mode;"));
-        foreach (var table in new[] { "hosts", "host_jumps", "identities", "proxies", "groups", "known_hosts", "settings", "undecryptable_fields" })
+        foreach (var table in new[] { "hosts", "host_jumps", "identities", "proxies", "groups", "known_hosts", "settings", "undecryptable_fields", "audit_log", "secret_settings" })
             Assert.Equal(1L, await T.ScalarAsync(s, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = $n;", ("$n", table)));
         if (!OperatingSystem.IsWindows())
         {
@@ -47,7 +47,7 @@ public class MigrationTests
             await s.Hosts.SaveAsync(h, T.Ct);
         await using (var s = await T.OpenUnlockedAsync(dir, ks))
         {
-            Assert.Equal(1L, await T.ScalarAsync(s, "SELECT COUNT(*) FROM schema_version;"));
+            Assert.Equal(3L, await T.ScalarAsync(s, "SELECT COUNT(*) FROM schema_version;"));
             Assert.NotNull(await s.Hosts.GetAsync(h.Id, T.Ct));
         }
     }

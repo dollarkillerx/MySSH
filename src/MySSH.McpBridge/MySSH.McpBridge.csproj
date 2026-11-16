@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- myssh-mcp: stdio <-> local socket byte pump for stdio-only MCP clients (design §6.4). Implemented in P3. -->
+  <!-- myssh-mcp: stdio <-> local socket byte pump for stdio-only MCP clients (design §6.4).
+       No ASP.NET / MCP SDK: the socket path logic is shared with the server as a linked source file. -->
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>myssh-mcp</AssemblyName>
+    <RootNamespace>MySSH.McpBridge</RootNamespace>
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <StackTraceSupport>false</StackTraceSupport>
+    <OptimizationPreference>Size</OptimizationPreference>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../MySSH.Mcp/LocalEndpoint.cs" Link="LocalEndpoint.cs" />
+  </ItemGroup>
 </Project>

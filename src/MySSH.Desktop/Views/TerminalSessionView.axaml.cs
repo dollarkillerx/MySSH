@@ -10,7 +10,7 @@ using MySSH.Desktop.ViewModels;
 namespace MySSH.Desktop.Views;
 
 /// <summary>Hosts a TerminalView for one <see cref="TerminalSessionViewModel"/>; connects once the grid size is known.</summary>
-public sealed partial class TerminalSessionView : UserControl
+public sealed partial class TerminalSessionView : UserControl, ITerminalScreen
 {
     TerminalSessionViewModel? _vm;
     bool _connectStarted;
@@ -24,6 +24,7 @@ public sealed partial class TerminalSessionView : UserControl
             StartIfReady();
         };
         Term.TitleChanged += (_, title) => RemoteTitle.Text = title;
+        Term.WorkingDirectoryChanged += (_, dir) => _vm?.NotifyWorkingDirectory(dir);
         Term.LinkActivated += async (_, uri) => { if (TopLevel.GetTopLevel(this) is IUiServices ui) await ui.OpenUriAsync(uri); };
         Term.PasteRequested += (_, e) =>
         {
@@ -37,13 +38,21 @@ public sealed partial class TerminalSessionView : UserControl
     protected override void OnDataContextChanged(EventArgs e)
     {
         base.OnDataContextChanged(e);
-        if (_vm is not null) _vm.PropertyChanged -= OnVmChanged;
+        if (_vm is not null)
+        {
+            _vm.PropertyChanged -= OnVmChanged;
+            if (ReferenceEquals(_vm.Screen, this)) _vm.Screen = null;
+        }
         _vm = DataContext as TerminalSessionViewModel;
         if (_vm is null) return;
+        _vm.Screen = this;
         _vm.PropertyChanged += OnVmChanged;
         SyncBackend();
         SyncState();
     }
+
+    string ITerminalScreen.GetRecentText(int maxLines) => Term.GetRecentText(maxLines);
+    bool ITerminalScreen.TypeText(string text, bool pressEnter) => Term.TypeText(text, pressEnter);
 
     void StartIfReady()
     {

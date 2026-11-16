@@ -41,6 +41,7 @@
         <ItemsControl.DataTemplates>
           <DataTemplate DataType="vm:TerminalSessionViewModel"><v:TerminalSessionView IsVisible="{Binding IsSelected}" /></DataTemplate>
           <DataTemplate DataType="vm:SftpSessionViewModel"><v:SftpSessionView IsVisible="{Binding IsSelected}" /></DataTemplate>
+          <DataTemplate DataType="vm:RdpSessionViewModel"><v:RdpSessionView IsVisible="{Binding IsSelected}" /></DataTemplate>
         </ItemsControl.DataTemplates>
       </ItemsControl>
     </DockPanel>

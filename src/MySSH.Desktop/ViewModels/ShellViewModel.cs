@@ -32,6 +32,12 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     /// <summary>SSH-layer prompts; the window implements them. Defaults reject / cancel (tests, headless).</summary>
     public MySSH.Core.IHostKeyVerifier HostKeyVerifier { get; set; } = RejectingPrompts.Instance;
     public MySSH.Core.ICredentialPrompt CredentialPrompt { get; set; } = RejectingPrompts.Instance;
+    /// <summary>MCP / AI tool approvals; the window implements them. Default denies (tests, headless).</summary>
+    public MySSH.Tools.IApprovalService Approvals { get; set; } = RejectingPrompts.Instance;
+    /// <summary>The shared tool layer (MCP now, the AI assistant in P4); created after unlock.</summary>
+    public MySSH.Tools.ToolLayer? Tools { get; private set; }
+    /// <summary>Tests: redirect the MCP socket / port away from the user's real ones.</summary>
+    public Func<MySSH.Mcp.McpHostOptions, MySSH.Mcp.McpHostOptions>? ConfigureMcp { get; set; }
 
     /// <summary>Created after unlock; tests may replace it.</summary>
     public MySSH.Ssh.ISshConnector? Connector { get; set; }
@@ -41,6 +47,13 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     public Action<DesktopSettings>? ApplySettings { get; set; }
 
     public AppSession? Session => _session;
+
+    /// <summary>MCP server lifetime; created after unlock (null in tests that don't need it).</summary>
+    public IMcpController? Mcp { get; private set; }
+    /// <summary>Closing the window hides it to the tray while the MCP server is serving (design §10).</summary>
+    public bool KeepRunningInTray => Mcp?.IsRunning == true;
+    /// <summary>Completes when the MCP controller has loaded its settings and (if enabled) tried to start the server.</summary>
+    public Task McpStartup { get; private set; } = Task.CompletedTask;
 
     public IReadOnlyList<NavItemViewModel> NavItems { get; } =
     [
@@ -59,6 +72,7 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     [ObservableProperty] public partial IdentitiesViewModel? Identities { get; set; }
     [ObservableProperty] public partial KnownHostsViewModel? KnownHosts { get; set; }
     [ObservableProperty] public partial SettingsViewModel? Settings { get; set; }
+    [ObservableProperty] public partial AiMcpPageViewModel? AiMcp { get; set; }
     /// <summary>The page shown for <see cref="SelectedNav"/> (null until the vault is unlocked).</summary>
     [ObservableProperty] public partial object? CurrentPage { get; set; }
     public bool IsSessionsActive => CurrentPage is SessionsWorkspaceViewModel;
@@ -85,6 +99,10 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
             case AppPage.KnownHosts when KnownHosts is not null:
                 await KnownHosts.LoadAsync();
                 CurrentPage = KnownHosts;
+                break;
+            case AppPage.Ai when AiMcp is not null:
+                await AiMcp.LoadAsync();
+                CurrentPage = AiMcp;
                 break;
             case AppPage.Settings when Settings is not null:
                 await Settings.LoadAsync();
@@ -206,6 +224,10 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
         Connector ??= new MySSH.Ssh.SshConnector(s.Storage.Hosts, s.Storage.Identities, s.Storage.Proxies, s.Storage.KnownHosts,
             HostKeyVerifier, CredentialPrompt);
         Sessions = new SessionsWorkspaceViewModel(() => Connector, Ui);
+        var rdpDir = Path.Combine(s.Storage.Paths.DataDirectory, "rdp");
+        try { if (Directory.Exists(rdpDir)) Directory.Delete(rdpDir, recursive: true); } // leftovers of a crashed session
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException) { }
+        Sessions.Rdp = new RdpServices(s.Storage.Hosts, s.Storage.Identities, new RdpLauncher(), rdpDir);
         Hosts = new HostListViewModel(s.Storage.Hosts, s.Storage.Identities, s.Storage.Proxies, Ui);
         Hosts.ConnectRequested += (row, kind) =>
         {
@@ -216,6 +238,11 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
         KnownHosts = new KnownHostsViewModel(s.Storage.KnownHosts, Ui);
         Settings = new SettingsViewModel(s.Storage, Ui, p => { Loc.Instance.SetCulture(p.Language); ApplySettings?.Invoke(p); });
         Settings.BackupImported += () => _ = Hosts.LoadAsync();
+        Tools = MySSH.Tools.ToolServices.Create(s.Storage.Hosts, Connector, Approvals, s.Storage.AuditLog, new TerminalSessionRegistry(() => Sessions));
+        var mcp = new McpController(s.Storage.Settings, s.Storage.Secrets, Tools.Catalog, Tools.Invoker, ConfigureMcp);
+        Mcp = mcp;
+        AiMcp = new AiMcpPageViewModel(new McpSettingsViewModel(mcp, Ui), new AuditLogViewModel(s.Storage.AuditLog, s.Storage.Hosts));
+        McpStartup = Task.Run(() => mcp.InitializeAsync(), CancellationToken.None); // starts the server only if the user enabled it before; never blocks startup
         await Hosts.LoadAsync(ct);
         CurrentPage = Hosts;
         if (await s.DetectLegacyOfferAsync(ct) is { } offer) LegacyOfferCount = offer.RecordCount;
@@ -224,6 +251,17 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     }
 
     void Notify(NotificationKind kind, string title, string message) => Notifications.Add(new(kind, title, message));
+
+    /// <summary>An exception escaped a UI handler (logged by the app); shown instead of crashing.</summary>
+    public void ReportUnexpectedError(Exception exception, string? logPath) =>
+        Notify(NotificationKind.Error, Loc.Instance["app.unexpectedError.title"],
+            Loc.Instance.Format("app.unexpectedError", ("error", exception.Message), ("path", logPath ?? "—")));
+
+    /// <summary>Stops thread-pool services (MCP host). Call on the thread pool before <see cref="DisposeAsync"/> at shutdown.</summary>
+    public async Task StopBackgroundServicesAsync()
+    {
+        if (Mcp is IAsyncDisposable mcp) await mcp.DisposeAsync().ConfigureAwait(false);
+    }
 
     public async ValueTask DisposeAsync()
     {
@@ -234,8 +272,9 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
 }
 
 /// <summary>Safe defaults until a window provides real prompts.</summary>
-public sealed class RejectingPrompts : MySSH.Core.IHostKeyVerifier, MySSH.Core.ICredentialPrompt
+public sealed class RejectingPrompts : MySSH.Core.IHostKeyVerifier, MySSH.Core.ICredentialPrompt, MySSH.Tools.IApprovalService
 {
+    public Task<MySSH.Tools.ApprovalOutcome> RequestAsync(MySSH.Tools.ApprovalRequest request, CancellationToken ct) => Task.FromResult(MySSH.Tools.ApprovalOutcome.Denied);
     public static readonly RejectingPrompts Instance = new();
     public ValueTask<MySSH.Core.HostKeyDecision> VerifyAsync(MySSH.Core.HostKeyCheck check, CancellationToken ct) => ValueTask.FromResult(MySSH.Core.HostKeyDecision.Reject);
     public ValueTask<string?> PromptPassphraseAsync(MySSH.Core.Identity identity, string? previousAttemptError, CancellationToken ct) => ValueTask.FromResult<string?>(null);

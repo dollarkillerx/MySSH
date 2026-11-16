@@ -26,6 +26,9 @@ public sealed class Loc
 
     public string this[string key] => _rm.GetString(key, _culture) ?? key;
 
+    /// <summary>null when the key does not exist (for optional translations such as tool titles).</summary>
+    public string? TryGet(string key) => _rm.GetString(key, _culture);
+
     public string Format(string key, params (string Name, object? Value)[] args)
     {
         var sb = new StringBuilder(this[key]);

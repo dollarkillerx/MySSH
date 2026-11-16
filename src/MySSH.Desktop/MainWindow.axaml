@@ -59,6 +59,7 @@
             <DataTemplate DataType="vm:IdentitiesViewModel"><v:IdentitiesPage /></DataTemplate>
             <DataTemplate DataType="vm:KnownHostsViewModel"><v:KnownHostsPage /></DataTemplate>
             <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsPage /></DataTemplate>
+            <DataTemplate DataType="vm:AiMcpPageViewModel"><v:AiMcpPage /></DataTemplate>
             <DataTemplate DataType="vm:PlaceholderPageViewModel"><v:PlaceholderPage /></DataTemplate>
           </ContentControl.DataTemplates>
         </ContentControl>
@@ -109,6 +110,29 @@
         </Grid>
         <CheckBox Name="HostKeyRemember" Content="{l:Tr hostKey.remember}" IsChecked="True" />
         <CheckBox Name="HostKeyVerified" Content="{l:Tr hostKey.verifiedChanged}" IsVisible="False" />
+      </StackPanel>
+    </carbon:Modal>
+
+    <!-- MCP / AI tool approval (design §6.1, §6.3): queued, auto-denied at the deadline -->
+    <carbon:Modal Name="ApprovalModal" Size="Medium">
+      <StackPanel Spacing="16">
+        <carbon:InlineNotification Name="ApprovalRisk" Kind="Warning" IsCloseButtonVisible="False" IsVisible="False" />
+        <TextBlock Name="ApprovalBody" Classes="body-01" TextWrapping="Wrap" />
+        <Grid ColumnDefinitions="Auto,16,*" RowDefinitions="Auto,8,Auto,8,Auto">
+          <TextBlock Classes="label-01 secondary" Text="{l:Tr approval.client}" />
+          <TextBlock Grid.Column="2" Name="ApprovalClient" Classes="body-01" />
+          <TextBlock Grid.Row="2" Classes="label-01 secondary" Text="{l:Tr approval.tool}" />
+          <TextBlock Grid.Row="2" Grid.Column="2" Name="ApprovalTool" Classes="body-01" />
+          <TextBlock Grid.Row="4" Classes="label-01 secondary" Text="{l:Tr approval.host}" />
+          <TextBlock Grid.Row="4" Grid.Column="2" Name="ApprovalHost" Classes="body-01" />
+        </Grid>
+        <Border Background="{DynamicResource CarbonField02}" BorderBrush="{DynamicResource CarbonBorderSubtle02}" BorderThickness="0,0,0,1" Padding="16,12">
+          <ScrollViewer MaxHeight="220" HorizontalScrollBarVisibility="Auto">
+            <SelectableTextBlock Name="ApprovalSummary" Classes="code-01" TextWrapping="Wrap" />
+          </ScrollViewer>
+        </Border>
+        <TextBlock Name="ApprovalReasonText" Classes="helper-text-01 secondary" TextWrapping="Wrap" />
+        <TextBlock Name="ApprovalCountdown" Classes="helper-text-01 secondary" />
       </StackPanel>
     </carbon:Modal>
 

@@ -1,4 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!-- MCP server (design §6.4): Streamable HTTP (in-process Kestrel, loopback only) + local socket / named pipe.
+       A thin transport adapter over MySSH.Tools (IToolCatalog / IToolInvoker); no tool logic lives here. -->
+  <PropertyGroup>
+    <!-- LibraryImport (getpeereid / geteuid) generates unsafe marshalling stubs -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../MySSH.Tools/MySSH.Tools.csproj" />
   </ItemGroup>
@@ -7,5 +13,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ModelContextProtocol.AspNetCore" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Microsoft.NET.Sdk (not .Web): add the ASP.NET Core / hosting usings ourselves (spike G1) -->
+    <Using Include="Microsoft.AspNetCore.Builder" />
+    <Using Include="Microsoft.AspNetCore.Http" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="Microsoft.Extensions.Hosting" />
+    <Using Include="Microsoft.Extensions.Logging" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySSH.Mcp.Tests" />
   </ItemGroup>
 </Project>

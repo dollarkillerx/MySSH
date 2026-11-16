@@ -69,7 +69,7 @@ public class BackupTests
         var web = T.NewHost("web 本番", "web.example.com") with
         {
             IdentityId = key.Id, GroupId = sub.Id, Tags = ["a", "b"], ProxyId = proxy.Id, JumpChain = [bastion.Id],
-            AiPolicy = AiPolicy.ReadOnly, AiIdentityId = pw.Id, Notes = "n", Port = 2200, Encoding = "gbk", KeepAliveSeconds = 5,
+            AiPolicy = AiPolicy.ReadOnly, AiIdentityId = pw.Id, AiCommandAllowlist = ["uptime", "df -h"], Notes = "n", Port = 2200, Protocol = HostProtocol.Rdp, Encoding = "gbk", KeepAliveSeconds = 5,
         };
         await s.Hosts.SaveAsync(bastion, T.Ct);
         await s.Hosts.SaveAsync(web, T.Ct);
@@ -118,7 +118,8 @@ public class BackupTests
             var hb = hostsB.Single(x => x.Id == h.Id);
             Assert.Equal(h.Tags, hb.Tags);
             Assert.Equal(h.JumpChain, hb.JumpChain);
-            Assert.Equal(h with { Tags = hb.Tags, JumpChain = hb.JumpChain }, hb);
+            Assert.Equal(h.AiCommandAllowlist, hb.AiCommandAllowlist);
+            Assert.Equal(h with { Tags = hb.Tags, JumpChain = hb.JumpChain, AiCommandAllowlist = hb.AiCommandAllowlist }, hb);
         }
         Assert.Equal(new IdentitySecrets(null, Fixtures.KeyA, "phrase ✓"), await b.Identities.GetSecretsAsync(key.Id, T.Ct));
         Assert.Equal("hunter2", (await b.Identities.GetSecretsAsync(bastion.IdentityId!.Value, T.Ct))!.Password);

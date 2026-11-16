@@ -182,6 +182,52 @@ public sealed class SessionTests(SshdEnvironment env)
         w.Close();
     }
 
+    [AvaloniaFact(Timeout = 120_000)]
+    public async Task Open_sftp_from_a_terminal_opens_next_to_it_in_the_shells_directory()
+    {
+        env.RequireSshd();
+        Loc.Instance.SetCulture("zh-CN");
+        await using var lab = new Lab(env);
+        var host = lab.AddHost("target");
+        var connector = lab.Connector();
+        var ws = new SessionsWorkspaceViewModel(() => connector, new FakeUi());
+        var page = new SessionsPage { DataContext = ws };
+        var w = new Window { Width = 1100, Height = 640, Content = page };
+        Application.Current!.RequestedThemeVariant = ThemeVariant.Light;
+        w.Show();
+        var row = new HostRowViewModel(host.Id, host.Label, "127.0.0.1", env.User, "Key", "—", AiPolicy.Off, "Off", []);
+        var term = (TerminalSessionViewModel)ws.Open(row, SessionKind.Terminal);
+        var other = ws.Open(row, SessionKind.Terminal); // a later tab: SFTP must be inserted right after `term`
+        ws.SelectedTab = term;
+        await Until(() => term.State == SessionState.Connected, "terminal connect");
+
+        // the shell reports its directory with OSC 7 (what bash/zsh integrations do on every prompt)
+        var dir = Path.Combine(env.Data, "osc7 目录");
+        Directory.CreateDirectory(dir);
+        var uri = new Uri("file://localhost" + dir).AbsoluteUri;
+        await term.Backend!.WriteAsync(Encoding.UTF8.GetBytes($"cd '{dir}' && printf '\\033]7;%s\\007' '{uri}'\n"));
+        await Until(() => term.WorkingDirectory == dir, "OSC 7 working directory");
+
+        var button = w.GetVisualDescendants().OfType<Button>().First(b => b.Name == "OpenSftpButton" && b.IsEffectivelyVisible);
+        button.Command!.Execute(null);
+        var sftp = Assert.IsType<SftpSessionViewModel>(ws.SelectedTab);
+        Assert.Equal(ws.Tabs.IndexOf(term) + 1, ws.Tabs.IndexOf(sftp));
+        Assert.Equal(ws.Tabs.Count - 1, ws.Tabs.IndexOf(other));
+        await Until(() => sftp.State == SessionState.Connected, "sftp connect");
+        await Until(() => sftp.CurrentPath == dir, "sftp in the terminal's directory");
+        Save(w, "p3-open-sftp-from-terminal-light-zh");
+        // breadcrumb: "/ var / folders / _b …": no doubled slash after the root, underscores kept (no access-key mangling)
+        Assert.False(sftp.Breadcrumb[0].ShowSeparator);
+        Assert.False(sftp.Breadcrumb[1].ShowSeparator);
+        Assert.True(sftp.Breadcrumb[2].ShowSeparator);
+        if (sftp.Breadcrumb.FirstOrDefault(b => b.Name.StartsWith('_')) is { } underscored)
+            Assert.Contains(w.GetVisualDescendants().OfType<TextBlock>(), t => t.Text == underscored.Name);
+
+        await ws.DisposeAsync();
+        Loc.Instance.SetCulture("en-US");
+        w.Close();
+    }
+
     static void Pump()
     {
         for (var i = 0; i < 30; i++) { AvaloniaHeadlessPlatform.ForceRenderTimerTick(); Dispatcher.UIThread.RunJobs(); }
@@ -204,7 +250,8 @@ sealed class FakeUi : IUiServices
     public Task<string?> PickOpenFileAsync(string title, IReadOnlyList<FileFilter>? filters = null) => Task.FromResult<string?>(null);
     public Task<string?> PickSaveFileAsync(string title, string suggestedName, IReadOnlyList<FileFilter>? filters = null) => Task.FromResult<string?>(null);
     public Task<string?> PromptPasswordAsync(string heading, string body, bool confirm) => Task.FromResult<string?>(null);
-    public Task CopyToClipboardAsync(string text) => Task.CompletedTask;
+    public string? Clipboard { get; private set; }
+    public Task CopyToClipboardAsync(string text) { Clipboard = text; return Task.CompletedTask; }
     public Task<string?> PromptTextAsync(string heading, string label, string initialValue) => Task.FromResult(TextAnswers.Count > 0 ? TextAnswers.Dequeue() : null);
     public Task<string?> PickFolderAsync(string title) => Task.FromResult<string?>(null);
     public Task OpenUriAsync(Uri uri) => Task.CompletedTask;

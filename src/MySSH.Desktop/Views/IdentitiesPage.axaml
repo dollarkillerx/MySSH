@@ -52,7 +52,10 @@
                      carbon:Field.IsInvalid="{Binding LabelError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding LabelError}" />
             <TextBox Text="{Binding Username}" carbon:Field.Label="{l:Tr serverForm.username}" PlaceholderText="{l:Tr serverForm.usernamePlaceholder}" />
             <ToggleSwitch IsChecked="{Binding IsPrivateKey}" OnContent="{l:Tr auth.key}" OffContent="{l:Tr auth.password}" />
-            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{Binding SecretHint}" />
+            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{Binding SecretHint}"
+                       IsVisible="{Binding SecretHint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+            <carbon:InlineNotification Kind="Warning" IsLowContrast="True" IsCloseButtonVisible="False"
+                                       Title="{Binding StoredSecretError}" IsVisible="{Binding StoredSecretError, Converter={x:Static ObjectConverters.IsNotNull}}" />
             <TextBox Classes="password" PasswordChar="●" Text="{Binding Password}" carbon:Field.Label="{l:Tr serverForm.password}"
                      IsVisible="{Binding !IsPrivateKey}"
                      carbon:Field.IsInvalid="{Binding SecretError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding SecretError}" />
@@ -60,8 +63,12 @@
               <TextBox Text="{Binding PrivateKey}" AcceptsReturn="True" MinHeight="140" FontFamily="{DynamicResource CarbonFontMono}" FontSize="12"
                        carbon:Field.Label="{l:Tr serverForm.privateKey}" PlaceholderText="{l:Tr serverForm.privateKeyPaste}"
                        carbon:Field.IsInvalid="{Binding SecretError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding SecretError}" />
-              <Button Classes="tertiary md" carbon:ButtonAssist.Icon="upload" HorizontalAlignment="Left" Content="{l:Tr serverForm.privateKeyHint}"
-                      Command="{Binding LoadKeyFileCommand}" />
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Classes="tertiary md" carbon:ButtonAssist.Icon="upload" Content="{l:Tr serverForm.privateKeyHint}"
+                        Command="{Binding LoadKeyFileCommand}" />
+                <Button Name="ShowStoredKeyButton" Classes="ghost md" carbon:ButtonAssist.Icon="view" Content="{l:Tr identities.showStoredKey}"
+                        Command="{Binding ShowStoredKeyCommand}" IsVisible="{Binding HasHiddenStoredKey}" />
+              </StackPanel>
               <TextBox Classes="password" PasswordChar="●" Text="{Binding Passphrase}" carbon:Field.Label="{l:Tr serverForm.passphrase}" />
             </StackPanel>
           </StackPanel>

@@ -56,7 +56,11 @@ public sealed partial class IdentitiesViewModel(IIdentityRepository identities, 
     }
 
     [RelayCommand]
-    void CancelEditor() => Editor = null;
+    void CancelEditor()
+    {
+        Editor?.ClearSecrets();
+        Editor = null;
+    }
 
     [RelayCommand]
     async Task DeleteAsync(IdentityRowViewModel? row)
@@ -87,23 +91,63 @@ public sealed partial class IdentityEditorViewModel(IIdentityRepository identiti
     [ObservableProperty] public partial string Label { get; set; } = "";
     [ObservableProperty] public partial string Username { get; set; } = "";
     [ObservableProperty] public partial bool IsPrivateKey { get; set; }
-    /// <summary>For edits: leave empty to keep the stored secret.</summary>
+    /// <summary>Edits: prefilled with the stored password (shown masked; the field's eye button reveals it).</summary>
     [ObservableProperty] public partial string Password { get; set; } = "";
     [ObservableProperty] public partial string PrivateKey { get; set; } = "";
     [ObservableProperty] public partial string Passphrase { get; set; } = "";
     [ObservableProperty] public partial string? LabelError { get; set; }
     [ObservableProperty] public partial string? SecretError { get; set; }
-    public string SecretHint => IsNew ? "" : Loc.Instance["identities.keepSecret"];
+    /// <summary>A stored private key exists but is not shown yet (multi-line plain text: revealed only on request).</summary>
+    [ObservableProperty] public partial bool HasHiddenStoredKey { get; set; }
+    /// <summary>The stored secret could not be decrypted (the record is kept, see the undecryptable-records notice).</summary>
+    [ObservableProperty] public partial string? StoredSecretError { get; set; }
+    IdentitySecrets? _stored;
 
-    public Task LoadAsync()
+    public string SecretHint => IsNew || !IsPrivateKey ? "" : Loc.Instance["identities.keepKey"];
+    partial void OnIsPrivateKeyChanged(bool value) => OnPropertyChanged(nameof(SecretHint));
+
+    public async Task LoadAsync(CancellationToken ct = default)
     {
-        if (existing is not null)
+        if (existing is null) return;
+        Label = existing.Label;
+        Username = existing.Username ?? "";
+        IsPrivateKey = existing.Kind == IdentityKind.PrivateKey;
+        try
         {
-            Label = existing.Label;
-            Username = existing.Username ?? "";
-            IsPrivateKey = existing.Kind == IdentityKind.PrivateKey;
+            _stored = await identities.GetSecretsAsync(existing.Id, ct);
         }
-        return Task.CompletedTask;
+        catch (Exception e) when (e is System.Security.Cryptography.CryptographicException or InvalidOperationException)
+        {
+            _stored = null;
+        }
+        if (_stored is null)
+        {
+            StoredSecretError = Loc.Instance["identities.secretUnreadable"];
+            return;
+        }
+        if (IsPrivateKey)
+        {
+            Passphrase = _stored.Passphrase ?? "";
+            HasHiddenStoredKey = !string.IsNullOrEmpty(_stored.PrivateKey);
+        }
+        else
+        {
+            Password = _stored.Password ?? "";
+        }
+    }
+
+    [RelayCommand]
+    void ShowStoredKey()
+    {
+        PrivateKey = _stored?.PrivateKey ?? "";
+        HasHiddenStoredKey = false;
+    }
+
+    /// <summary>Called when the editor closes without saving: do not keep secrets around in memory.</summary>
+    public void ClearSecrets()
+    {
+        Password = PrivateKey = Passphrase = "";
+        _stored = null;
     }
 
     [RelayCommand]
@@ -126,10 +170,13 @@ public sealed partial class IdentityEditorViewModel(IIdentityRepository identiti
     {
         LabelError = string.IsNullOrWhiteSpace(Label) ? Loc.Instance["validation.required"] : null;
         var kindChanged = existing is not null && (existing.Kind == IdentityKind.PrivateKey) != IsPrivateKey;
-        var newSecretGiven = IsPrivateKey ? PrivateKey.Trim().Length > 0 : Password.Length > 0;
+        // An unchanged edit of a key identity leaves the key field empty (hidden): reuse the stored key, so a changed
+        // passphrase alone is saved too.
+        var key = PrivateKey.Trim().Length > 0 ? PrivateKey : !kindChanged ? _stored?.PrivateKey ?? "" : "";
+        var newSecretGiven = IsPrivateKey ? key.Trim().Length > 0 : Password.Length > 0;
         SecretError = (IsNew || kindChanged) && !newSecretGiven
             ? Loc.Instance[IsPrivateKey ? "serverForm.privateKeyRequired" : "serverForm.passwordRequired"]
-            : IsPrivateKey && newSecretGiven && !PrivateKey.Contains("PRIVATE KEY", StringComparison.Ordinal) ? Loc.Instance["validation.privateKey"] : null;
+            : IsPrivateKey && newSecretGiven && !key.Contains("PRIVATE KEY", StringComparison.Ordinal) ? Loc.Instance["validation.privateKey"] : null;
         if (LabelError is not null || SecretError is not null) return null;
 
         var identity = (existing ?? new Identity { Label = Label.Trim() }) with
@@ -141,10 +188,10 @@ public sealed partial class IdentityEditorViewModel(IIdentityRepository identiti
             UpdatedAt = DateTimeOffset.UtcNow,
         };
         IdentitySecrets? secrets = !newSecretGiven ? null
-            : IsPrivateKey ? new IdentitySecrets(null, HostEditorViewModel.NormalizeKey(PrivateKey), Passphrase.Length > 0 ? Passphrase : null)
+            : IsPrivateKey ? new IdentitySecrets(null, HostEditorViewModel.NormalizeKey(key), Passphrase.Length > 0 ? Passphrase : null)
             : new IdentitySecrets(Password, null, null);
         await identities.SaveAsync(identity, secrets, ct);
-        Password = PrivateKey = Passphrase = "";
+        ClearSecrets();
         return identity;
     }
 }

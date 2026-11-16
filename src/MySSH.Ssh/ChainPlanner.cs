@@ -108,6 +108,9 @@ public static class ChainPlanner
         for (int i = 0; i < path.Count; i++)
         {
             var h = path[i];
+            if (h.Protocol != HostProtocol.Ssh)
+                throw new SshConnectException(SshFailureKind.InvalidConfiguration,
+                    $"'{h.Label}' is a Windows remote desktop (RDP) host, not an SSH server" + (i == path.Count - 1 ? "." : "; it cannot be a jump host."), i, h.Label);
             bool isTarget = i == path.Count - 1;
             Guid? identityId = isTarget && HostKeyPolicy.IsStrict(origin) && h.AiIdentityId is Guid ai ? ai : h.IdentityId;
             Identity? identity = null;

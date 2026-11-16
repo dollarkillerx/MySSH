@@ -7,16 +7,60 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="aiPolicy.Ask" xml:space="preserve"><value>询问</value></data>
   <data name="aiPolicy.Ask.help" xml:space="preserve"><value>AI 可以读取；每次执行命令或写入都会先询问你。</value></data>
+  <data name="aiPolicy.FullAccess" xml:space="preserve"><value>完全授权</value></data>
+  <data name="aiPolicy.FullAccess.help" xml:space="preserve"><value>所有操作都不再询问，包括高风险命令、覆盖和删除。每次调用仍会记录在审计日志里。</value></data>
+  <data name="aiPolicy.FullAccess.warning" xml:space="preserve"><value>AI 客户端可以不经你同意删除数据、停止服务或重启这台主机。只建议用于可随时重建或已完整备份的机器，最好配一个低权限身份。</value></data>
+  <data name="aiPolicy.FullAccess.warningTitle" xml:space="preserve"><value>这台主机不再审批</value></data>
   <data name="aiPolicy.Off" xml:space="preserve"><value>关闭</value></data>
   <data name="aiPolicy.Off.help" xml:space="preserve"><value>AI 助手和 MCP 客户端看不到这台主机。</value></data>
   <data name="aiPolicy.ReadOnly" xml:space="preserve"><value>只读</value></data>
   <data name="aiPolicy.ReadOnly.help" xml:space="preserve"><value>AI 可以读取文件，只能执行白名单里的命令。</value></data>
   <data name="aiPolicy.Trusted" xml:space="preserve"><value>信任</value></data>
-  <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI 执行命令无需询问（高风险命令除外）。建议给 AI 配一个低权限身份。</value></data>
+  <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI 执行命令、修改文件无需询问；高风险命令（rm、stop、reboot 等）、覆盖、删除以及在你的终端里按回车仍会先问你。建议给 AI 配一个低权限身份。</value></data>
   <data name="app.name" xml:space="preserve"><value>MySSH</value></data>
   <data name="app.openSftp" xml:space="preserve"><value>打开 SFTP</value></data>
   <data name="app.openTerminal" xml:space="preserve"><value>打开终端</value></data>
+  <data name="app.unexpectedError" xml:space="preserve"><value>{error} MySSH 会继续运行。详细信息：{path}</value></data>
+  <data name="app.unexpectedError.title" xml:space="preserve"><value>出现了意外错误</value></data>
   <data name="app.welcome" xml:space="preserve"><value>从侧边栏选择服务器进行连接</value></data>
+  <data name="approval.allow" xml:space="preserve"><value>允许</value></data>
+  <data name="approval.body" xml:space="preserve"><value>{client} 想在你的主机上执行一个工具。请先核对下面的内容再决定是否允许。</value></data>
+  <data name="approval.client" xml:space="preserve"><value>客户端</value></data>
+  <data name="approval.countdown" xml:space="preserve"><value>{seconds} 秒后自动拒绝。</value></data>
+  <data name="approval.deny" xml:space="preserve"><value>拒绝</value></data>
+  <data name="approval.highRisk" xml:space="preserve"><value>高风险</value></data>
+  <data name="approval.host" xml:space="preserve"><value>主机</value></data>
+  <data name="approval.reason.AskPolicy" xml:space="preserve"><value>这台主机的 AI 策略是「询问」：每次执行命令、修改文件或往终端输入都需要你批准。</value></data>
+  <data name="approval.reason.Delete" xml:space="preserve"><value>在「信任」主机上，删除文件总是需要你批准。</value></data>
+  <data name="approval.reason.HighRisk" xml:space="preserve"><value>命中高风险规则「{rule}」。除非这台主机是「完全授权」，高风险操作都需要你批准。</value></data>
+  <data name="approval.reason.Overwrite" xml:space="preserve"><value>这次会覆盖已有文件。在「信任」主机上，覆盖文件总是需要你批准。</value></data>
+  <data name="approval.reason.TerminalExecute" xml:space="preserve"><value>这次会在你的终端里按回车执行这一行。在「信任」主机上这总是需要你批准。</value></data>
+  <data name="approval.title" xml:space="preserve"><value>允许这个操作吗？</value></data>
+  <data name="approval.titleHighRisk" xml:space="preserve"><value>允许这个高风险操作吗？</value></data>
+  <data name="approval.tool" xml:space="preserve"><value>工具</value></data>
+  <data name="audit.col.actor" xml:space="preserve"><value>客户端</value></data>
+  <data name="audit.col.arguments" xml:space="preserve"><value>参数</value></data>
+  <data name="audit.col.decision" xml:space="preserve"><value>结果</value></data>
+  <data name="audit.col.duration" xml:space="preserve"><value>耗时</value></data>
+  <data name="audit.col.host" xml:space="preserve"><value>主机</value></data>
+  <data name="audit.col.result" xml:space="preserve"><value>执行结果</value></data>
+  <data name="audit.col.time" xml:space="preserve"><value>时间</value></data>
+  <data name="audit.col.tool" xml:space="preserve"><value>工具</value></data>
+  <data name="audit.decision.Allowed" xml:space="preserve"><value>已放行</value></data>
+  <data name="audit.decision.Approved" xml:space="preserve"><value>已批准</value></data>
+  <data name="audit.decision.Cancelled" xml:space="preserve"><value>已取消</value></data>
+  <data name="audit.decision.Denied" xml:space="preserve"><value>已拒绝</value></data>
+  <data name="audit.decision.Invalid" xml:space="preserve"><value>无效请求</value></data>
+  <data name="audit.decision.PolicyRejected" xml:space="preserve"><value>策略禁止</value></data>
+  <data name="audit.decision.TimedOut" xml:space="preserve"><value>审批超时</value></data>
+  <data name="audit.empty" xml:space="preserve"><value>还没有工具调用记录。</value></data>
+  <data name="audit.exitCode" xml:space="preserve"><value>退出码 {code}</value></data>
+  <data name="audit.filter.ai" xml:space="preserve"><value>AI 助手</value></data>
+  <data name="audit.filter.all" xml:space="preserve"><value>全部客户端</value></data>
+  <data name="audit.filter.mcp" xml:space="preserve"><value>MCP 客户端</value></data>
+  <data name="audit.loadMore" xml:space="preserve"><value>加载更早的记录</value></data>
+  <data name="audit.refresh" xml:space="preserve"><value>刷新</value></data>
+  <data name="audit.tab" xml:space="preserve"><value>审计日志</value></data>
   <data name="auth.key" xml:space="preserve"><value>密钥</value></data>
   <data name="auth.none" xml:space="preserve"><value>—</value></data>
   <data name="auth.password" xml:space="preserve"><value>密码</value></data>
@@ -24,6 +68,7 @@
   <data name="common.close" xml:space="preserve"><value>关闭</value></data>
   <data name="common.comingSoon" xml:space="preserve"><value>将在后续阶段提供。</value></data>
   <data name="common.confirm" xml:space="preserve"><value>确定</value></data>
+  <data name="common.copy" xml:space="preserve"><value>复制</value></data>
   <data name="common.delete" xml:space="preserve"><value>删除</value></data>
   <data name="common.edit" xml:space="preserve"><value>编辑</value></data>
   <data name="common.error" xml:space="preserve"><value>错误</value></data>
@@ -32,15 +77,31 @@
   <data name="common.success" xml:space="preserve"><value>成功</value></data>
   <data name="hostEditor.addHop" xml:space="preserve"><value>添加一跳</value></data>
   <data name="hostEditor.ai" xml:space="preserve"><value>AI / MCP 访问</value></data>
+  <data name="hostEditor.aiAllowlist" xml:space="preserve"><value>允许的命令（只读策略）</value></data>
+  <data name="hostEditor.aiAllowlistHelp" xml:space="preserve"><value>每行一个命令前缀。留空则使用内置的只读命令。管道、重定向和命令串联一律不允许。</value></data>
+  <data name="hostEditor.aiAllowlistPlaceholder" xml:space="preserve"><value>df -h
+systemctl status nginx
+journalctl -u nginx -n 200</value></data>
+  <data name="hostEditor.aiIdentity" xml:space="preserve"><value>AI / MCP 使用的身份</value></data>
+  <data name="hostEditor.aiIdentityDefault" xml:space="preserve"><value>与连接身份相同</value></data>
+  <data name="hostEditor.aiIdentityHelp" xml:space="preserve"><value>建议为 AI 和 MCP 单独设置一个低权限账号。</value></data>
   <data name="hostEditor.aiPolicy" xml:space="preserve"><value>策略</value></data>
   <data name="hostEditor.authNewKey" xml:space="preserve"><value>新私钥</value></data>
   <data name="hostEditor.authNewPassword" xml:space="preserve"><value>新密码</value></data>
   <data name="hostEditor.authSaved" xml:space="preserve"><value>已保存的身份</value></data>
   <data name="hostEditor.jumpHelp" xml:space="preserve"><value>按顺序经过这些主机连接（第一跳在前）。如果设置了代理，代理只用于第一跳。</value></data>
   <data name="hostEditor.network" xml:space="preserve"><value>网络</value></data>
+  <data name="hostEditor.noJumpCandidates" xml:space="preserve"><value>请先把跳板机本身添加为一台主机，再回到这里选择它并点击「添加一跳」。</value></data>
+  <data name="hostEditor.protocol" xml:space="preserve"><value>连接类型</value></data>
+  <data name="hostEditor.protocolRdp" xml:space="preserve"><value>Windows 远程桌面（RDP）</value></data>
   <data name="hostEditor.proxyNew" xml:space="preserve"><value>新代理</value></data>
   <data name="hostEditor.proxyNone" xml:space="preserve"><value>不使用代理</value></data>
   <data name="hostEditor.proxySaved" xml:space="preserve"><value>已保存的代理</value></data>
+  <data name="hostEditor.rdpHelp" xml:space="preserve"><value>用系统的远程桌面程序打开（Windows 上是远程桌面连接，macOS 上是 Windows App，Linux 上是 Remmina 或 FreeRDP）。默认端口 3389。</value></data>
+  <data name="hostEditor.rdpJumpHelp" xml:space="preserve"><value>可选：一台能访问这台 Windows 机器的 SSH 主机。MySSH 会经由它转发 RDP 端口（它自己的跳板机设置照常生效），内网机器也能连。</value></data>
+  <data name="hostEditor.rdpNeedsPassword" xml:space="preserve"><value>Windows 远程桌面使用密码登录，请选择密码类身份或输入新密码。</value></data>
+  <data name="hostEditor.savedPassword" xml:space="preserve"><value>已保存的密码</value></data>
+  <data name="hostEditor.savedPasswordHelp" xml:space="preserve"><value>点击眼睛图标查看。要修改请到「密钥与身份」页，所有使用这个身份的主机都会一起更新。</value></data>
   <data name="hostEditor.tags" xml:space="preserve"><value>标签</value></data>
   <data name="hostEditor.tagsHelp" xml:space="preserve"><value>用逗号分隔，例如 prod, web</value></data>
   <data name="hostEditor.usernameHelp" xml:space="preserve"><value>留空则使用身份中的用户名。</value></data>
@@ -65,6 +126,7 @@
   <data name="hosts.col.name" xml:space="preserve"><value>名称</value></data>
   <data name="hosts.col.user" xml:space="preserve"><value>用户</value></data>
   <data name="hosts.col.via" xml:space="preserve"><value>经由</value></data>
+  <data name="hosts.connect" xml:space="preserve"><value>连接</value></data>
   <data name="hosts.count" xml:space="preserve"><value>{count} 台主机</value></data>
   <data name="hosts.duplicate" xml:space="preserve"><value>复制</value></data>
   <data name="hosts.empty" xml:space="preserve"><value>还没有主机</value></data>
@@ -76,7 +138,10 @@
   <data name="identities.col.usedBy" xml:space="preserve"><value>使用者</value></data>
   <data name="identities.edit" xml:space="preserve"><value>编辑身份</value></data>
   <data name="identities.inUse" xml:space="preserve"><value>「{name}」正被 {count} 台主机使用。请先为它们换一个身份。</value></data>
+  <data name="identities.keepKey" xml:space="preserve"><value>私钥留空则保留已保存的私钥；点击「显示已保存的私钥」可以查看。</value></data>
   <data name="identities.keepSecret" xml:space="preserve"><value>密码/私钥留空则保留原来保存的内容。</value></data>
+  <data name="identities.secretUnreadable" xml:space="preserve"><value>已保存的密码或私钥无法解密，请重新输入以替换。</value></data>
+  <data name="identities.showStoredKey" xml:space="preserve"><value>显示已保存的私钥</value></data>
   <data name="identities.subtitle" xml:space="preserve"><value>可被多台主机共用的凭据。修改一次，所有使用它的主机都会生效。</value></data>
   <data name="identities.usedBy" xml:space="preserve"><value>{count} 台主机</value></data>
   <data name="knownHosts.col.fingerprint" xml:space="preserve"><value>指纹</value></data>
@@ -96,6 +161,35 @@
   <data name="legacy.later" xml:space="preserve"><value>暂不导入</value></data>
   <data name="legacy.skipped" xml:space="preserve"><value>有 {count} 条记录无法读取，已跳过：{details}</value></data>
   <data name="legacy.skippedTitle" xml:space="preserve"><value>部分记录已跳过</value></data>
+  <data name="mcp.clients" xml:space="preserve"><value>最近的客户端</value></data>
+  <data name="mcp.clients.callsActive" xml:space="preserve"><value>{calls}（{active} 个执行中）</value></data>
+  <data name="mcp.clients.disconnect" xml:space="preserve"><value>断开</value></data>
+  <data name="mcp.clients.empty" xml:space="preserve"><value>还没有客户端连接过。</value></data>
+  <data name="mcp.clients.httpNote" xml:space="preserve"><value>HTTP 客户端是无状态的，无法单独断开；要阻止它们，请重新生成 Token。</value></data>
+  <data name="mcp.connection" xml:space="preserve"><value>连接信息</value></data>
+  <data name="mcp.disabled" xml:space="preserve"><value>MCP 服务已关闭</value></data>
+  <data name="mcp.enableHelp" xml:space="preserve"><value>只监听 127.0.0.1 和本机套接字，客户端需要使用下面的 Token。</value></data>
+  <data name="mcp.enabled" xml:space="preserve"><value>MCP 服务已开启</value></data>
+  <data name="mcp.endpoint" xml:space="preserve"><value>HTTP 地址</value></data>
+  <data name="mcp.err.instanceRunning" xml:space="preserve"><value>另一个 MySSH 实例已经在提供 MCP 服务（{path}）。</value></data>
+  <data name="mcp.err.startFailed" xml:space="preserve"><value>MCP 服务无法启动：{error}</value></data>
+  <data name="mcp.pageSubtitle" xml:space="preserve"><value>让 Claude Code、Claude Desktop 等 AI 客户端通过 MCP 使用你的主机，权限按每台主机的策略控制，每次调用都有审计记录。</value></data>
+  <data name="mcp.policyHint" xml:space="preserve"><value>AI 客户端只能看到 AI / MCP 策略不是「关闭」的主机。请在主机编辑面板里逐台设置。</value></data>
+  <data name="mcp.policyHintTitle" xml:space="preserve"><value>主机默认不可见</value></data>
+  <data name="mcp.setup" xml:space="preserve"><value>接入客户端</value></data>
+  <data name="mcp.setup.claudeDesktopHelp" xml:space="preserve"><value>把下面的内容加到 claude_desktop_config.json。它通过 myssh-mcp 转发程序连接本机套接字，不需要 Token。</value></data>
+  <data name="mcp.setup.copyGeneric" xml:space="preserve"><value>复制其他 HTTP 客户端的 JSON 配置</value></data>
+  <data name="mcp.setup.noBridge" xml:space="preserve"><value>没有在 MySSH 旁边找到 myssh-mcp 转发程序。安装正式版后才能接入 Claude Desktop 这类 stdio 客户端。</value></data>
+  <data name="mcp.socket" xml:space="preserve"><value>本机套接字</value></data>
+  <data name="mcp.status.error" xml:space="preserve"><value>无法启动</value></data>
+  <data name="mcp.status.running" xml:space="preserve"><value>运行中</value></data>
+  <data name="mcp.status.stopped" xml:space="preserve"><value>已停止</value></data>
+  <data name="mcp.tab" xml:space="preserve"><value>MCP 服务</value></data>
+  <data name="mcp.token" xml:space="preserve"><value>Bearer Token</value></data>
+  <data name="mcp.token.regenerate" xml:space="preserve"><value>重新生成 Token</value></data>
+  <data name="mcp.token.regenerateConfirm" xml:space="preserve"><value>使用当前 Token 配置的客户端将无法连接，需要更新配置。</value></data>
+  <data name="mcp.token.reveal" xml:space="preserve"><value>显示 Token</value></data>
+  <data name="mcp.transport.local" xml:space="preserve"><value>本机套接字</value></data>
   <data name="nav.ai" xml:space="preserve"><value>AI / MCP</value></data>
   <data name="nav.expand" xml:space="preserve"><value>展开导航</value></data>
   <data name="nav.hosts" xml:space="preserve"><value>主机</value></data>
@@ -108,6 +202,26 @@
   <data name="paste.action" xml:space="preserve"><value>粘贴</value></data>
   <data name="paste.body" xml:space="preserve"><value>你要粘贴 {lines} 行内容，每一行都可能被当作命令执行。</value></data>
   <data name="paste.title" xml:space="preserve"><value>粘贴多行内容？</value></data>
+  <data name="rdp.client" xml:space="preserve"><value>已用以下程序打开</value></data>
+  <data name="rdp.copyPassword" xml:space="preserve"><value>复制密码</value></data>
+  <data name="rdp.failed" xml:space="preserve"><value>无法准备远程桌面：{error}</value></data>
+  <data name="rdp.hostMissing" xml:space="preserve"><value>这台主机已不存在。</value></data>
+  <data name="rdp.installWindowsApp" xml:space="preserve"><value>获取 Windows App</value></data>
+  <data name="rdp.launched" xml:space="preserve"><value>已在 {client} 中打开。</value></data>
+  <data name="rdp.noClient.Linux" xml:space="preserve"><value>请安装 Remmina 或 FreeRDP（xfreerdp），然后点击「打开远程桌面」。</value></data>
+  <data name="rdp.noClient.MacOS" xml:space="preserve"><value>请从 App Store 安装微软免费的 Windows App，然后点击「打开远程桌面」。</value></data>
+  <data name="rdp.noClient.Windows" xml:space="preserve"><value>无法启动远程桌面连接（mstsc）。</value></data>
+  <data name="rdp.noClientTitle" xml:space="preserve"><value>没有找到远程桌面程序</value></data>
+  <data name="rdp.noPassword" xml:space="preserve"><value>这台主机没有保存密码。</value></data>
+  <data name="rdp.open" xml:space="preserve"><value>打开远程桌面</value></data>
+  <data name="rdp.passwordCopied" xml:space="preserve"><value>密码已复制。远程桌面程序要求输入密码时粘贴即可。</value></data>
+  <data name="rdp.passwordHelp" xml:space="preserve"><value>MySSH 不会把密码写进 .rdp 文件。可以点「复制密码」，或让远程桌面程序记住密码。</value></data>
+  <data name="rdp.preparing" xml:space="preserve"><value>正在准备 {host} 的远程桌面…</value></data>
+  <data name="rdp.subtitle" xml:space="preserve"><value>Windows 远程桌面</value></data>
+  <data name="rdp.target" xml:space="preserve"><value>Windows 主机</value></data>
+  <data name="rdp.tunnel" xml:space="preserve"><value>{local} → {target}（经由 {via}）</value></data>
+  <data name="rdp.tunnelHelp" xml:space="preserve"><value>这个标签页开着时隧道一直保持；关闭标签页会断开远程桌面。</value></data>
+  <data name="rdp.tunnelLabel" xml:space="preserve"><value>SSH 隧道</value></data>
   <data name="serverForm.authType" xml:space="preserve"><value>认证类型</value></data>
   <data name="serverForm.authentication" xml:space="preserve"><value>认证方式</value></data>
   <data name="serverForm.basicInfo" xml:space="preserve"><value>基本信息</value></data>
@@ -265,8 +379,21 @@
   <data name="terminal.close" xml:space="preserve"><value>关闭</value></data>
   <data name="terminal.connecting" xml:space="preserve"><value>正在连接 {host}...</value></data>
   <data name="terminal.connectionFailed" xml:space="preserve"><value>连接失败：{error}</value></data>
+  <data name="terminal.openSftp" xml:space="preserve"><value>打开 SFTP</value></data>
+  <data name="terminal.openSftpTip" xml:space="preserve"><value>在新标签页里浏览这台主机的文件；如果 Shell 报告了当前目录，就从终端所在的目录打开</value></data>
   <data name="terminal.reconnect" xml:space="preserve"><value>重新连接</value></data>
   <data name="terminal.retry" xml:space="preserve"><value>重试</value></data>
+  <data name="tool.list_hosts" xml:space="preserve"><value>列出主机</value></data>
+  <data name="tool.list_sessions" xml:space="preserve"><value>列出终端会话</value></data>
+  <data name="tool.read_terminal" xml:space="preserve"><value>读取终端</value></data>
+  <data name="tool.run_command" xml:space="preserve"><value>执行命令</value></data>
+  <data name="tool.send_to_terminal" xml:space="preserve"><value>往终端输入</value></data>
+  <data name="tool.sftp_delete" xml:space="preserve"><value>删除文件</value></data>
+  <data name="tool.sftp_list" xml:space="preserve"><value>列出目录</value></data>
+  <data name="tool.sftp_mkdir" xml:space="preserve"><value>新建文件夹</value></data>
+  <data name="tool.sftp_read" xml:space="preserve"><value>读取文件</value></data>
+  <data name="tool.sftp_stat" xml:space="preserve"><value>查看文件信息</value></data>
+  <data name="tool.sftp_write" xml:space="preserve"><value>写入文件</value></data>
   <data name="transfer.clear" xml:space="preserve"><value>清除已完成</value></data>
   <data name="transfer.conflictBody" xml:space="preserve"><value>{path} 已存在，要覆盖吗？</value></data>
   <data name="transfer.conflictTitle" xml:space="preserve"><value>文件已存在</value></data>
@@ -278,6 +405,9 @@
   <data name="transfer.state.Queued" xml:space="preserve"><value>排队中</value></data>
   <data name="transfer.state.Running" xml:space="preserve"><value>传输中</value></data>
   <data name="transfer.title" xml:space="preserve"><value>传输</value></data>
+  <data name="tray.quit" xml:space="preserve"><value>退出 MySSH</value></data>
+  <data name="tray.show" xml:space="preserve"><value>显示 MySSH</value></data>
+  <data name="tray.tooltip" xml:space="preserve"><value>MySSH — MCP 服务运行中</value></data>
   <data name="validation.hostname" xml:space="preserve"><value>主机名不能包含空格</value></data>
   <data name="validation.identity" xml:space="preserve"><value>请选择一个身份</value></data>
   <data name="validation.jumpCycle" xml:space="preserve"><value>跳板链绕回了这台主机：{path}</value></data>

@@ -19,7 +19,7 @@ internal static class Rows
     // ---------------- hosts ----------------
 
     private const string HostColumns =
-        "id, label, hostname, port, username, identity_id, group_id, tags, proxy_id, keep_alive_seconds, encoding, ai_policy, ai_identity_id, notes, created_at, updated_at";
+        "id, label, hostname, port, username, identity_id, group_id, tags, proxy_id, keep_alive_seconds, encoding, ai_policy, ai_identity_id, notes, created_at, updated_at, ai_command_allowlist, protocol";
 
     public static async Task<List<Host>> ReadHostsAsync(SqliteConnection conn, SqliteTransaction? tx, Guid? onlyId, CancellationToken ct)
     {
@@ -65,6 +65,8 @@ internal static class Rows
                 CreatedAt = Sql.ParseTime(reader.GetString(14)),
                 UpdatedAt = Sql.ParseTime(reader.GetString(15)),
                 JumpChain = jumps.TryGetValue(hid, out var chain) ? chain : [],
+                AiCommandAllowlist = JsonSerializer.Deserialize(reader.GetString(16), StorageJsonContext.Default.ListString) ?? [],
+                Protocol = (HostProtocol)reader.GetInt32(17),
             });
         }
         return hosts;
@@ -79,6 +81,8 @@ internal static class Rows
             throw new ArgumentOutOfRangeException(nameof(host), host.Port, "Port must be between 1 and 65535.");
         if (host.JumpChain.Contains(host.Id))
             throw new ArgumentException("A host cannot be its own jump host.", nameof(host));
+        if (!Enum.IsDefined(host.Protocol))
+            throw new ArgumentOutOfRangeException(nameof(host), host.Protocol, "Unknown host protocol.");
 
         await RequireAsync(conn, tx, "SELECT 1 FROM identities WHERE id = $id;", host.IdentityId, "identity", ct).ConfigureAwait(false);
         await RequireAsync(conn, tx, "SELECT 1 FROM identities WHERE id = $id;", host.AiIdentityId, "AI identity", ct).ConfigureAwait(false);
@@ -87,22 +91,25 @@ internal static class Rows
 
         await Sql.ExecAsync(conn, tx, """
             INSERT INTO hosts (id, label, hostname, port, username, identity_id, group_id, tags, proxy_id, keep_alive_seconds,
-                               encoding, ai_policy, ai_identity_id, notes, created_at, updated_at)
+                               encoding, ai_policy, ai_identity_id, notes, created_at, updated_at, ai_command_allowlist, protocol)
             VALUES ($id, $label, $hostname, $port, $username, $identity, $group, $tags, $proxy, $keepalive,
-                    $encoding, $ai, $aiidentity, $notes, $created, $updated)
+                    $encoding, $ai, $aiidentity, $notes, $created, $updated, $allowlist, $protocol)
             ON CONFLICT(id) DO UPDATE SET
                 label = excluded.label, hostname = excluded.hostname, port = excluded.port, username = excluded.username,
                 identity_id = excluded.identity_id, group_id = excluded.group_id, tags = excluded.tags,
                 proxy_id = excluded.proxy_id, keep_alive_seconds = excluded.keep_alive_seconds, encoding = excluded.encoding,
                 ai_policy = excluded.ai_policy, ai_identity_id = excluded.ai_identity_id, notes = excluded.notes,
-                created_at = excluded.created_at, updated_at = excluded.updated_at;
+                created_at = excluded.created_at, updated_at = excluded.updated_at,
+                ai_command_allowlist = excluded.ai_command_allowlist, protocol = excluded.protocol;
             """, ct,
             ("$id", Sql.Id(host.Id)), ("$label", host.Label), ("$hostname", host.Hostname), ("$port", host.Port),
             ("$username", host.Username), ("$identity", Sql.Id(host.IdentityId)), ("$group", Sql.Id(host.GroupId)),
             ("$tags", JsonSerializer.Serialize(host.Tags.ToList(), StorageJsonContext.Default.ListString)),
             ("$proxy", Sql.Id(host.ProxyId)), ("$keepalive", host.KeepAliveSeconds), ("$encoding", host.Encoding),
             ("$ai", (int)host.AiPolicy), ("$aiidentity", Sql.Id(host.AiIdentityId)), ("$notes", host.Notes),
-            ("$created", Sql.Time(host.CreatedAt)), ("$updated", Sql.Time(host.UpdatedAt))).ConfigureAwait(false);
+            ("$created", Sql.Time(host.CreatedAt)), ("$updated", Sql.Time(host.UpdatedAt)),
+            ("$allowlist", JsonSerializer.Serialize(NormalizeAllowlist(host.AiCommandAllowlist), StorageJsonContext.Default.ListString)),
+            ("$protocol", (int)host.Protocol)).ConfigureAwait(false);
 
         await Sql.ExecAsync(conn, tx, "DELETE FROM host_jumps WHERE host_id = $id;", ct, ("$id", Sql.Id(host.Id))).ConfigureAwait(false);
         for (var i = 0; i < host.JumpChain.Count; i++)
@@ -110,6 +117,21 @@ internal static class Rows
             await Sql.ExecAsync(conn, tx, "INSERT INTO host_jumps (host_id, position, jump_host_id) VALUES ($h, $p, $j);", ct,
                 ("$h", Sql.Id(host.Id)), ("$p", i), ("$j", Sql.Id(host.JumpChain[i]))).ConfigureAwait(false);
         }
+    }
+
+    /// <summary>Trims entries and drops blanks and exact duplicates (order kept).</summary>
+    private static List<string> NormalizeAllowlist(IReadOnlyList<string>? list)
+    {
+        var result = new List<string>();
+        if (list is null)
+            return result;
+        foreach (var e in list)
+        {
+            var t = e?.Trim();
+            if (!string.IsNullOrEmpty(t) && !result.Contains(t, StringComparer.Ordinal))
+                result.Add(t);
+        }
+        return result;
     }
 
     /// <summary>Jump hosts must exist by commit time (FK is deferred so a batch can insert hosts in any order).</summary>

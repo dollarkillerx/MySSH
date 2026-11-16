@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             x:Class="MySSH.Desktop.Views.RdpSessionView"
+             x:DataType="vm:RdpSessionViewModel">
+  <DockPanel Background="{DynamicResource CarbonBackground}">
+    <carbon:InlineNotification DockPanel.Dock="Top" Kind="Error" IsLowContrast="False" Margin="0" IsCloseButtonVisible="False"
+                               IsVisible="{Binding ShowBanner}" Title="{Binding StateText}" Subtitle="{Binding StatusMessage}">
+      <carbon:InlineNotification.Action>
+        <Button Classes="ghost sm" Content="{l:Tr terminal.reconnect}" Command="{Binding ReconnectCommand}" />
+      </carbon:InlineNotification.Action>
+    </carbon:InlineNotification>
+
+    <ScrollViewer>
+      <StackPanel Margin="48,40" Spacing="24" MaxWidth="640" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Spacing="16">
+          <carbon:CarbonIcon Kind="application" Size="32" VerticalAlignment="Center" />
+          <StackPanel Spacing="4">
+            <TextBlock Classes="heading-04" Text="{Binding HostLabel}" />
+            <TextBlock Classes="body-compact-01 secondary" Text="{l:Tr rdp.subtitle}" />
+          </StackPanel>
+        </StackPanel>
+
+        <StackPanel Spacing="12" IsVisible="{Binding IsConnecting}">
+          <ProgressBar Classes="sm" IsIndeterminate="True" Width="240" HorizontalAlignment="Left" />
+          <TextBlock Classes="body-01 secondary" Text="{Binding StatusMessage}" />
+        </StackPanel>
+
+        <Grid ColumnDefinitions="Auto,16,*" RowDefinitions="Auto,8,Auto,8,Auto" IsVisible="{Binding IsConnected}">
+          <TextBlock Classes="label-01 secondary" Text="{l:Tr rdp.target}" VerticalAlignment="Center" />
+          <SelectableTextBlock Grid.Column="2" Name="RdpTarget" Classes="code-01" Text="{Binding TargetText}" />
+          <TextBlock Grid.Row="2" Classes="label-01 secondary" Text="{l:Tr rdp.tunnelLabel}" VerticalAlignment="Center"
+                     IsVisible="{Binding TunnelText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <SelectableTextBlock Grid.Row="2" Grid.Column="2" Name="RdpTunnel" Classes="code-01" Text="{Binding TunnelText}" TextWrapping="Wrap"
+                               IsVisible="{Binding TunnelText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <TextBlock Grid.Row="4" Classes="label-01 secondary" Text="{l:Tr rdp.client}" VerticalAlignment="Center"
+                     IsVisible="{Binding ClientName, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <TextBlock Grid.Row="4" Grid.Column="2" Classes="body-01" Text="{Binding ClientName}"
+                     IsVisible="{Binding ClientName, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </Grid>
+
+        <carbon:InlineNotification Kind="Warning" IsLowContrast="True" IsCloseButtonVisible="False" IsVisible="{Binding IsClientMissing}"
+                                   Title="{l:Tr rdp.noClientTitle}" Subtitle="{Binding MissingClientText}">
+          <carbon:InlineNotification.Action>
+            <Button Classes="ghost sm" Content="{l:Tr rdp.installWindowsApp}" Command="{Binding InstallClientCommand}"
+                    IsVisible="{Binding CanInstallWindowsApp}" />
+          </carbon:InlineNotification.Action>
+        </carbon:InlineNotification>
+
+        <StackPanel Orientation="Horizontal" Spacing="16" IsVisible="{Binding IsConnected}">
+          <Button Name="RdpLaunchButton" Classes="primary md" carbon:ButtonAssist.Icon="launch" Content="{l:Tr rdp.open}" Command="{Binding LaunchCommand}" />
+          <Button Name="RdpCopyPasswordButton" Classes="tertiary md" carbon:ButtonAssist.Icon="copy" Content="{l:Tr rdp.copyPassword}"
+                  Command="{Binding CopyPasswordCommand}" IsVisible="{Binding HasPassword}" />
+        </StackPanel>
+        <TextBlock Classes="body-01" Text="{Binding Notice}" TextWrapping="Wrap"
+                   IsVisible="{Binding Notice, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr rdp.tunnelHelp}"
+                   IsVisible="{Binding TunnelText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr rdp.passwordHelp}" />
+      </StackPanel>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

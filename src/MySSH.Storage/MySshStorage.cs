@@ -56,6 +56,8 @@ public sealed class MySshStorage : IAsyncDisposable
         Proxies = new ProxyRepository(db, vault);
         Groups = new GroupRepository(db);
         KnownHosts = new KnownHostStore(db);
+        AuditLog = new AuditLogStore(db);
+        Secrets = new SecretSettingsStore(db, vault);
         UndecryptableRecords = new UndecryptableRecordStore(db, vault);
         LegacyImport = new LegacyImportService(options.Paths.LegacyDataDirectory, db, vault, settings, logger);
         Backup = new BackupService(db, vault, options.Argon2);
@@ -71,6 +73,10 @@ public sealed class MySshStorage : IAsyncDisposable
     public IGroupRepository Groups { get; }
     public IKnownHostStore KnownHosts { get; }
     public ISettingsStore Settings { get; }
+    /// <summary>Tool-call audit log (design §6.1). Readable while the vault is locked.</summary>
+    public IAuditLogStore AuditLog { get; }
+    /// <summary>Vault-encrypted named secrets (MCP token, ...). Requires an unlocked vault; never included in backups.</summary>
+    public ISecretSettingsStore Secrets { get; }
     public Vault Vault { get; }
     public LegacyImportService LegacyImport { get; }
     public BackupService Backup { get; }

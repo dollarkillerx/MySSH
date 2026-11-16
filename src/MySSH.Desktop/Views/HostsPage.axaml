@@ -26,11 +26,10 @@
             </TextBox.InnerLeftContent>
           </TextBox>
           <Button Grid.Column="1" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="terminal"
-                  ToolTip.Tip="{l:Tr app.openTerminal}" Command="{Binding ConnectCommand}" CommandParameter="{x:Null}"
+                  ToolTip.Tip="{l:Tr hosts.connect}" Command="{Binding ConnectCommand}" CommandParameter="{x:Null}"
                   IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
           <Button Grid.Column="2" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="folder"
-                  ToolTip.Tip="{l:Tr app.openSftp}" Command="{Binding OpenSftpCommand}" CommandParameter="{x:Null}"
-                  IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                  ToolTip.Tip="{l:Tr app.openSftp}" Command="{Binding OpenSftpCommand}" CommandParameter="{x:Null}" />
           <Button Grid.Column="3" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="edit"
                   ToolTip.Tip="{l:Tr common.edit}" Command="{Binding EditHostCommand}" CommandParameter="{x:Null}"
                   IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
@@ -43,7 +42,7 @@
                   IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
           <DataGrid.ContextMenu>
             <ContextMenu>
-              <MenuItem Header="{l:Tr app.openTerminal}" Command="{Binding ConnectCommand}" CommandParameter="{x:Null}" />
+              <MenuItem Header="{l:Tr hosts.connect}" Command="{Binding ConnectCommand}" CommandParameter="{x:Null}" />
               <MenuItem Header="{l:Tr app.openSftp}" Command="{Binding OpenSftpCommand}" CommandParameter="{x:Null}" />
               <Separator />
               <MenuItem Header="{l:Tr common.edit}" Command="{Binding EditHostCommand}" CommandParameter="{x:Null}" />

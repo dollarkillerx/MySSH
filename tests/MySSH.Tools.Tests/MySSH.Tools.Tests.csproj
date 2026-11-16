@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/MySSH.Tools/MySSH.Tools.csproj" />
+    <ProjectReference Include="../../src/MySSH.Storage/MySSH.Storage.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Throwaway local non-root sshd (skips when OpenSSH server is unavailable), shared with MySSH.Ssh.IntegrationTests. -->
+    <Compile Include="../MySSH.Ssh.IntegrationTests/SshdEnvironment.cs" Link="SshdEnvironment.cs" />
+    <Compile Include="../MySSH.Ssh.IntegrationTests/Lab.cs" Link="Lab.cs" />
+    <Compile Include="../MySSH.Ssh.Tests/TestDoubles.cs" Link="TestDoubles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+</Project>

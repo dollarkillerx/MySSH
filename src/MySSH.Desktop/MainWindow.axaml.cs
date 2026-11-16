@@ -58,15 +58,18 @@ public sealed partial class MainWindow : Window, IUiServices
         _vm.Ui = this;
         _vm.HostKeyVerifier = this;
         _vm.CredentialPrompt = this;
+        _vm.Approvals = this;
         _vm.ApplySettings = ApplyTheme;
         _vm.PropertyChanged += OnVmPropertyChanged;
 
         Nav.Items.Clear();
         foreach (var item in _vm.NavItems)
         {
-            var label = new TextBlock();
-            label.Bind(TextBlock.TextProperty, Loc.Instance.Bind(item.LabelKey));
-            Nav.Items.Add(new SideNavItem { Icon = item.IconKind, Content = label, Tag = item });
+            // Plain (localized) text, not a TextBlock: the rail tooltip shows the same content, and a control cannot be in
+            // two places (that crashed the app when hovering a collapsed rail icon).
+            var navItem = new SideNavItem { Icon = item.IconKind, Tag = item };
+            navItem.Bind(ContentControl.ContentProperty, Loc.Instance.Bind(item.LabelKey));
+            Nav.Items.Add(navItem);
         }
         Nav.SelectedIndex = 0;
         SyncModals();

@@ -488,7 +488,7 @@
     <Setter Property="MinHeight" Value="32" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="ToolTip.Placement" Value="Right" />
-    <Setter Property="ToolTip.Tip" Value="{Binding $self.Content}" />
+    <Setter Property="ToolTip.Tip" Value="{Binding $self.Content, Converter={x:Static carbon:CarbonConverters.ContentText}}" />
     <Setter Property="Template">
       <ControlTemplate>
         <Panel Background="{TemplateBinding Background}">

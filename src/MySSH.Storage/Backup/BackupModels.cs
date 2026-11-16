@@ -67,6 +67,10 @@ internal sealed class BackupHost
     public string? Encoding { get; set; }
     public AiPolicy AiPolicy { get; set; }
     public Guid? AiIdentityId { get; set; }
+    /// <summary>Added in P3; absent (null) in older v2 backups → empty (built-in defaults).</summary>
+    public List<string>? AiCommandAllowlist { get; set; }
+    /// <summary>Added with RDP hosts; absent in older backups → SSH.</summary>
+    public HostProtocol Protocol { get; set; }
     public string? Notes { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/MySSH.Mcp/MySSH.Mcp.csproj" />
+    <!-- Built (not referenced) so the end-to-end tests can run the real myssh-mcp bridge; copied next to the tests below. -->
+    <ProjectReference Include="../../src/MySSH.McpBridge/MySSH.McpBridge.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="ModelContextProtocol" />
+  </ItemGroup>
+
+  <!-- Copy the bridge's build output (myssh-mcp.dll + runtimeconfig/deps + apphost) into bridge/ under the test output. -->
+  <Target Name="CopyMcpBridge" AfterTargets="Build">
+    <MSBuild Projects="../../src/MySSH.McpBridge/MySSH.McpBridge.csproj" Targets="GetTargetPath" Properties="Configuration=$(Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_McpBridgeTarget" />
+    </MSBuild>
+    <PropertyGroup>
+      <_McpBridgeDir>@(_McpBridgeTarget->'%(RootDir)%(Directory)')</_McpBridgeDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <_McpBridgeFiles Include="$(_McpBridgeDir)myssh-mcp*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_McpBridgeFiles)" DestinationFolder="$(OutDir)bridge" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

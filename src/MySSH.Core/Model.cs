@@ -1,9 +1,23 @@
 namespace MySSH.Core;
 
 /// <summary>Who may act on a host through the shared tool layer (design §6.3). Default Off: invisible to AI/MCP.</summary>
-public enum AiPolicy { Off = 0, ReadOnly = 1, Ask = 2, Trusted = 3 }
+public enum AiPolicy
+{
+    Off = 0,
+    ReadOnly = 1,
+    /// <summary>Every command, file change and terminal input asks the user.</summary>
+    Ask = 2,
+    /// <summary>Runs without asking, except high-risk commands, overwrites, deletes and pressing Enter in a terminal.</summary>
+    Trusted = 3,
+    /// <summary>Everything runs without asking, high-risk commands included. Still audited. The user's explicit choice per host.</summary>
+    FullAccess = 4,
+}
 
 public enum IdentityKind { Password = 0, PrivateKey = 1 }
+
+/// <summary>How MySSH reaches a host. RDP hosts open in the system remote-desktop client, tunnelled through
+/// <see cref="Host.JumpChain"/> (SSH hosts) when set.</summary>
+public enum HostProtocol { Ssh = 0, Rdp = 1 }
 
 public enum ProxyKind { Http = 0, Socks5 = 1 }
 
@@ -14,6 +28,9 @@ public sealed record Host
     public required string Label { get; init; }
     public required string Hostname { get; init; }
     public int Port { get; init; } = 22;
+    /// <summary>SSH (terminal / SFTP / AI tools) or RDP (Windows remote desktop via the system client).</summary>
+    public HostProtocol Protocol { get; init; } = HostProtocol.Ssh;
+    public const int DefaultRdpPort = 3389;
     /// <summary>Overrides <see cref="Identity.Username"/> when set.</summary>
     public string? Username { get; init; }
     public Guid? IdentityId { get; init; }
@@ -27,6 +44,11 @@ public sealed record Host
     public AiPolicy AiPolicy { get; init; } = AiPolicy.Off;
     /// <summary>Optional low-privilege identity used for AI/MCP actions instead of <see cref="IdentityId"/>.</summary>
     public Guid? AiIdentityId { get; init; }
+    /// <summary>
+    /// Commands allowed under <see cref="AiPolicy.ReadOnly"/> (design §6.3). Each entry is a command prefix matched on word
+    /// boundaries, e.g. "df -h", "systemctl status". Empty = the built-in read-only defaults of MySSH.Tools.
+    /// </summary>
+    public IReadOnlyList<string> AiCommandAllowlist { get; init; } = [];
     public string? Notes { get; init; }
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; init; } = DateTimeOffset.UtcNow;

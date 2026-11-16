@@ -27,6 +27,8 @@ public abstract partial class SessionTabViewModel : ObservableObject, IAsyncDisp
 
     protected ISshConnector Connector { get; }
     protected IUiServices Ui { get; }
+    /// <summary>Stable id for MCP / AI (list_sessions, read_terminal). Short and unguessable enough to avoid mix-ups.</summary>
+    public string SessionId { get; } = "s-" + Guid.NewGuid().ToString("N")[..8];
     public Guid HostId { get; }
     public string HostLabel { get; }
     /// <summary>"bastion → prod" style chain for the status bar.</summary>
@@ -38,7 +40,7 @@ public abstract partial class SessionTabViewModel : ObservableObject, IAsyncDisp
     [ObservableProperty] public partial string? StatusMessage { get; set; }
     /// <summary>Views stay alive while hidden (terminal scrollback must survive tab switches).</summary>
     [ObservableProperty] public partial bool IsSelected { get; set; }
-    public string Icon => Kind == SessionKind.Terminal ? "terminal" : "folder";
+    public string Icon => Kind switch { SessionKind.Terminal => "terminal", SessionKind.Sftp => "folder", _ => "application" };
 
     public bool IsConnecting => State == SessionState.Connecting;
     public bool IsConnected => State == SessionState.Connected;
@@ -76,6 +78,13 @@ public abstract partial class SessionTabViewModel : ObservableObject, IAsyncDisp
     public abstract ValueTask DisposeAsync();
 }
 
+/// <summary>Screen access for the tool layer, implemented by the view over its TerminalView. UI thread only.</summary>
+public interface ITerminalScreen
+{
+    string GetRecentText(int maxLines);
+    bool TypeText(string text, bool pressEnter);
+}
+
 /// <summary>Interactive shell tab. The view attaches <see cref="Backend"/> to a TerminalView.</summary>
 public sealed partial class TerminalSessionViewModel(ISshConnector connector, IUiServices ui, Guid hostId, string hostLabel, string via)
     : SessionTabViewModel(connector, ui, hostId, hostLabel, via)
@@ -86,6 +95,29 @@ public sealed partial class TerminalSessionViewModel(ISshConnector connector, IU
 
     public override SessionKind Kind => SessionKind.Terminal;
     [ObservableProperty] public partial ITerminalBackend? Backend { get; set; }
+    /// <summary>Set by the view while a TerminalView shows this session (UI thread only).</summary>
+    public ITerminalScreen? Screen { get; set; }
+
+    /// <summary>Remote working directory reported by the shell (OSC 7), when it does; SFTP opens there.</summary>
+    public string? WorkingDirectory { get; private set; }
+
+    /// <summary>OSC 7 payload ("file://host/path", percent-encoded) or a plain path → remote absolute path.</summary>
+    public void NotifyWorkingDirectory(string? reported)
+    {
+        if (string.IsNullOrWhiteSpace(reported)) return;
+        var path = reported.StartsWith("file://", StringComparison.OrdinalIgnoreCase) && Uri.TryCreate(reported, UriKind.Absolute, out var uri)
+            ? Uri.UnescapeDataString(uri.AbsolutePath)
+            : reported;
+        if (path.StartsWith('/')) WorkingDirectory = path;
+    }
+
+    /// <summary>The workspace opens an SFTP tab for this host next to this tab.</summary>
+    public event Action<TerminalSessionViewModel>? OpenSftpRequested;
+
+    [RelayCommand]
+    void OpenSftp() => OpenSftpRequested?.Invoke(this);
+    public int Columns => _cols;
+    public int RowCount => _rows;
     [ObservableProperty] public partial string GridSize { get; set; } = "80×24";
 
     public void NotifyGridSize(int cols, int rows)
@@ -164,8 +196,8 @@ public sealed record SftpRowViewModel(SftpEntry Entry, string Icon, string SizeT
 
 public sealed record BreadcrumbItem(string Name, string Path)
 {
-    /// <summary>The root "/" is its own separator.</summary>
-    public bool ShowSeparator => Path != "/";
+    /// <summary>The root "/" is its own separator: no extra "/" before the root or its direct children ("/ var / log").</summary>
+    public bool ShowSeparator => Path.Count(c => c == '/') > 1;
 }
 
 public sealed partial class TransferRowViewModel(TransferItem item) : ObservableObject
@@ -201,6 +233,8 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
     TransferQueue? _transfers;
 
     public override SessionKind Kind => SessionKind.Sftp;
+    /// <summary>Directory to open first (e.g. the terminal's current directory); home when missing or not a directory.</summary>
+    public string? InitialPath { get; init; }
     public ObservableCollection<SftpRowViewModel> Entries { get; } = [];
     public ObservableCollection<BreadcrumbItem> Breadcrumb { get; } = [];
     public ObservableCollection<TransferRowViewModel> Transfers { get; } = [];
@@ -231,7 +265,17 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
             _transfers.ProgressChanged += p => OnUi(() => Transfers.FirstOrDefault(t => t.Item.Id == p.ItemId)?.Refresh());
             State = SessionState.Connected;
             StatusMessage = null;
-            await NavigateAsync(_sftp.HomeDirectory);
+            var start = _sftp.HomeDirectory;
+            if (InitialPath is { Length: > 0 } initial)
+            {
+                try
+                {
+                    if (await _sftp.StatAsync(initial) is { Kind: SftpEntryKind.Directory or SftpEntryKind.Symlink })
+                        start = initial;
+                }
+                catch (Exception e) when (e is IOException or InvalidOperationException) { }
+            }
+            await NavigateAsync(start);
         }
         catch (Exception e) when (e is SshConnectException or SshConnectionLostException or OperationCanceledException or IOException or InvalidOperationException)
         {
@@ -449,6 +493,9 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
 /// <summary>The "Sessions" page: open tabs and the active one.</summary>
 public sealed partial class SessionsWorkspaceViewModel(Func<ISshConnector?> connector, IUiServices ui) : ObservableObject, IAsyncDisposable
 {
+    /// <summary>Needed for RDP tabs (host / identity lookup, client launcher); set after unlock.</summary>
+    public RdpServices? Rdp { get; set; }
+
     public ObservableCollection<SessionTabViewModel> Tabs { get; } = [];
     [ObservableProperty] public partial SessionTabViewModel? SelectedTab { get; set; }
     public bool IsEmpty => Tabs.Count == 0;
@@ -464,15 +511,38 @@ public sealed partial class SessionsWorkspaceViewModel(Func<ISshConnector?> conn
     public SessionTabViewModel Open(HostRowViewModel host, SessionKind kind)
     {
         var c = connector() ?? throw new InvalidOperationException("Not unlocked.");
-        SessionTabViewModel tab = kind == SessionKind.Terminal
-            ? new TerminalSessionViewModel(c, ui, host.Id, host.Name, host.Via)
-            : new SftpSessionViewModel(c, ui, host.Id, host.Name, host.Via) { Title = $"{host.Name} · SFTP" };
+        SessionTabViewModel tab = kind switch
+        {
+            SessionKind.Terminal => new TerminalSessionViewModel(c, ui, host.Id, host.Name, host.Via),
+            SessionKind.Sftp => new SftpSessionViewModel(c, ui, host.Id, host.Name, host.Via) { Title = $"{host.Name} · SFTP" },
+            _ => new RdpSessionViewModel(c, ui, host.Id, host.Name, host.Via, Rdp ?? throw new InvalidOperationException("RDP services are not set.")),
+        };
         Tabs.Add(tab);
         SelectedTab = tab;
         OnPropertyChanged(nameof(IsEmpty));
         OnPropertyChanged(nameof(HasTabs));
         if (tab is SftpSessionViewModel sftp) _ = sftp.ConnectAsync();
+        if (tab is RdpSessionViewModel rdp) _ = rdp.ConnectAsync();
+        if (tab is TerminalSessionViewModel term) term.OpenSftpRequested += t => OpenSftpFor(t);
         return tab;
+    }
+
+    /// <summary>SFTP for the terminal's host, inserted right after it, opened in the terminal's working directory.</summary>
+    public SftpSessionViewModel OpenSftpFor(TerminalSessionViewModel terminal)
+    {
+        var c = connector() ?? throw new InvalidOperationException("Not unlocked.");
+        var sftp = new SftpSessionViewModel(c, ui, terminal.HostId, terminal.HostLabel, terminal.Via)
+        {
+            Title = $"{terminal.HostLabel} · SFTP",
+            InitialPath = terminal.WorkingDirectory,
+        };
+        var i = Tabs.IndexOf(terminal);
+        Tabs.Insert(i < 0 ? Tabs.Count : i + 1, sftp);
+        SelectedTab = sftp;
+        OnPropertyChanged(nameof(IsEmpty));
+        OnPropertyChanged(nameof(HasTabs));
+        _ = sftp.ConnectAsync();
+        return sftp;
     }
 
     [RelayCommand]

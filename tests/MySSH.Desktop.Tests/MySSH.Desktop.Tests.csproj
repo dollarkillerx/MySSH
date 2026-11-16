@@ -9,6 +9,8 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Avalonia.Headless.XUnit" />
     <PackageReference Include="Avalonia.Skia" />
+    <!-- MCP client for the end-to-end controller test -->
+    <PackageReference Include="ModelContextProtocol" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../fixtures/legacy/**/*" LinkBase="fixtures/legacy" CopyToOutputDirectory="PreserveNewest" />

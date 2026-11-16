@@ -190,6 +190,41 @@ internal static class Migrations
                 PRIMARY KEY (table_name, record_id, field)
             ) WITHOUT ROWID;
             """),
+
+        // P3: shared tool layer (design §6). ReadOnly-policy command allowlist, audit log, vault-encrypted secret settings.
+        new(2, """
+            ALTER TABLE hosts ADD COLUMN ai_command_allowlist TEXT NOT NULL DEFAULT '[]' CHECK (json_valid(ai_command_allowlist));
+
+            -- Append-only tool-call log. host_id is deliberately NOT a foreign key: entries outlive the host.
+            CREATE TABLE audit_log (
+                id          TEXT    NOT NULL PRIMARY KEY,
+                ts          INTEGER NOT NULL,   -- UTC ticks (DateTimeOffset.UtcTicks), sortable
+                actor       TEXT    NOT NULL,
+                tool        TEXT    NOT NULL,
+                host_id     TEXT    NULL,
+                args_json   TEXT    NOT NULL,
+                decision    INTEGER NOT NULL,
+                exit_code   INTEGER NULL,
+                duration_ms INTEGER NOT NULL,
+                error       TEXT    NULL
+            );
+            CREATE INDEX ix_audit_log_ts ON audit_log(ts);
+            CREATE INDEX ix_audit_log_host ON audit_log(host_id, ts);
+
+            -- Named secrets (e.g. the MCP bearer token). value: AES-GCM field blob, AAD "secret_settings:{id}:value" where
+            -- id is a name-based UUID of the key, so a blob copied to another key fails to decrypt. Never exported in backups.
+            CREATE TABLE secret_settings (
+                key         TEXT NOT NULL PRIMARY KEY,
+                id          TEXT NOT NULL UNIQUE,
+                value       BLOB NOT NULL,
+                updated_at  TEXT NOT NULL
+            ) WITHOUT ROWID;
+            """),
+
+        // Windows remote desktop hosts (opened in the system RDP client, optionally tunnelled through SSH jump hosts).
+        new(3, """
+            ALTER TABLE hosts ADD COLUMN protocol INTEGER NOT NULL DEFAULT 0 CHECK (protocol IN (0, 1));
+            """),
     ];
 }
 

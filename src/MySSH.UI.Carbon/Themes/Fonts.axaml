@@ -1,6 +1,6 @@
 <!-- IBM Plex Sans / Mono (SIL OFL 1.1, see Assets/Fonts/OFL.txt), bundled Latin/Greek/Cyrillic only.
-     CJK text falls back to the platform font (PingFang / Microsoft YaHei / Noto CJK) via Avalonia font fallback;
-     IBM Plex Sans SC/JP are not bundled in P1 because of their size. -->
+     CJK text needs an explicit platform font chain that matches the UI language (CarbonFonts.Apply, called by the app
+     on every language change); these defaults are for hosts that never call it. -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <FontFamily x:Key="CarbonFontSans">avares://MySSH.UI.Carbon/Assets/Fonts#IBM Plex Sans, $Default</FontFamily>

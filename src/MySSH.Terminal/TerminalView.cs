@@ -522,6 +522,73 @@ public sealed partial class TerminalView : Control
         return string.Join('\n', lines.Skip(start).Take(end - start));
     }
 
+    /// <summary>
+    /// The last <paramref name="maxLines"/> logical lines of scrollback + live screen as plain text (UI thread). Soft-wrapped
+    /// rows are joined into one line; trailing blank rows are dropped. Used by MCP / AI <c>read_terminal</c>.
+    /// </summary>
+    public string GetRecentText(int maxLines)
+    {
+        var buf = Engine.Buffer;
+        var last = Math.Min(buf.Lines.Length - 1, buf.YBase + Engine.Rows - 1);
+        while (last >= 0 && (buf.GetLine(last)?.TranslateToString(true, 0, Engine.Cols) ?? string.Empty).Length == 0)
+        {
+            last--;
+        }
+
+        var lines = new List<string>();
+        var sb = new StringBuilder();
+        for (var r = last; r >= 0 && lines.Count < Math.Max(0, maxLines); r--)
+        {
+            var line = buf.GetLine(r);
+            // Wrapped rows keep their trailing spaces (they are part of the text), the final row is right-trimmed.
+            var wrappedInto = r < last && buf.GetLine(r + 1) is { IsWrapped: true };
+            sb.Insert(0, line?.TranslateToString(!wrappedInto, 0, Engine.Cols) ?? string.Empty);
+            if (line is { IsWrapped: true } && r > 0)
+            {
+                continue;
+            }
+
+            lines.Add(sb.ToString());
+            sb.Clear();
+        }
+
+        lines.Reverse();
+        return string.Join('\n', lines);
+    }
+
+    /// <summary>
+    /// Types <paramref name="text"/> on behalf of a tool call that was already authorized: no <see cref="PasteRequested"/>
+    /// confirmation. Multi-line text goes through the engine's paste path (bracketed when the application enabled mode 2004);
+    /// without bracketed paste, line breaks would execute lines, so multi-line text is refused unless
+    /// <paramref name="pressEnter"/> is set. Returns false when the session is closed or the text was refused.
+    /// </summary>
+    public bool TypeText(string text, bool pressEnter)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+        if (_inputClosed || _backend is null)
+        {
+            return false;
+        }
+
+        if (!pressEnter && !Engine.BracketedPasteMode && text.AsSpan().IndexOfAny('\r', '\n') >= 0)
+        {
+            return false;
+        }
+
+        ScrollToBottomOnInput();
+        if (text.Length > 0)
+        {
+            Engine.Paste(text);
+        }
+
+        if (pressEnter)
+        {
+            SendText("\r");
+        }
+
+        return true;
+    }
+
     /// <summary>Clears the screen and scrollback, keeping the cursor line (like xterm.js <c>clear()</c>).</summary>
     public void Clear()
     {

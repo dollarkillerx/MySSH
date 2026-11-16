@@ -72,7 +72,20 @@ jobs:
       - name: NativeAOT runtime smoke test (storage, crypto, legacy import, resources; no UI, no OS keystore)
         shell: bash
         run: publish/desktop/MySSH --self-test tests/fixtures/legacy/appdata/myssh
+      - name: AOT warning gate (myssh-mcp bridge)
+        shell: bash
+        run: tools/aot/check-aot-warnings.sh ${{ matrix.rid }} src/MySSH.McpBridge
       - run: dotnet publish src/MySSH.McpBridge -c Release -r ${{ matrix.rid }} -o publish/bridge
+      - name: NativeAOT bridge smoke test (MySSH not running -> exit code 3)
+        shell: bash
+        run: |
+          set +e
+          if [[ "$RUNNER_OS" == "Windows" ]]; then addr='\\.\pipe\myssh-mcp-ci-not-running'; else addr="$RUNNER_TEMP/none.sock"; fi
+          publish/bridge/myssh-mcp --socket "$addr" < /dev/null 2> bridge-err.txt
+          code=$?
+          cat bridge-err.txt
+          ls -l publish/bridge
+          [[ $code -eq 3 ]] && grep -q "MySSH is not running" bridge-err.txt
       - uses: actions/upload-artifact@v4
         with:
           name: myssh-${{ matrix.rid }}

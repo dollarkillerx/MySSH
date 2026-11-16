@@ -28,6 +28,13 @@ public interface ISshConnection : IAsyncDisposable
 
     /// <summary>Opens an SFTP session (its own SSH session to the target through the same chain, same pinned host key).</summary>
     Task<ISftpSession> OpenSftpAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Opens 127.0.0.1:&lt;random&gt; → <paramref name="remoteHost"/>:<paramref name="remotePort"/> as seen from the target
+    /// (e.g. RDP to a Windows host behind this SSH host). Keeps the connection alive until the forward is disposed.
+    /// </summary>
+    Task<ILocalForward> OpenLocalForwardAsync(string remoteHost, int remotePort, CancellationToken ct = default) =>
+        throw new NotSupportedException("This connection does not support port forwarding.");
 }
 
 internal sealed class SshConnectionLease : ISshConnection
@@ -97,6 +104,22 @@ internal sealed class SshConnectionLease : ISshConnection
         try
         {
             return await SshSftpSession.OpenAsync(r, ct);
+        }
+        catch
+        {
+            await r.DisposeAsync();
+            throw;
+        }
+    }
+
+    public async Task<ILocalForward> OpenLocalForwardAsync(string remoteHost, int remotePort, CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+        Chain.ThrowIfNotConnected();
+        var r = _ref.AddRef();
+        try
+        {
+            return await SshLocalForward.OpenAsync(r, remoteHost, remotePort, ct);
         }
         catch
         {

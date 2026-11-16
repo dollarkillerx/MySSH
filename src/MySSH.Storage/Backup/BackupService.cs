@@ -104,7 +104,7 @@ public sealed class BackupService
                     Id = h.Id, Label = h.Label, Hostname = h.Hostname, Port = h.Port, Username = h.Username, IdentityId = h.IdentityId,
                     GroupId = h.GroupId, Tags = [.. h.Tags], ProxyId = h.ProxyId, JumpChain = [.. h.JumpChain],
                     KeepAliveSeconds = h.KeepAliveSeconds, Encoding = h.Encoding, AiPolicy = h.AiPolicy, AiIdentityId = h.AiIdentityId,
-                    Notes = h.Notes, CreatedAt = h.CreatedAt, UpdatedAt = h.UpdatedAt,
+                    AiCommandAllowlist = [.. h.AiCommandAllowlist], Protocol = h.Protocol, Notes = h.Notes, CreatedAt = h.CreatedAt, UpdatedAt = h.UpdatedAt,
                 });
             }
 
@@ -302,7 +302,7 @@ public sealed class BackupService
                 Id = h.Id, Label = h.Label ?? "", Hostname = h.Hostname ?? "", Port = h.Port, Username = h.Username,
                 IdentityId = h.IdentityId, GroupId = h.GroupId, Tags = h.Tags ?? [], ProxyId = h.ProxyId, JumpChain = h.JumpChain ?? [],
                 KeepAliveSeconds = h.KeepAliveSeconds, Encoding = h.Encoding ?? "utf-8", AiPolicy = h.AiPolicy, AiIdentityId = h.AiIdentityId,
-                Notes = h.Notes, CreatedAt = h.CreatedAt, UpdatedAt = h.UpdatedAt,
+                AiCommandAllowlist = h.AiCommandAllowlist ?? [], Protocol = Enum.IsDefined(h.Protocol) ? h.Protocol : HostProtocol.Ssh, Notes = h.Notes, CreatedAt = h.CreatedAt, UpdatedAt = h.UpdatedAt,
             });
         }
         foreach (var k in payload.KnownHosts)

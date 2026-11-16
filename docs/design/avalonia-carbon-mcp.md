@@ -185,7 +185,8 @@ P0 在 4 个候选里做了 24 项一致性用例和吞吐对比，XTerm.NET 3.0
 | **Off**（默认） | 不可见 | 不可见 |
 | **ReadOnly** | 允许 | 只允许白名单命令 |
 | **Ask** | 允许 | 每次审批 |
-| **Trusted** | 允许 | 自动放行，**命中高风险规则时仍然审批** |
+| **Trusted** | 允许 | 自动放行；**命中高风险规则（rm、stop、reboot 等）、覆盖文件、删除、在终端里按回车时仍然审批** |
+| **FullAccess**（完全授权） | 允许 | 全部自动放行，包括高风险操作；只在审计里标记高风险。主机编辑面板显示警告 |
 
 高风险规则只是启发式的防误操作手段，不是安全边界；建议为 AI 单独设置低权限的 `aiIdentityId`。审批等待超时（120 秒）按拒绝处理。
 
@@ -313,6 +314,12 @@ loop (最多 25 步，可以随时取消):
 
 ---
 
+### 8.1 Windows 远程桌面（RDP，方案 A：调用系统客户端）
+- 主机新增 `protocol`（SSH | RDP，存储 v3）。RDP 主机默认端口 3389，用密码身份登录；不参与 AI / MCP（工具层对 RDP 主机不可见），不能作为跳板机，不使用代理。
+- 打开 RDP 主机时生成 `.rdp`（UTF-8 BOM、CRLF、仅当前用户可读，标签页关闭即删除；**不写密码**，提供「复制密码」），交给系统客户端：Windows `mstsc`，macOS Windows App（`open -b com.microsoft.rdc.macos`），Linux Remmina / xfreerdp。没有客户端时提示安装。
+- 设置了跳板机时：连接到该 SSH 主机（它自己的跳板链照常生效），开 `ILocalForward`（127.0.0.1:随机 → 目标:3389，direct-tcpip），`.rdp` 指向本地端口；隧道随标签页存在。
+- 方案 B（FreeRDP 内嵌到标签页）留到以后评估。
+
 ## 9. Carbon 主题（MySSH.UI.Carbon）
 
 ### 9.1 Token（由 `tools/gen-carbon-tokens` 从 `@carbon/themes` 生成，下表只举例）
@@ -378,7 +385,7 @@ UI Shell Header / SideNav · Button（5 种）· Text input / Password / Text ar
 1. 在当前 `main` 最后一个 Tauri 提交上打 tag **`tauri-final`**，方便以后查阅。
 2. P1 的第一个提交删除 `src/`（Vue）、`src-tauri/`、`index.html`、`vite.config.js`、`package.json`、`pnpm-lock.yaml`、`public/`，同时更新 `.gitignore`。
 3. 旧代码里两样东西要**先提取再删**：`src/locales/*.json` 转成 `.resx`；用旧代码生成一份迁移 fixture（加密的 `servers.json` 和 `.key`），放进 `tests/fixtures/legacy/`。
-4. README 重写为 .NET 版的构建说明；`README/` 下的截图在 P5 换成新界面的截图。
+4. README 重写为 .NET 版的构建说明；截图在 `docs/screenshots/`，由 `ReadmeScreenshots` 测试用演示数据生成（`MYSSH_README_SCREENSHOTS=1`）。
 
 ---
 
@@ -389,7 +396,7 @@ UI Shell Header / SideNav · Button（5 种）· Text input / Password / Text ar
 | **P0 Spike** ✅ | 已完成，结论见 `spikes/FINDINGS.md` | — |
 | **P1 基础** ✅ | 已完成（分支 `p1-foundation`）：删除 Tauri、解决方案骨架、Carbon 主题与控件和 Gallery、Storage/Vault、旧数据导入、known_hosts 存储、主窗口、CI。AOT 门禁：自有库逐成员分析；第三方警告对照 `tools/aot/allowed-warnings.txt`；AOT 二进制跑 `--self-test` | 已达成：UI 测试和 AOT 自检都覆盖「导入旧数据并展示主机列表」 |
 | **P2 终端与功能对齐** ✅（待真机验收） | 已完成（分支 `p2-terminal-ssh`）：TerminalView（按行缓存，160×50 满屏约 2.5ms；程序绘制框线；输入法；搜索；链接）、SSH 层（多跳、代理、两阶段 TOFU、心跳、Shell/Exec、SFTP 符号链接安全、传输队列）、主机/身份/已知主机/设置页、会话工作区（终端标签 + SFTP 面板 + 文本编辑 + 拖放上传）、主机密钥与口令提示、断线重连横幅 | 自动化：380 项测试（含真实 sshd 端到端）、AOT 门禁、原生自检通过；输入法和真实剪贴板需真机验收 |
-| **P3 工具层 + MCP** | `MySSH.Tools`、策略和审批、审计；MCP 先上只读工具，再上执行和写操作，最后上终端读写 | 策略矩阵测试通过，Claude Code 和 Claude Desktop 都能接入 |
+| **P3 工具层 + MCP** ✅（待真实客户端验收） | 已完成（分支 `p3-tools-mcp`）：`MySSH.Tools`（11 个工具、Schema 校验、策略引擎含 FullAccess、高风险规则与白名单防绕过、审批超时、审计）；存储 v2（白名单、audit_log、加密 Secret）；`MySSH.Mcp`（Stateless HTTP + 本地套接字/命名管道、资源与提示、客户端跟踪）；`myssh-mcp` AOT 桥（约 1.8MB）；桌面端审批 Modal、AI / MCP 页（开关、Token、一键接入、审计日志）、托盘常驻 | 策略矩阵（5 种策略 × 全部工具变体）与真实 sshd 端到端测试通过；SDK 客户端经 HTTP / 本地套接字 / 桥接入通过；Claude Code / Claude Desktop 需真机接入验收 |
 | **P4 AI 助手** | 提供商配置（预置三家 + 自定义）、Agent 循环、AI 面板、内联审批、终端内 `Ctrl+I`、上下文胶囊与脱敏、会话存储 | 三家预置加一个本地 OpenAI 兼容端点（如 Ollama）都能完成「分析报错 → 读终端 → 建议命令」的流程 |
 | **P5 发布** | Velopack 打包和自动更新、macOS 签名公证、README 和截图 | 三个平台的安装包 |
 | P6 可选 | AI 助手连接外部 MCP Server、端口转发界面、Snippets | |

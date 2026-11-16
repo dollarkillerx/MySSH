@@ -10,8 +10,10 @@ namespace MySSH.Desktop.ViewModels;
 /// <summary>One row of the Carbon data table on the Hosts page (design §8.4 wireframe).</summary>
 public sealed record HostRowViewModel(
     Guid Id, string Name, string Address, string User, string Auth, string Via, AiPolicy AiPolicy, string AiPolicyText,
-    IReadOnlyList<string> Tags)
+    IReadOnlyList<string> Tags, HostProtocol Protocol = HostProtocol.Ssh)
 {
+    public bool IsRdp => Protocol == HostProtocol.Rdp;
+
     internal bool Matches(string query) =>
         Name.Contains(query, StringComparison.OrdinalIgnoreCase)
         || Address.Contains(query, StringComparison.OrdinalIgnoreCase)
@@ -44,7 +46,7 @@ public sealed partial class HostListViewModel : ObservableObject
     [ObservableProperty] public partial bool IsLoading { get; set; }
     [ObservableProperty] public partial bool IsEmpty { get; set; } = true;
     [ObservableProperty] public partial string CountText { get; set; } = "";
-    [ObservableProperty] public partial HostRowViewModel? SelectedRow { get; set; }
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(OpenSftpCommand))] public partial HostRowViewModel? SelectedRow { get; set; }
 
     [ObservableProperty] public partial HostEditorViewModel? Editor { get; set; }
     [ObservableProperty] public partial string? Error { get; set; }
@@ -112,19 +114,22 @@ public sealed partial class HostListViewModel : ObservableObject
         }
     }
 
+    /// <summary>Double-click / Enter / "Connect": a terminal for SSH hosts, the remote desktop tab for RDP hosts.</summary>
     [RelayCommand]
     void Connect(HostRowViewModel? row)
     {
         row ??= SelectedRow;
-        if (row is not null) ConnectRequested?.Invoke(row, SessionKind.Terminal);
+        if (row is not null) ConnectRequested?.Invoke(row, row.IsRdp ? SessionKind.Rdp : SessionKind.Terminal);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanOpenSftp))]
     void OpenSftp(HostRowViewModel? row)
     {
         row ??= SelectedRow;
-        if (row is not null) ConnectRequested?.Invoke(row, SessionKind.Sftp);
+        if (row is { IsRdp: false }) ConnectRequested?.Invoke(row, SessionKind.Sftp);
     }
+
+    bool CanOpenSftp(HostRowViewModel? row) => (row ?? SelectedRow) is { IsRdp: false };
 
     public async Task LoadAsync(CancellationToken ct = default)
     {
@@ -157,6 +162,11 @@ public sealed partial class HostListViewModel : ObservableObject
             hops.Add(hosts.TryGetValue(jid, out var j) ? j.Label : "?");
         var via = hops.Count == 0 ? "—" : string.Join(" → ", hops);
 
+        if (h.Protocol == HostProtocol.Rdp)
+        {
+            var rdpAddress = "rdp://" + (h.Port == Host.DefaultRdpPort ? h.Hostname : $"{h.Hostname}:{h.Port}");
+            return new HostRowViewModel(h.Id, h.Label, rdpAddress, user, auth, via, AiPolicy.Off, "—", h.Tags, HostProtocol.Rdp);
+        }
         var address = h.Port == 22 ? h.Hostname : $"{h.Hostname}:{h.Port}";
         return new HostRowViewModel(h.Id, h.Label, address, user, auth, via, h.AiPolicy, loc["aiPolicy." + h.AiPolicy], h.Tags);
     }

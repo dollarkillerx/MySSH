@@ -3,4 +3,10 @@
     <ProjectReference Include="../MySSH.Core/MySSH.Core.csproj" />
     <ProjectReference Include="../MySSH.Ssh/MySSH.Ssh.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySSH.Tools.Tests" />
+  </ItemGroup>
 </Project>
