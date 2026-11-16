@@ -583,6 +583,19 @@ journalctl -u nginx -n 200</value></data>
   <data name="tray.quit" xml:space="preserve"><value>Quit MySSH</value></data>
   <data name="tray.show" xml:space="preserve"><value>Show MySSH</value></data>
   <data name="tray.tooltip" xml:space="preserve"><value>MySSH — MCP server running</value></data>
+  <data name="updates.auto" xml:space="preserve"><value>Check for updates automatically</value></data>
+  <data name="updates.check" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="updates.checking" xml:space="preserve"><value>Checking for updates…</value></data>
+  <data name="updates.current" xml:space="preserve"><value>MySSH {version}</value></data>
+  <data name="updates.downloading" xml:space="preserve"><value>Downloading MySSH {version}… {percent}%</value></data>
+  <data name="updates.failed" xml:space="preserve"><value>Could not check for updates: {error}</value></data>
+  <data name="updates.notInstalled" xml:space="preserve"><value>Updates work in the installed app only (this is a development build).</value></data>
+  <data name="updates.ready" xml:space="preserve"><value>MySSH {version} is ready. Restart to install it; open sessions will be closed.</value></data>
+  <data name="updates.readyNotice" xml:space="preserve"><value>MySSH {version} has been downloaded. Install it from Settings → Updates.</value></data>
+  <data name="updates.readyTitle" xml:space="preserve"><value>Update ready</value></data>
+  <data name="updates.restart" xml:space="preserve"><value>Restart to update</value></data>
+  <data name="updates.title" xml:space="preserve"><value>Updates</value></data>
+  <data name="updates.upToDate" xml:space="preserve"><value>You're up to date.</value></data>
   <data name="validation.hostname" xml:space="preserve"><value>Host names cannot contain spaces</value></data>
   <data name="validation.identity" xml:space="preserve"><value>Choose an identity</value></data>
   <data name="validation.jumpCycle" xml:space="preserve"><value>Jump chain loops back to this host: {path}</value></data>

@@ -40,6 +40,24 @@
         </StackPanel>
       </StackPanel>
 
+      <StackPanel Spacing="12" DataContext="{Binding Updates}" x:DataType="vm:UpdatesViewModel" Name="UpdatesSection"
+                  IsVisible="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).Updates, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <TextBlock Classes="heading-02" Text="{l:Tr updates.title}" />
+        <TextBlock Classes="body-01" Text="{Binding CurrentVersion}" />
+        <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{Binding StatusText}" Name="UpdateStatus"
+                   IsVisible="{Binding StatusText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        <ProgressBar IsIndeterminate="{Binding State, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static vm:UpdateState.Checking}}"
+                     Value="{Binding Progress}" Maximum="100" IsVisible="{Binding IsBusy}" HorizontalAlignment="Stretch" />
+        <StackPanel Orientation="Horizontal" Spacing="16">
+          <Button Classes="tertiary md" carbon:ButtonAssist.Icon="renew" Content="{l:Tr updates.check}" Command="{Binding CheckCommand}"
+                  IsVisible="{Binding !IsReady}" Name="CheckUpdates" />
+          <Button Classes="primary md" carbon:ButtonAssist.Icon="launch" Content="{l:Tr updates.restart}" Command="{Binding RestartCommand}"
+                  IsVisible="{Binding IsReady}" Name="RestartToUpdate" />
+        </StackPanel>
+        <CheckBox IsChecked="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).CheckForUpdates}"
+                  Content="{l:Tr updates.auto}" />
+      </StackPanel>
+
       <StackPanel Spacing="8">
         <TextBlock Classes="heading-02" Text="{l:Tr settings.data}" />
         <TextBlock Classes="label-01 secondary" Text="{l:Tr settings.dataDir}" />

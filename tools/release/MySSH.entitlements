@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Hardened runtime with no exceptions: NativeAOT generates no code at runtime, and every bundled dylib is signed with
+     the same Developer ID (vpk signs the whole bundle). Not sandboxed (SSH, local sockets, ~/.ssh). -->
+<plist version="1.0">
+<dict>
+</dict>
+</plist>

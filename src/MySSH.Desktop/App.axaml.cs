@@ -33,7 +33,8 @@ public sealed partial class App : Application, IDisposable
         {
             ApplyFonts();
             Loc.Instance.CultureChanged += () => Dispatcher.UIThread.Post(ApplyFonts);
-            var shell = new ShellViewModel(ct => AppSession.OpenAsync(StorageOptions.Default, ct));
+            var shell = new ShellViewModel(ct => AppSession.OpenAsync(StorageOptions.Default, ct)) { Updater = new VelopackUpdater() };
+            shell.QuitRequested = () => Quit(desktop);
             // An exception escaping a UI event or async void handler would abort the whole app (and in NativeAOT its
             // message only goes to stderr). Log it, tell the user, keep running.
             Dispatcher.UIThread.UnhandledException += (_, e) =>
@@ -198,6 +199,13 @@ public sealed partial class App : Application, IDisposable
         return false;
     }
 
+    /// <summary>Tray "Quit" and "Restart to update".</summary>
+    void Quit(IClassicDesktopStyleApplicationLifetime desktop)
+    {
+        if (_shell is { } shell) RunQuitCleanup(shell); // Shutdown() is a forced exit: it may skip ShutdownRequested
+        desktop.Shutdown();
+    }
+
     void ShowTray(IClassicDesktopStyleApplicationLifetime desktop, Window window)
     {
         if (_tray is null)
@@ -208,11 +216,7 @@ public sealed partial class App : Application, IDisposable
             show.Click += (_, _) => ShowWindow(window);
             var quit = new NativeMenuItem();
             quit.Bind(NativeMenuItem.HeaderProperty, Loc.Instance.Bind("tray.quit"));
-            quit.Click += (_, _) =>
-            {
-                if (_shell is { } shell) RunQuitCleanup(shell); // Shutdown() is a forced exit: it may skip ShutdownRequested
-                desktop.Shutdown();
-            };
+            quit.Click += (_, _) => Quit(desktop);
             _tray = new TrayIcon
             {
                 Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://MySSH/Assets/icon.png"))),

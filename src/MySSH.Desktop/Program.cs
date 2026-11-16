@@ -10,6 +10,8 @@ internal static class Program
     [STAThread]
     public static int Main(string[] args)
     {
+        // First: Velopack's install / update hooks run here and may exit the process. A no-op when not installed.
+        Velopack.VelopackApp.Build().Run();
         ClearProviderEnvironment();
         if (args is ["--self-test", var legacyDir])
             return Services.SelfTest.RunAsync(legacyDir).GetAwaiter().GetResult();

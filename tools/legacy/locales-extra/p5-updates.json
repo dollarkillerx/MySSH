@@ -1,0 +1,47 @@
+{
+  "en-US": {
+    "updates.title": "Updates",
+    "updates.current": "MySSH {version}",
+    "updates.check": "Check for updates",
+    "updates.restart": "Restart to update",
+    "updates.auto": "Check for updates automatically",
+    "updates.notInstalled": "Updates work in the installed app only (this is a development build).",
+    "updates.checking": "Checking for updates…",
+    "updates.upToDate": "You're up to date.",
+    "updates.downloading": "Downloading MySSH {version}… {percent}%",
+    "updates.ready": "MySSH {version} is ready. Restart to install it; open sessions will be closed.",
+    "updates.failed": "Could not check for updates: {error}",
+    "updates.readyTitle": "Update ready",
+    "updates.readyNotice": "MySSH {version} has been downloaded. Install it from Settings → Updates."
+  },
+  "zh-CN": {
+    "updates.title": "更新",
+    "updates.current": "MySSH {version}",
+    "updates.check": "检查更新",
+    "updates.restart": "重启并更新",
+    "updates.auto": "自动检查更新",
+    "updates.notInstalled": "只有安装版才能更新（当前是开发版本）。",
+    "updates.checking": "正在检查更新…",
+    "updates.upToDate": "已是最新版本。",
+    "updates.downloading": "正在下载 MySSH {version}… {percent}%",
+    "updates.ready": "MySSH {version} 已就绪。重启后安装，当前打开的会话会被关闭。",
+    "updates.failed": "检查更新失败：{error}",
+    "updates.readyTitle": "更新已就绪",
+    "updates.readyNotice": "MySSH {version} 已下载，可在「设置 → 更新」中安装。"
+  },
+  "ja-JP": {
+    "updates.title": "アップデート",
+    "updates.current": "MySSH {version}",
+    "updates.check": "アップデートを確認",
+    "updates.restart": "再起動してアップデート",
+    "updates.auto": "アップデートを自動的に確認",
+    "updates.notInstalled": "アップデートはインストール版でのみ利用できます（現在は開発ビルドです）。",
+    "updates.checking": "アップデートを確認しています…",
+    "updates.upToDate": "最新バージョンです。",
+    "updates.downloading": "MySSH {version} をダウンロードしています… {percent}%",
+    "updates.ready": "MySSH {version} の準備ができました。再起動するとインストールされます（開いているセッションは閉じられます）。",
+    "updates.failed": "アップデートを確認できませんでした：{error}",
+    "updates.readyTitle": "アップデートの準備完了",
+    "updates.readyNotice": "MySSH {version} をダウンロードしました。「設定 → アップデート」からインストールできます。"
+  }
+}

@@ -16,6 +16,8 @@ public sealed record DesktopSettings
     public ThemePreference Theme { get; init; } = ThemePreference.System;
     public bool ConfirmMultilinePaste { get; init; } = true;
     public int TerminalFontSize { get; init; } = 14;
+    /// <summary>Look for a new release on GitHub after startup (packaged builds only).</summary>
+    public bool CheckForUpdates { get; init; } = true;
 
     public static async Task<DesktopSettings> LoadAsync(ISettingsStore store, CancellationToken ct = default) =>
         await store.GetAsync(Key, DesktopJsonContext.Default.DesktopSettings, ct) ?? new DesktopSettings();

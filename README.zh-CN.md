@@ -55,7 +55,9 @@
 
 ### 下载
 
-当前版本还没有发布安装包：[Releases](https://github.com/dollarkillerx/MySSH/releases) 里 v0.0.4 及之前的都是旧的 Tauri/Vue/Rust 版本（tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。目前请从源码构建。
+macOS（Apple 芯片）：从 [Releases](https://github.com/dollarkillerx/MySSH/releases) 下载 `MySSH-osx-Portable.zip`，解压后把 MySSH.app 拖到「应用程序」。安装包已签名并经过 Apple 公证，之后会自动更新（设置 → 更新）。
+
+Windows 和 Linux：目前请从源码构建。v0.0.4 及之前的发布是旧的 Tauri/Vue/Rust 版本（tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。
 
 ### 从源码构建
 

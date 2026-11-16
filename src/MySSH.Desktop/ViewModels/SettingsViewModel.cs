@@ -40,6 +40,9 @@ public sealed partial class SettingsViewModel : ObservableObject
     [ObservableProperty] public partial LanguageOption? Language { get; set; }
     [ObservableProperty] public partial ThemePreference Theme { get; set; }
     [ObservableProperty] public partial bool ConfirmMultilinePaste { get; set; } = true;
+    [ObservableProperty] public partial bool CheckForUpdates { get; set; } = true;
+    /// <summary>Set by the shell (one instance for the app's lifetime).</summary>
+    [ObservableProperty] public partial UpdatesViewModel? Updates { get; set; }
     [ObservableProperty] public partial string? Message { get; set; }
     [ObservableProperty] public partial bool MessageIsError { get; set; }
 
@@ -58,17 +61,20 @@ public sealed partial class SettingsViewModel : ObservableObject
         Language = Languages.FirstOrDefault(l => l.Culture == _settings.Language) ?? Languages[0];
         Theme = _settings.Theme;
         ConfirmMultilinePaste = _settings.ConfirmMultilinePaste;
+        CheckForUpdates = _settings.CheckForUpdates;
         _loading = false;
     }
 
     partial void OnLanguageChanged(LanguageOption? value) => _ = PersistAsync();
     partial void OnThemeChanged(ThemePreference value) => _ = PersistAsync();
     partial void OnConfirmMultilinePasteChanged(bool value) => _ = PersistAsync();
+    partial void OnCheckForUpdatesChanged(bool value) => _ = PersistAsync();
 
     async Task PersistAsync()
     {
         if (_loading) return;
-        _settings = _settings with { Language = Language?.Culture, Theme = Theme, ConfirmMultilinePaste = ConfirmMultilinePaste };
+        _settings = _settings with { Language = Language?.Culture, Theme = Theme, ConfirmMultilinePaste = ConfirmMultilinePaste,
+            CheckForUpdates = CheckForUpdates };
         _apply(_settings);
         await _settings.SaveAsync(_storage.Settings);
     }

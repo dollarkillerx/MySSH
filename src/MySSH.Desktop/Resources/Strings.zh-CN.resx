@@ -583,6 +583,19 @@ journalctl -u nginx -n 200</value></data>
   <data name="tray.quit" xml:space="preserve"><value>退出 MySSH</value></data>
   <data name="tray.show" xml:space="preserve"><value>显示 MySSH</value></data>
   <data name="tray.tooltip" xml:space="preserve"><value>MySSH — MCP 服务运行中</value></data>
+  <data name="updates.auto" xml:space="preserve"><value>自动检查更新</value></data>
+  <data name="updates.check" xml:space="preserve"><value>检查更新</value></data>
+  <data name="updates.checking" xml:space="preserve"><value>正在检查更新…</value></data>
+  <data name="updates.current" xml:space="preserve"><value>MySSH {version}</value></data>
+  <data name="updates.downloading" xml:space="preserve"><value>正在下载 MySSH {version}… {percent}%</value></data>
+  <data name="updates.failed" xml:space="preserve"><value>检查更新失败：{error}</value></data>
+  <data name="updates.notInstalled" xml:space="preserve"><value>只有安装版才能更新（当前是开发版本）。</value></data>
+  <data name="updates.ready" xml:space="preserve"><value>MySSH {version} 已就绪。重启后安装，当前打开的会话会被关闭。</value></data>
+  <data name="updates.readyNotice" xml:space="preserve"><value>MySSH {version} 已下载，可在「设置 → 更新」中安装。</value></data>
+  <data name="updates.readyTitle" xml:space="preserve"><value>更新已就绪</value></data>
+  <data name="updates.restart" xml:space="preserve"><value>重启并更新</value></data>
+  <data name="updates.title" xml:space="preserve"><value>更新</value></data>
+  <data name="updates.upToDate" xml:space="preserve"><value>已是最新版本。</value></data>
   <data name="validation.hostname" xml:space="preserve"><value>主机名不能包含空格</value></data>
   <data name="validation.identity" xml:space="preserve"><value>请选择一个身份</value></data>
   <data name="validation.jumpCycle" xml:space="preserve"><value>跳板链绕回了这台主机：{path}</value></data>

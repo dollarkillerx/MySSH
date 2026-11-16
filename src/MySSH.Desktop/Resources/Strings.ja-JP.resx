@@ -583,6 +583,19 @@ journalctl -u nginx -n 200</value></data>
   <data name="tray.quit" xml:space="preserve"><value>MySSH を終了</value></data>
   <data name="tray.show" xml:space="preserve"><value>MySSH を表示</value></data>
   <data name="tray.tooltip" xml:space="preserve"><value>MySSH — MCP サーバー実行中</value></data>
+  <data name="updates.auto" xml:space="preserve"><value>アップデートを自動的に確認</value></data>
+  <data name="updates.check" xml:space="preserve"><value>アップデートを確認</value></data>
+  <data name="updates.checking" xml:space="preserve"><value>アップデートを確認しています…</value></data>
+  <data name="updates.current" xml:space="preserve"><value>MySSH {version}</value></data>
+  <data name="updates.downloading" xml:space="preserve"><value>MySSH {version} をダウンロードしています… {percent}%</value></data>
+  <data name="updates.failed" xml:space="preserve"><value>アップデートを確認できませんでした：{error}</value></data>
+  <data name="updates.notInstalled" xml:space="preserve"><value>アップデートはインストール版でのみ利用できます（現在は開発ビルドです）。</value></data>
+  <data name="updates.ready" xml:space="preserve"><value>MySSH {version} の準備ができました。再起動するとインストールされます（開いているセッションは閉じられます）。</value></data>
+  <data name="updates.readyNotice" xml:space="preserve"><value>MySSH {version} をダウンロードしました。「設定 → アップデート」からインストールできます。</value></data>
+  <data name="updates.readyTitle" xml:space="preserve"><value>アップデートの準備完了</value></data>
+  <data name="updates.restart" xml:space="preserve"><value>再起動してアップデート</value></data>
+  <data name="updates.title" xml:space="preserve"><value>アップデート</value></data>
+  <data name="updates.upToDate" xml:space="preserve"><value>最新バージョンです。</value></data>
   <data name="validation.hostname" xml:space="preserve"><value>ホスト名に空白は使えません</value></data>
   <data name="validation.identity" xml:space="preserve"><value>ID を選択してください</value></data>
   <data name="validation.jumpCycle" xml:space="preserve"><value>踏み台チェーンがこのホストに戻っています：{path}</value></data>

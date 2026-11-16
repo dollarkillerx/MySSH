@@ -55,7 +55,9 @@
 
 ### ダウンロード
 
-このバージョンはまだリリースされていません。[Releases](https://github.com/dollarkillerx/MySSH/releases) の v0.0.4 以前は旧 Tauri/Vue/Rust 版です（タグ [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。現在はソースからビルドしてください。
+macOS（Apple シリコン）：[Releases](https://github.com/dollarkillerx/MySSH/releases) から `MySSH-osx-Portable.zip` をダウンロードし、展開した MySSH.app を「アプリケーション」に移動してください。署名・公証済みで、自動的にアップデートされます（設定 → アップデート）。
+
+Windows と Linux：現在はソースからビルドしてください。v0.0.4 以前のリリースは旧 Tauri/Vue/Rust 版です（タグ [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。
 
 ### ソースからビルド
 

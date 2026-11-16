@@ -58,7 +58,9 @@ Tools: `list_hosts`, `run_command`, `list_sessions`, `read_terminal`, `send_to_t
 
 ### Download
 
-There is no release of this version yet: [Releases](https://github.com/dollarkillerx/MySSH/releases) up to v0.0.4 are the previous Tauri/Vue/Rust version (tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)). Build from source for now.
+macOS (Apple silicon): download `MySSH-osx-Portable.zip` from [Releases](https://github.com/dollarkillerx/MySSH/releases), unzip it and move MySSH.app to Applications. It is signed and notarized, and updates itself (Settings → Updates).
+
+Windows and Linux: build from source for now. Releases up to v0.0.4 are the previous Tauri/Vue/Rust version (tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)).
 
 ### Build from Source
 

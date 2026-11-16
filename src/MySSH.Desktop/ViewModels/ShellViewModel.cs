@@ -48,6 +48,13 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable,
     public AiSettingsService? AiSettings { get; private set; }
     [ObservableProperty] public partial SessionsWorkspaceViewModel? Sessions { get; private set; }
 
+    /// <summary>Packaged builds get Velopack (set by the app before initialization).</summary>
+    public IAppUpdater Updater { get; set; } = NullAppUpdater.Instance;
+    /// <summary>Quits the app the normal way (used by "Restart to update"); set by the app.</summary>
+    public Action? QuitRequested { get; set; }
+    /// <summary>Created after unlock, once.</summary>
+    public UpdatesViewModel? Updates { get; private set; }
+
     /// <summary>Applies language / theme. The window wires the theme part; tests leave it null.</summary>
     public Action<DesktopSettings>? ApplySettings { get; set; }
 
@@ -243,6 +250,13 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable,
         KnownHosts = new KnownHostsViewModel(s.Storage.KnownHosts, Ui);
         Settings = new SettingsViewModel(s.Storage, Ui, p => { Loc.Instance.SetCulture(p.Language); ApplySettings?.Invoke(p); });
         Settings.BackupImported += () => _ = Hosts.LoadAsync();
+        if (Updates is null)
+        {
+            Updates = new UpdatesViewModel(Updater, () => QuitRequested?.Invoke());
+            Updates.UpdateReady += v => Notify(NotificationKind.Info, Loc.Instance["updates.readyTitle"], Loc.Instance.Format("updates.readyNotice", ("version", v)));
+            if (prefs.CheckForUpdates) _ = Updates.CheckInBackgroundAsync(CancellationToken.None); // outlives the unlock call
+        }
+        Settings.Updates = Updates;
         Tools = MySSH.Tools.ToolServices.Create(s.Storage.Hosts, Connector, Approvals, s.Storage.AuditLog, new TerminalSessionRegistry(() => Sessions));
         var mcp = new McpController(s.Storage.Settings, s.Storage.Secrets, Tools.Catalog, Tools.Invoker, ConfigureMcp);
         Mcp = mcp;
