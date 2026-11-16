@@ -8,10 +8,6 @@
   シンプルなオープンソース SSH クライアント - Termius の代替品
 </p>
 
-> **書き直し中**：MySSH は .NET 10 + Avalonia で再実装しています（IBM Carbon UI、ネイティブターミナル、MCP サーバー、内蔵 AI アシスタント）。
-> 旧 Tauri/Vue/Rust 版はタグ [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final) を参照してください。v0.0.4 までのリリースはこのバージョンです。
-> 設計：[docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md)
-
 <p align="center">
   <a href="./README.md">English</a> | <a href="./README.zh-CN.md">简体中文</a> | <strong>日本語</strong>
 </p>
@@ -59,7 +55,7 @@
 
 ### ダウンロード
 
-[Releases](https://github.com/dollarkillerx/MySSH/releases) から最新版をダウンロードしてください。
+このバージョンはまだリリースされていません。[Releases](https://github.com/dollarkillerx/MySSH/releases) の v0.0.4 以前は旧 Tauri/Vue/Rust 版です（タグ [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。現在はソースからビルドしてください。
 
 ### ソースからビルド
 
@@ -82,6 +78,8 @@ dotnet run --project src/MySSH.Desktop
 - **SSH/SFTP**：SSH.NET
 - **ストレージ**：SQLite、AES-256-GCM のフィールド暗号化。マスターキーは OS のキーストア、または Argon2id マスターパスワードで保護
 - **連携**：MCP サーバー（ModelContextProtocol C# SDK：Streamable HTTP + ローカルソケット、`myssh-mcp` stdio ブリッジ）、内蔵 AI アシスタント（自前の Claude HTTP/SSE クライアント + OpenAI SDK）
+
+設計ドキュメント：[docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md)
 
 ## ライセンス
 

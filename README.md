@@ -8,10 +8,6 @@
   A simple, open-source SSH client - Termius alternative
 </p>
 
-> **Rewrite in progress.** MySSH is being rebuilt on .NET 10 + Avalonia (IBM Carbon UI, native terminal, MCP server and a built-in AI assistant).
-> The last Tauri/Vue/Rust version is tagged [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final); releases up to v0.0.4 are that version.
-> Design: [docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md).
-
 <p align="center">
   <strong>English</strong> | <a href="./README.zh-CN.md">简体中文</a> | <a href="./README.ja-JP.md">日本語</a>
 </p>
@@ -62,7 +58,7 @@ Tools: `list_hosts`, `run_command`, `list_sessions`, `read_terminal`, `send_to_t
 
 ### Download
 
-Download the latest release from [Releases](https://github.com/dollarkillerx/MySSH/releases).
+There is no release of this version yet: [Releases](https://github.com/dollarkillerx/MySSH/releases) up to v0.0.4 are the previous Tauri/Vue/Rust version (tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)). Build from source for now.
 
 ### Build from Source
 
@@ -87,6 +83,8 @@ On first start MySSH offers to import hosts from the previous (Tauri) version; t
 - **SSH/SFTP**: SSH.NET
 - **Storage**: SQLite, AES-256-GCM field encryption, master key in the OS keystore or behind an Argon2id master password
 - **Integrations**: MCP server (ModelContextProtocol C# SDK: Streamable HTTP + local socket, `myssh-mcp` stdio bridge); built-in AI assistant (own Claude HTTP/SSE client + OpenAI SDK)
+
+Design: [docs/design/avalonia-carbon-mcp.md](docs/design/avalonia-carbon-mcp.md)
 
 ## License
 
