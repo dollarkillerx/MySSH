@@ -20,7 +20,10 @@ WEB = ROOT / "website"
 SRC = WEB / "src"
 DIST = WEB / "dist"
 SITE = os.environ.get("MYSSH_SITE_URL", "https://myssh.pages.dev").rstrip("/")
-DOWNLOAD = "https://github.com/dollarkillerx/MySSH/releases/latest/download/MySSH-osx-Portable.zip"
+LATEST = "https://github.com/dollarkillerx/MySSH/releases/latest/download/"
+DOWNLOAD = LATEST + "MySSH-osx-Portable.zip"
+DOWNLOAD_WIN = LATEST + "MySSH-win-Setup.exe"
+DOWNLOAD_WIN_ZIP = LATEST + "MySSH-win-Portable.zip"
 LANG_ORDER = ["en", "zh", "ja"]
 SCREENSHOTS = ["terminal-dark", "hosts-dark", "sftp-dark", "rdp-dark", "host-editor-light", "mcp-light"]
 
@@ -61,7 +64,7 @@ def main() -> None:
         values = {
             "lang": s["_lang"], "langname": html.escape(s["_name"]), "langmenu": menu, "hreflang": hreflang,
             "home": s["_path"], "site": SITE, "canonical": SITE + s["_path"], "build": build,
-            "download.url": DOWNLOAD,
+            "download.url": DOWNLOAD, "download.win": DOWNLOAD_WIN, "download.winZip": DOWNLOAD_WIN_ZIP,
             "langredirect": REDIRECT if code == "en" else "",
         }
         for k, v in s.items():
@@ -92,7 +95,7 @@ def main() -> None:
     print(f"built v{ver} → {DIST.relative_to(ROOT)} ({', '.join(s['_path'] for s in langs.values())})")
 
 
-GENERATED = {"lang", "langname", "langmenu", "hreflang", "home", "site", "canonical", "build", "download.url", "langredirect"}
+GENERATED = {"lang", "langname", "langmenu", "hreflang", "home", "site", "canonical", "build", "download.url", "download.win", "download.winZip", "langredirect"}
 
 # Root page only: first visit follows the browser language; an explicit choice in the menu is remembered.
 REDIRECT = """<script>

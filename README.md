@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <a href="https://myssh.pages.dev">Website</a> · <a href="https://github.com/dollarkillerx/MySSH/releases/latest">Download</a>
+</p>
+
+<p align="center">
   <strong>English</strong> | <a href="./README.zh-CN.md">简体中文</a> | <a href="./README.ja-JP.md">日本語</a>
 </p>
 
@@ -58,9 +62,13 @@ Tools: `list_hosts`, `run_command`, `list_sessions`, `read_terminal`, `send_to_t
 
 ### Download
 
-macOS (Apple silicon): download `MySSH-osx-Portable.zip` from [Releases](https://github.com/dollarkillerx/MySSH/releases), unzip it and move MySSH.app to Applications. It is signed and notarized, and updates itself (Settings → Updates).
+From [Releases](https://github.com/dollarkillerx/MySSH/releases/latest) or the [website](https://myssh.pages.dev):
 
-Windows and Linux: build from source for now. Releases up to v0.0.4 are the previous Tauri/Vue/Rust version (tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)).
+- **macOS** (Apple silicon, macOS 13+): `MySSH-osx-Portable.zip` — unzip and move MySSH.app to Applications. Signed and notarized.
+- **Windows** (x64, Windows 10+): `MySSH-win-Setup.exe`, or `MySSH-win-Portable.zip`. Not code-signed yet: if SmartScreen appears, choose **More info → Run anyway**.
+- **Linux**: build from source for now.
+
+Both packages update themselves (Settings → Updates). Releases up to v0.0.4 are the previous Tauri/Vue/Rust version (tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)).
 
 ### Build from Source
 

@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <a href="https://myssh.pages.dev/zh/">官网</a> · <a href="https://github.com/dollarkillerx/MySSH/releases/latest">下载</a>
+</p>
+
+<p align="center">
   <a href="./README.md">English</a> | <strong>简体中文</strong> | <a href="./README.ja-JP.md">日本語</a>
 </p>
 
@@ -55,9 +59,13 @@
 
 ### 下载
 
-macOS（Apple 芯片）：从 [Releases](https://github.com/dollarkillerx/MySSH/releases) 下载 `MySSH-osx-Portable.zip`，解压后把 MySSH.app 拖到「应用程序」。安装包已签名并经过 Apple 公证，之后会自动更新（设置 → 更新）。
+从 [Releases](https://github.com/dollarkillerx/MySSH/releases/latest) 或[官网](https://myssh.pages.dev/zh/)下载：
 
-Windows 和 Linux：目前请从源码构建。v0.0.4 及之前的发布是旧的 Tauri/Vue/Rust 版本（tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。
+- **macOS**（Apple 芯片，macOS 13+）：`MySSH-osx-Portable.zip`，解压后把 MySSH.app 拖到「应用程序」。已签名并经过 Apple 公证。
+- **Windows**（x64，Windows 10+）：`MySSH-win-Setup.exe`，或便携版 `MySSH-win-Portable.zip`。暂未代码签名，如果 SmartScreen 拦截，点「更多信息 → 仍要运行」。
+- **Linux**：目前请从源码构建。
+
+安装后会自动更新（设置 → 更新）。v0.0.4 及之前的发布是旧的 Tauri/Vue/Rust 版本（tag [`tauri-final`](https://github.com/dollarkillerx/MySSH/tree/tauri-final)）。
 
 ### 从源码构建
 

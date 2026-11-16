@@ -399,7 +399,7 @@ UI Shell Header / SideNav · Button（5 种）· Text input / Password / Text ar
 | **P2 终端与功能对齐** ✅（待真机验收） | 已完成（分支 `p2-terminal-ssh`）：TerminalView（按行缓存，160×50 满屏约 2.5ms；程序绘制框线；输入法；搜索；链接）、SSH 层（多跳、代理、两阶段 TOFU、心跳、Shell/Exec、SFTP 符号链接安全、传输队列）、主机/身份/已知主机/设置页、会话工作区（终端标签 + SFTP 面板 + 文本编辑 + 拖放上传）、主机密钥与口令提示、断线重连横幅 | 自动化：380 项测试（含真实 sshd 端到端）、AOT 门禁、原生自检通过；输入法和真实剪贴板需真机验收 |
 | **P3 工具层 + MCP** ✅（待真实客户端验收） | 已完成（分支 `p3-tools-mcp`）：`MySSH.Tools`（11 个工具、Schema 校验、策略引擎含 FullAccess、高风险规则与白名单防绕过、审批超时、审计）；存储 v2（白名单、audit_log、加密 Secret）；`MySSH.Mcp`（Stateless HTTP + 本地套接字/命名管道、资源与提示、客户端跟踪）；`myssh-mcp` AOT 桥（约 1.8MB）；桌面端审批 Modal、AI / MCP 页（开关、Token、一键接入、审计日志）、托盘常驻 | 策略矩阵（5 种策略 × 全部工具变体）与真实 sshd 端到端测试通过；SDK 客户端经 HTTP / 本地套接字 / 桥接入通过；Claude Code / Claude Desktop 需真机接入验收 |
 | **P4 AI 助手** ✅（待真实 API 验收） | 已完成（分支 `p4-ai-assistant`）：`MySSH.Ai`（自研 Claude HTTP/SSE 客户端，OpenAI SDK 用于 OpenAI / DeepSeek / 兼容服务；Agent 循环经 P3 工具层执行；脱敏；上下文胶囊）；存储 v4（会话加密、只追加）；AI 面板（`Ctrl+Shift+A`，工具卡片内联审批、本会话允许相同操作）；终端 `Ctrl+I` 命令建议与选中内容「用 AI 解释/分析报错」；AI 设置页（提供商、Key、模型、测试连接、行为）。原生自检包含两个提供商的完整工具循环 | 三家预置加一个本地 OpenAI 兼容端点（如 Ollama）都能完成「分析报错 → 读终端 → 建议命令」的流程 |
-| **P5 发布** 🚧（macOS 已发布 v0.2.0） | Velopack 打包和自动更新（设置 → 更新，GitHub Releases 为更新源）、macOS Developer ID 签名公证（`tools/release/release-macos.sh`，本地构建）、README 和截图；Windows / Linux 安装包待在对应系统上构建 | 三个平台的安装包 |
+| **P5 发布** 🚧（macOS、Windows 已发布 v0.2.0） | Velopack 打包和自动更新（设置 → 更新，GitHub Releases 为更新源）、macOS Developer ID 签名公证（`tools/release/release-macos.sh`）、Windows 未签名安装包（`tools/release/release-windows.sh`，在 macOS 上交叉打包：NativeAOT 不能跨系统编译，所以是自包含 JIT + ReadyToRun，不裁剪）、官网（`website/`，Cloudflare Pages）；Linux 安装包和 Windows 代码签名待做 | 三个平台的安装包 |
 | P6 可选 | AI 助手连接外部 MCP Server、端口转发界面、Snippets | |
 
 **最大风险**：P0 的终端 Spike 和 P2 的终端实现（输入法、字宽、性能）。建议这一块由专人负责，并且**最先开工**。

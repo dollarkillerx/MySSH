@@ -11,24 +11,21 @@
   "nav.security": "安全",
   "nav.download": "下载",
   "nav.language": "语言",
-
   "hero.eyebrow": "开源 · v{{version}}",
   "hero.title": "让 AI 帮你管服务器，但只在你允许的地方",
   "hero.lead": "原生终端、SFTP 和跳板机，再加上 MCP 服务和内置 AI 助手。每台主机单独设置权限，危险命令要你点头才执行，每一次调用都有记录。",
   "hero.download": "下载 macOS 版",
   "hero.github": "在 GitHub 上查看",
   "hero.fine": "Apple 芯片 · macOS 13 及以上 · 已签名和公证，自动更新",
-
   "facts.label": "概览",
   "facts.native": "原生应用",
-  "facts.nativeSub": "NativeAOT 编译，不套浏览器内核",
+  "facts.nativeSub": "Avalonia + .NET，不套浏览器内核",
   "facts.mcp": "MCP 服务",
   "facts.mcpSub": "支持 Claude Code、Claude Desktop 等",
   "facts.ai": "AI 助手",
   "facts.aiSub": "Claude、OpenAI、DeepSeek、Ollama",
   "facts.open": "MIT 开源",
   "facts.openSub": "免费、无需注册，数据留在本机",
-
   "features.eyebrow": "功能",
   "features.title": "每天用到的，都在这里",
   "features.lead": "为整天待在终端里的人设计：打开快、用着安静，对你的凭据格外小心。",
@@ -44,7 +41,6 @@
   "f.rdp.d": "RDP 主机用系统自带客户端打开，可经 SSH 跳板机隧道连接。密码不会写进 .rdp 文件。",
   "f.backup.t": "备份与恢复",
   "f.backup.d": "用密码保护导出和导入你的主机和身份。内置 English、简体中文和日本語。",
-
   "ai.eyebrow": "AI 助手",
   "ai.title": "问它哪里出了问题，由你决定它执行什么",
   "ai.lead": "按 Ctrl+Shift+A 打开助手，附上主机和终端输出，直接提问。它和 MCP 服务使用同一套工具和权限去查日志、跑命令，每一步都以卡片形式展示，由你批准或拒绝。发送前会自动遮盖密钥和密码。",
@@ -60,7 +56,6 @@
   "ai.p.full": "完全授权",
   "ai.p.fullD": "全部直接执行，高风险操作会在审计日志中标出。",
   "ai.note": "支持 Claude、OpenAI、DeepSeek，以及 Ollama 等本地 OpenAI 兼容服务。API Key 加密保存在你的电脑上。",
-
   "mcp.eyebrow": "MCP 服务",
   "mcp.title": "把服务器交给 Claude Code，密码留给自己",
   "mcp.lead": "MySSH 在本机运行 MCP 服务，让 Claude Code、Claude Desktop 等 MCP 客户端操作你的主机。凭据始终留在 MySSH 里，客户端只能看到你共享的主机。",
@@ -68,10 +63,8 @@
   "mcp.s2": "给想共享的主机设置权限。",
   "mcp.s3": "复制 Claude Code 的一行接入命令，或 Claude Desktop 的 JSON 配置。",
   "mcp.tools": "工具",
-
   "tour.eyebrow": "看一看",
   "tour.title": "Carbon 设计，浅色深色都好看",
-
   "shots.terminal": "MySSH 终端连接到服务器",
   "shots.approval": "AI 助手在重启 nginx 前请求批准",
   "shots.mcp": "MCP 服务设置，含 Claude Code 和 Claude Desktop 接入方式",
@@ -79,7 +72,6 @@
   "shots.sftp": "在终端当前目录打开 SFTP",
   "shots.editor": "主机编辑：跳板链和 AI / MCP 权限",
   "shots.rdp": "经 SSH 隧道连接 Windows 远程桌面",
-
   "sec.eyebrow": "安全",
   "sec.title": "默认就很谨慎",
   "sec.lead": "凭据只留在你的电脑上，AI 的每一个动作都看得见。",
@@ -95,7 +87,6 @@
   "sec.audit.d": "每次 MCP 和 AI 工具调用都有记录：谁、哪台主机、做了什么、是否经你批准。",
   "sec.hostkey.t": "主机密钥校验",
   "sec.hostkey.d": "首次连接时确认主机指纹，主机密钥变化时明确警告。",
-
   "dl.eyebrow": "下载",
   "dl.title": "获取 MySSH",
   "dl.mac.meta": "v{{version}} · Apple 芯片 · macOS 13+",
@@ -106,9 +97,14 @@
   "dl.source": "目前请用 .NET 10 SDK 从源码构建。",
   "dl.build": "从源码构建",
   "dl.buildNote": "需要 .NET SDK 10.0.404 或更高版本。",
-
   "footer.text": "基于 MIT 许可证开源。",
   "footer.links": "项目链接",
   "footer.releases": "版本发布",
-  "footer.issues": "问题反馈"
+  "footer.issues": "问题反馈",
+  "hero.downloadWin": "下载 Windows 版",
+  "hero.fineWin": "Windows 10 及以上 · x64 · 自动更新 · 暂未代码签名",
+  "dl.win.meta": "v{{version}} · x64 · Windows 10+",
+  "dl.win.d": "运行安装程序即可，安装到当前用户并自动更新。暂未代码签名，SmartScreen 可能拦截：点「更多信息 → 仍要运行」。",
+  "dl.win.btn": "下载安装程序",
+  "dl.win.zip": "便携版 .zip"
 }

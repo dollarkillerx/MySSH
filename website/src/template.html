@@ -59,7 +59,8 @@
         <h1>{{hero.title}}</h1>
         <p class="lead">{{hero.lead}}</p>
         <div class="cta">
-          <a class="btn btn--primary" href="{{download.url}}" data-dl>
+          <a class="btn btn--primary" href="{{download.url}}" id="hero-download"
+             data-win-href="{{download.win}}" data-win-text="{{hero.downloadWin}}" data-win-fine="{{hero.fineWin}}">
             <span>{{hero.download}}</span>
             <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 15l-1.41-1.41L17 21.17V2h-2v19.17l-7.59-7.58L6 15l10 10z"/><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/></svg>
           </a>
@@ -68,7 +69,7 @@
             <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 6l-1.43 1.39L24.15 15H4v2h20.15l-7.58 7.57L18 26l10-10z"/></svg>
           </a>
         </div>
-        <p class="fine">{{hero.fine}}</p>
+        <p class="fine" id="hero-fine">{{hero.fine}}</p>
       </div>
       <figure class="hero__shot window">
         <div class="window__bar" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -193,14 +194,17 @@
           <h3>macOS</h3>
           <p class="platform__meta">{{dl.mac.meta}}</p>
           <p>{{dl.mac.d}}</p>
-          <a class="btn btn--primary" href="{{download.url}}" data-dl><span>{{dl.mac.btn}}</span>
+          <a class="btn btn--primary" href="{{download.url}}"><span>{{dl.mac.btn}}</span>
             <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 15l-1.41-1.41L17 21.17V2h-2v19.17l-7.59-7.58L6 15l10 10z"/><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/></svg></a>
           <p class="fine">{{dl.mac.fine}}</p>
         </article>
-        <article class="platform">
+        <article class="platform platform--main">
           <h3>Windows</h3>
-          <p class="platform__meta">{{dl.soon}}</p>
-          <p>{{dl.source}}</p>
+          <p class="platform__meta">{{dl.win.meta}}</p>
+          <p>{{dl.win.d}}</p>
+          <a class="btn btn--primary" href="{{download.win}}"><span>{{dl.win.btn}}</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 15l-1.41-1.41L17 21.17V2h-2v19.17l-7.59-7.58L6 15l10 10z"/><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/></svg></a>
+          <p class="fine"><a href="{{download.winZip}}">{{dl.win.zip}}</a></p>
         </article>
         <article class="platform">
           <h3>Linux</h3>
@@ -240,6 +244,14 @@ dotnet run --project src/MySSH.Desktop</code></pre>
   document.querySelectorAll('[data-lang]').forEach(function (a) {
     a.addEventListener('click', function () { try { localStorage.setItem('myssh-lang', a.dataset.lang); } catch (e) {} });
   });
+  // Windows visitors get the Windows installer in the hero.
+  var hero = document.getElementById('hero-download');
+  if (hero && /Windows/i.test(navigator.userAgent)) {
+    hero.href = hero.dataset.winHref;
+    hero.querySelector('span').textContent = hero.dataset.winText;
+    var fine = document.getElementById('hero-fine');
+    if (fine) fine.textContent = hero.dataset.winFine;
+  }
   // Close the language menu on an outside click or Escape.
   var menu = document.querySelector('.lang');
   document.addEventListener('click', function (e) { if (menu && !menu.contains(e.target)) menu.open = false; });

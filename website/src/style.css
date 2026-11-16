@@ -204,7 +204,7 @@ code, pre { font-family: var(--mono); }
 /* download */
 .section--download { background: linear-gradient(180deg, #161616, #0b1a33); }
 .platforms { display: grid; gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); }
-@media (min-width: 1056px) { .platforms { grid-template-columns: 2fr 1fr 1fr; } }
+@media (min-width: 1056px) { .platforms { grid-template-columns: 5fr 5fr 3fr; } }
 .platform { background: var(--layer-01); padding: 32px 24px; display: flex; flex-direction: column; gap: 12px; }
 .platform h3 { font-size: 28px; font-weight: 300; }
 .platform__meta { font-family: var(--mono); font-size: 13px; color: var(--text-3); }
