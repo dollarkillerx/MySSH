@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             x:Class="MySSH.Desktop.Views.IdentitiesPage"
+             x:DataType="vm:IdentitiesViewModel">
+  <Grid ColumnDefinitions="*,Auto">
+    <Grid Margin="32,24,32,32" RowDefinitions="Auto,Auto,Auto,*">
+      <StackPanel Spacing="4" Margin="0,0,0,24">
+        <TextBlock Classes="heading-04" Text="{l:Tr nav.identities}" />
+        <TextBlock Classes="body-compact-01 secondary" TextWrapping="Wrap" Text="{l:Tr identities.subtitle}" />
+      </StackPanel>
+      <carbon:InlineNotification Grid.Row="1" Kind="Error" IsLowContrast="True" Margin="0,0,0,16"
+                                 Title="{l:Tr common.error}" Subtitle="{Binding Error}"
+                                 IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}" Closed="OnErrorClosed" />
+      <Border Grid.Row="2" Background="{DynamicResource CarbonLayer01}">
+        <Grid ColumnDefinitions="*,Auto,Auto,Auto" Height="48">
+          <Button Grid.Column="1" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="edit" ToolTip.Tip="{l:Tr common.edit}"
+                  Command="{Binding EditCommand}" CommandParameter="{x:Null}"
+                  IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Grid.Column="2" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="trash-can" ToolTip.Tip="{l:Tr common.delete}"
+                  Command="{Binding DeleteCommand}" CommandParameter="{x:Null}"
+                  IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Grid.Column="3" Classes="lg" carbon:ButtonAssist.Icon="add" Content="{l:Tr identities.add}" Command="{Binding NewCommand}" />
+        </Grid>
+      </Border>
+      <DataGrid Grid.Row="3" Name="Grid" ItemsSource="{Binding Rows}" SelectedItem="{Binding SelectedRow}"
+                IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
+        <DataGrid.Columns>
+          <DataGridTextColumn x:DataType="vm:IdentityRowViewModel" Header="{l:Tr hosts.col.name}" Binding="{Binding Label}" Width="2*" />
+          <DataGridTextColumn x:DataType="vm:IdentityRowViewModel" Header="{l:Tr hosts.col.user}" Binding="{Binding Username}" Width="*" />
+          <DataGridTextColumn x:DataType="vm:IdentityRowViewModel" Header="{l:Tr hosts.col.auth}" Binding="{Binding KindText}" Width="*" />
+          <DataGridTextColumn x:DataType="vm:IdentityRowViewModel" Header="{l:Tr identities.col.usedBy}" Binding="{Binding UsedByText}" Width="*" />
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+
+    <Border Grid.Column="1" Width="420" Background="{DynamicResource CarbonLayer01}" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="1,0,0,0"
+            IsVisible="{Binding Editor, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <DockPanel DataContext="{Binding Editor}" x:DataType="vm:IdentityEditorViewModel">
+        <TextBlock DockPanel.Dock="Top" Classes="heading-03" Margin="24,24,24,16" Text="{Binding Heading}" />
+        <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,*" Height="64">
+          <Button Classes="secondary lg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{l:Tr common.cancel}"
+                  Command="{Binding $parent[UserControl].((vm:IdentitiesViewModel)DataContext).CancelEditorCommand}" />
+          <Button Grid.Column="1" Classes="primary lg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{l:Tr common.save}"
+                  Command="{Binding $parent[UserControl].((vm:IdentitiesViewModel)DataContext).SaveEditorCommand}" />
+        </Grid>
+        <ScrollViewer>
+          <StackPanel Margin="24,0,24,32" Spacing="16">
+            <TextBox Text="{Binding Label}" carbon:Field.Label="{l:Tr serverForm.name}"
+                     carbon:Field.IsInvalid="{Binding LabelError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding LabelError}" />
+            <TextBox Text="{Binding Username}" carbon:Field.Label="{l:Tr serverForm.username}" PlaceholderText="{l:Tr serverForm.usernamePlaceholder}" />
+            <ToggleSwitch IsChecked="{Binding IsPrivateKey}" OnContent="{l:Tr auth.key}" OffContent="{l:Tr auth.password}" />
+            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{Binding SecretHint}" />
+            <TextBox Classes="password" PasswordChar="●" Text="{Binding Password}" carbon:Field.Label="{l:Tr serverForm.password}"
+                     IsVisible="{Binding !IsPrivateKey}"
+                     carbon:Field.IsInvalid="{Binding SecretError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding SecretError}" />
+            <StackPanel Spacing="12" IsVisible="{Binding IsPrivateKey}">
+              <TextBox Text="{Binding PrivateKey}" AcceptsReturn="True" MinHeight="140" FontFamily="{DynamicResource CarbonFontMono}" FontSize="12"
+                       carbon:Field.Label="{l:Tr serverForm.privateKey}" PlaceholderText="{l:Tr serverForm.privateKeyPaste}"
+                       carbon:Field.IsInvalid="{Binding SecretError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding SecretError}" />
+              <Button Classes="tertiary md" carbon:ButtonAssist.Icon="upload" HorizontalAlignment="Left" Content="{l:Tr serverForm.privateKeyHint}"
+                      Command="{Binding LoadKeyFileCommand}" />
+              <TextBox Classes="password" PasswordChar="●" Text="{Binding Passphrase}" carbon:Field.Label="{l:Tr serverForm.passphrase}" />
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </DockPanel>
+    </Border>
+  </Grid>
+</UserControl>

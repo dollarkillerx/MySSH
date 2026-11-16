@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             x:Class="MySSH.Desktop.Views.KnownHostsPage"
+             x:DataType="vm:KnownHostsViewModel">
+  <Grid Margin="32,24,32,32" RowDefinitions="Auto,Auto,*">
+    <StackPanel Spacing="4" Margin="0,0,0,24">
+      <TextBlock Classes="heading-04" Text="{l:Tr nav.knownHosts}" />
+      <TextBlock Classes="body-compact-01 secondary" TextWrapping="Wrap" Text="{l:Tr knownHosts.subtitle}" />
+    </StackPanel>
+    <Border Grid.Row="1" Background="{DynamicResource CarbonLayer01}">
+      <Grid ColumnDefinitions="*,Auto,Auto" Height="48">
+        <Button Grid.Column="1" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="copy" ToolTip.Tip="{l:Tr knownHosts.copy}"
+                Command="{Binding CopyFingerprintCommand}" CommandParameter="{x:Null}"
+                IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <Button Grid.Column="2" Classes="danger-ghost lg" carbon:ButtonAssist.Icon="trash-can" Content="{l:Tr knownHosts.remove}"
+                Command="{Binding RemoveCommand}" CommandParameter="{x:Null}"
+                IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+      </Grid>
+    </Border>
+    <DataGrid Grid.Row="2" ItemsSource="{Binding Rows}" SelectedItem="{Binding SelectedRow}"
+              IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn x:DataType="vm:KnownHostRowViewModel" Header="{l:Tr knownHosts.col.host}" Binding="{Binding HostPort}" Width="2*" />
+        <DataGridTextColumn x:DataType="vm:KnownHostRowViewModel" Header="{l:Tr knownHosts.col.type}" Binding="{Binding KeyType}" Width="*" />
+        <DataGridTextColumn x:DataType="vm:KnownHostRowViewModel" Header="{l:Tr knownHosts.col.fingerprint}" Binding="{Binding Fingerprint}" Width="3*" />
+        <DataGridTextColumn x:DataType="vm:KnownHostRowViewModel" Header="{l:Tr knownHosts.col.lastSeen}" Binding="{Binding LastSeen}" Width="*" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>

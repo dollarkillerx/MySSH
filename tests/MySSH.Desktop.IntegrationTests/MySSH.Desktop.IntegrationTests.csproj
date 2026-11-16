@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- End-to-end: Desktop session view models / views against a real local sshd (skips when sshd is unavailable). -->
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <OutputType>Exe</OutputType>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CA1707;CA1515;CA1861;CA2007</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Compile Include="../MySSH.Ssh.Tests/TestDoubles.cs" Link="Lab/TestDoubles.cs" />
+    <Compile Include="../MySSH.Ssh.IntegrationTests/SshdEnvironment.cs" Link="Lab/SshdEnvironment.cs" />
+    <Compile Include="../MySSH.Ssh.IntegrationTests/Lab.cs" Link="Lab/Lab.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/MySSH.Desktop/MySSH.Desktop.csproj" />
+    <ProjectReference Include="../../src/MySSH.Ssh/MySSH.Ssh.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Avalonia.Headless.XUnit" />
+    <PackageReference Include="Avalonia.Skia" />
+  </ItemGroup>
+</Project>

@@ -388,7 +388,7 @@ UI Shell Header / SideNav · Button（5 种）· Text input / Password / Text ar
 |---|---|---|
 | **P0 Spike** ✅ | 已完成，结论见 `spikes/FINDINGS.md` | — |
 | **P1 基础** ✅ | 已完成（分支 `p1-foundation`）：删除 Tauri、解决方案骨架、Carbon 主题与控件和 Gallery、Storage/Vault、旧数据导入、known_hosts 存储、主窗口、CI。AOT 门禁：自有库逐成员分析；第三方警告对照 `tools/aot/allowed-warnings.txt`；AOT 二进制跑 `--self-test` | 已达成：UI 测试和 AOT 自检都覆盖「导入旧数据并展示主机列表」 |
-| **P2 终端与功能对齐** | TerminalControl 完整实现（§4.3）、主机和身份管理、SFTP 与传输队列、代理和跳板链、备份 v2、三语 | 达到旧版全部功能，终端验收清单全部通过 |
+| **P2 终端与功能对齐** ✅（待真机验收） | 已完成（分支 `p2-terminal-ssh`）：TerminalView（按行缓存，160×50 满屏约 2.5ms；程序绘制框线；输入法；搜索；链接）、SSH 层（多跳、代理、两阶段 TOFU、心跳、Shell/Exec、SFTP 符号链接安全、传输队列）、主机/身份/已知主机/设置页、会话工作区（终端标签 + SFTP 面板 + 文本编辑 + 拖放上传）、主机密钥与口令提示、断线重连横幅 | 自动化：380 项测试（含真实 sshd 端到端）、AOT 门禁、原生自检通过；输入法和真实剪贴板需真机验收 |
 | **P3 工具层 + MCP** | `MySSH.Tools`、策略和审批、审计；MCP 先上只读工具，再上执行和写操作，最后上终端读写 | 策略矩阵测试通过，Claude Code 和 Claude Desktop 都能接入 |
 | **P4 AI 助手** | 提供商配置（预置三家 + 自定义）、Agent 循环、AI 面板、内联审批、终端内 `Ctrl+I`、上下文胶囊与脱敏、会话存储 | 三家预置加一个本地 OpenAI 兼容端点（如 Ollama）都能完成「分析报错 → 读终端 → 建议命令」的流程 |
 | **P5 发布** | Velopack 打包和自动更新、macOS 签名公证、README 和截图 | 三个平台的安装包 |

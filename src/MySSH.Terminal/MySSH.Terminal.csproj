@@ -1,9 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!-- Native terminal control (design §4): XTerm.NET engine + our own rendering, input, IME, selection. -->
   <ItemGroup>
     <ProjectReference Include="../MySSH.Core/MySSH.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" />
     <PackageReference Include="XTerm.NET" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySSH.Terminal.Tests" />
   </ItemGroup>
 </Project>

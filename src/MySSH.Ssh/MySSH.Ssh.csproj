@@ -5,4 +5,8 @@
   <ItemGroup>
     <PackageReference Include="SSH.NET" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="MySSH.Ssh.Tests" />
+    <InternalsVisibleTo Include="MySSH.Ssh.IntegrationTests" />
+  </ItemGroup>
 </Project>

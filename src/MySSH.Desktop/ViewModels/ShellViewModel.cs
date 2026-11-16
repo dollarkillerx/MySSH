@@ -20,11 +20,32 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     readonly Func<CancellationToken, Task<AppSession>> _openSession;
     AppSession? _session;
 
-    public ShellViewModel(Func<CancellationToken, Task<AppSession>> openSession) => _openSession = openSession;
+    public ShellViewModel(Func<CancellationToken, Task<AppSession>> openSession, IUiServices? ui = null)
+    {
+        _openSession = openSession;
+        Ui = ui ?? NullUiServices.Instance;
+    }
+
+    /// <summary>Set by the window once it exists (dialogs need a visual root).</summary>
+    public IUiServices Ui { get; set; }
+
+    /// <summary>SSH-layer prompts; the window implements them. Defaults reject / cancel (tests, headless).</summary>
+    public MySSH.Core.IHostKeyVerifier HostKeyVerifier { get; set; } = RejectingPrompts.Instance;
+    public MySSH.Core.ICredentialPrompt CredentialPrompt { get; set; } = RejectingPrompts.Instance;
+
+    /// <summary>Created after unlock; tests may replace it.</summary>
+    public MySSH.Ssh.ISshConnector? Connector { get; set; }
+    [ObservableProperty] public partial SessionsWorkspaceViewModel? Sessions { get; private set; }
+
+    /// <summary>Applies language / theme. The window wires the theme part; tests leave it null.</summary>
+    public Action<DesktopSettings>? ApplySettings { get; set; }
+
+    public AppSession? Session => _session;
 
     public IReadOnlyList<NavItemViewModel> NavItems { get; } =
     [
         new(AppPage.Hosts, "virtual-machine", "nav.hosts"),
+        new(AppPage.Sessions, "terminal", "nav.sessions"),
         new(AppPage.Identities, "password", "nav.identities"),
         new(AppPage.KnownHosts, "locked", "nav.knownHosts"),
         new(AppPage.Ai, "machine-learning", "nav.ai"),
@@ -35,6 +56,45 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
 
     [ObservableProperty] public partial NavItemViewModel? SelectedNav { get; set; }
     [ObservableProperty] public partial HostListViewModel? Hosts { get; set; }
+    [ObservableProperty] public partial IdentitiesViewModel? Identities { get; set; }
+    [ObservableProperty] public partial KnownHostsViewModel? KnownHosts { get; set; }
+    [ObservableProperty] public partial SettingsViewModel? Settings { get; set; }
+    /// <summary>The page shown for <see cref="SelectedNav"/> (null until the vault is unlocked).</summary>
+    [ObservableProperty] public partial object? CurrentPage { get; set; }
+    public bool IsSessionsActive => CurrentPage is SessionsWorkspaceViewModel;
+    partial void OnCurrentPageChanged(object? value) => OnPropertyChanged(nameof(IsSessionsActive));
+
+    partial void OnSelectedNavChanged(NavItemViewModel? value) => _ = ShowPageAsync(value?.Page ?? AppPage.Hosts);
+
+    async Task ShowPageAsync(AppPage page)
+    {
+        if (_session is null || !_session.IsUnlocked) return;
+        switch (page)
+        {
+            case AppPage.Hosts when Hosts is not null:
+                await Hosts.LoadAsync();
+                CurrentPage = Hosts;
+                break;
+            case AppPage.Sessions when Sessions is not null:
+                CurrentPage = Sessions;
+                break;
+            case AppPage.Identities when Identities is not null:
+                await Identities.LoadAsync();
+                CurrentPage = Identities;
+                break;
+            case AppPage.KnownHosts when KnownHosts is not null:
+                await KnownHosts.LoadAsync();
+                CurrentPage = KnownHosts;
+                break;
+            case AppPage.Settings when Settings is not null:
+                await Settings.LoadAsync();
+                CurrentPage = Settings;
+                break;
+            default:
+                CurrentPage = new PlaceholderPageViewModel(Loc.Instance[SelectedNav?.LabelKey ?? "nav.ai"]);
+                break;
+        }
+    }
     [ObservableProperty] public partial bool IsBusy { get; set; } = true;
 
     // ---- startup prompts (rendered as Carbon modals)
@@ -140,8 +200,24 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
     async Task AfterUnlockAsync(CancellationToken ct)
     {
         var s = _session!;
-        Hosts = new HostListViewModel(s.Storage.Hosts, s.Storage.Identities, s.Storage.Proxies);
+        var prefs = await DesktopSettings.LoadAsync(s.Storage.Settings, ct);
+        if (prefs.Language is not null) Loc.Instance.SetCulture(prefs.Language); // null = keep the OS language picked at startup
+        ApplySettings?.Invoke(prefs);
+        Connector ??= new MySSH.Ssh.SshConnector(s.Storage.Hosts, s.Storage.Identities, s.Storage.Proxies, s.Storage.KnownHosts,
+            HostKeyVerifier, CredentialPrompt);
+        Sessions = new SessionsWorkspaceViewModel(() => Connector, Ui);
+        Hosts = new HostListViewModel(s.Storage.Hosts, s.Storage.Identities, s.Storage.Proxies, Ui);
+        Hosts.ConnectRequested += (row, kind) =>
+        {
+            Sessions!.Open(row, kind);
+            SelectedNav = NavItems.First(n => n.Page == AppPage.Sessions);
+        };
+        Identities = new IdentitiesViewModel(s.Storage.Identities, s.Storage.Hosts, Ui);
+        KnownHosts = new KnownHostsViewModel(s.Storage.KnownHosts, Ui);
+        Settings = new SettingsViewModel(s.Storage, Ui, p => { Loc.Instance.SetCulture(p.Language); ApplySettings?.Invoke(p); });
+        Settings.BackupImported += () => _ = Hosts.LoadAsync();
         await Hosts.LoadAsync(ct);
+        CurrentPage = Hosts;
         if (await s.DetectLegacyOfferAsync(ct) is { } offer) LegacyOfferCount = offer.RecordCount;
         var corrupt = await s.CountUndecryptableAsync(ct);
         if (corrupt > 0) Notify(NotificationKind.Warning, Loc.Instance["common.error"], Loc.Instance.Format("storage.corrupt", ("count", corrupt)));
@@ -151,6 +227,16 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
+        if (Sessions is not null) await Sessions.DisposeAsync();
+        if (Connector is IAsyncDisposable c) await c.DisposeAsync();
         if (_session is not null) await _session.DisposeAsync();
     }
+}
+
+/// <summary>Safe defaults until a window provides real prompts.</summary>
+public sealed class RejectingPrompts : MySSH.Core.IHostKeyVerifier, MySSH.Core.ICredentialPrompt
+{
+    public static readonly RejectingPrompts Instance = new();
+    public ValueTask<MySSH.Core.HostKeyDecision> VerifyAsync(MySSH.Core.HostKeyCheck check, CancellationToken ct) => ValueTask.FromResult(MySSH.Core.HostKeyDecision.Reject);
+    public ValueTask<string?> PromptPassphraseAsync(MySSH.Core.Identity identity, string? previousAttemptError, CancellationToken ct) => ValueTask.FromResult<string?>(null);
 }

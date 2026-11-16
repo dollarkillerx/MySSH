@@ -1,0 +1,149 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:core="using:MySSH.Core"
+             xmlns:local="using:MySSH.Desktop"
+             x:Class="MySSH.Desktop.Views.HostEditorPanel"
+             x:DataType="vm:HostEditorViewModel">
+  <!-- Carbon side panel: layer-01, subtle left border, scrolling body, full-width footer actions -->
+  <Border Background="{DynamicResource CarbonLayer01}" BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="1,0,0,0">
+    <DockPanel>
+      <StackPanel DockPanel.Dock="Top" Margin="24,24,24,16" Spacing="4">
+        <TextBlock Classes="heading-03" Text="{Binding Heading}" />
+      </StackPanel>
+
+      <Grid DockPanel.Dock="Bottom" ColumnDefinitions="*,*" Height="64">
+        <Button Classes="secondary lg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Content="{l:Tr common.cancel}" Click="OnCancel" />
+        <Button Grid.Column="1" Name="SaveButton" Classes="primary lg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Content="{l:Tr common.save}" Click="OnSave" />
+      </Grid>
+
+      <ScrollViewer>
+        <StackPanel Margin="24,0,24,32" Spacing="24">
+          <carbon:InlineNotification Kind="Error" IsLowContrast="True" Title="{l:Tr common.error}" Subtitle="{Binding SaveError}"
+                                     IsCloseButtonVisible="False"
+                                     IsVisible="{Binding SaveError, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <!-- General -->
+          <StackPanel Spacing="16">
+            <TextBlock Classes="heading-compact-01" Text="{l:Tr serverForm.basicInfo}" />
+            <TextBox Name="LabelBox" Text="{Binding Label}" carbon:Field.Label="{l:Tr serverForm.name}" PlaceholderText="{l:Tr serverForm.namePlaceholder}"
+                     carbon:Field.IsInvalid="{Binding LabelError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding LabelError}" />
+            <Grid ColumnDefinitions="*,16,120">
+              <TextBox Text="{Binding Hostname}" carbon:Field.Label="{l:Tr serverForm.host}" PlaceholderText="{l:Tr serverForm.hostPlaceholder}"
+                       carbon:Field.IsInvalid="{Binding HostnameError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding HostnameError}" />
+              <TextBox Grid.Column="2" Text="{Binding Port}" carbon:Field.Label="{l:Tr serverForm.port}"
+                       carbon:Field.IsInvalid="{Binding PortError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding PortError}" />
+            </Grid>
+            <TextBox Text="{Binding Username}" carbon:Field.Label="{l:Tr serverForm.username}" PlaceholderText="{l:Tr serverForm.usernamePlaceholder}"
+                     carbon:Field.HelperText="{l:Tr hostEditor.usernameHelp}" />
+            <TextBox Text="{Binding Tags}" carbon:Field.Label="{l:Tr hostEditor.tags}" carbon:Field.HelperText="{l:Tr hostEditor.tagsHelp}" />
+          </StackPanel>
+
+          <!-- Authentication -->
+          <StackPanel Spacing="12">
+            <TextBlock Classes="heading-compact-01" Text="{l:Tr serverForm.authentication}" />
+            <StackPanel Orientation="Horizontal" Spacing="24">
+              <RadioButton GroupName="auth" IsChecked="{Binding AuthIsSaved}" Content="{l:Tr hostEditor.authSaved}" />
+              <RadioButton GroupName="auth" IsChecked="{Binding AuthIsPassword}" Content="{l:Tr hostEditor.authNewPassword}" />
+              <RadioButton GroupName="auth" IsChecked="{Binding AuthIsKey}" Content="{l:Tr hostEditor.authNewKey}" />
+            </StackPanel>
+            <ComboBox ItemsSource="{Binding IdentityOptions}" SelectedItem="{Binding SelectedIdentity}" HorizontalAlignment="Stretch"
+                      carbon:Field.Label="{l:Tr nav.identities}" IsVisible="{Binding IsSavedIdentity}"
+                      carbon:Field.IsInvalid="{Binding AuthError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding AuthError}" />
+            <TextBox Classes="password" PasswordChar="●" Text="{Binding Password}" IsVisible="{Binding IsNewPassword}"
+                     carbon:Field.Label="{l:Tr serverForm.password}" PlaceholderText="{l:Tr serverForm.passwordPlaceholder}"
+                     carbon:Field.IsInvalid="{Binding AuthError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding AuthError}" />
+            <StackPanel Spacing="12" IsVisible="{Binding IsNewPrivateKey}">
+              <TextBox Text="{Binding PrivateKey}" AcceptsReturn="True" MinHeight="120" FontFamily="{DynamicResource CarbonFontMono}" FontSize="12"
+                       carbon:Field.Label="{l:Tr serverForm.privateKey}" PlaceholderText="{l:Tr serverForm.privateKeyPaste}"
+                       carbon:Field.IsInvalid="{Binding AuthError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding AuthError}" />
+              <TextBox Classes="password" PasswordChar="●" Text="{Binding Passphrase}"
+                       carbon:Field.Label="{l:Tr serverForm.passphrase}" PlaceholderText="{l:Tr serverForm.passphrasePlaceholder}" />
+            </StackPanel>
+          </StackPanel>
+
+          <!-- Network: proxy + jump chain -->
+          <StackPanel Spacing="12">
+            <TextBlock Classes="heading-compact-01" Text="{l:Tr hostEditor.network}" />
+            <StackPanel Orientation="Horizontal" Spacing="24">
+              <RadioButton GroupName="proxy" IsChecked="{Binding ProxyIsNone}" Content="{l:Tr hostEditor.proxyNone}" />
+              <RadioButton GroupName="proxy" IsChecked="{Binding ProxyIsSaved}" Content="{l:Tr hostEditor.proxySaved}" />
+              <RadioButton GroupName="proxy" IsChecked="{Binding ProxyIsNew}" Content="{l:Tr hostEditor.proxyNew}" />
+            </StackPanel>
+            <ComboBox ItemsSource="{Binding ProxyOptions}" SelectedItem="{Binding SelectedProxy}" HorizontalAlignment="Stretch"
+                      carbon:Field.Label="{l:Tr serverForm.useProxy}" IsVisible="{Binding IsSavedProxy}"
+                      carbon:Field.IsInvalid="{Binding ProxyError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding ProxyError}" />
+            <StackPanel Spacing="12" IsVisible="{Binding IsNewProxy}">
+              <Grid ColumnDefinitions="120,16,*,16,100">
+                <ComboBox ItemsSource="{Binding ProxyKinds}" SelectedItem="{Binding NewProxyKind}" HorizontalAlignment="Stretch"
+                          carbon:Field.Label="{l:Tr serverForm.proxyType}">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="core:ProxyKind">
+                      <TextBlock Text="{Binding Converter={x:Static local:Converters.ProxyKindText}}" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Grid.Column="2" Text="{Binding NewProxyHost}" carbon:Field.Label="{l:Tr serverForm.proxyHost}"
+                         carbon:Field.IsInvalid="{Binding ProxyError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding ProxyError}" />
+                <TextBox Grid.Column="4" Text="{Binding NewProxyPort}" carbon:Field.Label="{l:Tr serverForm.proxyPort}" />
+              </Grid>
+              <Grid ColumnDefinitions="*,16,*">
+                <TextBox Text="{Binding NewProxyUsername}" carbon:Field.Label="{l:Tr serverForm.proxyUsername}" />
+                <TextBox Grid.Column="2" Classes="password" PasswordChar="●" Text="{Binding NewProxyPassword}" carbon:Field.Label="{l:Tr serverForm.proxyPassword}" />
+              </Grid>
+            </StackPanel>
+
+            <TextBlock Classes="label-01 secondary" Margin="0,8,0,0" Text="{l:Tr serverForm.jumpHost}" />
+            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr hostEditor.jumpHelp}" />
+            <ItemsControl ItemsSource="{Binding JumpChain}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:HostOption">
+                  <Border Background="{DynamicResource CarbonLayer02}" BorderBrush="{DynamicResource CarbonBorderSubtle02}" BorderThickness="0,0,0,1" Height="40">
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" Margin="12,0,0,0">
+                      <carbon:CarbonIcon Kind="server-proxy" VerticalAlignment="Center" />
+                      <TextBlock Grid.Column="1" Classes="body-compact-01" Margin="8,0" VerticalAlignment="Center" Text="{Binding}" TextTrimming="CharacterEllipsis" />
+                      <Button Grid.Column="2" Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="arrow-up"
+                              Command="{Binding $parent[ItemsControl].((vm:HostEditorViewModel)DataContext).MoveJumpUpCommand}" CommandParameter="{Binding}" />
+                      <Button Grid.Column="3" Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="arrow-down"
+                              Command="{Binding $parent[ItemsControl].((vm:HostEditorViewModel)DataContext).MoveJumpDownCommand}" CommandParameter="{Binding}" />
+                      <Button Grid.Column="4" Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="close"
+                              Command="{Binding $parent[ItemsControl].((vm:HostEditorViewModel)DataContext).RemoveJumpCommand}" CommandParameter="{Binding}" />
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Grid ColumnDefinitions="*,Auto">
+              <ComboBox ItemsSource="{Binding AvailableJumpHosts}" SelectedItem="{Binding JumpHostToAdd}" HorizontalAlignment="Stretch"
+                        PlaceholderText="{l:Tr serverForm.jumpHostSelect}"
+                        carbon:Field.IsInvalid="{Binding JumpError, Converter={x:Static ObjectConverters.IsNotNull}}" carbon:Field.InvalidText="{Binding JumpError}" />
+              <Button Grid.Column="1" Classes="tertiary md" VerticalAlignment="Top" carbon:ButtonAssist.Icon="add" Content="{l:Tr hostEditor.addHop}"
+                      Command="{Binding AddJumpCommand}" />
+            </Grid>
+          </StackPanel>
+
+          <!-- AI / MCP (design §6.3) -->
+          <StackPanel Spacing="12">
+            <TextBlock Classes="heading-compact-01" Text="{l:Tr hostEditor.ai}" />
+            <ComboBox ItemsSource="{Binding AiPolicies}" SelectedItem="{Binding AiPolicy}" HorizontalAlignment="Stretch"
+                      carbon:Field.Label="{l:Tr hostEditor.aiPolicy}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="core:AiPolicy">
+                  <TextBlock Text="{Binding Converter={x:Static local:Converters.AiPolicyText}}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{Binding AiPolicy, Converter={x:Static local:Converters.AiPolicyHelp}}" />
+          </StackPanel>
+
+          <!-- Notes -->
+          <TextBox Text="{Binding Notes}" AcceptsReturn="True" MinHeight="80"
+                   carbon:Field.Label="{l:Tr serverForm.notes}" PlaceholderText="{l:Tr serverForm.notesPlaceholder}" />
+        </StackPanel>
+      </ScrollViewer>
+    </DockPanel>
+  </Border>
+</UserControl>

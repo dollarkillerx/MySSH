@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:svc="using:MySSH.Desktop.Services"
+             xmlns:local="using:MySSH.Desktop"
+             x:Class="MySSH.Desktop.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel">
+  <ScrollViewer>
+    <StackPanel Margin="32,24,32,32" Spacing="32" MaxWidth="720" HorizontalAlignment="Left">
+      <TextBlock Classes="heading-04" Text="{l:Tr settings.title}" />
+
+      <carbon:InlineNotification Kind="Success" IsLowContrast="True" Title="{l:Tr settings.backup}" Subtitle="{Binding Message}"
+                                 IsVisible="{Binding Message, Converter={x:Static ObjectConverters.IsNotNull}}" Name="MessageBar" />
+
+      <StackPanel Spacing="16">
+        <TextBlock Classes="heading-02" Text="{l:Tr settings.appearance}" />
+        <Grid ColumnDefinitions="*,16,*">
+          <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language}" HorizontalAlignment="Stretch"
+                    carbon:Field.Label="{l:Tr settings.language}" />
+          <ComboBox Grid.Column="2" ItemsSource="{Binding Themes}" SelectedItem="{Binding Theme}" HorizontalAlignment="Stretch"
+                    carbon:Field.Label="{l:Tr settings.theme}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="svc:ThemePreference">
+                <TextBlock Text="{Binding Converter={x:Static local:Converters.ThemeText}}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
+        <CheckBox IsChecked="{Binding ConfirmMultilinePaste}" Content="{l:Tr settings.confirmPaste}" />
+      </StackPanel>
+
+      <StackPanel Spacing="16">
+        <TextBlock Classes="heading-02" Text="{l:Tr settings.backup}" />
+        <TextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{l:Tr settings.backupHint}" />
+        <StackPanel Orientation="Horizontal" Spacing="16">
+          <Button Classes="tertiary md" carbon:ButtonAssist.Icon="download" Content="{l:Tr settings.export}" Command="{Binding ExportBackupCommand}" />
+          <Button Classes="tertiary md" carbon:ButtonAssist.Icon="upload" Content="{l:Tr settings.import}" Command="{Binding ImportBackupCommand}" />
+        </StackPanel>
+      </StackPanel>
+
+      <StackPanel Spacing="8">
+        <TextBlock Classes="heading-02" Text="{l:Tr settings.data}" />
+        <TextBlock Classes="label-01 secondary" Text="{l:Tr settings.dataDir}" />
+        <SelectableTextBlock Classes="code-01" Text="{Binding DataDirectory}" TextWrapping="Wrap" />
+        <TextBlock Classes="label-01 secondary" Margin="0,8,0,0" Text="{l:Tr settings.vault}" />
+        <TextBlock Classes="body-01" Text="{Binding VaultModeText}" />
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

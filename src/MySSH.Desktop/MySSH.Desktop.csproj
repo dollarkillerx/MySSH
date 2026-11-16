@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="../MySSH.Core/MySSH.Core.csproj" />
     <ProjectReference Include="../MySSH.Storage/MySSH.Storage.csproj" />
+    <ProjectReference Include="../MySSH.Ssh/MySSH.Ssh.csproj" />
     <ProjectReference Include="../MySSH.UI.Carbon/MySSH.UI.Carbon.csproj" />
     <ProjectReference Include="../MySSH.Terminal/MySSH.Terminal.csproj" />
   </ItemGroup>

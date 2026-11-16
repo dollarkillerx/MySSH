@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:t="using:MySSH.Terminal"
+             x:Class="MySSH.Desktop.Views.TerminalSessionView"
+             x:DataType="vm:TerminalSessionViewModel">
+  <DockPanel>
+    <!-- status bar (design §8.4): state · chain · grid size -->
+    <Border DockPanel.Dock="Bottom" Height="24" Background="{DynamicResource CarbonLayer01}"
+            BorderBrush="{DynamicResource CarbonBorderSubtle01}" BorderThickness="0,1,0,0">
+      <StackPanel Orientation="Horizontal" Spacing="8" Margin="16,0" VerticalAlignment="Center">
+        <Ellipse Name="StateDot" Width="8" Height="8" VerticalAlignment="Center" />
+        <TextBlock Classes="label-01" Text="{Binding StateText}" VerticalAlignment="Center" />
+        <TextBlock Classes="label-01 secondary" Text="·" VerticalAlignment="Center" />
+        <TextBlock Classes="label-01 secondary" Text="{Binding Via}" VerticalAlignment="Center" />
+        <TextBlock Classes="label-01 secondary" Text="·" VerticalAlignment="Center" />
+        <TextBlock Classes="label-01 secondary" Text="{Binding GridSize}" VerticalAlignment="Center" />
+        <TextBlock Name="RemoteTitle" Classes="label-01 secondary" VerticalAlignment="Center" Margin="8,0,0,0" TextTrimming="CharacterEllipsis" MaxWidth="480" />
+      </StackPanel>
+    </Border>
+
+    <!-- connection banner: lost / ended / failed, with reconnect -->
+    <carbon:InlineNotification DockPanel.Dock="Top" Name="Banner" IsLowContrast="False" Margin="0"
+                               IsVisible="{Binding ShowBanner}" Subtitle="{Binding StatusMessage}" IsCloseButtonVisible="False">
+      <carbon:InlineNotification.Action>
+        <Button Classes="ghost sm" Content="{l:Tr terminal.reconnect}" Command="{Binding ReconnectCommand}" />
+      </carbon:InlineNotification.Action>
+    </carbon:InlineNotification>
+
+    <Panel Background="{DynamicResource CarbonBackground}">
+      <t:TerminalView Name="Term" Margin="8,8,0,0" />
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" IsVisible="{Binding IsConnecting}">
+        <ProgressBar Classes="sm" IsIndeterminate="True" Width="240" />
+        <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{Binding StatusMessage}" />
+      </StackPanel>
+    </Panel>
+  </DockPanel>
+</UserControl>

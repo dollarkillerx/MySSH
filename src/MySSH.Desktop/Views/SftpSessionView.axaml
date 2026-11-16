@@ -1,0 +1,135 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             x:Class="MySSH.Desktop.Views.SftpSessionView"
+             x:DataType="vm:SftpSessionViewModel"
+             DragDrop.AllowDrop="True">
+  <Panel Background="{DynamicResource CarbonBackground}">
+    <DockPanel Margin="24,16,24,16">
+      <carbon:InlineNotification DockPanel.Dock="Top" Name="Banner" Margin="0,0,0,12"
+                                 IsVisible="{Binding ShowBanner}" Title="{Binding StateText}" Subtitle="{Binding StatusMessage}" IsCloseButtonVisible="False">
+        <carbon:InlineNotification.Action>
+          <Button Classes="ghost sm" Content="{l:Tr terminal.reconnect}" Command="{Binding ReconnectCommand}" />
+        </carbon:InlineNotification.Action>
+      </carbon:InlineNotification>
+      <carbon:InlineNotification DockPanel.Dock="Top" Kind="Error" IsLowContrast="True" Margin="0,0,0,12"
+                                 Title="{l:Tr common.error}" Subtitle="{Binding Error}" Closed="OnErrorClosed"
+                                 IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+      <!-- toolbar: breadcrumb + actions -->
+      <Border DockPanel.Dock="Top" Background="{DynamicResource CarbonLayer01}">
+        <Grid ColumnDefinitions="Auto,*,Auto" Height="48">
+          <StackPanel Orientation="Horizontal">
+            <Button Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="arrow-up" ToolTip.Tip="{l:Tr sftp.goUp}" Command="{Binding GoUpCommand}" />
+          </StackPanel>
+          <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding Breadcrumb}" VerticalAlignment="Center" Margin="8,0">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:BreadcrumbItem">
+                  <StackPanel Orientation="Horizontal">
+                    <TextBlock Classes="body-compact-01 secondary" Text="/" VerticalAlignment="Center" Margin="2,0" IsVisible="{Binding ShowSeparator}" />
+                    <Button Classes="ghost sm" Content="{Binding Name}" FontFamily="{DynamicResource CarbonFontMono}"
+                            Command="{Binding $parent[UserControl].((vm:SftpSessionViewModel)DataContext).NavigateToCommand}" CommandParameter="{Binding}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+          <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <Button Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="renew" ToolTip.Tip="{l:Tr sftp.refresh}" Command="{Binding RefreshCommand}" />
+            <Button Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="folder" ToolTip.Tip="{l:Tr sftp.newFolder}" Command="{Binding NewFolderCommand}" />
+            <Button Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="document" ToolTip.Tip="{l:Tr sftp.newFile}" Command="{Binding NewFileCommand}" />
+            <Button Classes="lg" carbon:ButtonAssist.Icon="upload" Content="{l:Tr sftp.upload}" Command="{Binding UploadCommand}" />
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <!-- transfers -->
+      <Border DockPanel.Dock="Bottom" Background="{DynamicResource CarbonLayer01}" Margin="0,16,0,0" MaxHeight="200"
+              IsVisible="{Binding Transfers.Count}">
+        <DockPanel>
+          <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Height="40" Margin="16,0,0,0">
+            <TextBlock Classes="heading-compact-01" VerticalAlignment="Center" Text="{l:Tr transfer.title}" />
+            <Button Grid.Column="1" Classes="ghost sm" Content="{l:Tr transfer.clear}" Command="{Binding ClearFinishedTransfersCommand}" />
+          </Grid>
+          <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Transfers}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:TransferRowViewModel">
+                  <Grid ColumnDefinitions="Auto,*,200,Auto" Height="40" Margin="16,0,0,0">
+                    <carbon:CarbonIcon Kind="{Binding DirectionIcon}" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Margin="8,0" VerticalAlignment="Center">
+                      <TextBlock Classes="body-compact-01" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Classes="helper-text-01 secondary" Text="{Binding Detail}" TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                    <ProgressBar Grid.Column="2" Classes="sm" Value="{Binding Percent}" Maximum="100" VerticalAlignment="Center" />
+                    <Button Grid.Column="3" Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="close" IsVisible="{Binding IsActive}"
+                            Command="{Binding $parent[UserControl].((vm:SftpSessionViewModel)DataContext).CancelTransferCommand}" CommandParameter="{Binding}" />
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </DockPanel>
+      </Border>
+
+      <Panel>
+        <DataGrid Name="Files" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry}"
+                  IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
+          <DataGrid.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="{l:Tr sftp.edit}" Command="{Binding OpenCommand}" CommandParameter="{x:Null}" />
+              <MenuItem Header="{l:Tr sftp.download}" Command="{Binding DownloadCommand}" CommandParameter="{x:Null}" />
+              <MenuItem Header="{l:Tr sftp.rename}" Command="{Binding RenameCommand}" CommandParameter="{x:Null}" />
+              <Separator />
+              <MenuItem Classes="danger" Header="{l:Tr sftp.delete}" Command="{Binding DeleteCommand}" CommandParameter="{x:Null}" />
+            </ContextMenu>
+          </DataGrid.ContextMenu>
+          <DataGrid.Columns>
+            <DataGridTemplateColumn x:DataType="vm:SftpRowViewModel" Header="{l:Tr hosts.col.name}" Width="3*" SortMemberPath="Name">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate x:DataType="vm:SftpRowViewModel">
+                  <StackPanel Orientation="Horizontal" Spacing="8" Margin="16,0" VerticalAlignment="Center">
+                    <carbon:CarbonIcon Kind="{Binding Icon}" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                  </StackPanel>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTextColumn x:DataType="vm:SftpRowViewModel" Header="{l:Tr sftp.col.size}" Binding="{Binding SizeText}" Width="*" />
+            <DataGridTextColumn x:DataType="vm:SftpRowViewModel" Header="{l:Tr sftp.col.modified}" Binding="{Binding ModifiedText}" Width="1.5*" />
+            <DataGridTextColumn x:DataType="vm:SftpRowViewModel" Header="{l:Tr sftp.col.permissions}" Binding="{Binding Permissions}" Width="*" FontFamily="{DynamicResource CarbonFontMono}" />
+          </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8" IsVisible="{Binding IsEmptyFolder}">
+          <carbon:CarbonIcon Kind="folder-open" Size="32" HorizontalAlignment="Center" />
+          <TextBlock Classes="body-01 secondary" Text="{l:Tr sftp.emptyFolder}" HorizontalAlignment="Center" />
+          <TextBlock Classes="helper-text-01 secondary" Text="{l:Tr sftp.dropToUpload}" HorizontalAlignment="Center" />
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12" IsVisible="{Binding IsConnecting}">
+          <ProgressBar Classes="sm" IsIndeterminate="True" Width="240" />
+          <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{Binding StatusMessage}" />
+        </StackPanel>
+      </Panel>
+    </DockPanel>
+
+    <!-- text editor for small remote files (old-app parity) -->
+    <Border Background="{DynamicResource CarbonLayer01}" IsVisible="{Binding IsEditing}" Margin="24">
+      <DockPanel>
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto" Height="48" Margin="16,0,0,0">
+          <TextBlock Classes="heading-compact-01" FontFamily="{DynamicResource CarbonFontMono}" VerticalAlignment="Center"
+                     Text="{Binding EditorPath}" TextTrimming="CharacterEllipsis" />
+          <Button Grid.Column="1" Classes="secondary md" Content="{l:Tr common.close}" Command="{Binding CloseEditorCommand}" />
+          <Button Grid.Column="2" Classes="primary md" carbon:ButtonAssist.Icon="save" Content="{l:Tr sftp.save}" Command="{Binding SaveEditorCommand}" />
+        </Grid>
+        <TextBox Text="{Binding EditorText}" AcceptsReturn="True" AcceptsTab="True" FontFamily="{DynamicResource CarbonFontMono}" FontSize="13"
+                 TextWrapping="NoWrap" VerticalContentAlignment="Top" />
+      </DockPanel>
+    </Border>
+  </Panel>
+</UserControl>

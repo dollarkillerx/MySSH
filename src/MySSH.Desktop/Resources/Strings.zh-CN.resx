@@ -6,9 +6,13 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="aiPolicy.Ask" xml:space="preserve"><value>询问</value></data>
+  <data name="aiPolicy.Ask.help" xml:space="preserve"><value>AI 可以读取；每次执行命令或写入都会先询问你。</value></data>
   <data name="aiPolicy.Off" xml:space="preserve"><value>关闭</value></data>
+  <data name="aiPolicy.Off.help" xml:space="preserve"><value>AI 助手和 MCP 客户端看不到这台主机。</value></data>
   <data name="aiPolicy.ReadOnly" xml:space="preserve"><value>只读</value></data>
+  <data name="aiPolicy.ReadOnly.help" xml:space="preserve"><value>AI 可以读取文件，只能执行白名单里的命令。</value></data>
   <data name="aiPolicy.Trusted" xml:space="preserve"><value>信任</value></data>
+  <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI 执行命令无需询问（高风险命令除外）。建议给 AI 配一个低权限身份。</value></data>
   <data name="app.name" xml:space="preserve"><value>MySSH</value></data>
   <data name="app.openSftp" xml:space="preserve"><value>打开 SFTP</value></data>
   <data name="app.openTerminal" xml:space="preserve"><value>打开终端</value></data>
@@ -18,6 +22,7 @@
   <data name="auth.password" xml:space="preserve"><value>密码</value></data>
   <data name="common.cancel" xml:space="preserve"><value>取消</value></data>
   <data name="common.close" xml:space="preserve"><value>关闭</value></data>
+  <data name="common.comingSoon" xml:space="preserve"><value>将在后续阶段提供。</value></data>
   <data name="common.confirm" xml:space="preserve"><value>确定</value></data>
   <data name="common.delete" xml:space="preserve"><value>删除</value></data>
   <data name="common.edit" xml:space="preserve"><value>编辑</value></data>
@@ -25,6 +30,34 @@
   <data name="common.loading" xml:space="preserve"><value>加载中...</value></data>
   <data name="common.save" xml:space="preserve"><value>保存</value></data>
   <data name="common.success" xml:space="preserve"><value>成功</value></data>
+  <data name="hostEditor.addHop" xml:space="preserve"><value>添加一跳</value></data>
+  <data name="hostEditor.ai" xml:space="preserve"><value>AI / MCP 访问</value></data>
+  <data name="hostEditor.aiPolicy" xml:space="preserve"><value>策略</value></data>
+  <data name="hostEditor.authNewKey" xml:space="preserve"><value>新私钥</value></data>
+  <data name="hostEditor.authNewPassword" xml:space="preserve"><value>新密码</value></data>
+  <data name="hostEditor.authSaved" xml:space="preserve"><value>已保存的身份</value></data>
+  <data name="hostEditor.jumpHelp" xml:space="preserve"><value>按顺序经过这些主机连接（第一跳在前）。如果设置了代理，代理只用于第一跳。</value></data>
+  <data name="hostEditor.network" xml:space="preserve"><value>网络</value></data>
+  <data name="hostEditor.proxyNew" xml:space="preserve"><value>新代理</value></data>
+  <data name="hostEditor.proxyNone" xml:space="preserve"><value>不使用代理</value></data>
+  <data name="hostEditor.proxySaved" xml:space="preserve"><value>已保存的代理</value></data>
+  <data name="hostEditor.tags" xml:space="preserve"><value>标签</value></data>
+  <data name="hostEditor.tagsHelp" xml:space="preserve"><value>用逗号分隔，例如 prod, web</value></data>
+  <data name="hostEditor.usernameHelp" xml:space="preserve"><value>留空则使用身份中的用户名。</value></data>
+  <data name="hostKey.changedBody" xml:space="preserve"><value>这台主机出示的密钥与你之前信任的不同。重装服务器后会出现这种情况，遭遇中间人攻击时也会。除非已经核实新指纹，否则不要继续。</value></data>
+  <data name="hostKey.changedTitle" xml:space="preserve"><value>主机密钥已变化</value></data>
+  <data name="hostKey.fingerprint" xml:space="preserve"><value>指纹</value></data>
+  <data name="hostKey.hopJump" xml:space="preserve"><value>（跳板机，第 {n}/{total} 跳）</value></data>
+  <data name="hostKey.hopTarget" xml:space="preserve"><value>（目标主机，第 {n}/{total} 跳）</value></data>
+  <data name="hostKey.host" xml:space="preserve"><value>主机</value></data>
+  <data name="hostKey.previous" xml:space="preserve"><value>之前信任的指纹</value></data>
+  <data name="hostKey.remember" xml:space="preserve"><value>记住这个密钥</value></data>
+  <data name="hostKey.replaceAndConnect" xml:space="preserve"><value>替换密钥并连接</value></data>
+  <data name="hostKey.trustAndConnect" xml:space="preserve"><value>信任并连接</value></data>
+  <data name="hostKey.type" xml:space="preserve"><value>密钥类型</value></data>
+  <data name="hostKey.unknownBody" xml:space="preserve"><value>这是第一次连接这台主机。请先把指纹与从服务器管理员处获得的指纹核对（例如 ssh-keygen -lf /etc/ssh/ssh_host_*_key.pub），再决定是否信任。</value></data>
+  <data name="hostKey.unknownTitle" xml:space="preserve"><value>核实主机密钥</value></data>
+  <data name="hostKey.verifiedChanged" xml:space="preserve"><value>我已与服务器管理员核实过新指纹</value></data>
   <data name="hosts.add" xml:space="preserve"><value>新建主机</value></data>
   <data name="hosts.col.address" xml:space="preserve"><value>地址</value></data>
   <data name="hosts.col.ai" xml:space="preserve"><value>AI</value></data>
@@ -33,10 +66,27 @@
   <data name="hosts.col.user" xml:space="preserve"><value>用户</value></data>
   <data name="hosts.col.via" xml:space="preserve"><value>经由</value></data>
   <data name="hosts.count" xml:space="preserve"><value>{count} 台主机</value></data>
+  <data name="hosts.duplicate" xml:space="preserve"><value>复制</value></data>
   <data name="hosts.empty" xml:space="preserve"><value>还没有主机</value></data>
   <data name="hosts.emptyHint" xml:space="preserve"><value>新建一台主机，或从旧版 MySSH 导入。</value></data>
+  <data name="hosts.inUse" xml:space="preserve"><value>「{name}」是以下主机的跳板：{hosts}。请先把它从这些主机的跳板链中移除。</value></data>
   <data name="hosts.search" xml:space="preserve"><value>搜索主机…</value></data>
   <data name="hosts.title" xml:space="preserve"><value>主机</value></data>
+  <data name="identities.add" xml:space="preserve"><value>新建身份</value></data>
+  <data name="identities.col.usedBy" xml:space="preserve"><value>使用者</value></data>
+  <data name="identities.edit" xml:space="preserve"><value>编辑身份</value></data>
+  <data name="identities.inUse" xml:space="preserve"><value>「{name}」正被 {count} 台主机使用。请先为它们换一个身份。</value></data>
+  <data name="identities.keepSecret" xml:space="preserve"><value>密码/私钥留空则保留原来保存的内容。</value></data>
+  <data name="identities.subtitle" xml:space="preserve"><value>可被多台主机共用的凭据。修改一次，所有使用它的主机都会生效。</value></data>
+  <data name="identities.usedBy" xml:space="preserve"><value>{count} 台主机</value></data>
+  <data name="knownHosts.col.fingerprint" xml:space="preserve"><value>指纹</value></data>
+  <data name="knownHosts.col.host" xml:space="preserve"><value>主机</value></data>
+  <data name="knownHosts.col.lastSeen" xml:space="preserve"><value>最近一次</value></data>
+  <data name="knownHosts.col.type" xml:space="preserve"><value>密钥类型</value></data>
+  <data name="knownHosts.copy" xml:space="preserve"><value>复制指纹</value></data>
+  <data name="knownHosts.remove" xml:space="preserve"><value>移除</value></data>
+  <data name="knownHosts.removeConfirm" xml:space="preserve"><value>移除 {host} 的已信任密钥？下次连接时会再次要求你核实密钥。</value></data>
+  <data name="knownHosts.subtitle" xml:space="preserve"><value>你信任过的主机密钥。如果主机密钥发生变化，MySSH 会拒绝连接，直到你删除旧记录并核实新密钥。</value></data>
   <data name="legacy.done" xml:space="preserve"><value>已导入 {imported} 台主机（{identities} 个身份，{proxies} 个代理）。</value></data>
   <data name="legacy.doneTitle" xml:space="preserve"><value>导入完成</value></data>
   <data name="legacy.failed" xml:space="preserve"><value>导入失败：{error}</value></data>
@@ -51,7 +101,13 @@
   <data name="nav.hosts" xml:space="preserve"><value>主机</value></data>
   <data name="nav.identities" xml:space="preserve"><value>密钥与身份</value></data>
   <data name="nav.knownHosts" xml:space="preserve"><value>已知主机</value></data>
+  <data name="nav.sessions" xml:space="preserve"><value>会话</value></data>
   <data name="nav.settings" xml:space="preserve"><value>设置</value></data>
+  <data name="passphrase.body" xml:space="preserve"><value>这个私钥已加密，且没有保存口令。请输入口令以继续连接。</value></data>
+  <data name="passphrase.title" xml:space="preserve"><value>私钥口令</value></data>
+  <data name="paste.action" xml:space="preserve"><value>粘贴</value></data>
+  <data name="paste.body" xml:space="preserve"><value>你要粘贴 {lines} 行内容，每一行都可能被当作命令执行。</value></data>
+  <data name="paste.title" xml:space="preserve"><value>粘贴多行内容？</value></data>
   <data name="serverForm.authType" xml:space="preserve"><value>认证类型</value></data>
   <data name="serverForm.authentication" xml:space="preserve"><value>认证方式</value></data>
   <data name="serverForm.basicInfo" xml:space="preserve"><value>基本信息</value></data>
@@ -100,13 +156,26 @@
   <data name="servers.noResults" xml:space="preserve"><value>未找到匹配的服务器</value></data>
   <data name="servers.search" xml:space="preserve"><value>搜索服务器...</value></data>
   <data name="servers.title" xml:space="preserve"><value>服务器</value></data>
+  <data name="session.ended" xml:space="preserve"><value>远端 shell 已退出（退出码 {code}）。</value></data>
+  <data name="session.none" xml:space="preserve"><value>没有打开的会话</value></data>
+  <data name="session.noneHint" xml:space="preserve"><value>双击一台主机即可打开终端。</value></data>
+  <data name="session.state.Connected" xml:space="preserve"><value>已连接</value></data>
+  <data name="session.state.Connecting" xml:space="preserve"><value>连接中</value></data>
+  <data name="session.state.Ended" xml:space="preserve"><value>会话已结束</value></data>
+  <data name="session.state.Failed" xml:space="preserve"><value>连接失败</value></data>
+  <data name="session.state.Lost" xml:space="preserve"><value>连接已断开</value></data>
   <data name="settings.about" xml:space="preserve"><value>关于</value></data>
+  <data name="settings.appearance" xml:space="preserve"><value>外观</value></data>
   <data name="settings.backup" xml:space="preserve"><value>备份</value></data>
   <data name="settings.backupHint" xml:space="preserve"><value>导出所有服务器配置，使用密码加密保护</value></data>
   <data name="settings.confirmPassword" xml:space="preserve"><value>确认密码</value></data>
   <data name="settings.confirmPasswordPlaceholder" xml:space="preserve"><value>请再次输入密码</value></data>
+  <data name="settings.confirmPaste" xml:space="preserve"><value>向终端粘贴多行内容前先确认</value></data>
+  <data name="settings.data" xml:space="preserve"><value>数据</value></data>
+  <data name="settings.dataDir" xml:space="preserve"><value>数据目录</value></data>
   <data name="settings.enterPassword" xml:space="preserve"><value>请输入密码</value></data>
   <data name="settings.export" xml:space="preserve"><value>导出</value></data>
+  <data name="settings.exportDone" xml:space="preserve"><value>备份已保存（{count} 台主机）。</value></data>
   <data name="settings.exportFailed" xml:space="preserve"><value>导出失败：{error}</value></data>
   <data name="settings.exportSuccess" xml:space="preserve"><value>备份导出成功</value></data>
   <data name="settings.exportTitle" xml:space="preserve"><value>导出备份</value></data>
@@ -127,13 +196,24 @@
   <data name="settings.themeDark" xml:space="preserve"><value>深色</value></data>
   <data name="settings.themeLight" xml:space="preserve"><value>浅色</value></data>
   <data name="settings.title" xml:space="preserve"><value>设置</value></data>
+  <data name="settings.vault" xml:space="preserve"><value>凭据保护方式</value></data>
+  <data name="settings.vaultOs" xml:space="preserve"><value>主密钥保存在系统密钥库（{kind}）</value></data>
+  <data name="settings.vaultPassword" xml:space="preserve"><value>主密码</value></data>
   <data name="settings.version" xml:space="preserve"><value>版本</value></data>
+  <data name="settings.weakBackup" xml:space="preserve"><value>这个文件是旧版安全性较弱的备份格式，建议重新导出一份新备份替换它。</value></data>
+  <data name="settings.wrongBackupPassword" xml:space="preserve"><value>密码不正确，或文件已损坏。</value></data>
+  <data name="sftp.binaryFile" xml:space="preserve"><value>这看起来是二进制文件，请下载后查看。</value></data>
+  <data name="sftp.col.modified" xml:space="preserve"><value>修改时间</value></data>
+  <data name="sftp.col.permissions" xml:space="preserve"><value>权限</value></data>
+  <data name="sftp.col.size" xml:space="preserve"><value>大小</value></data>
   <data name="sftp.connecting" xml:space="preserve"><value>连接中...</value></data>
   <data name="sftp.createFailed" xml:space="preserve"><value>创建文件夹失败：{error}</value></data>
   <data name="sftp.createFileFailed" xml:space="preserve"><value>创建文件失败：{error}</value></data>
   <data name="sftp.delete" xml:space="preserve"><value>删除</value></data>
   <data name="sftp.deleteConfirm" xml:space="preserve"><value>确定删除「{name}」？</value></data>
   <data name="sftp.deleteFailed" xml:space="preserve"><value>删除失败：{error}</value></data>
+  <data name="sftp.deleteFolderConfirm" xml:space="preserve"><value>删除文件夹「{name}」及其中所有内容？此操作无法撤销。</value></data>
+  <data name="sftp.deleteLinkConfirm" xml:space="preserve"><value>删除链接「{name}」？它指向的文件会保留。</value></data>
   <data name="sftp.download" xml:space="preserve"><value>下载</value></data>
   <data name="sftp.downloadFailed" xml:space="preserve"><value>下载失败：{error}</value></data>
   <data name="sftp.downloadSuccess" xml:space="preserve"><value>下载完成</value></data>
@@ -157,9 +237,25 @@
   <data name="sftp.saving" xml:space="preserve"><value>保存中...</value></data>
   <data name="sftp.selectFile" xml:space="preserve"><value>选择文件</value></data>
   <data name="sftp.title" xml:space="preserve"><value>SFTP</value></data>
+  <data name="sftp.tooLargeToEdit" xml:space="preserve"><value>文件超过 1 MB，请下载后查看。</value></data>
   <data name="sftp.upload" xml:space="preserve"><value>上传</value></data>
   <data name="sftp.uploadFailed" xml:space="preserve"><value>上传失败：{error}</value></data>
   <data name="sftp.uploading" xml:space="preserve"><value>上传中...</value></data>
+  <data name="ssh.err.AuthenticationFailed" xml:space="preserve"><value>{hop}：认证失败，请检查用户名和凭据。</value></data>
+  <data name="ssh.err.Cancelled" xml:space="preserve"><value>已取消。</value></data>
+  <data name="ssh.err.HostKeyChanged" xml:space="preserve"><value>{hop}：主机密钥已变化，已拒绝连接。</value></data>
+  <data name="ssh.err.HostKeyRejected" xml:space="preserve"><value>{hop}：你没有信任该主机密钥。</value></data>
+  <data name="ssh.err.HostKeyUnknown" xml:space="preserve"><value>{hop}：主机密钥尚未被信任。</value></data>
+  <data name="ssh.err.InvalidConfiguration" xml:space="preserve"><value>主机设置不完整：{message}</value></data>
+  <data name="ssh.err.InvalidKey" xml:space="preserve"><value>无法读取私钥：{message}</value></data>
+  <data name="ssh.err.Lost" xml:space="preserve"><value>连接已断开：{message}</value></data>
+  <data name="ssh.err.Network" xml:space="preserve"><value>无法连接到 {hop}：{message}</value></data>
+  <data name="ssh.err.PassphraseCancelled" xml:space="preserve"><value>已取消：没有输入口令。</value></data>
+  <data name="ssh.err.PassphraseRequired" xml:space="preserve"><value>私钥需要口令。</value></data>
+  <data name="ssh.err.Protocol" xml:space="preserve"><value>SSH 协议错误：{message}</value></data>
+  <data name="ssh.err.Proxy" xml:space="preserve"><value>代理拒绝了连接：{message}</value></data>
+  <data name="ssh.err.Timeout" xml:space="preserve"><value>{hop} 没有及时响应。</value></data>
+  <data name="ssh.err.WrongPassphrase" xml:space="preserve"><value>私钥口令不正确。</value></data>
   <data name="storage.corrupt" xml:space="preserve"><value>有 {count} 条已保存的记录无法解密，已原样保留；详见 设置 › 数据。</value></data>
   <data name="storage.openFailed" xml:space="preserve"><value>无法打开 MySSH 数据存储：{error}</value></data>
   <data name="tabs.openSftp" xml:space="preserve"><value>打开 SFTP</value></data>
@@ -171,6 +267,23 @@
   <data name="terminal.connectionFailed" xml:space="preserve"><value>连接失败：{error}</value></data>
   <data name="terminal.reconnect" xml:space="preserve"><value>重新连接</value></data>
   <data name="terminal.retry" xml:space="preserve"><value>重试</value></data>
+  <data name="transfer.clear" xml:space="preserve"><value>清除已完成</value></data>
+  <data name="transfer.conflictBody" xml:space="preserve"><value>{path} 已存在，要覆盖吗？</value></data>
+  <data name="transfer.conflictTitle" xml:space="preserve"><value>文件已存在</value></data>
+  <data name="transfer.failed" xml:space="preserve"><value>失败：{error}</value></data>
+  <data name="transfer.overwrite" xml:space="preserve"><value>覆盖</value></data>
+  <data name="transfer.state.Cancelled" xml:space="preserve"><value>已取消</value></data>
+  <data name="transfer.state.Completed" xml:space="preserve"><value>完成</value></data>
+  <data name="transfer.state.Failed" xml:space="preserve"><value>失败</value></data>
+  <data name="transfer.state.Queued" xml:space="preserve"><value>排队中</value></data>
+  <data name="transfer.state.Running" xml:space="preserve"><value>传输中</value></data>
+  <data name="transfer.title" xml:space="preserve"><value>传输</value></data>
+  <data name="validation.hostname" xml:space="preserve"><value>主机名不能包含空格</value></data>
+  <data name="validation.identity" xml:space="preserve"><value>请选择一个身份</value></data>
+  <data name="validation.jumpCycle" xml:space="preserve"><value>跳板链绕回了这台主机：{path}</value></data>
+  <data name="validation.port" xml:space="preserve"><value>请输入 1 到 65535 之间的端口</value></data>
+  <data name="validation.privateKey" xml:space="preserve"><value>这不是私钥（应以「-----BEGIN … PRIVATE KEY-----」开头）</value></data>
+  <data name="validation.required" xml:space="preserve"><value>必填</value></data>
   <data name="vault.unlock.action" xml:space="preserve"><value>解锁</value></data>
   <data name="vault.unlock.body" xml:space="preserve"><value>输入主密码以解密已保存的凭据。</value></data>
   <data name="vault.unlock.password" xml:space="preserve"><value>主密码</value></data>

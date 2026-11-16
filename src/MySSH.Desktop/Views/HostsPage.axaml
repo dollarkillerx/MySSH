@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:v="using:MySSH.Desktop.Views"
+             x:Class="MySSH.Desktop.Views.HostsPage"
+             x:DataType="vm:HostListViewModel">
+  <Grid ColumnDefinitions="*,Auto">
+    <!-- Hosts table (design §8.4 wireframe) -->
+    <Grid Margin="32,24,32,32" RowDefinitions="Auto,Auto,Auto,*">
+      <StackPanel Spacing="4" Margin="0,0,0,24">
+        <TextBlock Classes="heading-04" Text="{l:Tr hosts.title}" />
+        <TextBlock Classes="body-compact-01 secondary" Text="{Binding CountText}" />
+      </StackPanel>
+      <carbon:InlineNotification Grid.Row="1" Kind="Error" IsLowContrast="True" Margin="0,0,0,16"
+                                 Title="{l:Tr common.error}" Subtitle="{Binding Error}"
+                                 IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                 Closed="OnErrorClosed" />
+      <Border Grid.Row="2" Background="{DynamicResource CarbonLayer01}">
+        <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" Height="48">
+          <TextBox Classes="lg" BorderThickness="0" Background="Transparent"
+                   Text="{Binding SearchText}" PlaceholderText="{l:Tr hosts.search}">
+            <TextBox.InnerLeftContent>
+              <carbon:CarbonIcon Kind="search" Margin="16,0,0,0" VerticalAlignment="Center" />
+            </TextBox.InnerLeftContent>
+          </TextBox>
+          <Button Grid.Column="1" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="terminal"
+                  ToolTip.Tip="{l:Tr app.openTerminal}" Command="{Binding ConnectCommand}" CommandParameter="{x:Null}"
+                  IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Grid.Column="2" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="folder"
+                  ToolTip.Tip="{l:Tr app.openSftp}" Command="{Binding OpenSftpCommand}" CommandParameter="{x:Null}"
+                  IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Grid.Column="3" Classes="ghost icon-only lg" carbon:ButtonAssist.Icon="edit"
+                  ToolTip.Tip="{l:Tr common.edit}" Command="{Binding EditHostCommand}" CommandParameter="{x:Null}"
+                  IsEnabled="{Binding SelectedRow, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Grid.Column="4" Name="AddButton" Classes="lg" carbon:ButtonAssist.Icon="add" Content="{l:Tr hosts.add}"
+                  Command="{Binding NewHostCommand}" />
+        </Grid>
+      </Border>
+      <Panel Grid.Row="3">
+        <DataGrid Name="HostGrid" ItemsSource="{Binding Rows}" SelectedItem="{Binding SelectedRow}"
+                  IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
+          <DataGrid.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="{l:Tr app.openTerminal}" Command="{Binding ConnectCommand}" CommandParameter="{x:Null}" />
+              <MenuItem Header="{l:Tr app.openSftp}" Command="{Binding OpenSftpCommand}" CommandParameter="{x:Null}" />
+              <Separator />
+              <MenuItem Header="{l:Tr common.edit}" Command="{Binding EditHostCommand}" CommandParameter="{x:Null}" />
+              <MenuItem Header="{l:Tr hosts.duplicate}" Command="{Binding DuplicateHostCommand}" CommandParameter="{x:Null}" />
+              <Separator />
+              <MenuItem Classes="danger" Header="{l:Tr common.delete}" Command="{Binding DeleteHostCommand}" CommandParameter="{x:Null}" />
+            </ContextMenu>
+          </DataGrid.ContextMenu>
+          <DataGrid.Columns>
+            <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.name}" Binding="{Binding Name}" Width="2*" />
+            <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.address}" Binding="{Binding Address}" Width="2*" />
+            <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.user}" Binding="{Binding User}" Width="*" />
+            <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.auth}" Binding="{Binding Auth}" Width="*" />
+            <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.via}" Binding="{Binding Via}" Width="2*" />
+            <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.ai}" Binding="{Binding AiPolicyText}" Width="*" />
+          </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8" Margin="0,48,0,0"
+                    IsVisible="{Binding IsEmpty}">
+          <carbon:CarbonIcon Kind="virtual-machine" Size="32" HorizontalAlignment="Center" />
+          <TextBlock Classes="heading-03" HorizontalAlignment="Center" Text="{l:Tr hosts.empty}" />
+          <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{l:Tr hosts.emptyHint}" />
+        </StackPanel>
+      </Panel>
+    </Grid>
+
+    <!-- side panel editor (480px, design §8.4) -->
+    <v:HostEditorPanel Grid.Column="1" Width="480" DataContext="{Binding Editor}"
+                       IsVisible="{Binding $parent[UserControl].((vm:HostListViewModel)DataContext).Editor, Converter={x:Static ObjectConverters.IsNotNull}}"
+                       SaveRequested="OnEditorSave" CancelRequested="OnEditorCancel" />
+  </Grid>
+</UserControl>

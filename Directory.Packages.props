@@ -14,6 +14,8 @@
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="12.1.6" />
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <!-- tests only: local PTY to record / smoke-test real programs through TerminalView -->
+    <PackageVersion Include="Porta.Pty" Version="2.2.4" />
   </ItemGroup>
   <ItemGroup Label="Terminal / SSH / MCP / AI">
     <PackageVersion Include="XTerm.NET" Version="3.0.3" />

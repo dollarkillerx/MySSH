@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:carbon="https://myssh.app/carbon"
+             xmlns:l="using:MySSH.Desktop.Localization"
+             xmlns:vm="using:MySSH.Desktop.ViewModels"
+             xmlns:v="using:MySSH.Desktop.Views"
+             x:Class="MySSH.Desktop.Views.SessionsPage"
+             x:DataType="vm:SessionsWorkspaceViewModel">
+  <Panel>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8" IsVisible="{Binding IsEmpty}">
+      <carbon:CarbonIcon Kind="terminal" Size="32" HorizontalAlignment="Center" />
+      <TextBlock Classes="heading-03" HorizontalAlignment="Center" Text="{l:Tr session.none}" />
+      <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{l:Tr session.noneHint}" />
+    </StackPanel>
+
+    <DockPanel IsVisible="{Binding HasTabs}">
+      <!-- Carbon contained tabs: headers only; content lives in the stacked panel below -->
+      <TabControl DockPanel.Dock="Top" Classes="contained" VerticalAlignment="Top"
+                  ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
+        <TabControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:SessionTabViewModel">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <carbon:CarbonIcon Kind="{Binding Icon}" VerticalAlignment="Center" />
+              <TextBlock Text="{Binding Title}" VerticalAlignment="Center" MaxWidth="220" TextTrimming="CharacterEllipsis" />
+              <Ellipse Width="6" Height="6" VerticalAlignment="Center" Fill="{DynamicResource CarbonSupportError}" IsVisible="{Binding BannerIsError}" />
+              <Button Classes="ghost icon-only sm" carbon:ButtonAssist.Icon="close" VerticalAlignment="Center" Margin="4,0,-8,0"
+                      ToolTip.Tip="{l:Tr terminal.close}"
+                      Command="{Binding $parent[UserControl].((vm:SessionsWorkspaceViewModel)DataContext).CloseTabCommand}" CommandParameter="{Binding}" />
+            </StackPanel>
+          </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+          <DataTemplate><Panel Height="0" /></DataTemplate>
+        </TabControl.ContentTemplate>
+      </TabControl>
+
+      <ItemsControl ItemsSource="{Binding Tabs}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate><Panel /></ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.DataTemplates>
+          <DataTemplate DataType="vm:TerminalSessionViewModel"><v:TerminalSessionView IsVisible="{Binding IsSelected}" /></DataTemplate>
+          <DataTemplate DataType="vm:SftpSessionViewModel"><v:SftpSessionView IsVisible="{Binding IsSelected}" /></DataTemplate>
+        </ItemsControl.DataTemplates>
+      </ItemsControl>
+    </DockPanel>
+  </Panel>
+</UserControl>

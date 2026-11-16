@@ -6,9 +6,13 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="aiPolicy.Ask" xml:space="preserve"><value>Ask</value></data>
+  <data name="aiPolicy.Ask.help" xml:space="preserve"><value>AI may read; every command or write asks you first.</value></data>
   <data name="aiPolicy.Off" xml:space="preserve"><value>Off</value></data>
+  <data name="aiPolicy.Off.help" xml:space="preserve"><value>Invisible to the AI assistant and MCP clients.</value></data>
   <data name="aiPolicy.ReadOnly" xml:space="preserve"><value>Read-only</value></data>
+  <data name="aiPolicy.ReadOnly.help" xml:space="preserve"><value>AI may read files and run only allow-listed commands.</value></data>
   <data name="aiPolicy.Trusted" xml:space="preserve"><value>Trusted</value></data>
+  <data name="aiPolicy.Trusted.help" xml:space="preserve"><value>AI may run commands without asking, except high-risk ones. Prefer a low-privilege identity.</value></data>
   <data name="app.name" xml:space="preserve"><value>MySSH</value></data>
   <data name="app.openSftp" xml:space="preserve"><value>Open SFTP</value></data>
   <data name="app.openTerminal" xml:space="preserve"><value>Open Terminal</value></data>
@@ -18,6 +22,7 @@
   <data name="auth.password" xml:space="preserve"><value>Password</value></data>
   <data name="common.cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="common.close" xml:space="preserve"><value>Close</value></data>
+  <data name="common.comingSoon" xml:space="preserve"><value>Arrives in a later phase.</value></data>
   <data name="common.confirm" xml:space="preserve"><value>Confirm</value></data>
   <data name="common.delete" xml:space="preserve"><value>Delete</value></data>
   <data name="common.edit" xml:space="preserve"><value>Edit</value></data>
@@ -25,6 +30,34 @@
   <data name="common.loading" xml:space="preserve"><value>Loading...</value></data>
   <data name="common.save" xml:space="preserve"><value>Save</value></data>
   <data name="common.success" xml:space="preserve"><value>Success</value></data>
+  <data name="hostEditor.addHop" xml:space="preserve"><value>Add hop</value></data>
+  <data name="hostEditor.ai" xml:space="preserve"><value>AI / MCP access</value></data>
+  <data name="hostEditor.aiPolicy" xml:space="preserve"><value>Policy</value></data>
+  <data name="hostEditor.authNewKey" xml:space="preserve"><value>New private key</value></data>
+  <data name="hostEditor.authNewPassword" xml:space="preserve"><value>New password</value></data>
+  <data name="hostEditor.authSaved" xml:space="preserve"><value>Saved identity</value></data>
+  <data name="hostEditor.jumpHelp" xml:space="preserve"><value>Connect through these hosts in order (first hop first). The proxy, if any, applies to the first hop.</value></data>
+  <data name="hostEditor.network" xml:space="preserve"><value>Network</value></data>
+  <data name="hostEditor.proxyNew" xml:space="preserve"><value>New proxy</value></data>
+  <data name="hostEditor.proxyNone" xml:space="preserve"><value>No proxy</value></data>
+  <data name="hostEditor.proxySaved" xml:space="preserve"><value>Saved proxy</value></data>
+  <data name="hostEditor.tags" xml:space="preserve"><value>Tags</value></data>
+  <data name="hostEditor.tagsHelp" xml:space="preserve"><value>Comma separated, e.g. prod, web</value></data>
+  <data name="hostEditor.usernameHelp" xml:space="preserve"><value>Leave empty to use the identity's user name.</value></data>
+  <data name="hostKey.changedBody" xml:space="preserve"><value>The key this host presented differs from the one you trusted before. This happens after a server reinstall — or during a man-in-the-middle attack. Do not continue unless you have verified the new fingerprint.</value></data>
+  <data name="hostKey.changedTitle" xml:space="preserve"><value>Host key changed</value></data>
+  <data name="hostKey.fingerprint" xml:space="preserve"><value>Fingerprint</value></data>
+  <data name="hostKey.hopJump" xml:space="preserve"><value>(Jump host {n} of {total})</value></data>
+  <data name="hostKey.hopTarget" xml:space="preserve"><value>(Target, hop {n} of {total})</value></data>
+  <data name="hostKey.host" xml:space="preserve"><value>Host</value></data>
+  <data name="hostKey.previous" xml:space="preserve"><value>Previously trusted</value></data>
+  <data name="hostKey.remember" xml:space="preserve"><value>Remember this key</value></data>
+  <data name="hostKey.replaceAndConnect" xml:space="preserve"><value>Replace key and connect</value></data>
+  <data name="hostKey.trustAndConnect" xml:space="preserve"><value>Trust and connect</value></data>
+  <data name="hostKey.type" xml:space="preserve"><value>Key type</value></data>
+  <data name="hostKey.unknownBody" xml:space="preserve"><value>This is the first connection to this host. Compare the fingerprint with one obtained from the server administrator (e.g. ssh-keygen -lf /etc/ssh/ssh_host_*_key.pub) before trusting it.</value></data>
+  <data name="hostKey.unknownTitle" xml:space="preserve"><value>Verify host key</value></data>
+  <data name="hostKey.verifiedChanged" xml:space="preserve"><value>I verified the new fingerprint with the server administrator</value></data>
   <data name="hosts.add" xml:space="preserve"><value>New host</value></data>
   <data name="hosts.col.address" xml:space="preserve"><value>Address</value></data>
   <data name="hosts.col.ai" xml:space="preserve"><value>AI</value></data>
@@ -33,10 +66,27 @@
   <data name="hosts.col.user" xml:space="preserve"><value>User</value></data>
   <data name="hosts.col.via" xml:space="preserve"><value>Via</value></data>
   <data name="hosts.count" xml:space="preserve"><value>{count} hosts</value></data>
+  <data name="hosts.duplicate" xml:space="preserve"><value>Duplicate</value></data>
   <data name="hosts.empty" xml:space="preserve"><value>No hosts yet</value></data>
   <data name="hosts.emptyHint" xml:space="preserve"><value>Add a host, or import from the previous version of MySSH.</value></data>
+  <data name="hosts.inUse" xml:space="preserve"><value>"{name}" is a jump host for: {hosts}. Remove it from their jump chains first.</value></data>
   <data name="hosts.search" xml:space="preserve"><value>Search hosts…</value></data>
   <data name="hosts.title" xml:space="preserve"><value>Hosts</value></data>
+  <data name="identities.add" xml:space="preserve"><value>New identity</value></data>
+  <data name="identities.col.usedBy" xml:space="preserve"><value>Used by</value></data>
+  <data name="identities.edit" xml:space="preserve"><value>Edit identity</value></data>
+  <data name="identities.inUse" xml:space="preserve"><value>"{name}" is used by {count} hosts. Assign them another identity first.</value></data>
+  <data name="identities.keepSecret" xml:space="preserve"><value>Leave the secret fields empty to keep the stored password or key.</value></data>
+  <data name="identities.subtitle" xml:space="preserve"><value>Credentials that hosts share. Changing one updates every host that uses it.</value></data>
+  <data name="identities.usedBy" xml:space="preserve"><value>{count} hosts</value></data>
+  <data name="knownHosts.col.fingerprint" xml:space="preserve"><value>Fingerprint</value></data>
+  <data name="knownHosts.col.host" xml:space="preserve"><value>Host</value></data>
+  <data name="knownHosts.col.lastSeen" xml:space="preserve"><value>Last seen</value></data>
+  <data name="knownHosts.col.type" xml:space="preserve"><value>Key type</value></data>
+  <data name="knownHosts.copy" xml:space="preserve"><value>Copy fingerprint</value></data>
+  <data name="knownHosts.remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="knownHosts.removeConfirm" xml:space="preserve"><value>Remove the trusted key for {host}? The next connection will ask you to verify the key again.</value></data>
+  <data name="knownHosts.subtitle" xml:space="preserve"><value>Host keys you trusted. If a host key changes, MySSH refuses to connect until you remove the old entry and verify the new key.</value></data>
   <data name="legacy.done" xml:space="preserve"><value>Imported {imported} hosts ({identities} identities, {proxies} proxies).</value></data>
   <data name="legacy.doneTitle" xml:space="preserve"><value>Import complete</value></data>
   <data name="legacy.failed" xml:space="preserve"><value>Import failed: {error}</value></data>
@@ -51,7 +101,13 @@
   <data name="nav.hosts" xml:space="preserve"><value>Hosts</value></data>
   <data name="nav.identities" xml:space="preserve"><value>Keys &amp; identities</value></data>
   <data name="nav.knownHosts" xml:space="preserve"><value>Known hosts</value></data>
+  <data name="nav.sessions" xml:space="preserve"><value>Sessions</value></data>
   <data name="nav.settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="passphrase.body" xml:space="preserve"><value>This key is encrypted and its passphrase is not saved. Enter it to connect.</value></data>
+  <data name="passphrase.title" xml:space="preserve"><value>Private key passphrase</value></data>
+  <data name="paste.action" xml:space="preserve"><value>Paste</value></data>
+  <data name="paste.body" xml:space="preserve"><value>You are pasting {lines} lines. Each line may run as a command.</value></data>
+  <data name="paste.title" xml:space="preserve"><value>Paste multiple lines?</value></data>
   <data name="serverForm.authType" xml:space="preserve"><value>Auth Type</value></data>
   <data name="serverForm.authentication" xml:space="preserve"><value>Authentication</value></data>
   <data name="serverForm.basicInfo" xml:space="preserve"><value>Basic Info</value></data>
@@ -100,13 +156,26 @@
   <data name="servers.noResults" xml:space="preserve"><value>No matching servers found</value></data>
   <data name="servers.search" xml:space="preserve"><value>Search servers...</value></data>
   <data name="servers.title" xml:space="preserve"><value>Servers</value></data>
+  <data name="session.ended" xml:space="preserve"><value>The remote shell exited (code {code}).</value></data>
+  <data name="session.none" xml:space="preserve"><value>No open sessions</value></data>
+  <data name="session.noneHint" xml:space="preserve"><value>Double-click a host to open a terminal.</value></data>
+  <data name="session.state.Connected" xml:space="preserve"><value>Connected</value></data>
+  <data name="session.state.Connecting" xml:space="preserve"><value>Connecting</value></data>
+  <data name="session.state.Ended" xml:space="preserve"><value>Session ended</value></data>
+  <data name="session.state.Failed" xml:space="preserve"><value>Connection failed</value></data>
+  <data name="session.state.Lost" xml:space="preserve"><value>Connection lost</value></data>
   <data name="settings.about" xml:space="preserve"><value>About</value></data>
+  <data name="settings.appearance" xml:space="preserve"><value>Appearance</value></data>
   <data name="settings.backup" xml:space="preserve"><value>Backup</value></data>
   <data name="settings.backupHint" xml:space="preserve"><value>Export all server configurations with password encryption</value></data>
   <data name="settings.confirmPassword" xml:space="preserve"><value>Confirm Password</value></data>
   <data name="settings.confirmPasswordPlaceholder" xml:space="preserve"><value>Enter password again</value></data>
+  <data name="settings.confirmPaste" xml:space="preserve"><value>Confirm before pasting multiple lines into a terminal</value></data>
+  <data name="settings.data" xml:space="preserve"><value>Data</value></data>
+  <data name="settings.dataDir" xml:space="preserve"><value>Data directory</value></data>
   <data name="settings.enterPassword" xml:space="preserve"><value>Please enter password</value></data>
   <data name="settings.export" xml:space="preserve"><value>Export</value></data>
+  <data name="settings.exportDone" xml:space="preserve"><value>Backup saved ({count} hosts).</value></data>
   <data name="settings.exportFailed" xml:space="preserve"><value>Export failed: {error}</value></data>
   <data name="settings.exportSuccess" xml:space="preserve"><value>Backup exported successfully</value></data>
   <data name="settings.exportTitle" xml:space="preserve"><value>Export Backup</value></data>
@@ -127,13 +196,24 @@
   <data name="settings.themeDark" xml:space="preserve"><value>Dark</value></data>
   <data name="settings.themeLight" xml:space="preserve"><value>Light</value></data>
   <data name="settings.title" xml:space="preserve"><value>Settings</value></data>
+  <data name="settings.vault" xml:space="preserve"><value>Credential protection</value></data>
+  <data name="settings.vaultOs" xml:space="preserve"><value>Master key in the system keystore ({kind})</value></data>
+  <data name="settings.vaultPassword" xml:space="preserve"><value>Master password</value></data>
   <data name="settings.version" xml:space="preserve"><value>Version</value></data>
+  <data name="settings.weakBackup" xml:space="preserve"><value>This file uses the old, weaker backup format — export a new backup to replace it.</value></data>
+  <data name="settings.wrongBackupPassword" xml:space="preserve"><value>Wrong password, or the file is damaged.</value></data>
+  <data name="sftp.binaryFile" xml:space="preserve"><value>This looks like a binary file — download it instead.</value></data>
+  <data name="sftp.col.modified" xml:space="preserve"><value>Modified</value></data>
+  <data name="sftp.col.permissions" xml:space="preserve"><value>Permissions</value></data>
+  <data name="sftp.col.size" xml:space="preserve"><value>Size</value></data>
   <data name="sftp.connecting" xml:space="preserve"><value>Connecting...</value></data>
   <data name="sftp.createFailed" xml:space="preserve"><value>Failed to create folder: {error}</value></data>
   <data name="sftp.createFileFailed" xml:space="preserve"><value>Failed to create file: {error}</value></data>
   <data name="sftp.delete" xml:space="preserve"><value>Delete</value></data>
   <data name="sftp.deleteConfirm" xml:space="preserve"><value>Delete "{name}"?</value></data>
   <data name="sftp.deleteFailed" xml:space="preserve"><value>Failed to delete: {error}</value></data>
+  <data name="sftp.deleteFolderConfirm" xml:space="preserve"><value>Delete the folder "{name}" and everything in it? This cannot be undone.</value></data>
+  <data name="sftp.deleteLinkConfirm" xml:space="preserve"><value>Delete the link "{name}"? The file it points to is kept.</value></data>
   <data name="sftp.download" xml:space="preserve"><value>Download</value></data>
   <data name="sftp.downloadFailed" xml:space="preserve"><value>Failed to download: {error}</value></data>
   <data name="sftp.downloadSuccess" xml:space="preserve"><value>Download complete</value></data>
@@ -157,9 +237,25 @@
   <data name="sftp.saving" xml:space="preserve"><value>Saving...</value></data>
   <data name="sftp.selectFile" xml:space="preserve"><value>Select file</value></data>
   <data name="sftp.title" xml:space="preserve"><value>SFTP</value></data>
+  <data name="sftp.tooLargeToEdit" xml:space="preserve"><value>This file is larger than 1 MB — download it instead.</value></data>
   <data name="sftp.upload" xml:space="preserve"><value>Upload</value></data>
   <data name="sftp.uploadFailed" xml:space="preserve"><value>Failed to upload: {error}</value></data>
   <data name="sftp.uploading" xml:space="preserve"><value>Uploading...</value></data>
+  <data name="ssh.err.AuthenticationFailed" xml:space="preserve"><value>{hop}: authentication failed — check user name and credentials.</value></data>
+  <data name="ssh.err.Cancelled" xml:space="preserve"><value>Cancelled.</value></data>
+  <data name="ssh.err.HostKeyChanged" xml:space="preserve"><value>{hop}: host key changed — connection refused.</value></data>
+  <data name="ssh.err.HostKeyRejected" xml:space="preserve"><value>{hop}: you did not trust the host key.</value></data>
+  <data name="ssh.err.HostKeyUnknown" xml:space="preserve"><value>{hop}: host key is not trusted yet.</value></data>
+  <data name="ssh.err.InvalidConfiguration" xml:space="preserve"><value>Host settings are incomplete: {message}</value></data>
+  <data name="ssh.err.InvalidKey" xml:space="preserve"><value>The private key could not be read: {message}</value></data>
+  <data name="ssh.err.Lost" xml:space="preserve"><value>Connection lost: {message}</value></data>
+  <data name="ssh.err.Network" xml:space="preserve"><value>Could not reach {hop}: {message}</value></data>
+  <data name="ssh.err.PassphraseCancelled" xml:space="preserve"><value>Cancelled: no passphrase entered.</value></data>
+  <data name="ssh.err.PassphraseRequired" xml:space="preserve"><value>The private key needs a passphrase.</value></data>
+  <data name="ssh.err.Protocol" xml:space="preserve"><value>SSH protocol error: {message}</value></data>
+  <data name="ssh.err.Proxy" xml:space="preserve"><value>The proxy refused the connection: {message}</value></data>
+  <data name="ssh.err.Timeout" xml:space="preserve"><value>{hop} did not respond in time.</value></data>
+  <data name="ssh.err.WrongPassphrase" xml:space="preserve"><value>Wrong passphrase for the private key.</value></data>
   <data name="storage.corrupt" xml:space="preserve"><value>{count} saved records could not be decrypted. They are kept unchanged; see Settings › Data.</value></data>
   <data name="storage.openFailed" xml:space="preserve"><value>Could not open the MySSH data store: {error}</value></data>
   <data name="tabs.openSftp" xml:space="preserve"><value>Open SFTP</value></data>
@@ -171,6 +267,23 @@
   <data name="terminal.connectionFailed" xml:space="preserve"><value>Connection failed: {error}</value></data>
   <data name="terminal.reconnect" xml:space="preserve"><value>Reconnect</value></data>
   <data name="terminal.retry" xml:space="preserve"><value>Retry</value></data>
+  <data name="transfer.clear" xml:space="preserve"><value>Clear finished</value></data>
+  <data name="transfer.conflictBody" xml:space="preserve"><value>{path} already exists. Overwrite it?</value></data>
+  <data name="transfer.conflictTitle" xml:space="preserve"><value>File already exists</value></data>
+  <data name="transfer.failed" xml:space="preserve"><value>Failed: {error}</value></data>
+  <data name="transfer.overwrite" xml:space="preserve"><value>Overwrite</value></data>
+  <data name="transfer.state.Cancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="transfer.state.Completed" xml:space="preserve"><value>Done</value></data>
+  <data name="transfer.state.Failed" xml:space="preserve"><value>Failed</value></data>
+  <data name="transfer.state.Queued" xml:space="preserve"><value>Queued</value></data>
+  <data name="transfer.state.Running" xml:space="preserve"><value>Transferring</value></data>
+  <data name="transfer.title" xml:space="preserve"><value>Transfers</value></data>
+  <data name="validation.hostname" xml:space="preserve"><value>Host names cannot contain spaces</value></data>
+  <data name="validation.identity" xml:space="preserve"><value>Choose an identity</value></data>
+  <data name="validation.jumpCycle" xml:space="preserve"><value>Jump chain loops back to this host: {path}</value></data>
+  <data name="validation.port" xml:space="preserve"><value>Enter a port between 1 and 65535</value></data>
+  <data name="validation.privateKey" xml:space="preserve"><value>Not a private key (expected "-----BEGIN … PRIVATE KEY-----")</value></data>
+  <data name="validation.required" xml:space="preserve"><value>Required</value></data>
   <data name="vault.unlock.action" xml:space="preserve"><value>Unlock</value></data>
   <data name="vault.unlock.body" xml:space="preserve"><value>Enter your master password to decrypt saved credentials.</value></data>
   <data name="vault.unlock.password" xml:space="preserve"><value>Master password</value></data>

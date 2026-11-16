@@ -4,6 +4,7 @@
         xmlns:l="using:MySSH.Desktop.Localization"
         xmlns:vm="using:MySSH.Desktop.ViewModels"
         xmlns:local="using:MySSH.Desktop"
+        xmlns:v="using:MySSH.Desktop.Views"
         x:Class="MySSH.Desktop.MainWindow"
         x:DataType="vm:ShellViewModel"
         Width="1280" Height="800" MinWidth="900" MinHeight="560"
@@ -49,51 +50,20 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <!-- Hosts page (design §9.4: Carbon data table with toolbar) -->
-        <Grid Grid.Row="1" Name="HostsPage" Margin="32,24,32,32" RowDefinitions="Auto,Auto,*"
-              IsVisible="{Binding Hosts, Converter={x:Static ObjectConverters.IsNotNull}}">
-          <StackPanel Spacing="4" Margin="0,0,0,24">
-            <TextBlock Classes="heading-04" Text="{l:Tr hosts.title}" />
-            <TextBlock Classes="body-compact-01 secondary" Text="{Binding Hosts.CountText}" />
-          </StackPanel>
-          <Border Grid.Row="1" Background="{DynamicResource CarbonLayer01}">
-            <Grid ColumnDefinitions="*,Auto" Height="48">
-              <TextBox Classes="lg" BorderThickness="0" Background="Transparent"
-                       Text="{Binding Hosts.SearchText}" PlaceholderText="{l:Tr hosts.search}">
-                <TextBox.InnerLeftContent>
-                  <carbon:CarbonIcon Kind="search" Margin="16,0,0,0" VerticalAlignment="Center" />
-                </TextBox.InnerLeftContent>
-              </TextBox>
-              <Button Grid.Column="1" Classes="lg" carbon:ButtonAssist.Icon="add" Content="{l:Tr hosts.add}" IsEnabled="False" />
-            </Grid>
-          </Border>
-          <Panel Grid.Row="2">
-            <DataGrid Name="HostGrid" ItemsSource="{Binding Hosts.Rows}" SelectedItem="{Binding Hosts.SelectedRow}"
-                      IsReadOnly="True" CanUserSortColumns="True" AutoGenerateColumns="False">
-              <DataGrid.Columns>
-                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.name}" Binding="{Binding Name}" Width="2*" />
-                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.address}" Binding="{Binding Address}" Width="2*" />
-                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.user}" Binding="{Binding User}" Width="*" />
-                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.auth}" Binding="{Binding Auth}" Width="*" />
-                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.via}" Binding="{Binding Via}" Width="2*" />
-                <DataGridTextColumn x:DataType="vm:HostRowViewModel" Header="{l:Tr hosts.col.ai}" Binding="{Binding AiPolicyText}" Width="*" />
-              </DataGrid.Columns>
-            </DataGrid>
-            <!-- empty state -->
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8" Margin="0,48,0,0"
-                        IsVisible="{Binding Hosts.IsEmpty}">
-              <carbon:CarbonIcon Kind="virtual-machine" Size="32" HorizontalAlignment="Center" />
-              <TextBlock Classes="heading-03" HorizontalAlignment="Center" Text="{l:Tr hosts.empty}" />
-              <TextBlock Classes="body-01 secondary" HorizontalAlignment="Center" Text="{l:Tr hosts.emptyHint}" />
-            </StackPanel>
-          </Panel>
-        </Grid>
+        <!-- active page; typed templates keep compiled bindings (AOT) -->
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPage}">
+          <ContentControl.DataTemplates>
+            <DataTemplate DataType="vm:HostListViewModel"><v:HostsPage /></DataTemplate>
+            <!-- sessions are rendered by the persistent SessionsPage below, never recreated -->
+            <DataTemplate DataType="vm:SessionsWorkspaceViewModel"><Panel /></DataTemplate>
+            <DataTemplate DataType="vm:IdentitiesViewModel"><v:IdentitiesPage /></DataTemplate>
+            <DataTemplate DataType="vm:KnownHostsViewModel"><v:KnownHostsPage /></DataTemplate>
+            <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsPage /></DataTemplate>
+            <DataTemplate DataType="vm:PlaceholderPageViewModel"><v:PlaceholderPage /></DataTemplate>
+          </ContentControl.DataTemplates>
+        </ContentControl>
 
-        <!-- pages that arrive in later phases -->
-        <StackPanel Grid.Row="1" Name="LaterPage" Margin="32,24" Spacing="8" IsVisible="False">
-          <TextBlock Name="LaterTitle" Classes="heading-04" />
-          <TextBlock Classes="body-01 secondary" Text="P2+" />
-        </StackPanel>
+        <v:SessionsPage Grid.Row="1" DataContext="{Binding Sessions}" IsVisible="{Binding $parent[Window].((vm:ShellViewModel)DataContext).IsSessionsActive}" />
 
         <ProgressBar Grid.Row="1" Classes="sm" IsIndeterminate="True" VerticalAlignment="Top"
                      IsVisible="{Binding IsBusy}" />
@@ -110,6 +80,43 @@
                  carbon:Field.IsInvalid="{Binding VaultError, Converter={x:Static ObjectConverters.IsNotNull}}"
                  carbon:Field.InvalidText="{Binding VaultError}"
                  Text="{Binding MasterPassword}" />
+      </StackPanel>
+    </carbon:Modal>
+
+    <!-- generic dialogs for IUiServices (confirm, password prompt) -->
+    <carbon:Modal Name="DialogModal" Size="Small">
+      <StackPanel Spacing="16">
+        <TextBlock Name="DialogBody" Classes="body-01" TextWrapping="Wrap" />
+        <TextBox Name="DialogText" IsVisible="False" />
+        <TextBox Name="DialogPassword" Classes="password" PasswordChar="●" IsVisible="False" />
+        <TextBox Name="DialogPasswordConfirm" Classes="password" PasswordChar="●" IsVisible="False" />
+      </StackPanel>
+    </carbon:Modal>
+
+    <!-- host key verification (TOFU, design §5.2): Unknown = verify; Changed = danger, accept only after explicit check -->
+    <carbon:Modal Name="HostKeyModal" Size="Medium" IsDismissible="False">
+      <StackPanel Spacing="16">
+        <TextBlock Name="HostKeyBody" Classes="body-01" TextWrapping="Wrap" />
+        <Grid ColumnDefinitions="Auto,16,*" RowDefinitions="Auto,8,Auto,8,Auto,8,Auto">
+          <TextBlock Classes="label-01 secondary" Text="{l:Tr hostKey.host}" />
+          <SelectableTextBlock Grid.Column="2" Name="HostKeyHost" Classes="code-01" />
+          <TextBlock Grid.Row="2" Classes="label-01 secondary" Text="{l:Tr hostKey.type}" />
+          <SelectableTextBlock Grid.Row="2" Grid.Column="2" Name="HostKeyType" Classes="code-01" />
+          <TextBlock Grid.Row="4" Classes="label-01 secondary" Text="{l:Tr hostKey.fingerprint}" />
+          <SelectableTextBlock Grid.Row="4" Grid.Column="2" Name="HostKeyFingerprint" Classes="code-01" TextWrapping="Wrap" />
+          <TextBlock Grid.Row="6" Name="HostKeyPreviousLabel" Classes="label-01 secondary" Text="{l:Tr hostKey.previous}" />
+          <SelectableTextBlock Grid.Row="6" Grid.Column="2" Name="HostKeyPrevious" Classes="code-01 error" TextWrapping="Wrap" />
+        </Grid>
+        <CheckBox Name="HostKeyRemember" Content="{l:Tr hostKey.remember}" IsChecked="True" />
+        <CheckBox Name="HostKeyVerified" Content="{l:Tr hostKey.verifiedChanged}" IsVisible="False" />
+      </StackPanel>
+    </carbon:Modal>
+
+    <!-- passphrase for an encrypted key saved without it -->
+    <carbon:Modal Name="PassphraseModal" Size="Small">
+      <StackPanel Spacing="16">
+        <TextBlock Name="PassphraseBody" Classes="body-01" TextWrapping="Wrap" />
+        <TextBox Name="PassphraseBox" Classes="password" PasswordChar="●" />
       </StackPanel>
     </carbon:Modal>
 

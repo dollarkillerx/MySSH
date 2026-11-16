@@ -16,8 +16,12 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/MySSH.Core.Tests/MySSH.Core.Tests.csproj" />
+    <Project Path="tests/MySSH.Desktop.IntegrationTests/MySSH.Desktop.IntegrationTests.csproj" />
     <Project Path="tests/MySSH.Desktop.Tests/MySSH.Desktop.Tests.csproj" />
+    <Project Path="tests/MySSH.Ssh.IntegrationTests/MySSH.Ssh.IntegrationTests.csproj" />
+    <Project Path="tests/MySSH.Ssh.Tests/MySSH.Ssh.Tests.csproj" />
     <Project Path="tests/MySSH.Storage.Tests/MySSH.Storage.Tests.csproj" />
+    <Project Path="tests/MySSH.Terminal.Tests/MySSH.Terminal.Tests.csproj" />
     <Project Path="tests/MySSH.UI.Carbon.Tests/MySSH.UI.Carbon.Tests.csproj" />
   </Folder>
 </Solution>

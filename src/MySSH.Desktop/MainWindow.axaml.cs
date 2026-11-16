@@ -2,15 +2,18 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using MySSH.Desktop.Localization;
+using MySSH.Desktop.Services;
 using MySSH.Desktop.ViewModels;
 using MySSH.UI.Carbon;
 
 namespace MySSH.Desktop;
 
-public sealed partial class MainWindow : Window
+public sealed partial class MainWindow : Window, IUiServices
 {
     ShellViewModel? _vm;
 
@@ -48,6 +51,10 @@ public sealed partial class MainWindow : Window
         if (_vm is not null) _vm.PropertyChanged -= OnVmPropertyChanged;
         _vm = DataContext as ShellViewModel;
         if (_vm is null) return;
+        _vm.Ui = this;
+        _vm.HostKeyVerifier = this;
+        _vm.CredentialPrompt = this;
+        _vm.ApplySettings = ApplyTheme;
         _vm.PropertyChanged += OnVmPropertyChanged;
 
         Nav.Items.Clear();
@@ -58,37 +65,151 @@ public sealed partial class MainWindow : Window
             Nav.Items.Add(new SideNavItem { Icon = item.IconKind, Content = label, Tag = item });
         }
         Nav.SelectedIndex = 0;
-        SyncModalsAndPage();
+        SyncModals();
+    }
+
+    static void ApplyTheme(DesktopSettings s)
+    {
+        DesktopSettings.Current = s;
+        Application.Current!.RequestedThemeVariant = s.Theme switch
+        {
+            ThemePreference.Light => ThemeVariant.Light,
+            ThemePreference.Dark => ThemeVariant.Dark,
+            _ => ThemeVariant.Default,
+        };
     }
 
     void OnVmPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName is nameof(ShellViewModel.IsVaultPromptOpen) or nameof(ShellViewModel.IsLegacyOfferOpen)
-            or nameof(ShellViewModel.IsCreatingMasterPassword) or nameof(ShellViewModel.SelectedNav))
-            SyncModalsAndPage();
+            or nameof(ShellViewModel.IsCreatingMasterPassword))
+            SyncModals();
+        else if (e.PropertyName == nameof(ShellViewModel.SelectedNav) && _vm?.SelectedNav is { } nav)
+            Nav.SelectedItem = Nav.Items.OfType<SideNavItem>().FirstOrDefault(i => ReferenceEquals(i.Tag, nav));
     }
 
-    void SyncModalsAndPage()
+    void SyncModals()
     {
         if (_vm is null) return;
         VaultModal.IsOpen = _vm.IsVaultPromptOpen;
         LegacyModal.IsOpen = _vm.IsLegacyOfferOpen;
         if (_vm.IsVaultPromptOpen) MasterPasswordBox.Focus();
-
-        var isHosts = _vm.SelectedNav?.Page is null or AppPage.Hosts;
-        HostsPage.IsVisible = isHosts && _vm.Hosts is not null;
-        LaterPage.IsVisible = !isHosts;
-        if (!isHosts) LaterTitle.Text = Loc.Instance[_vm.SelectedNav!.LabelKey];
     }
 
-    void OnLanguageClick(object? sender, RoutedEventArgs e)
+    async void OnLanguageClick(object? sender, RoutedEventArgs e)
     {
-        if (sender is MenuItem { Tag: string culture }) Loc.Instance.SetCulture(culture);
-        if (_vm?.SelectedNav is { Page: not AppPage.Hosts } nav) LaterTitle.Text = Loc.Instance[nav.LabelKey];
+        if (sender is not MenuItem { Tag: string culture }) return;
+        Loc.Instance.SetCulture(culture);
+        if (_vm?.Settings is { } settings) // persist like the Settings page does
+        {
+            await settings.LoadAsync();
+            settings.Language = settings.Languages.FirstOrDefault(l => l.Culture == culture);
+        }
     }
 
     void OnNotificationClosed(object? sender, RoutedEventArgs e)
     {
         if (sender is Control { DataContext: NotificationViewModel n }) _vm?.DismissNotificationCommand.Execute(n);
+    }
+
+    // ---------------------------------------------------------------- IUiServices
+
+    async Task<ModalResult> ShowDialogAsync(string heading, string body, string primary, bool danger, int passwordFields)
+    {
+        DialogModal.Heading = heading;
+        DialogBody.Text = body;
+        DialogBody.IsVisible = body.Length > 0;
+        DialogModal.PrimaryButtonText = primary;
+        DialogModal.SecondaryButtonText = Loc.Instance["common.cancel"];
+        DialogModal.IsDanger = danger;
+        DialogPassword.Text = DialogPasswordConfirm.Text = "";
+        DialogPassword.IsVisible = passwordFields >= 1;
+        DialogPasswordConfirm.IsVisible = passwordFields >= 2;
+        Field.SetLabel(DialogPassword, Loc.Instance["settings.password"]);
+        Field.SetLabel(DialogPasswordConfirm, Loc.Instance["settings.confirmPassword"]);
+        Field.SetIsInvalid(DialogPasswordConfirm, false);
+
+        var tcs = new TaskCompletionSource<ModalResult>();
+        void OnPrimary(object? s, RoutedEventArgs e)
+        {
+            if (passwordFields >= 2 && DialogPassword.Text != DialogPasswordConfirm.Text)
+            {
+                e.Handled = true; // keep open
+                Field.SetInvalidText(DialogPasswordConfirm, Loc.Instance["settings.passwordMismatch"]);
+                Field.SetIsInvalid(DialogPasswordConfirm, true);
+            }
+        }
+        void OnClosed(object? s, ModalClosedEventArgs e) => tcs.TrySetResult(e.Result);
+        DialogModal.PrimaryClick += OnPrimary;
+        DialogModal.Closed += OnClosed;
+        DialogModal.IsOpen = true;
+        if (passwordFields > 0) DialogPassword.Focus();
+        else if (DialogText.IsVisible) { DialogText.Focus(); DialogText.SelectAll(); }
+        try { return await tcs.Task; }
+        finally
+        {
+            DialogModal.PrimaryClick -= OnPrimary;
+            DialogModal.Closed -= OnClosed;
+        }
+    }
+
+    public async Task<bool> ConfirmAsync(string heading, string body, string primaryText, bool danger) =>
+        await ShowDialogAsync(heading, body, primaryText, danger, 0) == ModalResult.Primary;
+
+    public async Task<string?> PromptPasswordAsync(string heading, string body, bool confirm)
+    {
+        var r = await ShowDialogAsync(heading, body, Loc.Instance["common.confirm"], false, confirm ? 2 : 1);
+        var pw = DialogPassword.Text;
+        DialogPassword.Text = DialogPasswordConfirm.Text = "";
+        return r == ModalResult.Primary && !string.IsNullOrEmpty(pw) ? pw : null;
+    }
+
+    public async Task<string?> PickOpenFileAsync(string title, IReadOnlyList<FileFilter>? filters = null)
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = title,
+            AllowMultiple = false,
+            FileTypeFilter = filters?.Select(f => new FilePickerFileType(f.Name) { Patterns = f.Patterns }).ToList(),
+        });
+        return files.Count > 0 ? files[0].TryGetLocalPath() : null;
+    }
+
+    public async Task<string?> PickSaveFileAsync(string title, string suggestedName, IReadOnlyList<FileFilter>? filters = null)
+    {
+        var file = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = title,
+            SuggestedFileName = suggestedName,
+            FileTypeChoices = filters?.Select(f => new FilePickerFileType(f.Name) { Patterns = f.Patterns }).ToList(),
+        });
+        return file?.TryGetLocalPath();
+    }
+
+    public Task CopyToClipboardAsync(string text) => Clipboard?.SetTextAsync(text) ?? Task.CompletedTask;
+
+    public async Task<string?> PromptTextAsync(string heading, string label, string initialValue)
+    {
+        DialogText.IsVisible = true;
+        DialogText.Text = initialValue;
+        Field.SetLabel(DialogText, label);
+        try
+        {
+            var r = await ShowDialogAsync(heading, "", Loc.Instance["common.confirm"], false, 0);
+            var text = DialogText.Text?.Trim();
+            return r == ModalResult.Primary && !string.IsNullOrEmpty(text) ? text : null;
+        }
+        finally { DialogText.IsVisible = false; }
+    }
+
+    public async Task<string?> PickFolderAsync(string title)
+    {
+        var folders = await StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions { Title = title, AllowMultiple = false });
+        return folders.Count > 0 ? folders[0].TryGetLocalPath() : null;
+    }
+
+    public async Task OpenUriAsync(Uri uri)
+    {
+        if (uri.Scheme is "http" or "https") await Launcher.LaunchUriAsync(uri);
     }
 }

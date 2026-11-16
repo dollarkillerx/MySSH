@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MySSH.Desktop.Services;
 using MySSH.Core;
 using MySSH.Desktop.Localization;
 
@@ -25,11 +27,14 @@ public sealed partial class HostListViewModel : ObservableObject
     readonly IProxyRepository _proxies;
     IReadOnlyList<HostRowViewModel> _all = [];
 
-    public HostListViewModel(IHostRepository hosts, IIdentityRepository identities, IProxyRepository proxies)
+    readonly IUiServices _ui;
+
+    public HostListViewModel(IHostRepository hosts, IIdentityRepository identities, IProxyRepository proxies, IUiServices? ui = null)
     {
         _hosts = hosts;
         _identities = identities;
         _proxies = proxies;
+        _ui = ui ?? NullUiServices.Instance;
         Loc.Instance.CultureChanged += () => _ = LoadAsync();
     }
 
@@ -41,7 +46,85 @@ public sealed partial class HostListViewModel : ObservableObject
     [ObservableProperty] public partial string CountText { get; set; } = "";
     [ObservableProperty] public partial HostRowViewModel? SelectedRow { get; set; }
 
+    [ObservableProperty] public partial HostEditorViewModel? Editor { get; set; }
+    [ObservableProperty] public partial string? Error { get; set; }
+
+    /// <summary>Raised when the user asks to open a session (double-click / Enter / "Connect").</summary>
+    public event Action<HostRowViewModel, SessionKind>? ConnectRequested;
+
     partial void OnSearchTextChanged(string value) => ApplyFilter();
+
+    [RelayCommand]
+    async Task NewHostAsync()
+    {
+        Editor = new HostEditorViewModel(_hosts, _identities, _proxies, null);
+        await Editor.LoadAsync();
+    }
+
+    [RelayCommand]
+    async Task EditHostAsync(HostRowViewModel? row)
+    {
+        row ??= SelectedRow;
+        if (row is null || await _hosts.GetAsync(row.Id) is not { } host) return;
+        Editor = new HostEditorViewModel(_hosts, _identities, _proxies, host);
+        await Editor.LoadAsync();
+    }
+
+    [RelayCommand]
+    async Task DuplicateHostAsync(HostRowViewModel? row)
+    {
+        row ??= SelectedRow;
+        if (row is null || await _hosts.GetAsync(row.Id) is not { } host) return;
+        var copy = host with { Id = Guid.NewGuid(), Label = host.Label + " (2)", CreatedAt = DateTimeOffset.UtcNow, UpdatedAt = DateTimeOffset.UtcNow };
+        await _hosts.SaveAsync(copy);
+        await LoadAsync();
+    }
+
+    [RelayCommand]
+    async Task SaveEditorAsync()
+    {
+        if (Editor is null || await Editor.SaveAsync() is not { } saved) return;
+        Editor = null;
+        await LoadAsync();
+        SelectedRow = Rows.FirstOrDefault(r => r.Id == saved.Id);
+    }
+
+    [RelayCommand]
+    void CancelEditor() => Editor = null;
+
+    [RelayCommand]
+    async Task DeleteHostAsync(HostRowViewModel? row)
+    {
+        row ??= SelectedRow;
+        if (row is null) return;
+        Error = null;
+        if (!await _ui.ConfirmAsync(Loc.Instance["servers.delete"], Loc.Instance.Format("servers.deleteConfirm", ("name", row.Name)), Loc.Instance["common.delete"], danger: true))
+            return;
+        try
+        {
+            await _hosts.DeleteAsync(row.Id);
+            await LoadAsync();
+        }
+        catch (EntityInUseException e)
+        {
+            var users = _all.Where(r => e.ReferencedBy.Contains(r.Id)).Select(r => r.Name);
+            Error = Loc.Instance.Format("hosts.inUse", ("name", row.Name), ("hosts", string.Join(", ", users)));
+        }
+    }
+
+    [RelayCommand]
+    void Connect(HostRowViewModel? row)
+    {
+        row ??= SelectedRow;
+        if (row is not null) ConnectRequested?.Invoke(row, SessionKind.Terminal);
+    }
+
+    [RelayCommand]
+    void OpenSftp(HostRowViewModel? row)
+    {
+        row ??= SelectedRow;
+        if (row is not null) ConnectRequested?.Invoke(row, SessionKind.Sftp);
+    }
 
     public async Task LoadAsync(CancellationToken ct = default)
     {
