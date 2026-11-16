@@ -11,8 +11,14 @@
   <data name="ai.attachHost" xml:space="preserve"><value>Host</value></data>
   <data name="ai.attachTerminal" xml:space="preserve"><value>Terminal</value></data>
   <data name="ai.chat.unreadable" xml:space="preserve"><value>This conversation can't be read anymore (it was saved with a different vault key).</value></data>
+  <data name="ai.chip.host" xml:space="preserve"><value>{host} · AI: {policy}</value></data>
+  <data name="ai.chip.hostOff" xml:space="preserve"><value>{host} · AI off</value></data>
   <data name="ai.chip.selection" xml:space="preserve"><value>Selection · {title}</value></data>
   <data name="ai.chip.terminal" xml:space="preserve"><value>{title} · last {lines} lines</value></data>
+  <data name="ai.code.insert" xml:space="preserve"><value>Insert</value></data>
+  <data name="ai.code.insertTip" xml:space="preserve"><value>Type it on the terminal's prompt line without running it</value></data>
+  <data name="ai.code.multiline" xml:space="preserve"><value>This shell doesn't accept multi-line pastes safely. Copy the command instead, or insert one line at a time.</value></data>
+  <data name="ai.code.noTerminal" xml:space="preserve"><value>Open a connected terminal tab to insert the command.</value></data>
   <data name="ai.context.noHost" xml:space="preserve"><value>The selected tab's host no longer exists.</value></data>
   <data name="ai.context.noTerminal" xml:space="preserve"><value>Open a terminal tab first to attach its output.</value></data>
   <data name="ai.dataNotice.accept" xml:space="preserve"><value>Continue</value></data>
@@ -46,6 +52,12 @@
   <data name="ai.noModel" xml:space="preserve"><value>Choose a model for {provider} in AI settings first.</value></data>
   <data name="ai.noProvider" xml:space="preserve"><value>No AI provider is set up yet. Add one in AI settings.</value></data>
   <data name="ai.placeholder" xml:space="preserve"><value>Ask about this server… (Enter to send, Shift+Enter for a new line)</value></data>
+  <data name="ai.policyCard.ask" xml:space="preserve"><value>Allow, ask each time</value></data>
+  <data name="ai.policyCard.body" xml:space="preserve"><value>AI access for {host} is Off, so the assistant can't read its terminal or run commands there. It can still answer from what you attach.</value></data>
+  <data name="ai.policyCard.done" xml:space="preserve"><value>AI access set to {policy}. Ask again and the assistant can use this host.</value></data>
+  <data name="ai.policyCard.help" xml:space="preserve"><value>Read-only: view files and run read-only commands. Ask: every command or change waits for your approval. You can change this any time in the host editor.</value></data>
+  <data name="ai.policyCard.readOnly" xml:space="preserve"><value>Allow read-only</value></data>
+  <data name="ai.policyCard.title" xml:space="preserve"><value>AI can't access this host</value></data>
   <data name="ai.redacted" xml:space="preserve"><value>Masked {count} secret(s) before sending.</value></data>
   <data name="ai.refusal" xml:space="preserve"><value>The model declined this request. {detail}</value></data>
   <data name="ai.send" xml:space="preserve"><value>Send</value></data>

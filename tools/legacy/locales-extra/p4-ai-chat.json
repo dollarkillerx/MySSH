@@ -61,7 +61,19 @@
     "ai.inline.placeholder": "Describe what you want to do, e.g. find files larger than 1 GB",
     "ai.inline.hint": "Enter: suggest · Tab: insert into the prompt (not run) · Esc: close",
     "ai.inline.none": "No command for that. Try describing it differently.",
-    "ai.inline.declined": "Not sent."
+    "ai.inline.declined": "Not sent.",
+    "ai.chip.host": "{host} · AI: {policy}",
+    "ai.chip.hostOff": "{host} · AI off",
+    "ai.policyCard.title": "AI can't access this host",
+    "ai.policyCard.body": "AI access for {host} is Off, so the assistant can't read its terminal or run commands there. It can still answer from what you attach.",
+    "ai.policyCard.readOnly": "Allow read-only",
+    "ai.policyCard.ask": "Allow, ask each time",
+    "ai.policyCard.help": "Read-only: view files and run read-only commands. Ask: every command or change waits for your approval. You can change this any time in the host editor.",
+    "ai.policyCard.done": "AI access set to {policy}. Ask again and the assistant can use this host.",
+    "ai.code.insert": "Insert",
+    "ai.code.insertTip": "Type it on the terminal's prompt line without running it",
+    "ai.code.noTerminal": "Open a connected terminal tab to insert the command.",
+    "ai.code.multiline": "This shell doesn't accept multi-line pastes safely. Copy the command instead, or insert one line at a time."
   },
   "zh-CN": {
     "ai.title": "AI 助手",
@@ -125,7 +137,19 @@
     "ai.inline.placeholder": "描述要做的事，例如：找出大于 1 GB 的文件",
     "ai.inline.hint": "Enter：生成 · Tab：填入命令行（不执行）· Esc：关闭",
     "ai.inline.none": "没有对应的命令，换个说法试试。",
-    "ai.inline.declined": "未发送。"
+    "ai.inline.declined": "未发送。",
+    "ai.chip.host": "{host} · AI：{policy}",
+    "ai.chip.hostOff": "{host} · AI 已关闭",
+    "ai.policyCard.title": "AI 无法访问这台主机",
+    "ai.policyCard.body": "{host} 的 AI 权限是「关闭」，助手不能读取它的终端，也不能执行命令。它仍然可以根据你附带的内容回答。",
+    "ai.policyCard.readOnly": "允许只读",
+    "ai.policyCard.ask": "允许，每次询问",
+    "ai.policyCard.help": "只读：可以查看文件、执行只读命令。询问：每条命令或修改都要你批准。之后可以随时在主机编辑里修改。",
+    "ai.policyCard.done": "AI 权限已设为「{policy}」。再问一次，助手就能使用这台主机了。",
+    "ai.code.insert": "填入",
+    "ai.code.insertTip": "填到终端命令行上，不会执行",
+    "ai.code.noTerminal": "请先打开一个已连接的终端标签页，才能填入命令。",
+    "ai.code.multiline": "这个 shell 无法安全接收多行粘贴。请复制命令，或一次填入一行。"
   },
   "ja-JP": {
     "ai.title": "AI アシスタント",
@@ -189,6 +213,18 @@
     "ai.inline.placeholder": "やりたいことを入力（例：1 GB より大きいファイルを探す）",
     "ai.inline.hint": "Enter：提案 · Tab：プロンプトに入力（実行しない）· Esc：閉じる",
     "ai.inline.none": "該当するコマンドがありません。言い方を変えてみてください。",
-    "ai.inline.declined": "送信しませんでした。"
+    "ai.inline.declined": "送信しませんでした。",
+    "ai.chip.host": "{host} · AI：{policy}",
+    "ai.chip.hostOff": "{host} · AI オフ",
+    "ai.policyCard.title": "AI はこのホストにアクセスできません",
+    "ai.policyCard.body": "{host} の AI ポリシーが「オフ」のため、アシスタントはターミナルを読んだりコマンドを実行したりできません。添付した内容からの回答はできます。",
+    "ai.policyCard.readOnly": "読み取り専用で許可",
+    "ai.policyCard.ask": "許可（毎回確認）",
+    "ai.policyCard.help": "読み取り専用：ファイルの閲覧と読み取り専用コマンドの実行。確認：すべてのコマンドや変更に承認が必要です。ホストの編集でいつでも変更できます。",
+    "ai.policyCard.done": "AI ポリシーを「{policy}」にしました。もう一度質問すると、アシスタントがこのホストを使えます。",
+    "ai.code.insert": "入力",
+    "ai.code.insertTip": "ターミナルのプロンプトに入力します（実行はしません）",
+    "ai.code.noTerminal": "コマンドを入力するには、接続中のターミナルタブを開いてください。",
+    "ai.code.multiline": "このシェルは複数行の貼り付けを安全に受け付けません。コマンドをコピーするか、1 行ずつ入力してください。"
   }
 }

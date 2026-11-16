@@ -11,8 +11,14 @@
   <data name="ai.attachHost" xml:space="preserve"><value>主机</value></data>
   <data name="ai.attachTerminal" xml:space="preserve"><value>终端</value></data>
   <data name="ai.chat.unreadable" xml:space="preserve"><value>这个会话已无法读取（它是用另一个保管库密钥保存的）。</value></data>
+  <data name="ai.chip.host" xml:space="preserve"><value>{host} · AI：{policy}</value></data>
+  <data name="ai.chip.hostOff" xml:space="preserve"><value>{host} · AI 已关闭</value></data>
   <data name="ai.chip.selection" xml:space="preserve"><value>选中内容 · {title}</value></data>
   <data name="ai.chip.terminal" xml:space="preserve"><value>{title} · 最近 {lines} 行</value></data>
+  <data name="ai.code.insert" xml:space="preserve"><value>填入</value></data>
+  <data name="ai.code.insertTip" xml:space="preserve"><value>填到终端命令行上，不会执行</value></data>
+  <data name="ai.code.multiline" xml:space="preserve"><value>这个 shell 无法安全接收多行粘贴。请复制命令，或一次填入一行。</value></data>
+  <data name="ai.code.noTerminal" xml:space="preserve"><value>请先打开一个已连接的终端标签页，才能填入命令。</value></data>
   <data name="ai.context.noHost" xml:space="preserve"><value>当前标签页对应的主机已不存在。</value></data>
   <data name="ai.context.noTerminal" xml:space="preserve"><value>请先打开一个终端标签页，才能附带它的输出。</value></data>
   <data name="ai.dataNotice.accept" xml:space="preserve"><value>继续</value></data>
@@ -46,6 +52,12 @@
   <data name="ai.noModel" xml:space="preserve"><value>请先在 AI 设置中为 {provider} 选择模型。</value></data>
   <data name="ai.noProvider" xml:space="preserve"><value>还没有设置 AI 提供商，请在 AI 设置中添加。</value></data>
   <data name="ai.placeholder" xml:space="preserve"><value>问问这台服务器…（Enter 发送，Shift+Enter 换行）</value></data>
+  <data name="ai.policyCard.ask" xml:space="preserve"><value>允许，每次询问</value></data>
+  <data name="ai.policyCard.body" xml:space="preserve"><value>{host} 的 AI 权限是「关闭」，助手不能读取它的终端，也不能执行命令。它仍然可以根据你附带的内容回答。</value></data>
+  <data name="ai.policyCard.done" xml:space="preserve"><value>AI 权限已设为「{policy}」。再问一次，助手就能使用这台主机了。</value></data>
+  <data name="ai.policyCard.help" xml:space="preserve"><value>只读：可以查看文件、执行只读命令。询问：每条命令或修改都要你批准。之后可以随时在主机编辑里修改。</value></data>
+  <data name="ai.policyCard.readOnly" xml:space="preserve"><value>允许只读</value></data>
+  <data name="ai.policyCard.title" xml:space="preserve"><value>AI 无法访问这台主机</value></data>
   <data name="ai.redacted" xml:space="preserve"><value>发送前已遮盖 {count} 处敏感信息。</value></data>
   <data name="ai.refusal" xml:space="preserve"><value>模型拒绝了这个请求。{detail}</value></data>
   <data name="ai.send" xml:space="preserve"><value>发送</value></data>

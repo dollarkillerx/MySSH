@@ -4,6 +4,7 @@
              xmlns:l="using:MySSH.Desktop.Localization"
              xmlns:vm="using:MySSH.Desktop.ViewModels"
              xmlns:ai="using:MySSH.Ai"
+             xmlns:v="using:MySSH.Desktop.Views"
              x:Class="MySSH.Desktop.Views.AiAssistantPanel"
              x:DataType="vm:AiAssistantViewModel"
              Width="420">
@@ -111,7 +112,8 @@
                             Content="{l:Tr ai.thinking}" Command="{Binding ToggleThinkingCommand}" />
                     <SelectableTextBlock Classes="body-01 secondary" TextWrapping="Wrap" Text="{Binding Thinking}"
                                          IsVisible="{Binding IsThinkingExpanded}" Margin="12,0,0,0" />
-                    <SelectableTextBlock Classes="body-01" TextWrapping="Wrap" Text="{Binding Text}" IsVisible="{Binding HasText}" />
+                    <v:MarkdownView Markdown="{Binding Text}" IsVisible="{Binding HasText}"
+                                    InsertCommand="{Binding $parent[UserControl].((vm:AiAssistantViewModel)DataContext).InsertCodeCommand}" />
                     <ProgressBar Classes="sm" IsIndeterminate="True" IsVisible="{Binding IsStreaming}" Width="64" HorizontalAlignment="Left" />
                   </StackPanel>
                 </DataTemplate>
@@ -153,6 +155,29 @@
                       </Border>
                     </StackPanel>
                   </Border>
+                </DataTemplate>
+                <DataTemplate DataType="vm:AiPolicyCardViewModel">
+                  <Panel>
+                    <Border Classes="ai-policy-card" IsVisible="{Binding IsPending}" Background="{DynamicResource CarbonLayer02}"
+                            BorderBrush="{DynamicResource CarbonSupportWarning}" BorderThickness="3,0,0,0">
+                      <StackPanel Margin="12,10" Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                          <carbon:CarbonIcon Kind="locked" VerticalAlignment="Center" />
+                          <TextBlock Classes="heading-compact-01" VerticalAlignment="Center" Text="{l:Tr ai.policyCard.title}" />
+                        </StackPanel>
+                        <TextBlock Classes="body-01" TextWrapping="Wrap" Text="{Binding Text}" />
+                        <Grid ColumnDefinitions="*,8,*">
+                          <Button Name="EnableReadOnlyButton" Classes="primary sm" HorizontalAlignment="Stretch" Content="{l:Tr ai.policyCard.readOnly}"
+                                  Command="{Binding EnableReadOnlyCommand}" />
+                          <Button Grid.Column="2" Classes="tertiary sm" HorizontalAlignment="Stretch" Content="{l:Tr ai.policyCard.ask}"
+                                  Command="{Binding EnableAskCommand}" />
+                        </Grid>
+                        <TextBlock Classes="helper-text-01 secondary" TextWrapping="Wrap" Text="{l:Tr ai.policyCard.help}" />
+                      </StackPanel>
+                    </Border>
+                    <carbon:InlineNotification Kind="Success" IsLowContrast="True" IsCloseButtonVisible="False" IsVisible="{Binding IsDone}"
+                                               Subtitle="{Binding DoneText}" />
+                  </Panel>
                 </DataTemplate>
                 <DataTemplate DataType="vm:AiNoticeItemViewModel">
                   <carbon:InlineNotification IsLowContrast="True" IsCloseButtonVisible="False"

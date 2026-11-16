@@ -252,6 +252,7 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable,
         AiMcp.Assistant = new AiSettingsViewModel(AiSettings, Ui, s.Storage.AiConversations);
         Assistant = new AiAssistantViewModel(AiSettings, s.Storage.AiConversations, s.Storage.Hosts, Tools.Invoker, Tools.Catalog, Ui, this);
         Sessions.TerminalAi = Assistant;
+        Assistant.HostsChanged += () => _ = Hosts.LoadAsync();
         Assistant.OpenSettingsRequested += () =>
         {
             SelectedNav = NavItems.First(n => n.Page == AppPage.Ai);

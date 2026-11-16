@@ -11,8 +11,14 @@
   <data name="ai.attachHost" xml:space="preserve"><value>ホスト</value></data>
   <data name="ai.attachTerminal" xml:space="preserve"><value>ターミナル</value></data>
   <data name="ai.chat.unreadable" xml:space="preserve"><value>この会話はもう読み取れません（別のボールトキーで保存されています）。</value></data>
+  <data name="ai.chip.host" xml:space="preserve"><value>{host} · AI：{policy}</value></data>
+  <data name="ai.chip.hostOff" xml:space="preserve"><value>{host} · AI オフ</value></data>
   <data name="ai.chip.selection" xml:space="preserve"><value>選択範囲 · {title}</value></data>
   <data name="ai.chip.terminal" xml:space="preserve"><value>{title} · 直近 {lines} 行</value></data>
+  <data name="ai.code.insert" xml:space="preserve"><value>入力</value></data>
+  <data name="ai.code.insertTip" xml:space="preserve"><value>ターミナルのプロンプトに入力します（実行はしません）</value></data>
+  <data name="ai.code.multiline" xml:space="preserve"><value>このシェルは複数行の貼り付けを安全に受け付けません。コマンドをコピーするか、1 行ずつ入力してください。</value></data>
+  <data name="ai.code.noTerminal" xml:space="preserve"><value>コマンドを入力するには、接続中のターミナルタブを開いてください。</value></data>
   <data name="ai.context.noHost" xml:space="preserve"><value>選択中のタブのホストはもう存在しません。</value></data>
   <data name="ai.context.noTerminal" xml:space="preserve"><value>出力を添付するには、まずターミナルのタブを開いてください。</value></data>
   <data name="ai.dataNotice.accept" xml:space="preserve"><value>続ける</value></data>
@@ -46,6 +52,12 @@
   <data name="ai.noModel" xml:space="preserve"><value>先に AI 設定で {provider} のモデルを選んでください。</value></data>
   <data name="ai.noProvider" xml:space="preserve"><value>AI プロバイダーがまだ設定されていません。AI 設定で追加してください。</value></data>
   <data name="ai.placeholder" xml:space="preserve"><value>このサーバーについて質問…（Enter で送信、Shift+Enter で改行）</value></data>
+  <data name="ai.policyCard.ask" xml:space="preserve"><value>許可（毎回確認）</value></data>
+  <data name="ai.policyCard.body" xml:space="preserve"><value>{host} の AI ポリシーが「オフ」のため、アシスタントはターミナルを読んだりコマンドを実行したりできません。添付した内容からの回答はできます。</value></data>
+  <data name="ai.policyCard.done" xml:space="preserve"><value>AI ポリシーを「{policy}」にしました。もう一度質問すると、アシスタントがこのホストを使えます。</value></data>
+  <data name="ai.policyCard.help" xml:space="preserve"><value>読み取り専用：ファイルの閲覧と読み取り専用コマンドの実行。確認：すべてのコマンドや変更に承認が必要です。ホストの編集でいつでも変更できます。</value></data>
+  <data name="ai.policyCard.readOnly" xml:space="preserve"><value>読み取り専用で許可</value></data>
+  <data name="ai.policyCard.title" xml:space="preserve"><value>AI はこのホストにアクセスできません</value></data>
   <data name="ai.redacted" xml:space="preserve"><value>送信前に {count} 件の機密情報を伏せました。</value></data>
   <data name="ai.refusal" xml:space="preserve"><value>モデルがこのリクエストを断りました。{detail}</value></data>
   <data name="ai.send" xml:space="preserve"><value>送信</value></data>

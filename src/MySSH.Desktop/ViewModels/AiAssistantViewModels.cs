@@ -97,6 +97,20 @@ public sealed partial class AiAssistantViewModel : ObservableObject, ITerminalAi
     [RelayCommand]
     void OpenSettings() => OpenSettingsRequested?.Invoke();
 
+    /// <summary>A code block's "Insert into terminal": typed on the prompt line of the selected terminal, never run.</summary>
+    [RelayCommand]
+    void InsertCode(string? code)
+    {
+        if (string.IsNullOrWhiteSpace(code)) return;
+        if (_workspace.CurrentTerminal is not { Screen: { } screen, IsConnected: true })
+        {
+            Current.AddNotice(AiNoticeKind.Warning, Loc.Instance["ai.code.noTerminal"]);
+            return;
+        }
+        if (!screen.TypeText(code.Trim(), pressEnter: false))
+            Current.AddNotice(AiNoticeKind.Warning, Loc.Instance["ai.code.multiline"]);
+    }
+
     [RelayCommand]
     void NewChat()
     {
@@ -165,13 +179,38 @@ public sealed partial class AiAssistantViewModel : ObservableObject, ITerminalAi
         return true;
     }
 
-    /// <summary>Host metadata of a terminal tab as a context item (null when the host is gone).</summary>
-    internal async Task<AiContextItem?> HostContextAsync(TerminalSessionViewModel term)
+    /// <summary>
+    /// Host metadata of a terminal tab as a context item (null when the host is gone). The chip shows the host's AI policy
+    /// and the model is told it, so with "Off" it explains instead of trying tools that can't see the host.
+    /// </summary>
+    internal async Task<(AiContextItem Item, Host Host)?> HostContextAsync(TerminalSessionViewModel term)
     {
         var host = await _hosts.GetAsync(term.HostId);
-        return host is null ? null : new AiContextItem(AiContextKind.Host, host.Label,
+        if (host is null) return null;
+        var policy = host.AiPolicy == AiPolicy.Off
+            ? "ai_policy: Off. MySSH hides this host from your tools (list_hosts, run_command, read_terminal, sftp_*) until the user " +
+              "enables AI access for it. Don't call tools for it; answer from the context, and if you need access say so in one sentence " +
+              "(the user can turn it on from the card shown in the chat)."
+            : "ai_policy: " + host.AiPolicy;
+        var label = host.AiPolicy == AiPolicy.Off
+            ? Loc.Instance.Format("ai.chip.hostOff", ("host", host.Label))
+            : Loc.Instance.Format("ai.chip.host", ("host", host.Label), ("policy", Loc.Instance["aiPolicy." + host.AiPolicy]));
+        var item = new AiContextItem(AiContextKind.Host, label,
             AiContextComposer.DescribeHost(host.Label, host.Hostname, host.Port, host.Username, term.WorkingDirectory, host.Id) +
-            "\nterminal_session: " + term.SessionId);
+            "\nterminal_session: " + term.SessionId + "\n" + policy);
+        return (item, host);
+    }
+
+    /// <summary>The host list (and anything showing host policies) should reload.</summary>
+    public event Action? HostsChanged;
+
+    /// <summary>The user turned AI access on for a host from the chat card (never the model).</summary>
+    internal async Task<bool> SetHostPolicyAsync(Guid hostId, AiPolicy policy)
+    {
+        if (await _hosts.GetAsync(hostId) is not { } host) return false;
+        await _hosts.SaveAsync(host with { AiPolicy = policy, UpdatedAt = DateTimeOffset.UtcNow });
+        HostsChanged?.Invoke();
+        return true;
     }
 
     public async Task<AiCommandSuggester.Suggestion> SuggestCommandAsync(TerminalSessionViewModel terminal, string request, CancellationToken ct)
@@ -182,7 +221,7 @@ public sealed partial class AiAssistantViewModel : ObservableObject, ITerminalAi
         if (string.IsNullOrWhiteSpace(provider.Model)) return new(null, Loc.Instance.Format("ai.noModel", ("provider", provider.Name)));
         if (!await EnsureDataNoticeAsync(provider)) return new(null, Loc.Instance["ai.inline.declined"]);
         var context = new List<AiContextItem>();
-        if (await HostContextAsync(terminal) is { } host) context.Add(host);
+        if (await HostContextAsync(terminal) is { } host) context.Add(host.Item);
         if (terminal.Screen is { } screen)
             context.Add(new AiContextItem(AiContextKind.Terminal, terminal.Title, screen.GetRecentText(40)));
         var composed = AiContextComposer.Compose(request, context, _settings.Current.RedactSecrets);
@@ -369,6 +408,30 @@ public sealed partial class AiToolCardViewModel : AiChatItemViewModel
     }
 }
 
+/// <summary>"AI access is off for this host" with one-click enabling (the user's choice; the model can't change policies).</summary>
+public sealed partial class AiPolicyCardViewModel(Guid hostId, string hostLabel, Func<AiPolicy, Task<bool>> enable) : AiChatItemViewModel
+{
+    public Guid HostId { get; } = hostId;
+    public string Text { get; } = Loc.Instance.Format("ai.policyCard.body", ("host", hostLabel));
+    [ObservableProperty] public partial bool IsDone { get; set; }
+    [ObservableProperty] public partial string? DoneText { get; set; }
+    public bool IsPending => !IsDone;
+    partial void OnIsDoneChanged(bool value) => OnPropertyChanged(nameof(IsPending));
+
+    async Task SetAsync(AiPolicy policy)
+    {
+        if (IsDone || !await enable(policy)) return;
+        DoneText = Loc.Instance.Format("ai.policyCard.done", ("policy", Loc.Instance["aiPolicy." + policy]));
+        IsDone = true;
+    }
+
+    [RelayCommand]
+    Task EnableReadOnlyAsync() => SetAsync(AiPolicy.ReadOnly);
+
+    [RelayCommand]
+    Task EnableAskAsync() => SetAsync(AiPolicy.Ask);
+}
+
 public enum AiNoticeKind { Info, Warning, Error }
 
 public sealed class AiNoticeItemViewModel(AiNoticeKind kind, string text) : AiChatItemViewModel
@@ -429,8 +492,24 @@ public sealed partial class AiChatViewModel : ObservableObject, IDisposable
     async Task AttachCurrentHostAsync(bool silent)
     {
         if (_owner.Workspace.CurrentTerminal is not { } term) { if (!silent) AddNotice(AiNoticeKind.Warning, Loc.Instance["ai.context.noTerminal"]); return; }
-        if (await _owner.HostContextAsync(term) is { } item) AddChip(item);
-        else if (!silent) AddNotice(AiNoticeKind.Warning, Loc.Instance["ai.context.noHost"]);
+        if (await _owner.HostContextAsync(term) is not { } ctx)
+        {
+            if (!silent) AddNotice(AiNoticeKind.Warning, Loc.Instance["ai.context.noHost"]);
+            return;
+        }
+        // One host chip at a time: replace a previous one (also refreshes the policy after it changed).
+        foreach (var old in Chips.Where(c => c.Item.Kind == AiContextKind.Host).ToList()) Chips.Remove(old);
+        AddChip(ctx.Item);
+        if (ctx.Host.AiPolicy == AiPolicy.Off && !Items.OfType<AiPolicyCardViewModel>().Any(c => c.HostId == ctx.Host.Id && !c.IsDone))
+        {
+            Items.Add(new AiPolicyCardViewModel(ctx.Host.Id, ctx.Host.Label, async policy =>
+            {
+                if (!await _owner.SetHostPolicyAsync(ctx.Host.Id, policy)) return false;
+                await AttachCurrentHostAsync(silent: true);
+                return true;
+            }));
+            OnPropertyChanged(nameof(HasMessages));
+        }
     }
 
     [RelayCommand]
@@ -534,7 +613,7 @@ public sealed partial class AiChatViewModel : ObservableObject, IDisposable
         return input.GetRawText();
     }
 
-    void AddNotice(AiNoticeKind kind, string text)
+    internal void AddNotice(AiNoticeKind kind, string text)
     {
         Items.Add(new AiNoticeItemViewModel(kind, text));
         OnPropertyChanged(nameof(HasMessages));

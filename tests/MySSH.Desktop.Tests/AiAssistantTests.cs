@@ -78,6 +78,31 @@ sealed class NoWorkspace : IAiWorkspace
     public TerminalSessionViewModel? CurrentTerminal => null;
 }
 
+sealed class OneTerminal(TerminalSessionViewModel terminal) : IAiWorkspace
+{
+    public TerminalSessionViewModel? CurrentTerminal => terminal;
+}
+
+sealed class FakeScreen : ITerminalScreen
+{
+    public List<(string Text, bool Enter)> Typed { get; } = [];
+    public bool AcceptMultiline { get; set; }
+    public string GetRecentText(int maxLines) => "$ uptime\n 10:00 up 3 days";
+    public string? GetSelectionText() => null;
+    public bool TypeText(string text, bool pressEnter)
+    {
+        if (!pressEnter && !AcceptMultiline && text.Contains('\n', StringComparison.Ordinal)) return false;
+        Typed.Add((text, pressEnter));
+        return true;
+    }
+}
+
+sealed class UnusedConnector : MySSH.Ssh.ISshConnector
+{
+    public Task<MySSH.Ssh.ISshConnection> ConnectAsync(Guid hostId, ConnectionOrigin origin, CancellationToken ct = default) =>
+        throw new InvalidOperationException("not used");
+}
+
 [Collection("Loc")]
 public sealed class AiAssistantTests
 {
@@ -199,6 +224,81 @@ public sealed class AiAssistantTests
         // The dangling tool call got an error result before the new question (valid history for the provider).
         var history = provider.Requests[1].History;
         Assert.Equal([AiRole.User, AiRole.Assistant, AiRole.ToolResults, AiRole.User], history.Select(m => m.Role));
+    }
+
+    [AvaloniaFact]
+    public async Task A_host_with_AI_off_shows_its_policy_and_can_be_enabled_from_the_chat()
+    {
+        Loc.Instance.SetCulture("zh-CN");
+        var provider = new ScriptedChatProvider(r =>
+        {
+            Assert.Contains("ai_policy: Off", r.History[^1].Text, StringComparison.Ordinal);
+            return ScriptedChatProvider.Text("I can't access it yet.");
+        }, r =>
+        {
+            Assert.Contains("ai_policy: ReadOnly", r.History[^1].Text, StringComparison.Ordinal);
+            return ScriptedChatProvider.Text("ok");
+        });
+        var (t, settings, _) = await SetupAsync(provider);
+        await using var __ = t;
+        var host = new Host { Label = "203.0.113.10", Hostname = "203.0.113.10", Username = "root" };
+        await t.Storage.Hosts.SaveAsync(host);
+        var term = new TerminalSessionViewModel(new UnusedConnector(), new FakeUi(), host.Id, host.Label, "—") { Screen = new FakeScreen() };
+        var ai = new AiAssistantViewModel(settings, t.Storage.AiConversations, t.Storage.Hosts, new ApprovingTools(() => null!), new ToolCatalog(), new FakeUi(), new OneTerminal(term));
+        var reloads = 0;
+        ai.HostsChanged += () => reloads++;
+        await Until(() => ai.Current.HasChips);
+        Assert.Equal("203.0.113.10 · AI 已关闭", ai.Current.Chips.Single().Label);
+        var card = Assert.Single(ai.Current.Items.OfType<AiPolicyCardViewModel>());
+
+        ai.Current.Input = "看看这台服务器的配置";
+        await ai.Current.SendCommand.ExecuteAsync(null);
+        RenderPanel(ai, "42-ai-policy-off");
+
+        await card.EnableReadOnlyCommand.ExecuteAsync(null);
+        Assert.True(card.IsDone);
+        Assert.Equal(AiPolicy.ReadOnly, (await t.Storage.Hosts.GetAsync(host.Id))!.AiPolicy);
+        Assert.Equal(1, reloads);
+        await Until(() => ai.Current.Chips.Single().Label == "203.0.113.10 · AI：只读");
+        ai.Current.Input = "再看看";
+        await ai.Current.SendCommand.ExecuteAsync(null);
+        Assert.Equal(2, provider.Requests.Count);
+        Loc.Instance.SetCulture("en-US");
+    }
+
+    [AvaloniaFact]
+    public async Task Code_blocks_insert_into_the_terminal_without_running()
+    {
+        Loc.Instance.SetCulture("en-US");
+        var (t, settings, _) = await SetupAsync(new ScriptedChatProvider());
+        await using var __ = t;
+        var screen = new FakeScreen();
+        var term = new TerminalSessionViewModel(new UnusedConnector(), new FakeUi(), Guid.NewGuid(), "web", "—") { Screen = screen };
+        var ai = new AiAssistantViewModel(settings, t.Storage.AiConversations, t.Storage.Hosts, new ApprovingTools(() => null!), new ToolCatalog(), new FakeUi(), new OneTerminal(term));
+
+        ai.InsertCodeCommand.Execute("df -h");
+        Assert.Empty(screen.Typed); // not connected yet
+        Assert.Contains(ai.Current.Items, i => i is AiNoticeItemViewModel n && n.Text.Contains("connected terminal", StringComparison.Ordinal));
+        term.State = SessionState.Connected;
+        ai.InsertCodeCommand.Execute("df -h\n");
+        Assert.Equal([("df -h", false)], screen.Typed);
+        ai.InsertCodeCommand.Execute("a\nb");
+        Assert.Contains(ai.Current.Items, i => i is AiNoticeItemViewModel n && n.Text.Contains("multi-line", StringComparison.Ordinal));
+    }
+
+    [AvaloniaFact]
+    public async Task Answers_render_as_markdown_in_the_panel()
+    {
+        Loc.Instance.SetCulture("zh-CN");
+        var provider = new ScriptedChatProvider(_ => ScriptedChatProvider.Text(
+            "**203.0.113.10 配置概览**\n\n| 项目 | 情况 |\n|---|---|\n| 系统 | Rocky Linux 9.3 (Blue Onyx)，内核 5.14.0-362 |\n| 内存 | 1.7 GiB，已用 335 MiB；无 **swap** |\n| 网络 | eth0：203.0.113.10/24，IPv6 `2001:db8::3e/64` |\n\n这台机器的 **AI 策略还没有设置**，`list_hosts` 返回空。\n\n你也可以手动运行：\n\n```bash\nuname -a; free -h\ndf -hT | grep -v tmpfs\n```\n\n1. 打开主机设置\n2. 设为 *只读*"));
+        var (t, settings, _) = await SetupAsync(provider);
+        await using var __ = t;
+        var ai = new AiAssistantViewModel(settings, t.Storage.AiConversations, t.Storage.Hosts, new ApprovingTools(() => null!), new ToolCatalog(), new FakeUi(), new NoWorkspace());
+        ai.Current.Input = "看看配置";
+        await ai.Current.SendCommand.ExecuteAsync(null);
+        RenderPanel(ai, "43-ai-markdown");
+        Loc.Instance.SetCulture("en-US");
     }
 
     [Fact]
