@@ -96,7 +96,9 @@ public class SideNavRail : ListBox
         }
     }
 
-    private void UpdateWidth() => SetCurrentValue(WidthProperty, IsExpanded ? ExpandedWidth : CollapsedWidth);
+    // A local value, not SetCurrentValue: while the Width transition runs, SetCurrentValue writes into the
+    // animation layer and the rail snaps back to the old width once the transition ends.
+    private void UpdateWidth() => SetValue(WidthProperty, IsExpanded ? ExpandedWidth : CollapsedWidth);
 }
 
 /// <summary>An item of <see cref="SideNavRail"/>: <see cref="Icon"/> (Carbon icon kind) + label (Content).</summary>

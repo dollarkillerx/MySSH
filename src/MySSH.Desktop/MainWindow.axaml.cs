@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using MySSH.Desktop.Localization;
@@ -22,6 +23,9 @@ public sealed partial class MainWindow : Window, IUiServices
     public MainWindow()
     {
         InitializeComponent();
+        // macOS uses the padded Apple-grid tile for the Dock (unbundled runs); elsewhere the full-bleed icon from XAML.
+        if (OperatingSystem.IsMacOS())
+            Icon = new WindowIcon(AssetLoader.Open(new Uri("avares://MySSH/Assets/icon-macos.png")));
         ThemeToggle.Click += (_, _) =>
         {
             var app = Application.Current!;
