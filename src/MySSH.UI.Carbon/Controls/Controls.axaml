@@ -12,5 +12,6 @@
     <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Misc.axaml" />
     <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/DataGrid.axaml" />
     <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/Custom.axaml" />
+    <MergeResourceInclude Source="avares://MySSH.UI.Carbon/Controls/WindowDecorations.axaml" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

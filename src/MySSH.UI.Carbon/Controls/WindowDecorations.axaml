@@ -1,0 +1,175 @@
+<!--
+  App-drawn window decorations (Windows / Linux with ExtendClientAreaToDecorationsHint): the caption buttons sit on the
+  Carbon UI Shell header, which is always Gray 100. Simple's template colours its glyphs from the app theme (dark glyphs
+  in the light theme: invisible on the header) and adds a 30px title text, so Carbon draws its own: 46x48 buttons with
+  fixed g100 colours, Carbon hover / active, a red close button, and no title (the header shows the product name).
+  ShellHeader reserves 3 x 46 = 138px on the right for them.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <ControlTheme x:Key="CarbonCaptionButton" TargetType="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="#f4f4f4" />
+    <Setter Property="Width" Value="46" />
+    <Setter Property="Height" Value="48" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+    <Setter Property="(WindowDecorationProperties.ElementRole)" Value="DecorationsElement" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ContentPresenter Name="PART_ContentPresenter"
+                          Background="{TemplateBinding Background}"
+                          Foreground="{TemplateBinding Foreground}"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          Content="{TemplateBinding Content}" />
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="#333333" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="#525252" />
+    </Style>
+    <Style Selector="^.close:pointerover">
+      <Setter Property="Background" Value="#da1e28" />
+      <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style Selector="^.close:pressed">
+      <Setter Property="Background" Value="#ba1b23" />
+      <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type WindowDrawnDecorations}" TargetType="WindowDrawnDecorations">
+    <Setter Property="DefaultTitleBarHeight" Value="48" />
+    <Setter Property="DefaultFrameThickness" Value="1" />
+    <Setter Property="DefaultShadowThickness" Value="8" />
+    <Setter Property="Template">
+      <WindowDrawnDecorationsTemplate>
+        <WindowDrawnDecorationsContent>
+
+          <WindowDrawnDecorationsContent.Underlay>
+            <Panel x:Name="PART_UnderlayWrapper">
+              <Border x:Name="PART_WindowBorder"
+                      Background="Transparent"
+                      BorderThickness="{TemplateBinding FrameThickness}"
+                      BorderBrush="#393939"
+                      IsHitTestVisible="False" />
+              <!-- Drag area under the client area; the ShellHeader background is the visible title bar. -->
+              <Panel x:Name="PART_TitleBar" VerticalAlignment="Top"
+                     Height="{TemplateBinding TitleBarHeight}"
+                     Background="Transparent"
+                     IsVisible="{TemplateBinding HasTitleBar}"
+                     WindowDecorationProperties.ElementRole="TitleBar" />
+            </Panel>
+          </WindowDrawnDecorationsContent.Underlay>
+
+          <WindowDrawnDecorationsContent.Overlay>
+            <Panel x:Name="PART_OverlayWrapper">
+              <StackPanel x:Name="PART_OverlayPanel"
+                          VerticalAlignment="Top"
+                          HorizontalAlignment="Right"
+                          Orientation="Horizontal"
+                          IsVisible="{TemplateBinding HasTitleBar}">
+                <Button x:Name="PART_FullScreenButton"
+                        Theme="{StaticResource CarbonCaptionButton}"
+                        WindowDecorationProperties.ElementRole="FullScreenButton"
+                        AutomationProperties.Name="Full screen">
+                  <Path Width="10" Height="10" Stretch="Uniform" Fill="{Binding $parent[Button].Foreground}"
+                        Data="M2048 2048v-819h-205v469l-1493 -1493h469v-205h-819v819h205v-469l1493 1493h-469v205h819z" />
+                </Button>
+                <Button x:Name="PART_MinimizeButton"
+                        Theme="{StaticResource CarbonCaptionButton}"
+                        WindowDecorationProperties.ElementRole="MinimizeButton"
+                        AutomationProperties.Name="Minimize">
+                  <Path Width="10" Height="1" Stretch="Fill" Fill="{Binding $parent[Button].Foreground}"
+                        Data="M0 0H10V1H0Z" />
+                </Button>
+                <Button x:Name="PART_MaximizeButton"
+                        Theme="{StaticResource CarbonCaptionButton}"
+                        WindowDecorationProperties.ElementRole="MaximizeButton"
+                        AutomationProperties.Name="Maximize">
+                  <Path Name="RestoreButtonPath" Width="10" Height="10" Stretch="Uniform" Fill="{Binding $parent[Button].Foreground}"
+                        Data="M2048 2048v-2048h-2048v2048h2048zM1843 1843h-1638v-1638h1638v1638z" />
+                </Button>
+                <Button x:Name="PART_CloseButton" Classes="close"
+                        Theme="{StaticResource CarbonCaptionButton}"
+                        WindowDecorationProperties.ElementRole="CloseButton"
+                        AutomationProperties.Name="Close">
+                  <Path Width="10" Height="10" Stretch="Uniform" Fill="{Binding $parent[Button].Foreground}"
+                        Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z" />
+                </Button>
+              </StackPanel>
+            </Panel>
+          </WindowDrawnDecorationsContent.Overlay>
+
+          <WindowDrawnDecorationsContent.FullscreenPopover>
+            <Panel Height="48" VerticalAlignment="Top" Background="#161616"
+                   WindowDecorationProperties.ElementRole="DecorationsElement">
+              <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button x:Name="PART_PopoverFullScreenButton"
+                        Theme="{StaticResource CarbonCaptionButton}"
+                        WindowDecorationProperties.ElementRole="FullScreenButton"
+                        AutomationProperties.Name="Exit full screen">
+                  <Path Width="10" Height="10" Stretch="Uniform" Fill="{Binding $parent[Button].Foreground}"
+                        Data="M205 1024h819v-819h-205v469l-674 -674l-145 145l674 674h-469v205zM1374 1229h469v-205h-819v819h205v-469l674 674l145 -145z" />
+                </Button>
+                <Button x:Name="PART_PopoverCloseButton" Classes="close"
+                        Theme="{StaticResource CarbonCaptionButton}"
+                        WindowDecorationProperties.ElementRole="CloseButton"
+                        AutomationProperties.Name="Close">
+                  <Path Width="10" Height="10" Stretch="Uniform" Fill="{Binding $parent[Button].Foreground}"
+                        Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z" />
+                </Button>
+              </StackPanel>
+            </Panel>
+          </WindowDrawnDecorationsContent.FullscreenPopover>
+
+        </WindowDrawnDecorationsContent>
+      </WindowDrawnDecorationsTemplate>
+    </Setter>
+
+    <Style Selector="^:has-shadow /template/ Panel#PART_UnderlayWrapper">
+      <Setter Property="Margin" Value="{TemplateBinding ShadowThickness}" />
+    </Style>
+    <Style Selector="^:has-shadow /template/ Border#PART_WindowBorder">
+      <Setter Property="BoxShadow" Value="0 2 10 2 #80000000" />
+    </Style>
+    <Style Selector="^:has-shadow /template/ Panel#PART_OverlayWrapper">
+      <Setter Property="Margin" Value="{TemplateBinding ShadowThickness}" />
+    </Style>
+    <Style Selector="^:has-border /template/ Panel#PART_TitleBar">
+      <Setter Property="Margin" Value="1,1,1,0" />
+    </Style>
+    <Style Selector="^:has-border /template/ StackPanel#PART_OverlayPanel">
+      <Setter Property="Margin" Value="0,1,1,0" />
+    </Style>
+
+    <Style Selector="^:maximized /template/ Path#RestoreButtonPath">
+      <Setter Property="Data" Value="M2048 410h-410v-410h-1638v1638h410v410h1638v-1638zM1434 1434h-1229v-1229h1229v1229zM1843 1843h-1229v-205h1024v-1024h205v1229z" />
+    </Style>
+    <Style Selector="^ /template/ Button:disabled">
+      <Setter Property="Opacity" Value="0.25" />
+    </Style>
+    <Style Selector="^:not(:has-minimize) /template/ Button#PART_MinimizeButton">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:not(:has-maximize) /template/ Button#PART_MaximizeButton">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:not(:has-fullscreen) /template/ Button#PART_FullScreenButton">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:not(:has-fullscreen) /template/ Button#PART_PopoverFullScreenButton">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:fullscreen /template/ StackPanel#PART_OverlayPanel">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:fullscreen /template/ Panel#PART_TitleBar">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>
