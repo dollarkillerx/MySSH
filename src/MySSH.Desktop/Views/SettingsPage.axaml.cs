@@ -8,15 +8,8 @@ public sealed partial class SettingsPage : UserControl
     public SettingsPage()
     {
         InitializeComponent();
-        DataContextChanged += (_, _) =>
-        {
-            if (DataContext is SettingsViewModel vm)
-                vm.PropertyChanged += (_, e) =>
-                {
-                    if (e.PropertyName == nameof(SettingsViewModel.MessageIsError))
-                        MessageBar.Kind = vm.MessageIsError ? MySSH.UI.Carbon.NotificationKind.Error : MySSH.UI.Carbon.NotificationKind.Success;
-                };
-        };
+        // The bar's kind is bound (SettingsViewModel.MessageKind). The page is rebuilt on every visit while the view
+        // model lives for the whole app, so the page must not subscribe to it: each visit used to leak a page.
         MessageBar.Closed += (_, _) => { if (DataContext is SettingsViewModel vm) vm.Message = null; };
     }
 }

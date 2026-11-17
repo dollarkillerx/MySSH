@@ -30,7 +30,9 @@ internal static class Credentials
             ct.ThrowIfCancellationRequested();
             try
             {
-                return loader(privateKey, passphrase);
+                // Decrypting a key runs bcrypt-pbkdf (OpenSSH) or Argon2 (PPK v3): seconds on purpose, so off the caller's thread.
+                var attempt = passphrase;
+                return await Task.Run(() => loader(privateKey, attempt), ct);
             }
             catch (SshPassPhraseNullOrEmptyException)
             {

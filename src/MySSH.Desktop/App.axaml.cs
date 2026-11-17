@@ -93,16 +93,25 @@ public sealed partial class App : Application, IDisposable
     /// </summary>
     static async Task StartHiddenAsync(ShellViewModel shell, Window window, Func<Task> initialize)
     {
-        await initialize();
-        if (shell.IsVaultPromptOpen)
+        try
         {
-            ShowWindow(window);
-            return;
+            await initialize();
+            if (shell.IsVaultPromptOpen || shell.StartupFailed)
+            {
+                ShowWindow(window);
+                return;
+            }
+            await shell.McpStartup; // loads the MCP settings and starts the server on the thread pool
+            if (!shell.KeepRunningInTray)
+            {
+                shell.SelectedNav = shell.NavItems.First(n => n.Page == AppPage.Ai);
+                ShowWindow(window);
+            }
         }
-        await shell.McpStartup; // loads the MCP settings and starts the server on the thread pool
-        if (!shell.KeepRunningInTray)
+        catch (Exception e) when (e is not OperationCanceledException)
         {
-            shell.SelectedNav = shell.NavItems.First(n => n.Page == AppPage.Ai);
+            // Nobody awaits this task: report and show the window instead of staying invisible in the tray.
+            shell.ReportUnexpectedError(e, CrashLog.Write(e, "tray start"));
             ShowWindow(window);
         }
     }

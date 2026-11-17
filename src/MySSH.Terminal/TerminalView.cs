@@ -354,6 +354,7 @@ public sealed partial class TerminalView : Control
         _backend = null;
         _dataHandler = null;
         _exitHandler = null;
+        _pendingExit = null;
         _outQueue.Clear();
         while (_pending.TryDequeue(out _))
         {
@@ -423,6 +424,12 @@ public sealed partial class TerminalView : Control
             AfterContentChange();
         }
 
+        if (_pending.IsEmpty && _pendingExit is { } exit)
+        {
+            _pendingExit = null;
+            CompleteExit(exit);
+        }
+
         if (!_pending.IsEmpty && Interlocked.Exchange(ref _pumpScheduled, 1) == 0)
         {
             // more to do: yield to rendering/input first (a flood then renders at a reduced frame rate)
@@ -433,6 +440,9 @@ public sealed partial class TerminalView : Control
     /// <summary>Test/diagnostic hook: parse everything queued right now.</summary>
     internal void ProcessPendingOutput() => Pump(timeBoxed: false);
 
+    /// <summary>Set while the session has ended but queued output is still being parsed.</summary>
+    private TerminalExit? _pendingExit;
+
     private void OnBackendExited(ITerminalBackend backend, TerminalExit exit)
     {
         if (!ReferenceEquals(backend, _backend) || _inputClosed)
@@ -440,9 +450,25 @@ public sealed partial class TerminalView : Control
             return;
         }
 
-        ProcessPendingOutput();
         _inputClosed = true;
         _outQueue.Clear();
+        if (_pending.IsEmpty)
+        {
+            CompleteExit(exit);
+            return;
+        }
+
+        // The last output is still queued (up to MaxPendingBytes after a flood): the time-boxed pump parses it, and the
+        // session ends once it is shown. Parsing it all here in one go froze the UI for seconds.
+        _pendingExit = exit;
+        if (Interlocked.Exchange(ref _pumpScheduled, 1) == 0)
+        {
+            Dispatcher.UIThread.Post(_pumpAction, DispatcherPriority.Background);
+        }
+    }
+
+    private void CompleteExit(TerminalExit exit)
+    {
         _overlay.InvalidateVisual();
         SessionEnded?.Invoke(this, exit);
     }

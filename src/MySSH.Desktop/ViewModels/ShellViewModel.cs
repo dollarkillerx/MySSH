@@ -162,14 +162,21 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable,
         }
         catch (VaultUnavailableException e)
         {
+            StartupFailed = true;
             Notify(NotificationKind.Error, Loc.Instance["common.error"], Loc.Instance.Format("storage.openFailed", ("error", e.Message)));
         }
-        catch (Exception e) when (e is IOException or InvalidOperationException or UnauthorizedAccessException or Microsoft.Data.Sqlite.SqliteException)
+        catch (Exception e) when (e is not OperationCanceledException)
         {
+            // Anything else (a corrupt vault file, a newer database schema, the keychain refusing a write, ...): the app
+            // cannot work without its store, so say why instead of showing empty pages (or nothing at all in the tray).
+            StartupFailed = true;
             Notify(NotificationKind.Error, Loc.Instance["common.error"], Loc.Instance.Format("storage.openFailed", ("error", e.Message)));
         }
         finally { IsBusy = false; }
     }
+
+    /// <summary>The store could not be opened; a tray start shows the window so the error is seen.</summary>
+    public bool StartupFailed { get; private set; }
 
     [RelayCommand]
     async Task SubmitMasterPasswordAsync(CancellationToken ct)
@@ -295,6 +302,7 @@ public sealed partial class ShellViewModel : ObservableObject, IAsyncDisposable,
 
     public async ValueTask DisposeAsync()
     {
+        Assistant?.Current.Dispose(); // a running chat stops calling the model and running tools at quit
         if (Sessions is not null) await Sessions.DisposeAsync();
         if (Connector is IAsyncDisposable c) await c.DisposeAsync();
         AiMcp?.Assistant?.Dispose();

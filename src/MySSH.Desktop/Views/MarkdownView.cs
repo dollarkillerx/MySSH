@@ -13,16 +13,18 @@ namespace MySSH.Desktop.Views;
 
 /// <summary>
 /// Renders <see cref="Markdown"/> (see <see cref="MarkdownParser"/>) with Carbon styles. Code blocks get "Copy" and
-/// "Insert into terminal" (<see cref="InsertCommand"/>, parameter = the code; never executed). Re-renders are coalesced, so
-/// a streaming answer is laid out at most once per UI frame.
+/// "Insert into terminal" (<see cref="InsertCommand"/>, parameter = the code; never executed). Updates are coalesced and
+/// incremental: the controls of leading blocks that did not change are kept, so a streaming answer (whose text the view
+/// model updates every ~60 ms) only rebuilds its last, growing block, and a selection in earlier paragraphs survives.
 /// </summary>
 public sealed class MarkdownView : StackPanel
 {
     public static readonly StyledProperty<string?> MarkdownProperty = AvaloniaProperty.Register<MarkdownView, string?>(nameof(Markdown));
     public static readonly StyledProperty<ICommand?> InsertCommandProperty = AvaloniaProperty.Register<MarkdownView, ICommand?>(nameof(InsertCommand));
 
-    bool _pending;
+    bool _pending, _fullPending;
     string? _rendered;
+    IReadOnlyList<MdBlock> _blocks = [];
 
     public MarkdownView()
     {
@@ -45,6 +47,7 @@ public sealed class MarkdownView : StackPanel
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+        if (change.Property == InsertCommandProperty) _fullPending = true; // code block headers depend on it
         if (change.Property == MarkdownProperty || change.Property == InsertCommandProperty) Schedule();
     }
 
@@ -55,35 +58,48 @@ public sealed class MarkdownView : StackPanel
         Dispatcher.UIThread.Post(() =>
         {
             _pending = false;
-            if (_rendered == Markdown && Children.Count > 0) return;
+            if (_rendered == Markdown && Children.Count > 0 && !_fullPending) return;
             _rendered = Markdown;
-            Render();
+            Render(full: _fullPending);
         }, DispatcherPriority.Background);
     }
 
-    /// <summary>Renders now (tests, first layout).</summary>
+    /// <summary>Renders everything now (tests, first layout, theme change: brushes are resolved per render).</summary>
     internal void RenderNow()
     {
         _pending = false;
         _rendered = Markdown;
-        Render();
+        Render(full: true);
     }
 
-    void Render()
+    void Render(bool full)
     {
-        Children.Clear();
-        foreach (var block in MarkdownParser.Parse(Markdown))
-            Children.Add(block.Kind switch
-            {
-                MdBlockKind.Code => CodeBlock(block),
-                MdBlockKind.Table => Table(block),
-                MdBlockKind.Heading => Text(block.Text, block.Level <= 2 ? "heading-compact-02" : "heading-compact-01"),
-                MdBlockKind.ListItem => ListItem(block),
-                MdBlockKind.Quote => Quote(block),
-                MdBlockKind.Rule => new Border { Height = 1, Background = Brush("CarbonBorderSubtle01"), Margin = new Thickness(0, 4) },
-                _ => Text(block.Text, "body-01"),
-            });
+        _fullPending = false;
+        var blocks = MarkdownParser.Parse(Markdown);
+        var keep = 0;
+        if (!full)
+            while (keep < blocks.Count && keep < _blocks.Count && keep < Children.Count && SameBlock(blocks[keep], _blocks[keep]))
+                keep++;
+        if (keep < Children.Count) Children.RemoveRange(keep, Children.Count - keep);
+        for (var i = keep; i < blocks.Count; i++) Children.Add(Build(blocks[i]));
+        _blocks = blocks;
     }
+
+    static bool SameBlock(MdBlock a, MdBlock b) =>
+        a.Kind == b.Kind && a.Text == b.Text && a.Level == b.Level && a.Marker == b.Marker && a.Language == b.Language
+        && (ReferenceEquals(a.Rows, b.Rows) || (a.Rows is not null && b.Rows is not null && a.Rows.Count == b.Rows.Count
+            && a.Rows.Zip(b.Rows).All(r => r.First.SequenceEqual(r.Second))));
+
+    Control Build(MdBlock block) => block.Kind switch
+    {
+        MdBlockKind.Code => CodeBlock(block),
+        MdBlockKind.Table => Table(block),
+        MdBlockKind.Heading => Text(block.Text, block.Level <= 2 ? "heading-compact-02" : "heading-compact-01"),
+        MdBlockKind.ListItem => ListItem(block),
+        MdBlockKind.Quote => Quote(block),
+        MdBlockKind.Rule => new Border { Height = 1, Background = Brush("CarbonBorderSubtle01"), Margin = new Thickness(0, 4) },
+        _ => Text(block.Text, "body-01"),
+    };
 
     IBrush? Brush(string key) => this.TryFindResource(key, ActualThemeVariant, out var v) ? v as IBrush : null;
 

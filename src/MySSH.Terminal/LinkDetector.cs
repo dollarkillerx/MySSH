@@ -12,6 +12,9 @@ internal static partial class LinkDetector
 {
     private const string TrailingPunctuation = ".,;:!?'\"";
 
+    /// <summary>Rows of a soft-wrapped line searched above and below the pointer (a URL rarely spans more).</summary>
+    internal const int MaxWrappedRows = 32;
+
     [GeneratedRegex(@"(?:(?:https?|ftp|sftp|ssh|file)://|mailto:|www\.)[^\s<>""'`\u0000-\u001f]+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
     private static partial Regex UrlRegex();
 
@@ -28,15 +31,16 @@ internal static partial class LinkDetector
             return new LinkHit(target, [(absRow, link.Column, Math.Min(cols, link.Column + link.Cols) - 1)], true);
         }
 
-        // logical line: walk soft wraps both ways
+        // logical line: walk soft wraps both ways, at most MaxWrappedRows around the pointer (a minified file printed as
+        // one line spans thousands of rows, and this runs on every pointer move while the link modifier is held)
         var first = absRow;
-        while (first > 0 && buf.GetLine(first) is { IsWrapped: true })
+        while (first > 0 && absRow - first < MaxWrappedRows && buf.GetLine(first) is { IsWrapped: true })
         {
             first--;
         }
 
         var last = absRow;
-        while (last + 1 < buf.Lines.Length && buf.GetLine(last + 1) is { IsWrapped: true } && last - first < 64)
+        while (last + 1 < buf.Lines.Length && buf.GetLine(last + 1) is { IsWrapped: true } && last - absRow < MaxWrappedRows)
         {
             last++;
         }

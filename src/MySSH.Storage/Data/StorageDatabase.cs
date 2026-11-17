@@ -35,6 +35,8 @@ internal sealed class StorageDatabase
 
     public async Task<SqliteConnection> OpenAsync(CancellationToken ct)
     {
+        // Every repository method starts here: the rest of it (queries, decryption) runs on the thread pool.
+        await ThreadPoolHop.Instance;
         var conn = new SqliteConnection(_connectionString);
         try
         {

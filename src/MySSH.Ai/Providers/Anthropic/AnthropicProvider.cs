@@ -94,10 +94,14 @@ public sealed class AnthropicProvider : IChatProvider
             var yielded = false;
             var retry = false;
             Stopped? final = null;
-            await using (var events = SseReader.ReadAsync(opened.Stream!, ct).GetAsyncEnumerator(ct))
+            // The HttpClient has no overall timeout (answers can stream for minutes), so a stalled stream needs its own:
+            // the API sends ping events while it works, and nothing at all for StreamIdleTimeout means the connection died.
+            using var idle = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            await using (var events = SseReader.ReadAsync(opened.Stream!, idle.Token).GetAsyncEnumerator(idle.Token))
             {
                 while (final is null)
                 {
+                    idle.CancelAfter(StreamIdleTimeout);
                     var step = await NextAsync(events, assembler, buffer, ct).ConfigureAwait(false);
                     if (step is { Reason: StopReason.Error } && !yielded && buffer.Count == 0 && attempt < MaxRetries
                         && AnthropicErrors.IsRetryableKind(step.ErrorKind))
@@ -123,6 +127,9 @@ public sealed class AnthropicProvider : IChatProvider
             yield break;
         }
     }
+
+    /// <summary>No byte for this long ends the turn with a network error (the server pings every few seconds).</summary>
+    internal static TimeSpan StreamIdleTimeout { get; set; } = TimeSpan.FromMinutes(3);
 
     /// <summary>Reads one SSE event. Returns null to continue, else the final event (normal end or error).</summary>
     static async Task<Stopped?> NextAsync(IAsyncEnumerator<SseEvent> events, AnthropicStreamAssembler assembler, List<ChatEvent> buffer,

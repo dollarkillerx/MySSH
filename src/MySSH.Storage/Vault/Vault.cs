@@ -103,8 +103,9 @@ public sealed class Vault : IDisposable
     /// for this service/account and <paramref name="adoptExistingKey"/> is true, that key is reused instead of being
     /// overwritten (a stray vault.json deletion must never destroy the key).
     /// </summary>
-    public Task InitializeWithOsKeystoreAsync(bool adoptExistingKey = true, CancellationToken ct = default)
+    public async Task InitializeWithOsKeystoreAsync(bool adoptExistingKey = true, CancellationToken ct = default)
     {
+        await ThreadPoolHop.Instance; // the keystore blocks (and may prompt)
         ct.ThrowIfCancellationRequested();
         var store = RequireKeyStore();
         EnsureUninitialized();
@@ -115,7 +116,6 @@ public sealed class Vault : IDisposable
         var file = NewOsKeystoreFile(store, key);
         WriteFile(file);
         SetState(file, key);
-        return Task.CompletedTask;
     }
 
     /// <summary>Creates a vault protected by a master password (Argon2id KEK wraps the MasterKey) and leaves it unlocked.</summary>
@@ -131,31 +131,33 @@ public sealed class Vault : IDisposable
     }
 
     /// <summary>Unlock an OS-keystore vault.</summary>
-    public Task<VaultUnlockResult> UnlockAsync(CancellationToken ct = default)
+    public async Task<VaultUnlockResult> UnlockAsync(CancellationToken ct = default)
     {
+        // The Keychain read can wait for the user ("MySSH wants to use the login keychain"): never on the UI thread.
+        await ThreadPoolHop.Instance;
         ct.ThrowIfCancellationRequested();
         VaultFileModel? file;
         lock (_gate)
         {
             file = _file;
-            if (file is null) return Task.FromResult(VaultUnlockResult.NotInitialized);
-            if (_masterKey is not null) return Task.FromResult(VaultUnlockResult.AlreadyUnlocked);
+            if (file is null) return VaultUnlockResult.NotInitialized;
+            if (_masterKey is not null) return VaultUnlockResult.AlreadyUnlocked;
         }
         if (file.Mode != VaultFileModel.ModeOsKeystore)
-            return Task.FromResult(VaultUnlockResult.WrongMode);
+            return VaultUnlockResult.WrongMode;
         if (_keyStore is not { IsAvailable: true })
-            return Task.FromResult(VaultUnlockResult.KeystoreUnavailable);
+            return VaultUnlockResult.KeystoreUnavailable;
 
         var key = _keyStore.Load();
         if (key is null)
-            return Task.FromResult(VaultUnlockResult.KeyNotFound);
+            return VaultUnlockResult.KeyNotFound;
         if (key.Length != FieldCipher.KeySize || !KeyMatches(file, key))
         {
             CryptographicOperations.ZeroMemory(key);
-            return Task.FromResult(VaultUnlockResult.KeyMismatch);
+            return VaultUnlockResult.KeyMismatch;
         }
         SetState(file, key);
-        return Task.FromResult(VaultUnlockResult.Unlocked);
+        return VaultUnlockResult.Unlocked;
     }
 
     /// <summary>Unlock a master-password vault. A wrong password is detected from the wrapped key's GCM tag; no data is touched.</summary>
@@ -235,8 +237,9 @@ public sealed class Vault : IDisposable
     }
 
     /// <summary>Switch an unlocked vault to OS-keystore protection.</summary>
-    public Task SwitchToOsKeystoreAsync(CancellationToken ct = default)
+    public async Task SwitchToOsKeystoreAsync(CancellationToken ct = default)
     {
+        await ThreadPoolHop.Instance;
         ct.ThrowIfCancellationRequested();
         var store = RequireKeyStore();
         var (old, key) = SnapshotUnlocked();
@@ -253,7 +256,6 @@ public sealed class Vault : IDisposable
         {
             CryptographicOperations.ZeroMemory(key);
         }
-        return Task.CompletedTask;
     }
 
     public void Dispose() => Lock();

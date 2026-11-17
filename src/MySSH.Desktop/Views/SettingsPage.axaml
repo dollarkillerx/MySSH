@@ -11,7 +11,7 @@
     <StackPanel Margin="32,24,32,32" Spacing="32" MaxWidth="720" HorizontalAlignment="Left">
       <TextBlock Classes="heading-04" Text="{l:Tr settings.title}" />
 
-      <carbon:InlineNotification Kind="Success" IsLowContrast="True" Title="{l:Tr settings.backup}" Subtitle="{Binding Message}"
+      <carbon:InlineNotification IsLowContrast="True" Title="{l:Tr settings.backup}" Subtitle="{Binding Message}" Kind="{Binding MessageKind}"
                                  IsVisible="{Binding Message, Converter={x:Static ObjectConverters.IsNotNull}}" Name="MessageBar" />
 
       <StackPanel Spacing="16">

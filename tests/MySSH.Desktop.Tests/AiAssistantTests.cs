@@ -66,10 +66,28 @@ sealed class ApprovingTools(Func<AiAssistantViewModel> assistant) : IToolInvoker
         var approval = new ApprovalRequest(Guid.NewGuid(), actor, new ToolCatalog().Find(request.ToolName)!, Web,
             request.Arguments.GetProperty("command").GetString()!, null, "high risk", true, DateTimeOffset.UtcNow.AddMinutes(2),
             MySSH.Tools.ApprovalReason.HighRisk, "systemctl restart");
-        var pending = assistant().TryRequestApproval(approval, AiToolCallScope.Current!, ct) ?? throw new InvalidOperationException("no inline approval");
-        var outcome = await pending;
+        // Like MainWindow.Approvals: the agent runs on the thread pool, the chat's cards live on the UI thread.
+        var info = AiToolCallScope.Current!;
+        Task<ApprovalOutcome>? pending = null;
+        await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => { pending = assistant().TryRequestApproval(approval, info, ct); });
+        var outcome = await (pending ?? throw new InvalidOperationException("no inline approval"));
         Outcomes.Add(outcome);
         return outcome == ApprovalOutcome.Approved ? new ToolCallResult(false, "exit_code: 0") : new ToolCallResult(true, "The user denied this call.");
+    }
+}
+
+/// <summary>Never answers until cancelled (a stalled stream).</summary>
+sealed class HangingChatProvider : IChatProvider
+{
+    public string ProviderId => "anthropic";
+    public ProviderCapabilities Capabilities => new();
+    public Task<IReadOnlyList<ModelInfo>> ListModelsAsync(CancellationToken ct) => Task.FromResult<IReadOnlyList<ModelInfo>>([]);
+    public Task<ProviderProbeResult> ProbeAsync(string model, CancellationToken ct) => Task.FromResult(new ProviderProbeResult(true, [], new()));
+
+    public async IAsyncEnumerable<ChatEvent> StreamAsync(ChatRequest request, [EnumeratorCancellation] CancellationToken ct)
+    {
+        await Task.Delay(Timeout.Infinite, ct);
+        yield break;
     }
 }
 
@@ -198,6 +216,27 @@ public sealed class AiAssistantTests
         Assert.All(ai.Current.Items.OfType<AiToolCardViewModel>(), c => Assert.Equal(AiToolCardState.Succeeded, c.State));
         Assert.Equal("nginx is running again.", ai.Current.Items.OfType<AiAssistantItemViewModel>().Last().Text);
         RenderPanel(ai, "41-ai-chat");
+    }
+
+    [AvaloniaFact]
+    public async Task A_running_chat_stops_when_another_question_replaces_it()
+    {
+        Loc.Instance.SetCulture("en-US");
+        var (t, settings, _) = await SetupAsync(new HangingChatProvider());
+        await using var __ = t;
+        var ai = new AiAssistantViewModel(settings, t.Storage.AiConversations, t.Storage.Hosts, new ApprovingTools(() => null!),
+            new ToolCatalog(), new FakeUi(), new NoWorkspace());
+        ai.Current.Input = "why is the disk full?";
+        var old = ai.Current;
+        var send = old.SendCommand.ExecuteAsync(null);
+        await Until(() => old.IsRunning);
+
+        // "Explain this output" on a terminal selection opens a new chat; the hidden one used to keep running (and billing).
+        await ai.AskAsync("explain", null, send: false);
+
+        Assert.NotSame(old, ai.Current);
+        await send.WaitAsync(TimeSpan.FromSeconds(10));
+        Assert.False(old.IsRunning);
     }
 
     [AvaloniaFact]

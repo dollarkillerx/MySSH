@@ -183,8 +183,9 @@ internal sealed class SshChain : IPooledChain
             }
             catch (Exception ex)
             {
-                client?.Dispose();
-                endpoint?.Dispose();
+                // Disposing waits for SSH.NET's listener thread and the tunnelled channel: not on the caller's (UI) thread.
+                var (failedClient, failedEndpoint) = (client, endpoint);
+                await Task.Run(() => { failedClient?.Dispose(); failedEndpoint?.Dispose(); }, CancellationToken.None);
                 ct.ThrowIfCancellationRequested();
                 if (ex is SshConnectException) throw;
                 if (gate.Observed is { Evaluation.Match: not HostKeyMatch.Match } observed)
@@ -248,6 +249,10 @@ internal sealed class SshChain : IPooledChain
     {
         ThrowIfNotConnected();
         var (client, endpoint) = await ConnectClientAsync(_hops.Count - 1, make, ct);
+        // Its own TCP connection (direct hosts) or channel: keep it alive like the hop clients, or an idle SFTP tab is
+        // dropped by NAT while the terminal stays up, and the next listing hangs until the operation timeout.
+        var keepAlive = _deps.Options.KeepAliveOverride ?? TimeSpan.FromSeconds(_hops[^1].Hop.Host.KeepAliveSeconds);
+        if (keepAlive > TimeSpan.Zero) client.KeepAliveInterval = keepAlive;
         var owner = new ChildHandle(this, client, endpoint);
         lock (_lock)
         {

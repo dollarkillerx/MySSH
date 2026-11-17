@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Channels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MySSH.Ai;
@@ -53,6 +54,13 @@ public sealed partial class AiAssistantViewModel : ObservableObject, ITerminalAi
 
     [ObservableProperty] public partial bool IsOpen { get; set; }
     [ObservableProperty] public partial AiChatViewModel Current { get; set; }
+
+    /// <summary>A replaced chat stops (it was hidden, kept calling the model and running tools, and its approvals went to
+    /// a modal for a chat the user could no longer see).</summary>
+    partial void OnCurrentChanging(AiChatViewModel oldValue, AiChatViewModel newValue)
+    {
+        if (oldValue is not null && !ReferenceEquals(oldValue, newValue)) oldValue.Dispose();
+    }
     [ObservableProperty] public partial bool IsHistoryOpen { get; set; }
     public ObservableCollection<AiConversationItemViewModel> Conversations { get; } = [];
     public ObservableCollection<AiProviderConfig> Providers { get; } = [];
@@ -289,8 +297,38 @@ public sealed partial class AiAssistantItemViewModel : AiChatItemViewModel
     partial void OnTextChanged(string value) => OnPropertyChanged(nameof(HasText));
     partial void OnThinkingChanged(string value) => OnPropertyChanged(nameof(HasThinking));
 
-    public void AppendText(string delta) { _text.Append(delta); Text = _text.ToString(); }
-    public void AppendThinking(string delta) { _thinking.Append(delta); Thinking = _thinking.ToString(); }
+    /// <summary>
+    /// While streaming, the visible text follows the received text at most every <see cref="StreamFlushInterval"/>:
+    /// copying the whole answer (and re-laying it out) per delta is O(n²) for a long answer.
+    /// </summary>
+    internal static readonly TimeSpan StreamFlushInterval = TimeSpan.FromMilliseconds(60);
+    bool _flushQueued;
+    readonly SynchronizationContext? _ui = SynchronizationContext.Current;
+
+    public void AppendText(string delta) { _text.Append(delta); Changed(); }
+    public void AppendThinking(string delta) { _thinking.Append(delta); Changed(); }
+
+    void Changed()
+    {
+        if (!IsStreaming || _ui is null) { Flush(); return; }
+        if (_flushQueued) return;
+        _flushQueued = true;
+        var ui = _ui;
+        _ = Task.Delay(StreamFlushInterval).ContinueWith(_ => ui.Post(_ => { if (_flushQueued) Flush(); }, null), TaskScheduler.Default);
+    }
+
+    /// <summary>Shows everything received so far (also when streaming ends).</summary>
+    public void Flush()
+    {
+        _flushQueued = false;
+        if (Text.Length != _text.Length) Text = _text.ToString();
+        if (Thinking.Length != _thinking.Length) Thinking = _thinking.ToString();
+    }
+
+    partial void OnIsStreamingChanged(bool value)
+    {
+        if (!value) Flush();
+    }
 
     [RelayCommand]
     void ToggleThinking() => IsThinkingExpanded = !IsThinkingExpanded;
@@ -659,8 +697,9 @@ public sealed partial class AiChatViewModel : ObservableObject, IDisposable
         OnPropertyChanged(nameof(HasChips));
 
         IsRunning = true;
-        _run = new CancellationTokenSource();
-        var ct = _run.Token;
+        var run = _run = new CancellationTokenSource();
+        var ct = run.Token;
+        Task? producer = null;
         try
         {
             if (_conversation is null && settings.SaveHistory)
@@ -683,8 +722,24 @@ public sealed partial class AiChatViewModel : ObservableObject, IDisposable
             var turn = new AgentTurn(ConversationId, _history.ToList(), composed.Text, model, providerConfig.Effort,
                 AiTools.FromCatalog(_owner.Catalog), AiAgent.Actor(providerConfig, model),
                 MaxTokens: providerConfig.MaxOutputTokens ?? 32000);
-            await foreach (var ev in agent.RunAsync(turn, ct))
+            // The agent (request JSON for the whole history, SSE parsing, tool fan-out) runs on the thread pool; the UI
+            // only applies its events. Approvals still reach this chat's cards: the approval service marshals to the UI.
+            var events = Channel.CreateUnbounded<AgentEvent>(new UnboundedChannelOptions { SingleReader = true, SingleWriter = true });
+            Exception? failure = null;
+            producer = Task.Run(async () =>
+            {
+                try
+                {
+                    await foreach (var ev in agent.RunAsync(turn, ct).ConfigureAwait(false))
+                        events.Writer.TryWrite(ev);
+                }
+                catch (Exception e) { failure = e; }
+                finally { events.Writer.TryComplete(); }
+            }, CancellationToken.None);
+            await foreach (var ev in events.Reader.ReadAllAsync(CancellationToken.None))
                 await HandleAsync(ev);
+            await producer;
+            if (failure is not null) System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(failure);
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
@@ -701,8 +756,12 @@ public sealed partial class AiChatViewModel : ObservableObject, IDisposable
         finally
         {
             IsRunning = false;
-            _run.Dispose();
-            _run = null;
+            // Cancel before disposing: when handling an event failed, the agent and its tool calls must stop too.
+            await run.CancelAsync();
+            if (producer is not null)
+                try { await producer.WaitAsync(TimeSpan.FromSeconds(5)); } catch (TimeoutException) { }
+            run.Dispose();
+            if (ReferenceEquals(_run, run)) _run = null;
         }
     }
 

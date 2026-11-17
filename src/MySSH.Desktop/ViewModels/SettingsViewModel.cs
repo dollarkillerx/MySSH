@@ -44,7 +44,9 @@ public sealed partial class SettingsViewModel : ObservableObject
     /// <summary>Set by the shell (one instance for the app's lifetime).</summary>
     [ObservableProperty] public partial UpdatesViewModel? Updates { get; set; }
     [ObservableProperty] public partial string? Message { get; set; }
-    [ObservableProperty] public partial bool MessageIsError { get; set; }
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(MessageKind))] public partial bool MessageIsError { get; set; }
+    public MySSH.UI.Carbon.NotificationKind MessageKind =>
+        MessageIsError ? MySSH.UI.Carbon.NotificationKind.Error : MySSH.UI.Carbon.NotificationKind.Success;
 
     public string DataDirectory => _storage.Paths.DataDirectory;
     public string VaultModeText => _storage.Vault.Mode switch

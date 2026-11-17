@@ -103,6 +103,7 @@ public sealed partial class TerminalSessionViewModel(ISshConnector connector, IU
 {
     ISshConnection? _connection;
     CancellationTokenSource? _cts;
+    bool _disposed;
     int _cols = 80, _rows = 24;
 
     public override SessionKind Kind => SessionKind.Terminal;
@@ -204,15 +205,22 @@ public sealed partial class TerminalSessionViewModel(ISshConnector connector, IU
     {
         NotifyGridSize(cols, rows);
         await CloseConnectionAsync();
-        _cts = new CancellationTokenSource();
+        if (_disposed) return;
+        var cts = _cts = new CancellationTokenSource();
+        var ct = cts.Token;
+        // Closing the tab (DisposeAsync) or reconnecting cancels ct while this awaits. An SSH open that is already
+        // running finishes anyway, so whatever arrives after that is released here and never stored on the tab.
+        bool Abandoned() => _disposed || ct.IsCancellationRequested;
         State = SessionState.Connecting;
         StatusMessage = Loc.Instance.Format("terminal.connecting", ("host", HostLabel));
         try
         {
-            var conn = await Connector.ConnectAsync(HostId, ConnectionOrigin.User, _cts.Token);
+            var conn = await Connector.ConnectAsync(HostId, ConnectionOrigin.User, ct);
+            if (Abandoned()) { await conn.DisposeAsync(); return; }
             _connection = conn;
             conn.StateChanged += OnConnectionStateChanged;
-            var backend = await conn.OpenShellAsync(_cols, _rows, ct: _cts.Token);
+            var backend = await conn.OpenShellAsync(_cols, _rows, ct: ct);
+            if (Abandoned()) { await backend.DisposeAsync(); return; }
             backend.Exited += OnExited;
             Backend = backend;
             State = SessionState.Connected;
@@ -220,6 +228,7 @@ public sealed partial class TerminalSessionViewModel(ISshConnector connector, IU
         }
         catch (Exception e) when (e is SshConnectException or SshConnectionLostException or OperationCanceledException or IOException or InvalidOperationException)
         {
+            if (Abandoned()) return;
             State = SessionState.Failed;
             StatusMessage = Loc.Instance.Format("terminal.connectionFailed", ("error", Describe(e)));
         }
@@ -256,6 +265,8 @@ public sealed partial class TerminalSessionViewModel(ISshConnector connector, IU
 
     public override async ValueTask DisposeAsync()
     {
+        _disposed = true;
+        _inlineCts?.Cancel();
         await CloseConnectionAsync();
         State = SessionState.Ended;
     }
@@ -305,11 +316,15 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
     ISshConnection? _connection;
     ISftpSession? _sftp;
     TransferQueue? _transfers;
+    CancellationTokenSource? _cts;
+    bool _disposed, _refreshQueued;
+    int _navigation;
 
     public override SessionKind Kind => SessionKind.Sftp;
     /// <summary>Directory to open first (e.g. the terminal's current directory); home when missing or not a directory.</summary>
     public string? InitialPath { get; init; }
-    public ObservableCollection<SftpRowViewModel> Entries { get; } = [];
+    /// <summary>Replaced as a whole on each listing (one reset instead of one change per entry: big folders).</summary>
+    [ObservableProperty] public partial ObservableCollection<SftpRowViewModel> Entries { get; private set; } = [];
     public ObservableCollection<BreadcrumbItem> Breadcrumb { get; } = [];
     public ObservableCollection<TransferRowViewModel> Transfers { get; } = [];
     [ObservableProperty] public partial string CurrentPath { get; set; } = "/";
@@ -326,14 +341,22 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
     public async Task ConnectAsync()
     {
         await CloseConnectionAsync();
+        if (_disposed) return;
+        var cts = _cts = new CancellationTokenSource();
+        var ct = cts.Token;
+        // See TerminalSessionViewModel.ConnectAsync: a tab closed or reconnected meanwhile releases what arrives late.
+        bool Abandoned() => _disposed || ct.IsCancellationRequested;
         State = SessionState.Connecting;
         StatusMessage = Loc.Instance["sftp.connecting"];
         try
         {
-            var conn = await Connector.ConnectAsync(HostId, ConnectionOrigin.User);
+            var conn = await Connector.ConnectAsync(HostId, ConnectionOrigin.User, ct);
+            if (Abandoned()) { await conn.DisposeAsync(); return; }
             _connection = conn;
             conn.StateChanged += OnConnectionStateChanged;
-            _sftp = await conn.OpenSftpAsync();
+            var sftp = await conn.OpenSftpAsync(ct);
+            if (Abandoned()) { await sftp.DisposeAsync(); return; }
+            _sftp = sftp;
             _transfers = new TransferQueue(_sftp, new TransferQueueOptions { ConflictPolicy = ConflictPolicy.Ask, OnConflict = OnConflictAsync });
             _transfers.ItemChanged += i => OnUi(() => UpdateTransfer(i));
             _transfers.ProgressChanged += p => OnUi(() => Transfers.FirstOrDefault(t => t.Item.Id == p.ItemId)?.Refresh());
@@ -344,15 +367,17 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
             {
                 try
                 {
-                    if (await _sftp.StatAsync(initial) is { Kind: SftpEntryKind.Directory or SftpEntryKind.Symlink })
+                    if (await sftp.StatAsync(initial, ct) is { Kind: SftpEntryKind.Directory or SftpEntryKind.Symlink })
                         start = initial;
                 }
-                catch (Exception e) when (e is IOException or InvalidOperationException) { }
+                catch (Exception e) when (e is IOException or InvalidOperationException or TimeoutException) { }
             }
+            if (Abandoned()) return;
             await NavigateAsync(start);
         }
-        catch (Exception e) when (e is SshConnectException or SshConnectionLostException or OperationCanceledException or IOException or InvalidOperationException)
+        catch (Exception e) when (e is SshConnectException or SshConnectionLostException or OperationCanceledException or IOException or InvalidOperationException or TimeoutException)
         {
+            if (Abandoned()) return;
             State = SessionState.Failed;
             StatusMessage = Loc.Instance.Format("terminal.connectionFailed", ("error", Describe(e)));
         }
@@ -382,38 +407,60 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
         if (row is null) Transfers.Insert(0, row = new TransferRowViewModel(item));
         row.Refresh();
         if (item.State == TransferState.Completed && item.Direction == TransferDirection.Upload)
-            _ = RefreshAsync();
+            QueueRefresh();
+    }
+
+    /// <summary>One listing after a burst of finished uploads (dropping 200 files used to list the folder 200 times).</summary>
+    void QueueRefresh()
+    {
+        if (_refreshQueued) return;
+        _refreshQueued = true;
+        _ = Task.Delay(400).ContinueWith(_ => OnUi(() =>
+        {
+            _refreshQueued = false;
+            if (!_disposed) _ = RefreshAsync();
+        }), TaskScheduler.Default);
     }
 
     public async Task NavigateAsync(string path)
     {
-        if (_sftp is null) return;
+        if (_sftp is not { } sftp) return;
         Error = null;
+        var navigation = ++_navigation; // only the latest navigation is shown (refreshes can overlap)
         try
         {
             var target = SftpPath.Normalize(path, CurrentPath);
-            var list = await _sftp.ListAsync(target);
+            var list = await sftp.ListAsync(target);
+            // Sorting and formatting tens of thousands of rows stays off the UI thread.
+            var culture = Loc.Instance.Culture;
+            var rows = await Task.Run(() => list
+                .OrderByDescending(e => e.Kind == SftpEntryKind.Directory).ThenBy(e => e.Name, StringComparer.OrdinalIgnoreCase)
+                .Select(e => ToRow(e, culture)).ToList());
+            if (navigation != _navigation || _disposed) return;
             CurrentPath = target;
-            Entries.Clear();
-            foreach (var e in list.OrderByDescending(e => e.Kind == SftpEntryKind.Directory).ThenBy(e => e.Name, StringComparer.OrdinalIgnoreCase))
-                Entries.Add(ToRow(e));
-            IsEmptyFolder = Entries.Count == 0;
+            Entries = new ObservableCollection<SftpRowViewModel>(rows);
+            IsEmptyFolder = rows.Count == 0;
             Breadcrumb.Clear();
             var acc = "";
             Breadcrumb.Add(new BreadcrumbItem("/", "/"));
             foreach (var part in target.Split('/', StringSplitOptions.RemoveEmptyEntries))
                 Breadcrumb.Add(new BreadcrumbItem(part, acc += "/" + part));
         }
-        catch (Exception e) when (e is IOException or UnauthorizedAccessException or InvalidOperationException)
+        catch (Exception e) when (IsSftpError(e))
         {
-            Error = Loc.Instance.Format("sftp.loadFailed", ("error", e.Message));
+            if (navigation == _navigation) Error = Loc.Instance.Format("sftp.loadFailed", ("error", e.Message));
         }
     }
 
-    static SftpRowViewModel ToRow(SftpEntry e) => new(e,
+    /// <summary>Failures an SFTP operation reports to the tab instead of crashing: I/O and permission errors, the
+    /// connection dropping, and SSH.NET's operation timeout (mapped to TimeoutException by the SSH layer).</summary>
+    static bool IsSftpError(Exception e) => e is IOException or UnauthorizedAccessException or InvalidOperationException
+        or InvalidDataException or SshConnectionLostException or TimeoutException;
+
+    static SftpRowViewModel ToRow(SftpEntry e, System.Globalization.CultureInfo culture) => new(e,
         e.Kind switch { SftpEntryKind.Directory => "folder", SftpEntryKind.Symlink => "launch", _ => "document" },
         e.Kind == SftpEntryKind.Directory ? "—" : FormatSize(e.Size),
-        e.Modified.ToLocalTime().ToString("g", Loc.Instance.Culture));
+        e.Modified.ToLocalTime().ToString("g", culture));
 
     internal static string FormatSize(long bytes) => bytes switch
     {
@@ -438,13 +485,18 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
             await EditAsync(row);
     }
 
-    async Task<bool> IsDirectoryAsync(string path) => _sftp is not null && (await _sftp.StatAsync(path))?.Kind == SftpEntryKind.Directory;
+    async Task<bool> IsDirectoryAsync(string path)
+    {
+        if (_sftp is not { } sftp) return false;
+        try { return (await sftp.StatAsync(path))?.Kind == SftpEntryKind.Directory; }
+        catch (Exception e) when (IsSftpError(e)) { return false; }
+    }
 
     async Task<string?> RunAsync(Func<Task> op, string errorKey)
     {
         Error = null;
         try { await op(); return null; }
-        catch (Exception e) when (e is IOException or UnauthorizedAccessException or InvalidOperationException or InvalidDataException)
+        catch (Exception e) when (IsSftpError(e))
         {
             return Error = Loc.Instance.Format(errorKey, ("error", e.Message));
         }
@@ -552,6 +604,7 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
 
     async Task CloseConnectionAsync()
     {
+        if (_cts is not null) { await _cts.CancelAsync(); _cts.Dispose(); _cts = null; }
         if (_transfers is { } q) { _transfers = null; await q.DisposeAsync(); }
         if (_sftp is { } s) { _sftp = null; await s.DisposeAsync(); }
         if (_connection is { } c) { c.StateChanged -= OnConnectionStateChanged; _connection = null; await c.DisposeAsync(); }
@@ -559,6 +612,7 @@ public sealed partial class SftpSessionViewModel(ISshConnector connector, IUiSer
 
     public override async ValueTask DisposeAsync()
     {
+        _disposed = true;
         await CloseConnectionAsync();
         State = SessionState.Ended;
     }
