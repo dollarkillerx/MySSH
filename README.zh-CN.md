@@ -93,4 +93,6 @@ dotnet run --project src/MySSH.Desktop
 
 ## 许可证
 
-MIT License
+MySSH 是自由软件，采用 GNU Affero 通用公共许可证第 3 版或（由你选择）任何更高版本（`AGPL-3.0-or-later`）发布，详见 [LICENSE](LICENSE)。
+
+v0.2.3 及之前的版本仍适用其发布时的许可证。
