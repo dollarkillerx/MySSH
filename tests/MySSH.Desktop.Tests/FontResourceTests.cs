@@ -22,13 +22,13 @@ public sealed class FontResourceTests
         w.Show();
         try
         {
-            CarbonFonts.Apply(app.Resources, japanese: false);
+            CarbonFonts.Apply(app.Resources, CjkScript.SimplifiedChinese);
             MainWindowUiTestsHelpers.Pump();
             var label = w.GetVisualDescendants().OfType<TextBlock>().First(t => t.Text == "主机");
             Assert.Contains("Fonts#IBM Plex Sans, PingFang SC", label.FontFamily.ToString(), StringComparison.Ordinal);
             MainWindowUiTestsHelpers.Save(w, "31-nav-zh-fonts");
 
-            CarbonFonts.Apply(app.Resources, japanese: true);
+            CarbonFonts.Apply(app.Resources, CjkScript.Japanese);
             MainWindowUiTestsHelpers.Pump();
             Assert.Contains("Fonts#IBM Plex Sans, Hiragino Sans", label.FontFamily.ToString(), StringComparison.Ordinal);
         }

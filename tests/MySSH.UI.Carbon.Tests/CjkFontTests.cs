@@ -12,13 +12,18 @@ namespace MySSH.UI.Carbon.Tests;
 public sealed class CjkFontTests
 {
     [Theory]
-    [InlineData("zh-CN", null, false)]
-    [InlineData("ja-JP", null, true)]
-    [InlineData("en-US", new[] { "ja-JP", "zh-Hans-JP" }, true)]
-    [InlineData("en-US", new[] { "en-US", "zh-Hans-CN", "ja-JP" }, false)]
-    [InlineData("en-US", new[] { "en-US", "de-DE" }, false)]
-    public void Script_preference_follows_the_ui_language_then_the_os(string ui, string[]? os, bool japanese) =>
-        Assert.Equal(japanese, CarbonFonts.PrefersJapanese(new CultureInfo(ui), os ?? ["en-US"]));
+    [InlineData("zh-CN", null, CjkScript.SimplifiedChinese)]
+    [InlineData("zh-TW", null, CjkScript.TraditionalChinese)]
+    [InlineData("ja-JP", null, CjkScript.Japanese)]
+    [InlineData("ko-KR", null, CjkScript.Korean)]
+    [InlineData("en-US", new[] { "ja-JP", "zh-Hans-JP" }, CjkScript.Japanese)]
+    [InlineData("en-US", new[] { "en-US", "zh-Hans-CN", "ja-JP" }, CjkScript.SimplifiedChinese)]
+    [InlineData("en-US", new[] { "en-US", "zh-Hant-TW" }, CjkScript.TraditionalChinese)]
+    [InlineData("en-US", new[] { "en-US", "zh-HK" }, CjkScript.TraditionalChinese)]
+    [InlineData("en-US", new[] { "en-US", "ko-KR", "ja-JP" }, CjkScript.Korean)]
+    [InlineData("en-US", new[] { "en-US", "de-DE" }, CjkScript.SimplifiedChinese)]
+    public void Script_preference_follows_the_ui_language_then_the_os(string ui, string[]? os, CjkScript expected) =>
+        Assert.Equal(expected, CarbonFonts.PreferredScript(new CultureInfo(ui), os ?? ["en-US"]));
 
     static List<(string Text, string Family)> CjkRuns(FontFamily family, string text)
     {
@@ -29,11 +34,13 @@ public sealed class CjkFontTests
     }
 
     [AvaloniaTheory]
-    [InlineData(false, "我的服务器 用户名 密钥与身份 新私钥 留空则使用身份中的用户名")]
-    [InlineData(true, "ホスト 鍵と ID 既知のホスト 設定 パスワード")]
-    public void All_cjk_text_uses_one_family(bool japanese, string text)
+    [InlineData(CjkScript.SimplifiedChinese, "我的服务器 用户名 密钥与身份 新私钥 留空则使用身份中的用户名")]
+    [InlineData(CjkScript.TraditionalChinese, "我的伺服器 使用者名稱 金鑰與身份 設定 主機")]
+    [InlineData(CjkScript.Japanese, "ホスト 鍵と ID 既知のホスト 設定 パスワード")]
+    [InlineData(CjkScript.Korean, "호스트 키 및 자격 증명 알려진 호스트 설정 비밀번호")]
+    public void All_cjk_text_uses_one_family(CjkScript script, string text)
     {
-        var family = CarbonFonts.Sans(japanese);
+        var family = CarbonFonts.Sans(script);
         var runs = CjkRuns(family, text);
         Assert.SkipWhen(runs.Count == 0 || runs.All(r => r.Family.Contains("Plex", StringComparison.Ordinal)), "no CJK system font installed");
         Assert.True(runs.Select(r => r.Family).Distinct().Count() == 1, string.Join(" ", runs.Select(r => $"{r.Text}={r.Family}")));

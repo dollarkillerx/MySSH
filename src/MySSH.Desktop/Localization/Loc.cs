@@ -7,14 +7,14 @@ using Avalonia.Data;
 namespace MySSH.Desktop.Localization;
 
 /// <summary>
-/// Runtime-switchable string table backed by Resources/Strings*.resx (en-US neutral, zh-CN, ja-JP).
+/// Runtime-switchable string table backed by Resources/Strings*.resx (en-US neutral, zh-CN, zh-TW, ja-JP, ko-KR).
 /// AOT-safe: plain ResourceManager lookups + observable bindings, no reflection bindings.
 /// Placeholders use the legacy vue-i18n "{name}" form.
 /// </summary>
 public sealed class Loc
 {
     // Must be declared before Instance: static initializers run in textual order.
-    public static readonly IReadOnlyList<string> SupportedCultures = ["en-US", "zh-CN", "ja-JP"];
+    public static readonly IReadOnlyList<string> SupportedCultures = ["en-US", "zh-CN", "zh-TW", "ja-JP", "ko-KR"];
     public static Loc Instance { get; } = new();
 
     readonly ResourceManager _rm = new("MySSH.Desktop.Resources.Strings", typeof(Loc).Assembly);
@@ -59,8 +59,11 @@ public sealed class Loc
         return o;
     }
 
-    static CultureInfo PickDefault(CultureInfo ui)
+    internal static CultureInfo PickDefault(CultureInfo ui)
     {
+        // Chinese by script: zh-Hant / zh-TW / zh-HK / zh-MO → Traditional, everything else (zh-Hans, zh-CN, zh-SG) → Simplified.
+        if (MySSH.UI.Carbon.CarbonFonts.ScriptOf(ui.Name) is { } script and (MySSH.UI.Carbon.CjkScript.SimplifiedChinese or MySSH.UI.Carbon.CjkScript.TraditionalChinese))
+            return CultureInfo.GetCultureInfo(script == MySSH.UI.Carbon.CjkScript.TraditionalChinese ? "zh-TW" : "zh-CN");
         foreach (var c in SupportedCultures)
             if (string.Equals(ui.Name, c, StringComparison.OrdinalIgnoreCase)) return CultureInfo.GetCultureInfo(c);
         foreach (var c in SupportedCultures)

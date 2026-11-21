@@ -28,7 +28,7 @@
 - **Per-host AI Policy** - Off / Read-only / Ask / Trusted / Full access; high-risk commands (`rm -rf`, `systemctl stop`, ...) ask for approval, every call is audited
 - **Secure Storage** - SQLite with AES-256-GCM field encryption; master key in the OS keystore or behind an Argon2id master password
 - **Backup & Restore** - Password-protected export / import; imports hosts from the previous (Tauri) version
-- **Multi-language** - English, Chinese (Simplified), Japanese
+- **Multi-language** - English, Chinese (Simplified and Traditional), Japanese, Korean
 - **Cross-platform** - macOS, Windows, Linux
 
 ## Screenshots

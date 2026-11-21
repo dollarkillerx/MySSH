@@ -36,12 +36,17 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-:lang(zh-CN), :lang(ja) { line-break: strict; }
+:lang(zh-CN), :lang(zh-TW), :lang(ja), :lang(ko) { line-break: strict; }
+:lang(zh-CN) body { font-family: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; }
+:lang(zh-TW) body { font-family: "IBM Plex Sans", "PingFang TC", "Heiti TC", "Microsoft JhengHei", "Noto Sans CJK TC", "Noto Sans TC", sans-serif; }
+:lang(ja) body { font-family: "IBM Plex Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", "Noto Sans JP", sans-serif; }
+:lang(ko) body { font-family: "IBM Plex Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", sans-serif; }
+:lang(ko) body { word-break: keep-all; }
 /* CJK headings: break at punctuation, not inside words; balance the lines */
-:lang(zh-CN) :is(h1, h2, h3), :lang(ja) :is(h1, h2, h3) { word-break: keep-all; overflow-wrap: anywhere; }
+:lang(zh-CN) :is(h1, h2, h3), :lang(zh-TW) :is(h1, h2, h3), :lang(ja) :is(h1, h2, h3), :lang(ko) :is(h1, h2, h3) { word-break: keep-all; overflow-wrap: anywhere; }
 :lang(ja) :is(h1, h2, h3) { word-break: auto-phrase; }
 h1, h2 { text-wrap: balance; }
-:lang(zh-CN) body, :lang(ja) body { line-height: 1.7; }
+:lang(zh-CN) body, :lang(zh-TW) body, :lang(ja) body, :lang(ko) body { line-height: 1.7; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: var(--link); text-decoration: none; }
 a:hover { color: var(--link-hover); text-decoration: underline; }
@@ -84,7 +89,7 @@ svg { fill: currentColor; }
 /* ------------------------------------------------------------ type */
 .eyebrow { font-family: var(--mono); font-size: 14px; letter-spacing: .32px; color: var(--link); margin-bottom: 16px; }
 .lead { color: var(--text-2); font-size: 18px; line-height: 1.55; max-width: 40em; }
-:lang(zh-CN) .lead, :lang(ja) .lead { font-size: 17px; line-height: 1.8; }
+:lang(zh-CN) .lead, :lang(zh-TW) .lead, :lang(ja) .lead, :lang(ko) .lead { font-size: 17px; line-height: 1.8; }
 .fine { color: var(--text-3); font-size: 14px; line-height: 1.45; }
 .label { font-size: 12px; letter-spacing: .32px; color: var(--text-3); margin: 0 0 8px; }
 .note { color: var(--text-3); font-size: 14px; margin-top: 24px; max-width: 40em; }
@@ -110,7 +115,7 @@ code, pre { font-family: var(--mono); }
   linear-gradient(180deg, #161616, #161616); border-bottom: 1px solid var(--border-subtle); }
 .hero__grid { display: grid; gap: 56px; align-items: center; }
 .hero h1 { font-size: clamp(2.25rem, 5vw + 1rem, 3.75rem); line-height: 1.12; letter-spacing: -.5px; max-width: 13em; }
-:lang(zh-CN) .hero h1, :lang(ja) .hero h1 { letter-spacing: 0; line-height: 1.25; font-weight: 400; font-size: clamp(2rem, 4vw + 1rem, 3.25rem); }
+:lang(zh-CN) .hero h1, :lang(zh-TW) .hero h1, :lang(ja) .hero h1, :lang(ko) .hero h1 { letter-spacing: 0; line-height: 1.25; font-weight: 400; font-size: clamp(2rem, 4vw + 1rem, 3.25rem); }
 .hero .lead { margin-top: 24px; }
 @media (min-width: 1056px) {
   .hero { padding: 96px 0 112px; }
@@ -142,7 +147,7 @@ code, pre { font-family: var(--mono); }
 @media (min-width: 1056px) { .section { padding: 112px 0; } }
 .section__head { margin-bottom: 48px; max-width: 48em; }
 .section h2 { font-size: clamp(1.75rem, 2.4vw + 1rem, 2.625rem); line-height: 1.2; }
-:lang(zh-CN) .section h2, :lang(ja) .section h2 { font-weight: 400; line-height: 1.35; }
+:lang(zh-CN) .section h2, :lang(zh-TW) .section h2, :lang(ja) .section h2, :lang(ko) .section h2 { font-weight: 400; line-height: 1.35; }
 .section__head .lead { margin-top: 16px; }
 
 /* feature tiles: Carbon grid with 1px gaps */

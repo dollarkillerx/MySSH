@@ -33,7 +33,9 @@ public sealed partial class SettingsViewModel : ObservableObject
         new(null, Loc.Instance["settings.languageAuto"]),
         new("en-US", "English"),
         new("zh-CN", "简体中文"),
+        new("zh-TW", "繁體中文"),
         new("ja-JP", "日本語"),
+        new("ko-KR", "한국어"),
     ];
     public IReadOnlyList<ThemePreference> Themes { get; } = [ThemePreference.System, ThemePreference.Light, ThemePreference.Dark];
 

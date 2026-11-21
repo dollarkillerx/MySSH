@@ -13,7 +13,7 @@
     <Deterministic>true</Deterministic>
     <Company>MySSH</Company>
     <Product>MySSH</Product>
-    <Version>0.2.4</Version>
+    <Version>0.2.5</Version>
     <!-- Avalonia: compiled bindings everywhere (AOT, design §1) -->
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>

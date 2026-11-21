@@ -14,7 +14,7 @@
     <!-- Third-party assemblies only report collapsed IL2104/IL3053; tools/aot/check-aot-warnings.sh gates the
          individual warnings against a reviewed allowlist. Our own libraries are analysed member-by-member. -->
     <NoWarn>$(NoWarn);IL2104;IL3053</NoWarn>
-    <SatelliteResourceLanguages>en-US;zh-CN;ja-JP</SatelliteResourceLanguages>
+    <SatelliteResourceLanguages>en-US;zh-CN;zh-TW;ja-JP;ko-KR</SatelliteResourceLanguages>
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="MySSH.Desktop.Tests" />

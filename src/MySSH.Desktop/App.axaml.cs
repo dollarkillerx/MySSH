@@ -116,8 +116,8 @@ public sealed partial class App : Application, IDisposable
         }
     }
 
-    /// <summary>CJK fallback fonts follow the UI language (see CarbonFonts: avoids mixed Japanese / Chinese glyphs).</summary>
-    void ApplyFonts() => MySSH.UI.Carbon.CarbonFonts.Apply(Resources, MySSH.UI.Carbon.CarbonFonts.PrefersJapanese(Loc.Instance.Culture, s_osLanguages.Value));
+    /// <summary>CJK fallback fonts follow the UI language (see CarbonFonts: avoids mixed Chinese / Japanese / Korean glyphs).</summary>
+    void ApplyFonts() => MySSH.UI.Carbon.CarbonFonts.Apply(Resources, MySSH.UI.Carbon.CarbonFonts.PreferredScript(Loc.Instance.Culture, s_osLanguages.Value));
 
     static readonly Lazy<List<string>> s_osLanguages = new(OsLanguages); // read once
 

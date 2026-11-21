@@ -40,7 +40,7 @@
   "f.rdp.t": "Windows remote desktop",
   "f.rdp.d": "RDP hosts open in your system client, optionally tunnelled through an SSH jump host. Passwords never land in .rdp files.",
   "f.backup.t": "Backup and restore",
-  "f.backup.d": "Password-protected export and import of your hosts and identities. English, 简体中文 and 日本語 built in.",
+  "f.backup.d": "Password-protected export and import of your hosts and identities. English, 简体中文, 繁體中文, 日本語 and 한국어 built in.",
   "ai.eyebrow": "AI assistant",
   "ai.title": "Ask why it broke. Approve what it runs.",
   "ai.lead": "Open the assistant with Ctrl+Shift+A, attach the host and the terminal output, and ask. It reads logs and runs commands through the same tools and policies as the MCP server, and shows each step as a card you can approve or deny. Secrets are masked before anything is sent.",
