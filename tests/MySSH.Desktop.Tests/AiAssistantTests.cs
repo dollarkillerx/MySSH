@@ -219,6 +219,53 @@ public sealed class AiAssistantTests
     }
 
     [AvaloniaFact]
+    public async Task The_chat_follows_the_newest_text_unless_the_user_scrolled_up()
+    {
+        Loc.Instance.SetCulture("en-US");
+        var (t, settings, _) = await SetupAsync(new HangingChatProvider());
+        await using var __ = t;
+        var ai = new AiAssistantViewModel(settings, t.Storage.AiConversations, t.Storage.Hosts, new ApprovingTools(() => null!),
+            new ToolCatalog(), new FakeUi(), new NoWorkspace());
+        var panel = new AiAssistantPanel { DataContext = ai };
+        var window = new Window { Width = 460, Height = 760, Content = panel };
+        window.Show();
+        var scroll = panel.FindControl<ScrollViewer>("ChatScroll")!;
+        void Settle()
+        {
+            for (var i = 0; i < 6; i++) { Avalonia.Threading.Dispatcher.UIThread.RunJobs(); window.UpdateLayout(); }
+        }
+        bool AtBottom() => scroll.Offset.Y >= scroll.Extent.Height - scroll.Viewport.Height - 1;
+        static string Paragraphs(int from, int count) =>
+            string.Concat(Enumerable.Range(from, count).Select(i => $"Paragraph {i}: the service restarted and the logs look clean.\n\n"));
+
+        ai.Current.Items.Add(new AiUserItemViewModel("check the logs", []));
+        var answer = new AiAssistantItemViewModel();
+        ai.Current.Items.Add(answer);
+        answer.AppendText(Paragraphs(0, 30));
+        Settle();
+        Assert.True(scroll.Extent.Height > scroll.Viewport.Height);
+        Assert.True(AtBottom());
+
+        // A streaming answer grows inside the same item: the view keeps following it.
+        answer.AppendText(Paragraphs(30, 20));
+        Settle();
+        Assert.True(AtBottom());
+
+        // Scrolled up to read: new text does not pull the view down.
+        scroll.Offset = new Vector(0, 0);
+        Settle();
+        answer.AppendText(Paragraphs(50, 20));
+        Settle();
+        Assert.Equal(0, scroll.Offset.Y);
+
+        // Asking again brings the newest messages back into view.
+        ai.Current.Items.Add(new AiUserItemViewModel("and now?", []));
+        Settle();
+        Assert.True(AtBottom());
+        window.Close();
+    }
+
+    [AvaloniaFact]
     public async Task A_running_chat_stops_when_another_question_replaces_it()
     {
         Loc.Instance.SetCulture("en-US");
